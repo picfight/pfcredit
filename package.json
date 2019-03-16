@@ -106,7 +106,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/decred/pfcredit.git"
+    "url": "git+https://github.com/picfight/pfcredit.git"
   },
   "author": {
     "name": "The Decred developers",
@@ -115,7 +115,7 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/decred/pfcredit/issues"
+    "url": "https://github.com/picfight/pfcredit/issues"
   },
   "keywords": [
     "decred",
@@ -127,7 +127,7 @@
     "webpack",
     "react-hot"
   ],
-  "homepage": "https://github.com/decred/pfcredit#readme",
+  "homepage": "https://github.com/picfight/pfcredit#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0",

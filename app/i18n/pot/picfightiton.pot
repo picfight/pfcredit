@@ -6508,9 +6508,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 #. [help.github.subtitle]
 #. defaultMessage is:
-#. github.com/decred/pfcredit
+#. github.com/picfight/pfcredit
 msgctxt "help.github.subtitle"
-msgid "github.com/decred/pfcredit"
+msgid "github.com/picfight/pfcredit"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/messages.json

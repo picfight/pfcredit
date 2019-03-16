@@ -6765,11 +6765,11 @@ msgstr "forum.picfight.org"
 
 #. [help.github.subtitle]
 #. defaultMessage is:
-#. github.com/decred/pfcredit
+#. github.com/picfight/pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.subtitle"
-msgid "github.com/decred/pfcredit"
-msgstr "github.com/decred/pfcredit"
+msgid "github.com/picfight/pfcredit"
+msgstr "github.com/picfight/pfcredit"
 
 #. [ticket.status.immature]
 #. defaultMessage is:

@@ -13,7 +13,7 @@ export const LinksTab = () => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.project" m="Project Related"/></div>
     <div className="help-icons-list">
-      <HelpLink className={"help-github-icon"} href="https://github.com/decred/pfcredit" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/pfcredit"/>} />
+      <HelpLink className={"help-github-icon"} href="https://github.com/picfight/pfcredit" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/picfight/pfcredit"/>} />
       <HelpLink className={"help-docs-icon"} href="https://docs.picfight.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.picfight.org"/>}/>
       <HelpLink className={"help-stakepools-icon"} href="https://picfight.org/stakepools" title={<T id="help.stakepools" m=" Stakepools" />} subtitle={<T id="help.stakepools.subtitle" m="picfight.org/stakepools"/>}/>
       <HelpLink className={"help-blockchain-explorer-icon"} href="https://explorer.pfcdata.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.pfcdata.org"/>}/>

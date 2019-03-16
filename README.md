@@ -1,6 +1,6 @@
 # pfcredit
 
-[![Build Status](https://travis-ci.org/decred/pfcredit.png?branch=master)](https://travis-ci.org/decred/pfcredit)
+[![Build Status](https://travis-ci.org/picfight/pfcredit.png?branch=master)](https://travis-ci.org/picfight/pfcredit)
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
 pfcredit is a cross-platform GUI for picfight written in node.js using
@@ -16,7 +16,7 @@ already be using at this time.
 Download the pfcredit release for your operating system on [decred/picfight-binaries](https://github.com/decred/picfight-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
-no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/decred/pfcredit/issues/1404)).
+no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/picfight/pfcredit/issues/1404)).
 
 On Fedora or similar distros you may need to install the libXScrnSaver
 package if you see this error:
@@ -84,7 +84,7 @@ Adjust the following steps for the paths you want to use.
 ``` bash
 mkdir code
 cd code
-git clone https://github.com/decred/pfcredit.git
+git clone https://github.com/picfight/pfcredit.git
 cd pfcredit
 yarn
 mkdir bin/
@@ -195,7 +195,7 @@ If you have any further questions you can find us at:
 ## Issue Tracker
 
 The
-[integrated github issue tracker](https://github.com/decred/pfcredit/issues)
+[integrated github issue tracker](https://github.com/picfight/pfcredit/issues)
 is used for this project.
 
 ## License
