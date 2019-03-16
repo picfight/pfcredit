@@ -40,10 +40,10 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
         versionErr = "Unable to obtain Pfcwallet API version";
       } else {
         if (!semverCompatible(requiredVersion, walletVersion)) {
-          versionErr = "API versions not compatible..  PicFightiton requires "
+          versionErr = "API versions not compatible..  Pfcredit requires "
             + requiredVersion + " but wallet " + walletVersion
             + " does not satisfy the requirement. Please check your"
-            + " installation, PicFightiton and Pfcwallet versions should match.";
+            + " installation, Pfcredit and Pfcwallet versions should match.";
         }
       }
       if (versionErr) {

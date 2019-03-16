@@ -237,7 +237,7 @@ export const TRZ_CANCELOPERATION_FAILED = "TRZ_CANCELOPERATION_FAILED";
 
 // Note that calling this function while no pin/passphrase operation is running
 // will attempt to steal the device, cancelling operations from apps *other
-// than decrediton*.
+// than pfcredit*.
 export const cancelCurrentOperation = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   const { trezor: { pinCallBack, passPhraseCallBack, wordCallBack } } = getState();

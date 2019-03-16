@@ -18,7 +18,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
       <T id="privacy.title" m={"Privacy Options"}/>
     </div>
     <div className="language-select-title-sub">
-      <T id="privacy.titleSub" m={"Select how PicFightiton should connect to external services. You can change this in the application settings later."}/>
+      <T id="privacy.titleSub" m={"Select how Pfcredit should connect to external services. You can change this in the application settings later."}/>
     </div>
     <div className="privacy-options">
       <PrivacyOption

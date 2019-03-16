@@ -19,7 +19,7 @@ export default ({ enableSpv, disableSpv }) => (
       <T id="spv.title" m={"Simple Payment Verification (SPV)"}/>
     </div>
     <div className="language-select-title-sub">
-      <T id="spv.titleSub" m={"Select how PicFightiton wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go "}/>
+      <T id="spv.titleSub" m={"Select how Pfcredit wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go "}/>
       <ExternalLink href={"https://docs.picfight.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink>.
     </div>
     <div className="privacy-options">

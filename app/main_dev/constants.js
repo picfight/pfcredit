@@ -42,4 +42,4 @@ Options
   --customBinPath    Custom path for pfcd/pfcwallet/pfcctl binaries
 ` : null;
 
-export const DIFF_CONNECTION_ERROR = "daemon and picfightiton does not have the same network";
+export const DIFF_CONNECTION_ERROR = "daemon and pfcredit does not have the same network";

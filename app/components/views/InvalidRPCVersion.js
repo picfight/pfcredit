@@ -8,7 +8,7 @@ const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion }) => (
     <div className="invalid-rpc-info">
       <T
         id="invalidRPCVersion.info"
-        m={`The API of the currently running wallet ({walletRPCVersion}) is not compatible with PicFightiton (required version {requiredWalletRPCVersion}).
+        m={`The API of the currently running wallet ({walletRPCVersion}) is not compatible with Pfcredit (required version {requiredWalletRPCVersion}).
 
         Please update the daemon (pfcd) and wallet (pfcwallet) to the latest version, then try again.`}
         values={{ walletRPCVersion, requiredWalletRPCVersion }}

@@ -6,14 +6,14 @@ import "style/Help.less";
 
 export const LinksTabHeader = () =>
   <DescriptionHeader
-    description={<T id="help.description.links" m="If you have any difficulty with picfightiton, please use the following links to help find a solution." />}
+    description={<T id="help.description.links" m="If you have any difficulty with pfcredit, please use the following links to help find a solution." />}
   />;
 
 export const LinksTab = () => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.project" m="Project Related"/></div>
     <div className="help-icons-list">
-      <HelpLink className={"help-github-icon"} href="https://github.com/decred/decrediton" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/decrediton"/>} />
+      <HelpLink className={"help-github-icon"} href="https://github.com/decred/pfcredit" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/decred/pfcredit"/>} />
       <HelpLink className={"help-docs-icon"} href="https://docs.picfight.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.picfight.org"/>}/>
       <HelpLink className={"help-stakepools-icon"} href="https://picfight.org/stakepools" title={<T id="help.stakepools" m=" Stakepools" />} subtitle={<T id="help.stakepools.subtitle" m="picfight.org/stakepools"/>}/>
       <HelpLink className={"help-blockchain-explorer-icon"} href="https://explorer.pfcdata.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.pfcdata.org"/>}/>
@@ -25,8 +25,8 @@ export const LinksTab = () => (
         double
       />
       <HelpLinkAboutModal className={"help-star-icon"}
-        title={<T id="help.about.decrediton" m="About PicFightiton"/>}
-        subtitle={<T id="help.about.decrediton.subtitle" m="Software Summary"/>}
+        title={<T id="help.about.pfcredit" m="About Pfcredit"/>}
+        subtitle={<T id="help.about.pfcredit.subtitle" m="Software Summary"/>}
       />
     </div>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.communications" m="Communications"/></div>

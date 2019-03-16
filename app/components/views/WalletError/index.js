@@ -20,7 +20,7 @@ const WalletError = ({ getNetworkError }) => (
       { getNetworkError ?
         <p>{getNetworkError} Please verify that your pfcd is configured correctly and restart.</p> :
         <p> We have detected that your wallet has disconnected.
-          Please reload PicFightiton to fix this problem. </p>
+          Please reload Pfcredit to fix this problem. </p>
       }
     </div>
   </div>

@@ -3,9 +3,9 @@ import { ipcRenderer } from "electron";
 import { isString } from "util";
 import { withLog as log, logOptionNoResponseData } from "./app";
 
-export const checkPicFightitonVersion = log(() => Promise
+export const checkPfcreditVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
-, "Check PicFightiton release version");
+, "Check Pfcredit release version");
 
 export const startDaemon = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
@@ -119,11 +119,11 @@ export const getPfcwalletLogs = () => Promise
     throw "Error getting pfcwallet logs";
   });
 
-export const getPicFightitonLogs = () => Promise
-  .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
+export const getPfcreditLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-pfcredit-logs"))
   .then(logs => {
     if (logs) return logs;
-    throw "Error getting decrediton logs";
+    throw "Error getting pfcredit logs";
   });
 
 export const getAvailableWallets = log((network) => Promise

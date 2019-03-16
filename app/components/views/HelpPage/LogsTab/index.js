@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getPfcdLogs, getPfcwalletLogs, getPicFightitonLogs } from "wallet";
+import { getPfcdLogs, getPfcwalletLogs, getPfcreditLogs } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -39,26 +39,26 @@ class LogsTabBody extends React.Component {
       interval: null,
       pfcdLogs: "",
       pfcwalletLogs: "",
-      decreditonLogs: "",
+      pfcreditLogs: "",
       showPfcdLogs: false,
       showPfcwalletLogs: false,
-      showPicFightitonLogs: false
+      showPfcreditLogs: false
     };
   }
 
   render() {
-    const { onShowPicFightitonLogs, onShowPfcdLogs, onShowPfcwalletLogs,
-      onHidePicFightitonLogs, onHidePfcdLogs, onHidePfcwalletLogs
+    const { onShowPfcreditLogs, onShowPfcdLogs, onShowPfcwalletLogs,
+      onHidePfcreditLogs, onHidePfcdLogs, onHidePfcwalletLogs
     } = this;
     return (
       <Logs
         {...{
           ...this.props,
           ...this.state,
-          onShowPicFightitonLogs,
+          onShowPfcreditLogs,
           onShowPfcdLogs,
           onShowPfcwalletLogs,
-          onHidePicFightitonLogs,
+          onHidePfcreditLogs,
           onHidePfcdLogs,
           onHidePfcwalletLogs,
         }}
@@ -68,8 +68,8 @@ class LogsTabBody extends React.Component {
 
   getLogs() {
     return Promise
-      .all([ getPfcdLogs(), getPfcwalletLogs(), getPicFightitonLogs() ])
-      .then(([ rawPfcdLogs, rawPfcwalletLogs, decreditonLogs ]) => {
+      .all([ getPfcdLogs(), getPfcwalletLogs(), getPfcreditLogs() ])
+      .then(([ rawPfcdLogs, rawPfcwalletLogs, pfcreditLogs ]) => {
         const pfcdLogs = Buffer.from(rawPfcdLogs).toString("utf8");
         const pfcwalletLogs = Buffer.from(rawPfcwalletLogs).toString("utf8");
         if ( pfcdLogs !== this.state.pfcdLogs ) {
@@ -78,18 +78,18 @@ class LogsTabBody extends React.Component {
         if ( pfcwalletLogs !== this.state.pfcwalletLogs ) {
           this.setState({ pfcwalletLogs });
         }
-        if ( decreditonLogs !== this.state.decreditonLogs ) {
-          this.setState({ decreditonLogs });
+        if ( pfcreditLogs !== this.state.pfcreditLogs ) {
+          this.setState({ pfcreditLogs });
         }
       });
   }
 
-  onShowPicFightitonLogs() {
-    this.setState({ showPicFightitonLogs: true });
+  onShowPfcreditLogs() {
+    this.setState({ showPfcreditLogs: true });
   }
 
-  onHidePicFightitonLogs() {
-    this.setState({ showPicFightitonLogs: false });
+  onHidePfcreditLogs() {
+    this.setState({ showPfcreditLogs: false });
   }
 
   onShowPfcdLogs() {

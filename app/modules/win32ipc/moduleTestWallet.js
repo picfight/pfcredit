@@ -1,5 +1,5 @@
 // Sample script to test the namedpiperx option of pfcwallet in windows.
-// Requires that a wallet config exists in the default decrediton config dir,
+// Requires that a wallet config exists in the default pfcredit config dir,
 // with a wallet name "default-wallet".
 
 const childProcess = require("child_process");
@@ -8,7 +8,7 @@ const path = require("path");
 const os = require("os");
 
 //const pipeFname = "\\\\.\\pipe\\pfcwallet-test";
-const walletConfPath = path.join(os.homedir(), "AppData", "Local", "PicFightiton",
+const walletConfPath = path.join(os.homedir(), "AppData", "Local", "Pfcredit",
   "wallets", "testnet", "default-wallet", "pfcwallet.conf");
 
 function sleep(milli) {

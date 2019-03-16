@@ -79,7 +79,7 @@ export async function cleanShutdown(mainWindow, app) {
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
     setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
-    logger.log("info", "Closing decrediton.");
+    logger.log("info", "Closing pfcredit.");
 
     let shutdownTimer = setInterval(function () {
       const stillRunning = (require("is-running")(pfcdPID) && os.platform() != "win32");
@@ -286,7 +286,7 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
   // on that platform. For linux/macOS users, the --pipetx argument is used to
-  // provide a pipe back to picfightiton, which reads the grpc port in a secure and
+  // provide a pipe back to pfcredit, which reads the grpc port in a secure and
   // reliable way.
   const waitForGrpcPortListener = (data) => {
     const matches = /PFCW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
@@ -323,7 +323,7 @@ export const readExesVersion = (app, grpcVersions) => {
   let exes = [ "pfcd", "pfcwallet", "pfcctl" ];
   let versions = {
     grpc: grpcVersions,
-    decrediton: app.getVersion()
+    pfcredit: app.getVersion()
   };
 
   for (let exe of exes) {

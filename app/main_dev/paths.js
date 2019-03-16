@@ -9,11 +9,11 @@ import { initWalletCfg, newWalletConfigCreation } from "../config";
 // electron in production mode.
 export function appDataDirectory() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "PicFightiton");
+    return path.join(os.homedir(), "AppData", "Local", "Pfcredit");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","decrediton");
+    return path.join(os.homedir(), "Library","Application Support","pfcredit");
   } else {
-    return path.join(os.homedir(),".config","decrediton");
+    return path.join(os.homedir(),".config","pfcredit");
   }
 }
 
@@ -49,7 +49,7 @@ export function getWalletDBPathFromWallets(testnet, walletPath) {
   return path.join(getWalletsDirectoryPath(), network, walletPath, networkFolder, "wallet.db");
 }
 
-export function getPicFightitonWalletDBPath(testnet) {
+export function getPfcreditWalletDBPath(testnet) {
   return path.join(appDataDirectory(), testnet ? "testnet3" : "mainnet", "wallet.db");
 }
 
@@ -106,12 +106,12 @@ export function getDirectoryLogs(dir) {
 export function checkAndInitWalletCfg (testnet) {
   const walletDirectory = getDefaultWalletDirectory(testnet);
 
-  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(getPicFightitonWalletDBPath(testnet))) {
+  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(getPfcreditWalletDBPath(testnet))) {
     fs.mkdirsSync(walletDirectory);
 
     // check for existing mainnet directories
-    if ( fs.pathExistsSync(getPicFightitonWalletDBPath(testnet)) ) {
-      fs.copySync(getPicFightitonWalletDBPath(testnet), path.join(getDefaultWalletDirectory(testnet, testnet),"wallet.db"));
+    if ( fs.pathExistsSync(getPfcreditWalletDBPath(testnet)) ) {
+      fs.copySync(getPfcreditWalletDBPath(testnet), path.join(getDefaultWalletDirectory(testnet, testnet),"wallet.db"));
     }
 
     // copy over existing config.json if it exists

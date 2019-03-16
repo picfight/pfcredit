@@ -8,7 +8,7 @@ const LanguageSelectPage = ({ availableLanguages, selectedLang, onChangeSelected
     <div className="page-body getstarted">
       <div className="getstarted-new">
         <div className="language-select-title">
-          <T id="selectLang.title" m={"Welcome to PicFightiton Wallet"}/>
+          <T id="selectLang.title" m={"Welcome to Pfcredit Wallet"}/>
         </div>
         <div className="language-select-title-sub">
           <T id="selectLang.titleSub" m={"Choose your language"}/>

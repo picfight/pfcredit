@@ -49,20 +49,20 @@ export const DELETE_PFCD_SUCCESS = "DELETE_PFCD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 export const NETWORK_MATCH = "NETWORK_MATCH";
 
-export const checkPicFightitonVersion = () => (dispatch, getState) =>{
+export const checkPfcreditVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
-  const releaseApiURL = "https://api.github.com/repos/decred/decrediton/releases";
+  const releaseApiURL = "https://api.github.com/repos/decred/pfcredit/releases";
   axios.get(releaseApiURL, { timeout: 5000 })
     .then(function (response) {
       const currentVersion = response.data[0].tag_name.split("v")[1];
       if (semverCompatible(currentVersion, detectedVersion)) {
-        wallet.log("info", "PicFightiton version up to date.");
+        wallet.log("info", "Pfcredit version up to date.");
       } else {
         dispatch({ type: DECREDITON_VERSION, msg:  response.data[0].tag_name });
       }
     })
     .catch(function (error) {
-      console.log("Unable to check latest decrediton release version.", error);
+      console.log("Unable to check latest pfcredit release version.", error);
     });
 };
 
@@ -316,7 +316,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 export const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
   dispatch(registerForErrors());
-  dispatch(checkPicFightitonVersion());
+  dispatch(checkPfcreditVersion());
   if (!daemonAdvanced) {
     dispatch(startDaemon());
     return;
@@ -408,8 +408,8 @@ export const getPfcwalletLogs = () => {
       });
 };
 
-export const getPicFightitonLogs = () => {
-  wallet.getPicFightitonLogs()
+export const getPfcreditLogs = () => {
+  wallet.getPfcreditLogs()
     .then(logs => {
       return(logs);
     }).catch(

@@ -14,7 +14,7 @@ import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemo
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 
-// setPath as decrediton
+// setPath as pfcredit
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -81,7 +81,7 @@ checkAndInitWalletCfg(true);
 checkAndInitWalletCfg(false);
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
-logger.log("info", "Versions: PicFightiton: %s, Electron: %s, Chrome: %s",
+logger.log("info", "Versions: Pfcredit: %s, Electron: %s, Chrome: %s",
   app.getVersion(), process.versions.electron, process.versions.chrome);
 
 process.on("uncaughtException", err => {
@@ -201,7 +201,7 @@ ipcMain.on("get-pfcwallet-logs", (event) => {
   event.returnValue = GetPfcwalletLogs();
 });
 
-ipcMain.on("get-decrediton-logs", (event) => {
+ipcMain.on("get-pfcredit-logs", (event) => {
   const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
   readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
     if (err) {
@@ -246,7 +246,7 @@ if (stopSecondInstance) {
 
 app.on("ready", async () => {
   // when installing (on first run) locale will be empty. Determine the user's
-  // OS locale and set that as decrediton's locale.
+  // OS locale and set that as pfcredit's locale.
   const cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
@@ -279,7 +279,7 @@ app.on("ready", async () => {
     await installExtensions();
     await setupProxy(logger);
   }
-  windowOpts.title = "PicFightiton - " + app.getVersion();
+  windowOpts.title = "Pfcredit - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);

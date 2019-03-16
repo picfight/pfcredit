@@ -96,20 +96,20 @@
     "defaultMessage": "Select All"
   },
   {
-    "id": "appMenu.decrediton",
-    "defaultMessage": "PicFightiton"
+    "id": "appMenu.pfcredit",
+    "defaultMessage": "Pfcredit"
   },
   {
-    "id": "appMenu.aboutPicFightiton",
-    "defaultMessage": "About PicFightiton"
+    "id": "appMenu.aboutPfcredit",
+    "defaultMessage": "About Pfcredit"
   },
   {
     "id": "appMenu.services",
     "defaultMessage": "Services"
   },
   {
-    "id": "appMenu.hidePicFightiton",
-    "defaultMessage": "Hide PicFightiton"
+    "id": "appMenu.hidePfcredit",
+    "defaultMessage": "Hide Pfcredit"
   },
   {
     "id": "appMenu.hideOthers",

@@ -12,7 +12,7 @@ class ShutdownAppPage extends React.Component{
     return (
       <div className="page-body getstarted">
         <PicFightLoading  className="get-started-loading" />
-        <div className="shutdown-text"><T id="shutdown.header.title" m="Shutting down PicFightiton" /></div>
+        <div className="shutdown-text"><T id="shutdown.header.title" m="Shutting down Pfcredit" /></div>
       </div>
     );
   }

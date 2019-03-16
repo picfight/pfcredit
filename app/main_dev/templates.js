@@ -6,9 +6,9 @@ let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
   {
-    label: locale.messages["appMenu.decrediton"],
+    label: locale.messages["appMenu.pfcredit"],
     submenu: [ {
-      label: locale.messages["appMenu.aboutPicFightiton"],
+      label: locale.messages["appMenu.aboutPfcredit"],
       selector: "orderFrontStandardAboutPanel:",
       click() {
         mainWindow.webContents.send("show-about-modal");
@@ -21,7 +21,7 @@ const darwinTemplate = (mainWindow, locale) => [
     }, {
       type: "separator"
     }, {
-      label: locale.messages["appMenu.hidePicFightiton"],
+      label: locale.messages["appMenu.hidePfcredit"],
       accelerator: "Command+H",
       selector: "hide:"
     }, {

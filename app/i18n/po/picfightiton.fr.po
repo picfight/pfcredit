@@ -143,27 +143,27 @@ msgstr "À propos"
 
 #. [help.about]
 #. defaultMessage is:
-#. About PicFightiton
+#. About Pfcredit
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "help.about"
-msgid "About PicFightiton"
-msgstr "À propos de PicFightiton"
+msgid "About Pfcredit"
+msgstr "À propos de Pfcredit"
 
-#. [help.about.decrediton]
+#. [help.about.pfcredit]
 #. defaultMessage is:
-#. About PicFightiton
+#. About Pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.about.decrediton"
-msgid "About PicFightiton"
-msgstr "À propos de PicFightiton"
+msgctxt "help.about.pfcredit"
+msgid "About Pfcredit"
+msgstr "À propos de Pfcredit"
 
-#. [appMenu.aboutPicFightiton]
+#. [appMenu.aboutPfcredit]
 #. defaultMessage is:
-#. About PicFightiton
+#. About Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.aboutPicFightiton"
-msgid "About PicFightiton"
-msgstr "À propos de PicFightiton"
+msgctxt "appMenu.aboutPfcredit"
+msgid "About Pfcredit"
+msgstr "À propos de Pfcredit"
 
 #. [privacy.custom.accept]
 #. defaultMessage is:
@@ -908,11 +908,11 @@ msgstr "Fermer"
 
 #. [fatal.button]
 #. defaultMessage is:
-#. Close PicFightiton
+#. Close Pfcredit
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button"
-msgid "Close PicFightiton"
-msgstr "Fermer PicFightiton"
+msgid "Close Pfcredit"
+msgstr "Fermer Pfcredit"
 
 #. [settings.closeWalletModalOk]
 #. defaultMessage is:
@@ -1392,53 +1392,53 @@ msgctxt "aboutModal.paragraph2b"
 msgid "PicFight contributors"
 msgstr "Contributeurs PicFight"
 
-#. [aboutModal.decrediton]
+#. [aboutModal.pfcredit]
 #. defaultMessage is:
-#. PicFightiton
+#. Pfcredit
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
-msgctxt "aboutModal.decrediton"
-msgid "PicFightiton"
-msgstr "PicFightiton"
+msgctxt "aboutModal.pfcredit"
+msgid "Pfcredit"
+msgstr "Pfcredit"
 
-#. [appMenu.decrediton]
+#. [appMenu.pfcredit]
 #. defaultMessage is:
-#. PicFightiton
+#. Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.decrediton"
-msgid "PicFightiton"
-msgstr "PicFightiton"
+msgctxt "appMenu.pfcredit"
+msgid "Pfcredit"
+msgstr "Pfcredit"
 
 #. [aboutModal.paragraph2a]
 #. defaultMessage is:
-#. PicFightiton is free and open source software, developed and designed by the
+#. Pfcredit is free and open source software, developed and designed by the
 #. global team of
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2a"
 msgid ""
-"PicFightiton is free and open source software, developed and designed by the "
+"Pfcredit is free and open source software, developed and designed by the "
 "global team of"
 msgstr ""
-"PicFightiton est un logiciel gratuit et open source, développé et conçu par "
+"Pfcredit est un logiciel gratuit et open source, développé et conçu par "
 "l'équipe mondiale de"
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
-#. PicFightiton must remain running for tickets to be automatically purchased.
+#. Pfcredit must remain running for tickets to be automatically purchased.
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "tickets.startAutoBuyerConfirmation.description"
 msgid ""
-"PicFightiton must remain running for tickets to be automatically purchased."
+"Pfcredit must remain running for tickets to be automatically purchased."
 msgstr ""
-"PicFightiton doit rester en cours d'exécution pour permettre l'achat "
+"Pfcredit doit rester en cours d'exécution pour permettre l'achat "
 "automatique de tickets."
 
 #. [getStarted.releaseNotesTitle]
 #. defaultMessage is:
-#. PicFightiton v{version} Released
+#. Pfcredit v{version} Released
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 msgctxt "getStarted.releaseNotesTitle"
-msgid "PicFightiton v{version} Released"
-msgstr "PicFightiton v{version} publié"
+msgid "Pfcredit v{version} Released"
+msgstr "Pfcredit v{version} publié"
 
 #. [getStarted.decrypt.label]
 #. defaultMessage is:
@@ -1773,17 +1773,17 @@ msgstr "Saisir la représentation hexadécimale de votre graine…"
 #. Enter the passphrase you just created to scan the blockchain for additional
 #. accounts you may have previously created with your wallet.
 #.   Your account names aren't stored on the blockchain, so you will have to
-#. rename them after setting up PicFightiton.
+#. rename them after setting up Pfcredit.
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.discoverAccountsInfo"
 msgid ""
 "Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.\n"
 "\n"
-"  Your account names aren't stored on the blockchain, so you will have to rename them after setting up PicFightiton."
+"  Your account names aren't stored on the blockchain, so you will have to rename them after setting up Pfcredit."
 msgstr ""
 "Saisissez la phrase secrète que vous venez de créer pour analyser la chaîne de blocs afin de rechercher des comptes supplémentaires que vous avez pu créer précédemment avec votre portefeuille.\n"
 "\n"
-"  Comme les noms de vos comptes ne sont pas stockés sur la chaîne de blocs, vous devrez les renommer après la configuration de PicFightiton."
+"  Comme les noms de vos comptes ne sont pas stockés sur la chaîne de blocs, vous devrez les renommer après la configuration de Pfcredit."
 
 #. [securitycenter.signMessage.field.message.placeholder]
 #. defaultMessage is:
@@ -2381,13 +2381,13 @@ msgctxt "accounts.hide.tip"
 msgid "Hide"
 msgstr "Masquer"
 
-#. [appMenu.hidePicFightiton]
+#. [appMenu.hidePfcredit]
 #. defaultMessage is:
-#. Hide PicFightiton
+#. Hide Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.hidePicFightiton"
-msgid "Hide PicFightiton"
-msgstr "Masquer PicFightiton"
+msgctxt "appMenu.hidePfcredit"
+msgid "Hide Pfcredit"
+msgstr "Masquer Pfcredit"
 
 #. [appMenu.hideOthers]
 #. defaultMessage is:
@@ -2431,15 +2431,15 @@ msgstr "Détails d'E/S"
 
 #. [help.description.links]
 #. defaultMessage is:
-#. If you have any difficulty with picfightiton, please use the following links
+#. If you have any difficulty with pfcredit, please use the following links
 #. to help find a solution.
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.description.links"
 msgid ""
-"If you have any difficulty with picfightiton, please use the following links "
+"If you have any difficulty with pfcredit, please use the following links "
 "to help find a solution."
 msgstr ""
-"En cas de difficultés avec PicFightiton, veuillez utiliser les liens suivants "
+"En cas de difficultés avec Pfcredit, veuillez utiliser les liens suivants "
 "pour vous aider à trouver une solution."
 
 #. [charts.keys.immature]
@@ -4482,43 +4482,43 @@ msgstr "Sélectionner un compte"
 
 #. [privacy.titleSub]
 #. defaultMessage is:
-#. Select how PicFightiton should connect to external services. You can change
+#. Select how Pfcredit should connect to external services. You can change
 #. this in the application settings later.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.titleSub"
 msgid ""
-"Select how PicFightiton should connect to external services. You can change "
+"Select how Pfcredit should connect to external services. You can change "
 "this in the application settings later."
 msgstr ""
-"Sélectionnez la façon dont PicFightiton doit se connecter à des services "
+"Sélectionnez la façon dont Pfcredit doit se connecter à des services "
 "externes. Vous pouvez modifier cela plus tard dans les paramètres de "
 "l'application."
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how PicFightiton wallet's should connect to the network. You can
+#. Select how Pfcredit wallet's should connect to the network. You can
 #. change this in the application settings later.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how PicFightiton wallet's should connect to the network. You can change"
+"Select how Pfcredit wallet's should connect to the network. You can change"
 " this in the application settings later."
 msgstr ""
-"Sélectionnez la manière dont le portefeuille PicFightiton se connecte au "
+"Sélectionnez la manière dont le portefeuille Pfcredit se connecte au "
 "réseau. Vous pourrez modifier cela ultérieurement dans les paramètres de "
 "l’application."
 
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
-#. Select which external requests PicFightiton is allowed to make. You can
+#. Select which external requests Pfcredit is allowed to make. You can
 #. change this later on the app settings page.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.json
 msgctxt "privacy.custom.titleSub"
 msgid ""
-"Select which external requests PicFightiton is allowed to make. You can change"
+"Select which external requests Pfcredit is allowed to make. You can change"
 " this later on the app settings page."
 msgstr ""
-"Sélectionnez les demandes externes que PicFightiton est autorisée à effectuer."
+"Sélectionnez les demandes externes que Pfcredit est autorisée à effectuer."
 " Vous pouvez modifier cela plus tard dans la page des paramètres de "
 "l'application."
 
@@ -4692,11 +4692,11 @@ msgstr "Afficher des fichiers journaux de portefeuille"
 
 #. [shutdown.header.title]
 #. defaultMessage is:
-#. Shutting down PicFightiton
+#. Shutting down Pfcredit
 #: app/i18n/extracted/app/components/views/ShutdownAppPage.json
 msgctxt "shutdown.header.title"
-msgid "Shutting down PicFightiton"
-msgstr "Fermeture de PicFightiton"
+msgid "Shutting down Pfcredit"
+msgstr "Fermeture de Pfcredit"
 
 #. [securitycenter.signMessageBtn]
 #. defaultMessage is:
@@ -4778,11 +4778,11 @@ msgctxt "history.min.value"
 msgid "Slider min"
 msgstr "Curseur min"
 
-#. [help.about.decrediton.subtitle]
+#. [help.about.pfcredit.subtitle]
 #. defaultMessage is:
 #. Software Summary
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.about.decrediton.subtitle"
+msgctxt "help.about.pfcredit.subtitle"
 msgid "Software Summary"
 msgstr "Résumé du logiciel"
 
@@ -5197,32 +5197,32 @@ msgstr ""
 #. [invalidRPCVersion.info]
 #. defaultMessage is:
 #. The API of the currently running wallet ({walletRPCVersion}) is not
-#. compatible with PicFightiton (required version {requiredWalletRPCVersion}).
+#. compatible with Pfcredit (required version {requiredWalletRPCVersion}).
 #.         Please update the daemon (pfcd) and wallet (pfcwallet) to the
 #. latest version, then try again.
 #: app/i18n/extracted/app/components/views/InvalidRPCVersion.json
 msgctxt "invalidRPCVersion.info"
 msgid ""
-"The API of the currently running wallet ({walletRPCVersion}) is not compatible with PicFightiton (required version {requiredWalletRPCVersion}).\n"
+"The API of the currently running wallet ({walletRPCVersion}) is not compatible with Pfcredit (required version {requiredWalletRPCVersion}).\n"
 "\n"
 "        Please update the daemon (pfcd) and wallet (pfcwallet) to the latest version, then try again."
 msgstr ""
-"L’API du portefeuille en cours d’exécution ({walletRPCVersion}) n’est pas compatible avec PicFightiton (la version requise est {requiredWalletRPCVersion}).\n"
+"L’API du portefeuille en cours d’exécution ({walletRPCVersion}) n’est pas compatible avec Pfcredit (la version requise est {requiredWalletRPCVersion}).\n"
 "\n"
 "        Veuillez mettre à jour Daemon (pfcd) et le portefeuille (pfcwallet) avec la version la plus récente, puis réessayer."
 
 #. [settings.resetNetworkContent]
 #. defaultMessage is:
-#. The setting you have chosen to change requires PicFightiton to be restarted.
+#. The setting you have chosen to change requires Pfcredit to be restarted.
 #. Please confirm this action before proceeding.
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.resetNetworkContent"
 msgid ""
-"The setting you have chosen to change requires PicFightiton to be restarted.  "
+"The setting you have chosen to change requires Pfcredit to be restarted.  "
 "Please confirm this action before proceeding."
 msgstr ""
 "Le paramètre que vous avez choisi de changer nécessite le redémarrage de "
-"PicFightiton. Veuillez confirmer cette action avant de continuer."
+"Pfcredit. Veuillez confirmer cette action avant de continuer."
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
@@ -5261,7 +5261,7 @@ msgstr ""
 #. built-in SMART didn't repair it, or the more likely case, there was a
 #. memory issue which corrupted the data.  To resolve, you must delete your
 #. blockchain data and re-download.  Press the button below to complete the
-#. process. When you restart PicFightiton, it will automatically begin your
+#. process. When you restart Pfcredit, it will automatically begin your
 #. blockchain download. Please come to our support channel on
 #. slack/matrix/discord/rocketchat to get advice about running disk utilities.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
@@ -5272,7 +5272,7 @@ msgid ""
 "built-in SMART didn't repair it, or the more likely case, there was a memory"
 " issue which corrupted the data.  To resolve, you must delete your "
 "blockchain data and re-download.  Press the button below to complete the "
-"process. When you restart PicFightiton, it will automatically begin your "
+"process. When you restart Pfcredit, it will automatically begin your "
 "blockchain download. Please come to our support channel on "
 "slack/matrix/discord/rocketchat to get advice about running disk utilities."
 msgstr ""
@@ -5283,7 +5283,7 @@ msgstr ""
 "corrompu les données. Pour corriger l'erreur, vous devez supprimer les "
 "données de votre chaîne de blocs et les télécharger à nouveau. Appuyez sur "
 "le bouton ci-dessous pour terminer le processus. Lorsque vous redémarrez "
-"PicFightiton, celle-ci lance automatiquement le téléchargement de votre chaîne"
+"Pfcredit, celle-ci lance automatiquement le téléchargement de votre chaîne"
 " de blocs. Veuillez consulter notre chaîne d'assistance sur "
 "slack/matrix/discord/rocketchat pour obtenir des conseils sur l'exécution "
 "d'utilitaires de disque."
@@ -6623,18 +6623,18 @@ msgstr ""
 #. [fatal.removeConfirmModal.content]
 #. defaultMessage is:
 #. Warning this action is permanent! Please make sure you want to remove your
-#. blockchain data before proceeding. PicFightiton will automatically shutdown
+#. blockchain data before proceeding. Pfcredit will automatically shutdown
 #. after deleting the folder. Please manually restart it afterwards.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.removeConfirmModal.content"
 msgid ""
 "Warning this action is permanent! Please make sure you want to remove your "
-"blockchain data before proceeding. PicFightiton will automatically shutdown "
+"blockchain data before proceeding. Pfcredit will automatically shutdown "
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "Notez que cette action est irréversible ! Veuillez vous assurer que vous "
 "voulez supprimer les données de votre chaîne de blocs avant de continuer. "
-"PicFightiton ne se fermera pas automatiquement après la suppression du "
+"Pfcredit ne se fermera pas automatiquement après la suppression du "
 "dossier. Veuillez la redémarrer manuellement par la suite."
 
 #. [watchOnly.enabled]
@@ -6663,19 +6663,19 @@ msgstr "Lecture seule"
 
 #. [selectLang.title]
 #. defaultMessage is:
-#. Welcome to PicFightiton Wallet
+#. Welcome to Pfcredit Wallet
 #: app/i18n/extracted/app/components/views/GetStartedPage/LanguageSelectPage/Page.json
 msgctxt "selectLang.title"
-msgid "Welcome to PicFightiton Wallet"
-msgstr "Bienvenue dans le portefeuille PicFightiton"
+msgid "Welcome to Pfcredit Wallet"
+msgstr "Bienvenue dans le portefeuille Pfcredit"
 
 #. [loader.title]
 #. defaultMessage is:
-#. Welcome to PicFightiton Wallet
+#. Welcome to Pfcredit Wallet
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "loader.title"
-msgid "Welcome to PicFightiton Wallet"
-msgstr "Bienvenue dans le portefeuille PicFightiton"
+msgid "Welcome to Pfcredit Wallet"
+msgstr "Bienvenue dans le portefeuille Pfcredit"
 
 #. [tutorials.staking]
 #. defaultMessage is:
@@ -6872,13 +6872,13 @@ msgctxt "help.stakepools.subtitle"
 msgid "picfight.org/stakepools"
 msgstr "picfight.org/stakepools"
 
-#. [help.logs.decrediton]
+#. [help.logs.pfcredit]
 #. defaultMessage is:
-#. decrediton
+#. pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
-msgctxt "help.logs.decrediton"
-msgid "decrediton"
-msgstr "decrediton"
+msgctxt "help.logs.pfcredit"
+msgid "pfcredit"
+msgstr "pfcredit"
 
 #. [help.documentation.subtitle]
 #. defaultMessage is:
@@ -6922,11 +6922,11 @@ msgstr "forum.picfight.org"
 
 #. [help.github.subtitle]
 #. defaultMessage is:
-#. github.com/decred/decrediton
+#. github.com/decred/pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.subtitle"
-msgid "github.com/decred/decrediton"
-msgstr "github.com/decred/decrediton"
+msgid "github.com/decred/pfcredit"
+msgstr "github.com/decred/pfcredit"
 
 #. [ticket.status.immature]
 #. defaultMessage is:

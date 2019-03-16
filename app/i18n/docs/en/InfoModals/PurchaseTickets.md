@@ -12,7 +12,7 @@
 
 **Expiry (blocks)** Often ticket fees will increase during a window and you may be stopped out by higher fees. By setting an expiry, tickets that are not mined in the given number of blocks are cancelled so you can try again with higher fees if you wish. If this is empty, they will not expire until the end of the window.
 
-**Tx fee (PFC/kB)** PicFightiton uses a "split" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The "split" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them.
+**Tx fee (PFC/kB)** Pfcredit uses a "split" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The "split" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them.
 
 **Voting address** The PicFight address that will do the voting.
 

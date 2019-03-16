@@ -13,10 +13,10 @@ const Logs = ({
   isDaemonRemote,
   isDaemonStarted,
   walletReady,
-  decreditonLogs,
-  showPicFightitonLogs,
-  onShowPicFightitonLogs,
-  onHidePicFightitonLogs,
+  pfcreditLogs,
+  showPfcreditLogs,
+  onShowPfcreditLogs,
+  onHidePfcreditLogs,
 }
 ) => (
   <Aux>
@@ -53,18 +53,18 @@ const Logs = ({
         </div>
       </div>
     }
-    {!showPicFightitonLogs ?
+    {!showPfcreditLogs ?
       <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowPicFightitonLogs}>
-          <T id="help.logs.decrediton" m="decrediton" />
+        <div className="log-area-title hidden" onClick={onShowPfcreditLogs}>
+          <T id="help.logs.pfcredit" m="pfcredit" />
         </div>
       </div>:
       <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHidePicFightitonLogs}>
-          <T id="help.logs.decrediton" m="decrediton" />
+        <div className="log-area-title expanded" onClick={onHidePfcreditLogs}>
+          <T id="help.logs.pfcredit" m="pfcredit" />
         </div>
         <div className="log-area-logs">
-          <textarea rows="30" value={decreditonLogs} disabled />
+          <textarea rows="30" value={pfcreditLogs} disabled />
         </div>
       </div>
     }
