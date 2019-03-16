@@ -1,14 +1,14 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
-import { DecredLoading } from "indicators";
+import { PicFightLoading } from "indicators";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
 
 const AccountsListHeader = ({ onGetNextAccountAttempt, isCreateAccountDisabled }) => <StandaloneHeader
   title={<T id="accounts.title" m="Accounts" />}
-  description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your DCR funds.\nTransferring DCR across accounts will create a transaction on the blockchain."}/>}
+  description={<T id="accounts.description" m={"Accounts allow you to keep separate records of your PFC funds.\nTransferring PFC across accounts will create a transaction on the blockchain."}/>}
   iconClassName="accounts"
   actionButton={
     <WatchOnlyWarnNotification isActive={isCreateAccountDisabled}>
@@ -38,7 +38,7 @@ const AccountsList = ({
   isCreateAccountDisabled,
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
-    { isLoading ? <DecredLoading/> :
+    { isLoading ? <PicFightLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">
           <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>

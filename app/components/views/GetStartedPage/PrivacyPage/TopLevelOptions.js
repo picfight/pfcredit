@@ -18,7 +18,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
       <T id="privacy.title" m={"Privacy Options"}/>
     </div>
     <div className="language-select-title-sub">
-      <T id="privacy.titleSub" m={"Select how Decrediton should connect to external services. You can change this in the application settings later."}/>
+      <T id="privacy.titleSub" m={"Select how Pfcredit should connect to external services. You can change this in the application settings later."}/>
     </div>
     <div className="privacy-options">
       <PrivacyOption
@@ -31,7 +31,7 @@ export default ({ setupStandardPrivacy, setupDisabledPrivacy, setupCustomPrivacy
       <PrivacyOption
         title={<T id="privacy.options.disabled.title" m="No Outbound Connections" />}
         icon="disabled"
-        description={<T id="privacy.options.disabled.description" m="Disables all connections to third party (non-dcrd/non-dcrwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users." />}
+        description={<T id="privacy.options.disabled.description" m="Disables all connections to third party (non-pfcd/non-pfcwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users." />}
         onClick={setupDisabledPrivacy}
       />
 

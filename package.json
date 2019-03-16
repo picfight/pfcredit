@@ -1,8 +1,8 @@
 {
-  "name": "decrediton",
-  "productName": "Decrediton",
+  "name": "pfcredit",
+  "productName": "Pfcredit",
   "version": "1.4.0",
-  "description": "Decrediton based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Pfcredit based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test jest",
@@ -26,7 +26,7 @@
     "package-dev-linux": "npm run build && build --linux tar.gz",
     "cleanup": "mop -v",
     "flow": "flow",
-    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
+    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/pfcredit.pot",
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js"
@@ -55,7 +55,7 @@
     ]
   },
   "build": {
-    "appId": "com.Electron.Decrediton",
+    "appId": "com.Electron.Pfcredit",
     "dmg": {
       "contents": [
         {
@@ -106,20 +106,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/decred/decrediton.git"
+    "url": "git+https://github.com/decred/pfcredit.git"
   },
   "author": {
     "name": "The Decred developers",
-    "email": "info@decred.org",
+    "email": "info@picfight.org",
     "url": "https://github.com/decred"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/decred/decrediton/issues"
+    "url": "https://github.com/decred/pfcredit/issues"
   },
   "keywords": [
     "decred",
-    "decrediton",
+    "pfcredit",
     "electron",
     "react",
     "react-router",
@@ -127,7 +127,7 @@
     "webpack",
     "react-hot"
   ],
-  "homepage": "https://github.com/decred/decrediton#readme",
+  "homepage": "https://github.com/decred/pfcredit#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.0.0",

@@ -4,8 +4,8 @@ import { MAX_LOG_LENGTH } from "./constants";
 import { appDataDirectory } from "./paths";
 import os from "os";
 
-let dcrdLogs = Buffer.from("");
-let dcrwalletLogs = Buffer.from("");
+let pfcdLogs = Buffer.from("");
+let pfcwalletLogs = Buffer.from("");
 
 let logger;
 
@@ -16,7 +16,7 @@ const pad = (s, n) => {
 };
 
 // logTimestamp is a function to format current time as a string using a
-// format compatible to dcrd/dcrwallet logs. This function is meant to be
+// format compatible to pfcd/pfcwallet logs. This function is meant to be
 // installed in the winston loggers.
 const logTimestamp = () => {
   let date = new Date();
@@ -31,7 +31,7 @@ const logTimestamp = () => {
 };
 
 // logLevelsPrintable are the printable strings for each log level, compatible
-// with the dcrd/dcrwallet logs.
+// with the pfcd/pfcwallet logs.
 const logLevelsPrintable = {
   "error": "ERR",
   "warn": "WRN",
@@ -56,7 +56,7 @@ const logFormatterColorized = (opts) => {
 };
 
 // createLogger creates the main app logger. This stores all logs into the
-// decrediton app data dir and sends to the console when debug == true.
+// pfcredit app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
   if (logger)
@@ -65,7 +65,7 @@ export function createLogger(debug) {
     transports: [
       new (winston.transports.File)({
         json: false,
-        filename: path.join(appDataDirectory(), "decrediton.log"),
+        filename: path.join(appDataDirectory(), "pfcredit.log"),
         timestamp: logTimestamp,
         formatter: logFormatter,
       })
@@ -92,17 +92,17 @@ const AddToLog = (destIO, destLogBuffer, data, debug) => {
   return Buffer.concat([ destLogBuffer, dataBuffer ]);
 };
 
-export const AddToDcrdLog = (destIO, data, debug) => {
-  dcrdLogs = AddToLog(destIO, dcrdLogs, data, debug);
+export const AddToPfcdLog = (destIO, data, debug) => {
+  pfcdLogs = AddToLog(destIO, pfcdLogs, data, debug);
 };
 
-export const AddToDcrwalletLog = (destIO, data, debug) => {
-  dcrwalletLogs = AddToLog(destIO, dcrwalletLogs, data, debug);
+export const AddToPfcwalletLog = (destIO, data, debug) => {
+  pfcwalletLogs = AddToLog(destIO, pfcwalletLogs, data, debug);
 };
 
-export const GetDcrdLogs = () => dcrdLogs;
+export const GetPfcdLogs = () => pfcdLogs;
 
-export const GetDcrwalletLogs = () => dcrwalletLogs;
+export const GetPfcwalletLogs = () => pfcwalletLogs;
 
 const logError = "[ERR]";
 
@@ -128,8 +128,8 @@ export function lastPanicLine(log) {
   return lastLineBuff;
 }
 
-export function ClearDcrwalletLogs() {
-  dcrwalletLogs = Buffer.from("");
+export function ClearPfcwalletLogs() {
+  pfcwalletLogs = Buffer.from("");
 }
 
 const reindexCheck = "Reindexing to height";

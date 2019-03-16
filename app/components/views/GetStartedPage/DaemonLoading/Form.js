@@ -28,7 +28,7 @@ const DaemonLoadingBody = ({
   syncInput,
   passPhrase,
   intl,
-  lastDcrwalletLogLine,
+  lastPfcwalletLogLine,
   onSetPassPhrase,
   onKeyDown,
   onRPCSync,
@@ -98,11 +98,11 @@ const DaemonLoadingBody = ({
         {daemonWarning && getCurrentBlockCount <= 0 ?
           <Aux>
             <div className="get-started-last-log-lines">
-              <div className="last-dcrwallet-log-line">{daemonWarning}</div>
+              <div className="last-pfcwallet-log-line">{daemonWarning}</div>
             </div>
             <div className="advanced-page-form">
               <div className="advanced-daemon-row">
-                <T id="getStarted.longWaitWarning" m="You are currently upgrading to a new dcrd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."/>
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to a new pfcd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."/>
               </div>
             </div>
           </Aux>:
@@ -137,7 +137,7 @@ const DaemonLoadingBody = ({
             </div>
           </div> :
           <div className="get-started-last-log-lines">
-            <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
+            <div className="last-pfcwallet-log-line">{lastPfcwalletLogLine}</div>
           </div>
         }
       </Aux>

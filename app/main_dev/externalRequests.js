@@ -9,13 +9,13 @@ import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
-import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "../middleware/dcrdataapi";
+import { PFCDATA_URL_TESTNET, PFCDATA_URL_MAINNET } from "../middleware/pfcdataapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
-export const EXTERNALREQUEST_DCRDATA = "EXTERNALREQUEST_DCRDATA";
+export const EXTERNALREQUEST_PFCDATA = "EXTERNALREQUEST_PFCDATA";
 export const EXTERNALREQUEST_TREZOR_BRIDGE = "EXTERNALREQUEST_TREZOR_BRIDGE";
 
 // These are the requests allowed when the standard privacy mode is selected.
@@ -23,7 +23,7 @@ export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
-  EXTERNALREQUEST_DCRDATA
+  EXTERNALREQUEST_PFCDATA
 ];
 
 let allowedURLs = [];
@@ -88,22 +88,22 @@ export const allowExternalRequest = (externalReqType) => {
 
   switch (externalReqType) {
   case EXTERNALREQUEST_NETWORK_STATUS:
-    addAllowedURL("https://testnet.decred.org/api/status");
-    addAllowedURL("https://mainnet.decred.org/api/status");
+    addAllowedURL("https://testnet.picfight.org/api/status");
+    addAllowedURL("https://mainnet.picfight.org/api/status");
     break;
   case EXTERNALREQUEST_STAKEPOOL_LISTING:
     addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
     break;
   case EXTERNALREQUEST_UPDATE_CHECK:
-    addAllowedURL("https://api.github.com/repos/decred/decrediton/releases");
+    addAllowedURL("https://api.github.com/repos/decred/pfcredit/releases");
     break;
   case EXTERNALREQUEST_POLITEIA:
     addAllowedURL(POLITEIA_URL_TESTNET);
     addAllowedURL(POLITEIA_URL_MAINNET);
     break;
-  case EXTERNALREQUEST_DCRDATA:
-    addAllowedURL(DCRDATA_URL_TESTNET);
-    addAllowedURL(DCRDATA_URL_MAINNET);
+  case EXTERNALREQUEST_PFCDATA:
+    addAllowedURL(PFCDATA_URL_TESTNET);
+    addAllowedURL(PFCDATA_URL_MAINNET);
     break;
   case EXTERNALREQUEST_TREZOR_BRIDGE:
     addAllowedURL(/^http:\/\/127.0.0.1:21324\//);

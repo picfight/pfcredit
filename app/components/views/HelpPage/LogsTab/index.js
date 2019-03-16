@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getDcrdLogs, getDcrwalletLogs, getDecreditonLogs } from "wallet";
+import { getPfcdLogs, getPfcwalletLogs, getPfcreditLogs } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -37,30 +37,30 @@ class LogsTabBody extends React.Component {
   getInitialState() {
     return {
       interval: null,
-      dcrdLogs: "",
-      dcrwalletLogs: "",
-      decreditonLogs: "",
-      showDcrdLogs: false,
-      showDcrwalletLogs: false,
-      showDecreditonLogs: false
+      pfcdLogs: "",
+      pfcwalletLogs: "",
+      pfcreditLogs: "",
+      showPfcdLogs: false,
+      showPfcwalletLogs: false,
+      showPfcreditLogs: false
     };
   }
 
   render() {
-    const { onShowDecreditonLogs, onShowDcrdLogs, onShowDcrwalletLogs,
-      onHideDecreditonLogs, onHideDcrdLogs, onHideDcrwalletLogs
+    const { onShowPfcreditLogs, onShowPfcdLogs, onShowPfcwalletLogs,
+      onHidePfcreditLogs, onHidePfcdLogs, onHidePfcwalletLogs
     } = this;
     return (
       <Logs
         {...{
           ...this.props,
           ...this.state,
-          onShowDecreditonLogs,
-          onShowDcrdLogs,
-          onShowDcrwalletLogs,
-          onHideDecreditonLogs,
-          onHideDcrdLogs,
-          onHideDcrwalletLogs,
+          onShowPfcreditLogs,
+          onShowPfcdLogs,
+          onShowPfcwalletLogs,
+          onHidePfcreditLogs,
+          onHidePfcdLogs,
+          onHidePfcwalletLogs,
         }}
       />
     );
@@ -68,44 +68,44 @@ class LogsTabBody extends React.Component {
 
   getLogs() {
     return Promise
-      .all([ getDcrdLogs(), getDcrwalletLogs(), getDecreditonLogs() ])
-      .then(([ rawDcrdLogs, rawDcrwalletLogs, decreditonLogs ]) => {
-        const dcrdLogs = Buffer.from(rawDcrdLogs).toString("utf8");
-        const dcrwalletLogs = Buffer.from(rawDcrwalletLogs).toString("utf8");
-        if ( dcrdLogs !== this.state.dcrdLogs ) {
-          this.setState({ dcrdLogs });
+      .all([ getPfcdLogs(), getPfcwalletLogs(), getPfcreditLogs() ])
+      .then(([ rawPfcdLogs, rawPfcwalletLogs, pfcreditLogs ]) => {
+        const pfcdLogs = Buffer.from(rawPfcdLogs).toString("utf8");
+        const pfcwalletLogs = Buffer.from(rawPfcwalletLogs).toString("utf8");
+        if ( pfcdLogs !== this.state.pfcdLogs ) {
+          this.setState({ pfcdLogs });
         }
-        if ( dcrwalletLogs !== this.state.dcrwalletLogs ) {
-          this.setState({ dcrwalletLogs });
+        if ( pfcwalletLogs !== this.state.pfcwalletLogs ) {
+          this.setState({ pfcwalletLogs });
         }
-        if ( decreditonLogs !== this.state.decreditonLogs ) {
-          this.setState({ decreditonLogs });
+        if ( pfcreditLogs !== this.state.pfcreditLogs ) {
+          this.setState({ pfcreditLogs });
         }
       });
   }
 
-  onShowDecreditonLogs() {
-    this.setState({ showDecreditonLogs: true });
+  onShowPfcreditLogs() {
+    this.setState({ showPfcreditLogs: true });
   }
 
-  onHideDecreditonLogs() {
-    this.setState({ showDecreditonLogs: false });
+  onHidePfcreditLogs() {
+    this.setState({ showPfcreditLogs: false });
   }
 
-  onShowDcrdLogs() {
-    this.setState({ showDcrdLogs: true });
+  onShowPfcdLogs() {
+    this.setState({ showPfcdLogs: true });
   }
 
-  onHideDcrdLogs() {
-    this.setState({ showDcrdLogs: false });
+  onHidePfcdLogs() {
+    this.setState({ showPfcdLogs: false });
   }
 
-  onShowDcrwalletLogs() {
-    this.setState({ showDcrwalletLogs: true });
+  onShowPfcwalletLogs() {
+    this.setState({ showPfcwalletLogs: true });
   }
 
-  onHideDcrwalletLogs() {
-    this.setState({ showDcrwalletLogs: false });
+  onHidePfcwalletLogs() {
+    this.setState({ showPfcwalletLogs: false });
   }
 }
 

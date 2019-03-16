@@ -3,9 +3,9 @@ import { ipcRenderer } from "electron";
 import { isString } from "util";
 import { withLog as log, logOptionNoResponseData } from "./app";
 
-export const checkDecreditonVersion = log(() => Promise
+export const checkPfcreditVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
-, "Check Decrediton release version");
+, "Check Pfcredit release version");
 
 export const startDaemon = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
@@ -70,11 +70,11 @@ export const stopWallet = log(() => Promise
 export const startWallet = log((walletPath, testnet) => new Promise((resolve, reject) => {
   let pid, port;
 
-  // resolveCheck must be done both on the dcrwallet-port event and on the
+  // resolveCheck must be done both on the pfcwallet-port event and on the
   // return of the sendSync call because we can't be certain which will happen first
   const resolveCheck = () => pid && port ? resolve({ pid, port }) : null;
 
-  ipcRenderer.once("dcrwallet-port", (e, p) => { port = p; resolveCheck(); });
+  ipcRenderer.once("pfcwallet-port", (e, p) => { port = p; resolveCheck(); });
   pid = ipcRenderer.sendSync("start-wallet", walletPath, testnet);
   if (!pid) reject("Error starting wallet");
   resolveCheck();
@@ -105,25 +105,25 @@ export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
   ipcRenderer.send("get-info", rpcCreds);
 }), "Get Daemon network info");
 
-export const getDcrdLogs = () => Promise
-  .resolve(ipcRenderer.sendSync("get-dcrd-logs"))
+export const getPfcdLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-pfcd-logs"))
   .then(logs => {
     if (logs) return logs;
-    throw "Error getting dcrd logs";
+    throw "Error getting pfcd logs";
   });
 
-export const getDcrwalletLogs = () => Promise
-  .resolve(ipcRenderer.sendSync("get-dcrwallet-logs"))
+export const getPfcwalletLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-pfcwallet-logs"))
   .then(logs => {
     if (logs) return logs;
-    throw "Error getting dcrwallet logs";
+    throw "Error getting pfcwallet logs";
   });
 
-export const getDecreditonLogs = () => Promise
-  .resolve(ipcRenderer.sendSync("get-decrediton-logs"))
+export const getPfcreditLogs = () => Promise
+  .resolve(ipcRenderer.sendSync("get-pfcredit-logs"))
   .then(logs => {
     if (logs) return logs;
-    throw "Error getting decrediton logs";
+    throw "Error getting pfcredit logs";
   });
 
 export const getAvailableWallets = log((network) => Promise
@@ -145,8 +145,8 @@ export const allowStakePoolHost = log(host => Promise
   .resolve(ipcRenderer.sendSync("allow-stakepool-host", host))
 , "Allow StakePool Host");
 
-export const getDcrdLastLogLine = () => Promise
-  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrd"));
+export const getPfcdLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-pfcd"));
 
-export const getDcrwalletLastLogLine = () => Promise
-  .resolve(ipcRenderer.sendSync("get-last-log-line-dcrwallet"));
+export const getPfcwalletLastLogLine = () => Promise
+  .resolve(ipcRenderer.sendSync("get-last-log-line-pfcwallet"));

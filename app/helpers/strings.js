@@ -22,13 +22,13 @@ export function restrictToStdDecimalNumber(s) {
 }
 
 // Converts a string encoded as stdDecimalString (ie, a string protected by
-// restrictToStdDecimalNumber) into a decred atom amount. This performs a
+// restrictToStdDecimalNumber) into a picfight atom amount. This performs a
 // conversion from a string into a JS number and then scales the number
 // according to unitDivisor so the value represents an atom amount.
 //
-// Due to floating point inacuracies, a rounding function compatible to dcrutil
+// Due to floating point inacuracies, a rounding function compatible to pfcutil
 // `round` is used (see:
-// https://github.com/decred/dcrd/blob/v1.1.2/dcrutil/amount.go#L77)
+// https://github.com/picfight/pfcd/blob/v1.1.2/pfcutil/amount.go#L77)
 //
 // Note that, since JS doesn't actually have an integer type (all numbers
 // are floating-point numbers), the Math.trunc function is used to simulate

@@ -15,8 +15,8 @@ import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
 import { getVettedProposals } from "./GovernanceActions";
 import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
-import * as da from "../middleware/dcrdataapi";
-import { EXTERNALREQUEST_DCRDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
+import * as da from "../middleware/pfcdataapi";
+import { EXTERNALREQUEST_PFCDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -89,7 +89,7 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
   const config = getGlobalCfg();
-  const dcrdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_DCRDATA) > -1;
+  const pfcdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_PFCDATA) > -1;
   const politeiaEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) > -1;
 
   return new Promise((resolve, reject) => {
@@ -101,7 +101,7 @@ export const getStartupWalletInfo = () => (dispatch) => {
         await dispatch(publishUnminedTransactionsAttempt());
         await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
-        if (dcrdataEnabled) {
+        if (pfcdataEnabled) {
           dispatch(getTreasuryBalance());
         }
         if (politeiaEnabled) {
@@ -733,7 +733,7 @@ export const getTransactions = () => async (dispatch, getState) => {
   // List of transactions found after filtering
   let filtered = [];
 
-  // first, request unmined transactions. They always come first in decrediton.
+  // first, request unmined transactions. They always come first in pfcredit.
   let { unmined } = await walletGetTransactions(walletService, -1, -1, 0);
   let unminedTransactions = filterTransactions(unmined, transactionsFilter);
 
@@ -1256,10 +1256,10 @@ export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
 export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
 export const getTreasuryBalance = () => (dispatch, getState) => {
   const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
-  const dURL = sel.dcrdataURL(getState());
+  const dURL = sel.pfcdataURL(getState());
   da.getTreasuryInfo(dURL, treasuryAddress)
     .then(treasuryInfo => {
-      // Manually convert DCR to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
+      // Manually convert PFC to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
       const treasuryBalance = parseInt(treasuryInfo["data"]["dcr_unspent"].toString().replace(".",""));
       dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
     });

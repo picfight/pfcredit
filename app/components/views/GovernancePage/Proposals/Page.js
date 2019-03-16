@@ -9,7 +9,7 @@ const PageHeader = () => (
   <div className="proposals-community-header">
     <div className="proposals-community-header-title"><T id="proposals.community.title" m="Proposals"/></div>
     <p className="proposals-community-header-description"><T id="proposals.community.descr" m="Voting on community proposals allows you to have a say on how the project treasury is spent.
-        Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at" /> <a onClick={() => shell.openExternal("https://proposals.decred.org")}>proposals.decred.org</a></p>
+        Participation in voting requires (PoS) tickets. Proposal creation, discussions and other features are available at" /> <a onClick={() => shell.openExternal("https://proposals.picfight.org")}>proposals.picfight.org</a></p>
 
     <div className="links">
       <PiLink><T id="proposals.community.createLink" m="Create a Proposal" /></PiLink>

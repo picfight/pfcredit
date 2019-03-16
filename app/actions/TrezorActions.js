@@ -18,7 +18,7 @@ import {
 
 const hardeningConstant = 0x80000000;
 
-// Right now (2018-07-06) dcrwallet only supports a single account on watch only
+// Right now (2018-07-06) pfcwallet only supports a single account on watch only
 // wallets. Therefore we are limited to using this single account when signing
 // transactions via trezor.
 const WALLET_ACCOUNT = 0;
@@ -237,7 +237,7 @@ export const TRZ_CANCELOPERATION_FAILED = "TRZ_CANCELOPERATION_FAILED";
 
 // Note that calling this function while no pin/passphrase operation is running
 // will attempt to steal the device, cancelling operations from apps *other
-// than decrediton*.
+// than pfcredit*.
 export const cancelCurrentOperation = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   const { trezor: { pinCallBack, passPhraseCallBack, wordCallBack } } = getState();
@@ -296,8 +296,8 @@ export const submitWord = (word) => (dispatch, getState) => {
   wordCallBack(null, word);
 };
 
-// checkTrezorIsDcrwallet verifies whether the wallet currently running on
-// dcrwallet (presumably a watch only wallet created from a trezor provided
+// checkTrezorIsPfcwallet verifies whether the wallet currently running on
+// pfcwallet (presumably a watch only wallet created from a trezor provided
 // xpub) is the same wallet as the one of the currently connected trezor. This
 // function throws an error if they are not the same.
 // This is useful for making sure, prior to performing some wallet related
@@ -306,11 +306,11 @@ export const submitWord = (word) => (dispatch, getState) => {
 // Note that this might trigger pin/passphrase modals, depending on the current
 // trezor configuration.
 // The way the check is performed is by generating the first address from the
-// trezor wallet and then validating this address agains dcrwallet, ensuring
+// trezor wallet and then validating this address agains pfcwallet, ensuring
 // this is an owned address at the appropriate branch/index.
 // This check is only valid for a single session (ie, a single execution of
 // `deviceRun`) as the physical device might change between sessions.
-const checkTrezorIsDcrwallet = (session) => async (dispatch, getState) => {
+const checkTrezorIsPfcwallet = (session) => async (dispatch, getState) => {
   const { grpc: { walletService } } = getState();
   const chainParams = selectors.chainParams(getState());
 
@@ -321,7 +321,7 @@ const checkTrezorIsDcrwallet = (session) => async (dispatch, getState) => {
   const addrValidResp = await wallet.validateAddress(walletService, addr);
   if (!addrValidResp.getIsValid()) throw "Trezor provided an invalid address " + addr;
 
-  if (!addrValidResp.getIsMine()) throw "Trezor and dcrwallet not running from the same extended public key";
+  if (!addrValidResp.getIsMine()) throw "Trezor and pfcwallet not running from the same extended public key";
 
   if (addrValidResp.getIndex() !== 0) throw "Wallet replied with wrong index.";
 };
@@ -352,7 +352,7 @@ export const signTransactionAttemptTrezor = (rawUnsigTx, constructTxResponse) =>
       changeIndex, inputTxs));
 
     const signedRaw = await deviceRun(dispatch, getState, device, async session => {
-      await dispatch(checkTrezorIsDcrwallet(session));
+      await dispatch(checkTrezorIsPfcwallet(session));
 
       const signedResp = await session.signTx(txInfo.inputs, txInfo.outputs,
         refTxs, chainParams.trezorCoinName, 0);
@@ -390,7 +390,7 @@ export const signMessageAttemptTrezor = (address, message) => async (dispatch, g
       chainParams.HDCoinType);
 
     const signedMsg = await deviceRun(dispatch, getState, device, async session => {
-      await dispatch(checkTrezorIsDcrwallet(session));
+      await dispatch(checkTrezorIsPfcwallet(session));
 
       return await session.signMessage(address_n, str2utf8hex(message),
         chainParams.trezorCoinName, false);
@@ -405,7 +405,7 @@ export const signMessageAttemptTrezor = (address, message) => async (dispatch, g
 
 };
 
-// walletTxToBtcjsTx converts a tx decoded by the decred wallet (ie,
+// walletTxToBtcjsTx converts a tx decoded by the picfight wallet (ie,
 // returned from the decodeRawTransaction call) into a bitcoinjs-compatible
 // transaction (to be used in trezor)
 export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch, getState) => {
@@ -500,7 +500,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
   return txInfo;
 };
 
-// walletTxToRefTx converts a tx decoded by the decred wallet into a trezor
+// walletTxToRefTx converts a tx decoded by the picfight wallet into a trezor
 // RefTransaction object to be used with SignTx.
 export function walletTxToRefTx(tx) {
   const inputs = tx.getInputsList().map(inp => ({
@@ -586,7 +586,7 @@ export const TRZ_CHANGEHOMESCREEN_ATTEMPT = "TRZ_CHANGEHOMESCREEN_ATTEMPT";
 export const TRZ_CHANGEHOMESCREEN_FAILED =  "TRZ_CHANGEHOMESCREEN_FAILED";
 export const TRZ_CHANGEHOMESCREEN_SUCCESS = "TRZ_CHANGEHOMESCREEN_SUCCESS";
 
-export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
+export const changeToPicFightHomeScreen = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
     dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });
@@ -670,7 +670,7 @@ export const recoverDevice = () => async (dispatch, getState) => {
         word_count: 24, // FIXED at 24 (256 bits)
         passphrase_protection: false,
         pin_protection: false,
-        label: "New DCR Trezor",
+        label: "New PFC Trezor",
         dry_run: false,
       };
 
@@ -701,7 +701,7 @@ export const initDevice = () => async (dispatch, getState) => {
         strength: 256, // 24 words
         passphrase_protection: false,
         pin_protection: false,
-        label: "New DCR Trezor",
+        label: "New PFC Trezor",
       };
 
       await session.resetDevice(settings);

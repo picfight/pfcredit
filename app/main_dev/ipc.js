@@ -3,9 +3,9 @@ import path from "path";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getDcrdPath, dcrdCfg, dcrctlCfg, appDataDirectory, getExecutablePath, getDcrdRpcCert } from "./paths";
-import { createTempDcrdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readDcrdConfig } from "../config";
-import { launchDCRD, launchDCRWallet, GetDcrdPID, GetDcrwPID, closeDCRD, closeDCRW, GetDcrwPort } from "./launch";
+import { getWalletPath, getWalletDBPathFromWallets, getPfcdPath, pfcdCfg, pfcctlCfg, appDataDirectory, getExecutablePath, getPfcdRpcCert } from "./paths";
+import { createTempPfcdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readPfcdConfig } from "../config";
+import { launchPFCD, launchPFCWallet, GetPfcdPID, GetDcrwPID, closePFCD, closePFCW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
@@ -35,7 +35,7 @@ export const getAvailableWallets = (network) => {
 };
 
 export const deleteDaemon = (appData, testnet) => {
-  let removeDaemonDirectory = getDcrdPath();
+  let removeDaemonDirectory = getPfcdPath();
   if (appData) removeDaemonDirectory = appData;
   let removeDaemonDirectoryData = path.join(removeDaemonDirectory, "data", testnet ? "testnet3" : "mainnet");
   try {
@@ -51,38 +51,38 @@ export const deleteDaemon = (appData, testnet) => {
 };
 
 export const startDaemon = (mainWindow, daemonIsAdvanced, primaryInstance, appData, testnet, reactIPC) => {
-  if (GetDcrdPID() && GetDcrdPID() !== -1) {
-    logger.log("info", "Skipping restart of daemon as it is already running " + GetDcrdPID());
+  if (GetPfcdPID() && GetPfcdPID() !== -1) {
+    logger.log("info", "Skipping restart of daemon as it is already running " + GetPfcdPID());
     var newConfig = {};
     if (appData) {
-      newConfig = readDcrdConfig(appData, testnet);
-      newConfig.rpc_cert = getDcrdRpcCert(appData);
+      newConfig = readPfcdConfig(appData, testnet);
+      newConfig.rpc_cert = getPfcdRpcCert(appData);
     } else {
-      newConfig = readDcrdConfig(getDcrdPath(), testnet);
-      newConfig.rpc_cert = getDcrdRpcCert();
+      newConfig = readPfcdConfig(getPfcdPath(), testnet);
+      newConfig.rpc_cert = getPfcdRpcCert();
     }
-    newConfig.pid =  GetDcrdPID();
+    newConfig.pid =  GetPfcdPID();
     return newConfig;
   }
   if(appData){
-    logger.log("info", "launching dcrd with different appdata directory");
+    logger.log("info", "launching pfcd with different appdata directory");
   }
   if (!daemonIsAdvanced && !primaryInstance) {
-    logger.log("info", "Running on secondary instance. Assuming dcrd is already running.");
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
+    logger.log("info", "Running on secondary instance. Assuming pfcd is already running.");
+    let pfcdConfPath = getPfcdPath();
+    if (!fs.existsSync(pfcdCfg(pfcdConfPath))) {
+      pfcdConfPath = createTempPfcdConf();
     }
     return -1;
   }
   try {
-    let dcrdConfPath = getDcrdPath();
-    if (!fs.existsSync(dcrdCfg(dcrdConfPath))) {
-      dcrdConfPath = createTempDcrdConf();
+    let pfcdConfPath = getPfcdPath();
+    if (!fs.existsSync(pfcdCfg(pfcdConfPath))) {
+      pfcdConfPath = createTempPfcdConf();
     }
-    return launchDCRD(mainWindow, daemonIsAdvanced, dcrdConfPath, appData, testnet, reactIPC);
+    return launchPFCD(mainWindow, daemonIsAdvanced, pfcdConfPath, appData, testnet, reactIPC);
   } catch (e) {
-    logger.log("error", "error launching dcrd: " + e);
+    logger.log("error", "error launching pfcd: " + e);
   }
 };
 
@@ -118,31 +118,31 @@ export const removeWallet = (testnet, walletPath) => {
 
 export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC) => {
   if (GetDcrwPID()) {
-    logger.log("info", "dcrwallet already started " + GetDcrwPID());
-    mainWindow.webContents.send("dcrwallet-port", GetDcrwPort());
+    logger.log("info", "pfcwallet already started " + GetDcrwPID());
+    mainWindow.webContents.send("pfcwallet-port", GetDcrwPort());
     return GetDcrwPID();
   }
   initWalletCfg(testnet, walletPath);
   try {
-    return launchDCRWallet(mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC);
+    return launchPFCWallet(mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC);
   } catch (e) {
-    logger.log("error", "error launching dcrwallet: " + e);
+    logger.log("error", "error launching pfcwallet: " + e);
   }
 };
 
 export const stopDaemon = () => {
-  return closeDCRD(GetDcrdPID());
+  return closePFCD(GetPfcdPID());
 };
 
 export const stopWallet = () => {
-  return closeDCRW(GetDcrwPID());
+  return closePFCW(GetDcrwPID());
 };
 
 export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
   let args = [ "getinfo" ];
 
   if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
+    args.push(`--configfile=${pfcctlCfg(appDataDirectory())}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -160,22 +160,22 @@ export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
     args.push("--testnet");
   }
 
-  const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
+  const pfcctlExe = getExecutablePath("pfcctl", argv.customBinPath);
+  if (!fs.existsSync(pfcctlExe)) {
+    logger.log("error", "The pfcctl executable does not exist. Expected to find it at " + pfcctlExe);
   }
 
-  logger.log("info", `checking daemon network with dcrctl ${args}`);
+  logger.log("info", `checking daemon network with pfcctl ${args}`);
 
   const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
+  const pfcctl = spawn(pfcctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
-  dcrctl.stdout.on("data", (data) => {
+  pfcctl.stdout.on("data", (data) => {
     const parsedData = JSON.parse(data);
     logger.log("info", "is daemon testnet: " + parsedData.testnet);
     mainWindow.webContents.send("check-getinfo-response", parsedData);
   });
-  dcrctl.stderr.on("data", (data) => {
+  pfcctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
     if (isRetry) {
       mainWindow.webContents.send("check-getinfo-response", null );
@@ -190,7 +190,7 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
   let host, port;
 
   if (!rpcCreds){
-    args.push(`--configfile=${dcrctlCfg(appDataDirectory())}`);
+    args.push(`--configfile=${pfcctlCfg(appDataDirectory())}`);
   } else if (rpcCreds) {
     if (rpcCreds.rpc_user) {
       args.push(`--rpcuser=${rpcCreds.rpc_user}`);
@@ -214,24 +214,24 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
     args.push("--testnet");
   }
 
-  const dcrctlExe = getExecutablePath("dcrctl", argv.customBinPath);
-  if (!fs.existsSync(dcrctlExe)) {
-    logger.log("error", "The dcrctl executable does not exist. Expected to find it at " + dcrctlExe);
+  const pfcctlExe = getExecutablePath("pfcctl", argv.customBinPath);
+  if (!fs.existsSync(pfcctlExe)) {
+    logger.log("error", "The pfcctl executable does not exist. Expected to find it at " + pfcctlExe);
   }
 
-  logger.log("info", `checking if daemon is ready  with dcrctl ${args}`);
+  logger.log("info", `checking if daemon is ready  with pfcctl ${args}`);
 
   const spawn = require("child_process").spawn;
-  const dcrctl = spawn(dcrctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
+  const pfcctl = spawn(pfcctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
-  dcrctl.stdout.on("data", (data) => {
+  pfcctl.stdout.on("data", (data) => {
     const parsedData = JSON.parse(data);
     const blockCount = parsedData.blocks;
     const syncHeight = parsedData.syncheight;
     logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
     mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
   });
-  dcrctl.stderr.on("data", (data) => {
+  pfcctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
     mainWindow.webContents.send("check-daemon-response", { blockCount: 0, syncHeight: 0 });
   });

@@ -1,4 +1,4 @@
-// Constants copied from dcrd/chaincfg/params.go
+// Constants copied from pfcd/chaincfg/params.go
 
 export const TestNetParams = {
   TicketMaturity:          16,
@@ -15,7 +15,7 @@ export const TestNetParams = {
   HDCoinType: 1,
 
   TreasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
-  trezorCoinName: "Decred Testnet",
+  trezorCoinName: "PicFight Testnet",
 };
 
 export const MainNetParams = {
@@ -33,5 +33,5 @@ export const MainNetParams = {
   HDCoinType: 42,
 
   TreasuryAddress: "Dcur2mcGjmENx4DhNqDctW5wJCVyT3Qeqkx",
-  trezorCoinName: "Decred",
+  trezorCoinName: "PicFight",
 };

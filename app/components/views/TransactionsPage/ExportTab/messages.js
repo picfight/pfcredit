@@ -28,12 +28,12 @@ export default {
       { name: "total", description: <T id="export.dailyBalances.fields.total" m="Total available balance." /> },
       { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
       { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
-      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of PFC used on staking." /> },
       { name: "sent", description: <T id="export.dailyBalances.fields.sent" m="Total amount sent to addresses not on the wallet." /> },
       { name: "received", description: <T id="export.dailyBalances.fields.received" m="Total amount received from addresses not on the wallet." /> },
-      { name: "voted", description: <T id="export.dailyBalances.fields.voted" m="Total amount, in DCR, of tickets voted" /> },
-      { name: "revoked", description: <T id="export.dailyBalances.fields.revoked" m="Total amount, in DCR, of tickets revoked" /> },
-      { name: "ticket", description: <T id="export.dailyBalances.fields.ticket" m="Total amount, in DCR, spent in tickets" /> },
+      { name: "voted", description: <T id="export.dailyBalances.fields.voted" m="Total amount, in PFC, of tickets voted" /> },
+      { name: "revoked", description: <T id="export.dailyBalances.fields.revoked" m="Total amount, in PFC, of tickets revoked" /> },
+      { name: "ticket", description: <T id="export.dailyBalances.fields.ticket" m="Total amount, in PFC, spent in tickets" /> },
     ]
   },
   balances: {
@@ -49,7 +49,7 @@ export default {
       { name: "total", description: <T id="export.balances.fields.total" m="Total available balance." /> },
       { name: "stakeRewards", description: <T id="export.balances.fields.stakeRewards" m="Total stake rewards received." /> },
       { name: "stakeFees", description: <T id="export.balances.fields.stakeFees" m="Total stake fees paid." /> },
-      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of DCR used on staking." /> },
+      { name: "totalStake", description: <T id="export.balances.fields.totalStake" m="Total amount of PFC used on staking." /> },
     ]
   },
   voteTime: {

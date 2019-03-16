@@ -3,7 +3,7 @@ import {
   EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
   EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_DCRDATA,
+  EXTERNALREQUEST_PFCDATA,
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (
@@ -43,14 +43,14 @@ const PrivacySettings = ({
         <AllowableRequestType
           label={<T id="settings.privacy.networkStatus.label" m="Network Information" />}
           id="networking"
-          description={<T id="settings.privacy.networkStatus.description" m="General network information (block height, etc) from decred.org" />}
+          description={<T id="settings.privacy.networkStatus.description" m="General network information (block height, etc) from picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_NETWORK_STATUS) > -1}
           onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
         />
         <AllowableRequestType
           label={<T id="settings.privacy.stakepoolListing.label" m="Stakepool Listing" />}
           id="stakepool"
-          description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from decred.org" />}
+          description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1}
           onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
         />
@@ -64,16 +64,16 @@ const PrivacySettings = ({
         <AllowableRequestType
           label={<T id="settings.privacy.politeia.label" m="Politeia" />}
           id="politeia"
-          description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.decred.org" />}
+          description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1}
           onChange={toggle(EXTERNALREQUEST_POLITEIA)}
         />
         <AllowableRequestType
-          label={<T id="settings.privacy.dcrdata.label" m="Decred Block Explorer" />}
-          id="dcrdata"
-          description={<T id="settings.privacy.dcrdata.description" m="Access chain information from explorer.dcrdata.org" />}
-          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1}
-          onChange={toggle(EXTERNALREQUEST_DCRDATA)}
+          label={<T id="settings.privacy.pfcdata.label" m="PicFight Block Explorer" />}
+          id="pfcdata"
+          description={<T id="settings.privacy.pfcdata.description" m="Access chain information from explorer.pfcdata.org" />}
+          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1}
+          onChange={toggle(EXTERNALREQUEST_PFCDATA)}
         />
       </div>
     </div>

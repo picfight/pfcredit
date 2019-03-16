@@ -29,7 +29,7 @@ const currentSettings = {
   spvMode: globalCfg.get("spv_mode"),
   spvConnect: globalCfg.get("spv_connect"),
   timezone: globalCfg.get("timezone"),
-  currencyDisplay: "DCR",
+  currencyDisplay: "PFC",
   network: globalCfg.get("network"),
 };
 var initialState = {

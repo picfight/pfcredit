@@ -1,7 +1,7 @@
-import { dcrwalletCfg, getWalletPath, getExecutablePath, dcrdCfg, getDcrdRpcCert } from "./paths";
-import { getWalletCfg, readDcrdConfig } from "../config";
-import { createLogger, AddToDcrdLog, AddToDcrwalletLog, GetDcrdLogs,
-  GetDcrwalletLogs, lastErrorLine, lastPanicLine, ClearDcrwalletLogs, CheckDaemonLogs } from "./logging";
+import { pfcwalletCfg, getWalletPath, getExecutablePath, pfcdCfg, getPfcdRpcCert } from "./paths";
+import { getWalletCfg, readPfcdConfig } from "../config";
+import { createLogger, AddToPfcdLog, AddToPfcwalletLog, GetPfcdLogs,
+  GetPfcwalletLogs, lastErrorLine, lastPanicLine, ClearPfcwalletLogs, CheckDaemonLogs } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -13,53 +13,53 @@ const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
-let dcrdPID;
+let pfcdPID;
 let dcrwPID;
 
 // windows-only stuff
 let dcrwPipeRx;
-let dcrdPipeRx;
+let pfcdPipeRx;
 
 let dcrwPort;
 
 function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
-  if(dcrdPID && dcrdPID !== -1)
-    closeDCRD(dcrdPID);
+  if(pfcdPID && pfcdPID !== -1)
+    closePFCD(pfcdPID);
   if(dcrwPID && dcrwPID !== -1)
-    closeDCRW(dcrwPID);
+    closePFCW(dcrwPID);
 }
 
-export function closeDCRD() {
-  if (require("is-running")(dcrdPID) && os.platform() != "win32") {
-    logger.log("info", "Sending SIGINT to dcrd at pid:" + dcrdPID);
-    process.kill(dcrdPID, "SIGINT");
-    dcrdPID = null;
-  } else if (require("is-running")(dcrdPID)) {
+export function closePFCD() {
+  if (require("is-running")(pfcdPID) && os.platform() != "win32") {
+    logger.log("info", "Sending SIGINT to pfcd at pid:" + pfcdPID);
+    process.kill(pfcdPID, "SIGINT");
+    pfcdPID = null;
+  } else if (require("is-running")(pfcdPID)) {
     try {
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      win32ipc.closePipe(dcrdPipeRx);
-      dcrdPID = null;
+      win32ipc.closePipe(pfcdPipeRx);
+      pfcdPID = null;
     } catch (e) {
-      logger.log("error", "Error closing dcrd piperx: " + e);
+      logger.log("error", "Error closing pfcd piperx: " + e);
       return false;
     }
   }
   return true;
 }
 
-export const closeDCRW = () => {
+export const closePFCW = () => {
   try {
     if (require("is-running")(dcrwPID) && os.platform() != "win32") {
-      logger.log("info", "Sending SIGINT to dcrwallet at pid:" + dcrwPID);
+      logger.log("info", "Sending SIGINT to pfcwallet at pid:" + dcrwPID);
       process.kill(dcrwPID, "SIGINT");
     } else if (require("is-running")(dcrwPID)) {
       try {
         const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
         win32ipc.closePipe(dcrwPipeRx);
       } catch (e) {
-        logger.log("error", "Error closing dcrwallet piperx: " + e);
+        logger.log("error", "Error closing pfcwallet piperx: " + e);
       }
     }
     dcrwPID = null;
@@ -79,10 +79,10 @@ export async function cleanShutdown(mainWindow, app) {
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
     setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
-    logger.log("info", "Closing decrediton.");
+    logger.log("info", "Closing pfcredit.");
 
     let shutdownTimer = setInterval(function () {
-      const stillRunning = (require("is-running")(dcrdPID) && os.platform() != "win32");
+      const stillRunning = (require("is-running")(pfcdPID) && os.platform() != "win32");
 
       if (!stillRunning) {
         logger.log("info", "Final shutdown pause. Quitting app.");
@@ -101,26 +101,26 @@ export async function cleanShutdown(mainWindow, app) {
   });
 }
 
-export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
+export const launchPFCD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, testnet, reactIPC) => {
   const spawn = require("child_process").spawn;
   let args = [ "--nolisten" ];
   let newConfig = {};
   if (appdata) {
     args.push(`--appdata=${appdata}`);
-    newConfig = readDcrdConfig(appdata, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert(appdata);
+    newConfig = readPfcdConfig(appdata, testnet);
+    newConfig.rpc_cert = getPfcdRpcCert(appdata);
   } else {
-    args.push(`--configfile=${dcrdCfg(daemonPath)}`);
-    newConfig = readDcrdConfig(daemonPath, testnet);
-    newConfig.rpc_cert = getDcrdRpcCert();
+    args.push(`--configfile=${pfcdCfg(daemonPath)}`);
+    newConfig = readPfcdConfig(daemonPath, testnet);
+    newConfig.rpc_cert = getPfcdRpcCert();
   }
   if (testnet) {
     args.push("--testnet");
   }
 
-  const dcrdExe = getExecutablePath("dcrd", argv.customBinPath);
-  if (!fs.existsSync(dcrdExe)) {
-    logger.log("error", "The dcrd executable does not exist. Expected to find it at " + dcrdExe);
+  const pfcdExe = getExecutablePath("pfcd", argv.customBinPath);
+  if (!fs.existsSync(pfcdExe)) {
+    logger.log("error", "The pfcd executable does not exist. Expected to find it at " + pfcdExe);
     return;
   }
 
@@ -128,60 +128,60 @@ export const launchDCRD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     try {
       const util = require("util");
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      dcrdPipeRx = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", dcrdPipeRx.readEnd));
+      pfcdPipeRx = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", pfcdPipeRx.readEnd));
     } catch (e) {
-      logger.log("error", "can't find proper module to launch dcrd: " + e);
+      logger.log("error", "can't find proper module to launch pfcd: " + e);
     }
   }
 
-  logger.log("info", `Starting ${dcrdExe} with ${args}`);
+  logger.log("info", `Starting ${pfcdExe} with ${args}`);
 
-  const dcrd = spawn(dcrdExe, args, {
+  const pfcd = spawn(pfcdExe, args, {
     detached: os.platform() == "win32",
     stdio: [ "ignore", "pipe", "pipe" ]
   });
 
-  dcrd.on("error", function (err) {
-    logger.log("error", "Error running dcrd.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrd.  Check logs and restart! " + err + "\");");
+  pfcd.on("error", function (err) {
+    logger.log("error", "Error running pfcd.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running pfcd.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
-  dcrd.on("close", (code) => {
+  pfcd.on("close", (code) => {
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      var lastDcrdErr = lastErrorLine(GetDcrdLogs());
-      if (!lastDcrdErr || lastDcrdErr == "") {
-        lastDcrdErr = lastPanicLine(GetDcrdLogs());
-        console.log("panic error", lastDcrdErr);
+      var lastPfcdErr = lastErrorLine(GetPfcdLogs());
+      if (!lastPfcdErr || lastPfcdErr == "") {
+        lastPfcdErr = lastPanicLine(GetPfcdLogs());
+        console.log("panic error", lastPfcdErr);
       }
-      logger.log("error", "dcrd closed due to an error: ", lastDcrdErr);
-      reactIPC.send("error-received", true, lastDcrdErr);
+      logger.log("error", "pfcd closed due to an error: ", lastPfcdErr);
+      reactIPC.send("error-received", true, lastPfcdErr);
     } else {
-      logger.log("info", `dcrd exited with code ${code}`);
+      logger.log("info", `pfcd exited with code ${code}`);
     }
   });
 
-  dcrd.stdout.on("data", (data) => {
-    AddToDcrdLog(process.stdout, data, debug);
+  pfcd.stdout.on("data", (data) => {
+    AddToPfcdLog(process.stdout, data, debug);
     if (CheckDaemonLogs(data)) {
       reactIPC.send("warning-received", true, data.toString("utf-8"));
     }
   });
-  dcrd.stderr.on("data", (data) => AddToDcrdLog(process.stderr, data, debug));
+  pfcd.stderr.on("data", (data) => AddToPfcdLog(process.stderr, data, debug));
 
-  newConfig.pid = dcrd.pid;
-  dcrdPID = dcrd.pid;
-  logger.log("info", "dcrd started with pid:" + newConfig.pid);
+  newConfig.pid = pfcd.pid;
+  pfcdPID = pfcd.pid;
+  logger.log("info", "pfcd started with pid:" + newConfig.pid);
 
-  dcrd.unref();
+  pfcd.unref();
   return newConfig;
 };
 
-// DecodeDaemonIPCData decodes messages from an IPC message received from dcrd/
-// dcrwallet using their internal IPC protocol.
+// DecodeDaemonIPCData decodes messages from an IPC message received from pfcd/
+// pfcwallet using their internal IPC protocol.
 // NOTE: very simple impl for the moment, will break if messages get split
 // between data calls.
 const DecodeDaemonIPCData = (logger, data, cb) => {
@@ -199,9 +199,9 @@ const DecodeDaemonIPCData = (logger, data, cb) => {
   }
 };
 
-export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC) => {
+export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testnet, reactIPC) => {
   const spawn = require("child_process").spawn;
-  let args = [ "--configfile=" + dcrwalletCfg(getWalletPath(testnet, walletPath)) ];
+  let args = [ "--configfile=" + pfcwalletCfg(getWalletPath(testnet, walletPath)) ];
 
   const cfg = getWalletCfg(testnet, walletPath);
 
@@ -209,9 +209,9 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
-  const dcrwExe = getExecutablePath("dcrwallet", argv.customBinPath);
+  const dcrwExe = getExecutablePath("pfcwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
-    logger.log("error", "The dcrwallet executable does not exist. Expected to find it at " + dcrwExe);
+    logger.log("error", "The pfcwallet executable does not exist. Expected to find it at " + dcrwExe);
     return;
   }
 
@@ -222,7 +222,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
       dcrwPipeRx = win32ipc.createPipe("out");
       args.push(util.format("--piperx=%d", dcrwPipeRx.readEnd));
     } catch (e) {
-      logger.log("error", "can't find proper module to launch dcrwallet: " + e);
+      logger.log("error", "can't find proper module to launch pfcwallet: " + e);
     }
   } else {
     args.push("--rpclistenerevents");
@@ -236,7 +236,7 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   logger.log("info", `Starting ${dcrwExe} with ${args}`);
 
-  const dcrwallet = spawn(dcrwExe, args, {
+  const pfcwallet = spawn(dcrwExe, args, {
     detached: os.platform() == "win32",
     stdio: [ "ignore", "pipe", "pipe", "ignore", "pipe" ]
   });
@@ -244,92 +244,92 @@ export const launchDCRWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   const notifyGrpcPort = (port) => {
     dcrwPort = port;
     logger.log("info", "wallet grpc running on port", port);
-    mainWindow.webContents.send("dcrwallet-port", port);
+    mainWindow.webContents.send("pfcwallet-port", port);
   };
 
-  dcrwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(logger, data, (mtype, payload) => {
+  pfcwallet.stdio[4].on("data", (data) => DecodeDaemonIPCData(logger, data, (mtype, payload) => {
     if (mtype === "grpclistener") {
       const intf = payload.toString("utf-8");
       const matches = intf.match(/^.+:(\d+)$/);
       if (matches) {
         notifyGrpcPort(matches[1]);
       } else {
-        logger.log("error", "GRPC port not found on IPC channel to dcrwallet: " + intf);
+        logger.log("error", "GRPC port not found on IPC channel to pfcwallet: " + intf);
       }
     }
   }));
 
-  dcrwallet.on("error", function (err) {
-    logger.log("error", "Error running dcrwallet.  Check logs and restart! " + err);
-    mainWindow.webContents.executeJavaScript("alert(\"Error running dcrwallet.  Check logs and restart! " + err + "\");");
+  pfcwallet.on("error", function (err) {
+    logger.log("error", "Error running pfcwallet.  Check logs and restart! " + err);
+    mainWindow.webContents.executeJavaScript("alert(\"Error running pfcwallet.  Check logs and restart! " + err + "\");");
     mainWindow.webContents.executeJavaScript("window.close();");
   });
 
-  dcrwallet.on("close", (code) => {
+  pfcwallet.on("close", (code) => {
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      var lastDcrwalletErr = lastErrorLine(GetDcrwalletLogs());
-      if (!lastDcrwalletErr || lastDcrwalletErr == "") {
-        lastDcrwalletErr = lastPanicLine(GetDcrwalletLogs());
+      var lastPfcwalletErr = lastErrorLine(GetPfcwalletLogs());
+      if (!lastPfcwalletErr || lastPfcwalletErr == "") {
+        lastPfcwalletErr = lastPanicLine(GetPfcwalletLogs());
       }
-      logger.log("error", "dcrwallet closed due to an error: ", lastDcrwalletErr);
-      reactIPC.send("error-received", false, lastDcrwalletErr);
+      logger.log("error", "pfcwallet closed due to an error: ", lastPfcwalletErr);
+      reactIPC.send("error-received", false, lastPfcwalletErr);
     } else {
-      logger.log("info", `dcrwallet exited with code ${code}`);
+      logger.log("info", `pfcwallet exited with code ${code}`);
     }
-    ClearDcrwalletLogs();
+    ClearPfcwalletLogs();
   });
 
-  const addStdoutToLogListener = (data) => AddToDcrwalletLog(process.stdout, data, debug);
+  const addStdoutToLogListener = (data) => AddToPfcwalletLog(process.stdout, data, debug);
 
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
   // on that platform. For linux/macOS users, the --pipetx argument is used to
-  // provide a pipe back to decrediton, which reads the grpc port in a secure and
+  // provide a pipe back to pfcredit, which reads the grpc port in a secure and
   // reliable way.
   const waitForGrpcPortListener = (data) => {
-    const matches = /DCRW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
+    const matches = /PFCW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
     if (matches) {
       notifyGrpcPort(matches[1]);
       // swap the listener since we don't need to keep looking for the port
-      dcrwallet.stdout.removeListener("data", waitForGrpcPortListener);
-      dcrwallet.stdout.on("data", addStdoutToLogListener);
+      pfcwallet.stdout.removeListener("data", waitForGrpcPortListener);
+      pfcwallet.stdout.on("data", addStdoutToLogListener);
     }
-    AddToDcrwalletLog(process.stdout, data, debug);
+    AddToPfcwalletLog(process.stdout, data, debug);
   };
 
-  dcrwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
-  dcrwallet.stderr.on("data", (data) => {
-    AddToDcrwalletLog(process.stderr, data, debug);
+  pfcwallet.stdout.on("data", os.platform() == "win32" ? waitForGrpcPortListener : addStdoutToLogListener);
+  pfcwallet.stderr.on("data", (data) => {
+    AddToPfcwalletLog(process.stderr, data, debug);
   });
 
-  dcrwPID = dcrwallet.pid;
-  logger.log("info", "dcrwallet started with pid:" + dcrwPID);
+  dcrwPID = pfcwallet.pid;
+  logger.log("info", "pfcwallet started with pid:" + dcrwPID);
 
-  dcrwallet.unref();
+  pfcwallet.unref();
   return dcrwPID;
 };
 
 export const GetDcrwPort = () => dcrwPort;
 
-export const GetDcrdPID = () => dcrdPID;
+export const GetPfcdPID = () => pfcdPID;
 
 export const GetDcrwPID = () => dcrwPID;
 
 export const readExesVersion = (app, grpcVersions) => {
   let spawn = require("child_process").spawnSync;
   let args = [ "--version" ];
-  let exes = [ "dcrd", "dcrwallet", "dcrctl" ];
+  let exes = [ "pfcd", "pfcwallet", "pfcctl" ];
   let versions = {
     grpc: grpcVersions,
-    decrediton: app.getVersion()
+    pfcredit: app.getVersion()
   };
 
   for (let exe of exes) {
-    let exePath = getExecutablePath("dcrd", argv.customBinPath);
+    let exePath = getExecutablePath("pfcd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
-      logger.log("error", "The dcrd executable does not exist. Expected to find it at " + exePath);
+      logger.log("error", "The pfcd executable does not exist. Expected to find it at " + exePath);
     }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });

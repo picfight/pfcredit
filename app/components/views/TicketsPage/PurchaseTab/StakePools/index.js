@@ -61,7 +61,7 @@ class StakePools extends React.Component {
         id="stake.noAvailableStakepools"
         m="No stakepool found. Check your internet connection or {link} to see if the StakePool API is down."
         values={{
-          link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.decred.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
+          link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.picfight.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
         }} />
     );
   }

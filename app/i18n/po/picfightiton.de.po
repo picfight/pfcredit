@@ -100,13 +100,13 @@ msgstr "vor < 1 Minute"
 
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
-#. A cross platform GUI Wallet for Decred written in node.js using Electron
+#. A cross platform GUI Wallet for PicFight written in node.js using Electron
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph1"
 msgid ""
-"A cross platform GUI Wallet for Decred written in node.js using Electron"
+"A cross platform GUI Wallet for PicFight written in node.js using Electron"
 msgstr ""
-"Ein plattformübergreifendes GUI Wallet für Decred, geschrieben in node.js "
+"Ein plattformübergreifendes GUI Wallet für PicFight, geschrieben in node.js "
 "unter Benutzung von Electron"
 
 #. [getStarted.stakepool.apikey]
@@ -143,27 +143,27 @@ msgstr "Über"
 
 #. [help.about]
 #. defaultMessage is:
-#. About Decrediton
+#. About Pfcredit
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "help.about"
-msgid "About Decrediton"
-msgstr "Über Decredition"
+msgid "About Pfcredit"
+msgstr "Über PicFightition"
 
-#. [help.about.decrediton]
+#. [help.about.pfcredit]
 #. defaultMessage is:
-#. About Decrediton
+#. About Pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.about.decrediton"
-msgid "About Decrediton"
-msgstr "Über Decredition"
+msgctxt "help.about.pfcredit"
+msgid "About Pfcredit"
+msgstr "Über PicFightition"
 
-#. [appMenu.aboutDecrediton]
+#. [appMenu.aboutPfcredit]
 #. defaultMessage is:
-#. About Decrediton
+#. About Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.aboutDecrediton"
-msgid "About Decrediton"
-msgstr "Über Decredition"
+msgctxt "appMenu.aboutPfcredit"
+msgid "About Pfcredit"
+msgstr "Über PicFightition"
 
 #. [privacy.custom.accept]
 #. defaultMessage is:
@@ -173,13 +173,13 @@ msgctxt "privacy.custom.accept"
 msgid "Accept"
 msgstr "Akzeptieren"
 
-#. [settings.privacy.dcrdata.description]
+#. [settings.privacy.pfcdata.description]
 #. defaultMessage is:
-#. Access chain information from explorer.dcrdata.org
+#. Access chain information from explorer.pfcdata.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
-msgctxt "settings.privacy.dcrdata.description"
-msgid "Access chain information from explorer.dcrdata.org"
-msgstr "Aus explorer.dcrdata.org auf Chain-Informationen zugreifen"
+msgctxt "settings.privacy.pfcdata.description"
+msgid "Access chain information from explorer.pfcdata.org"
+msgstr "Aus explorer.pfcdata.org auf Chain-Informationen zugreifen"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -215,17 +215,17 @@ msgstr "Accounts"
 
 #. [accounts.description]
 #. defaultMessage is:
-#. Accounts allow you to keep separate records of your DCR funds.
-#. Transferring DCR across accounts will create a transaction on the
+#. Accounts allow you to keep separate records of your PFC funds.
+#. Transferring PFC across accounts will create a transaction on the
 #. blockchain.
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.description"
 msgid ""
-"Accounts allow you to keep separate records of your DCR funds.\n"
-"Transferring DCR across accounts will create a transaction on the blockchain."
+"Accounts allow you to keep separate records of your PFC funds.\n"
+"Transferring PFC across accounts will create a transaction on the blockchain."
 msgstr ""
-"Mit Accounts können Sie getrennte Aufzeichnungen Ihrer DCR-Guthaben aufbewahren.\n"
-"Das Übertragen von DCR zwischen Accounts erstellt eine Transaktion in der Blockchain."
+"Mit Accounts können Sie getrennte Aufzeichnungen Ihrer PFC-Guthaben aufbewahren.\n"
+"Das Übertragen von PFC zwischen Accounts erstellt eine Transaktion in der Blockchain."
 
 #. [getStarted.stakePools.addBtn]
 #. defaultMessage is:
@@ -683,11 +683,11 @@ msgstr "Alle nach vorne bringen"
 
 #. [home.noTransactions.buyFromExchanges]
 #. defaultMessage is:
-#. Buy Decred from Exchanges
+#. Buy PicFight from Exchanges
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTransactionsLinks.json
 msgctxt "home.noTransactions.buyFromExchanges"
-msgid "Buy Decred from Exchanges"
-msgstr "Decred von Exchanges kaufen"
+msgid "Buy PicFight from Exchanges"
+msgstr "PicFight von Exchanges kaufen"
 
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
@@ -910,11 +910,11 @@ msgstr "Schließen"
 
 #. [fatal.button]
 #. defaultMessage is:
-#. Close Decrediton
+#. Close Pfcredit
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button"
-msgid "Close Decrediton"
-msgstr "Decrediton schließen"
+msgid "Close Pfcredit"
+msgstr "Pfcredit schließen"
 
 #. [settings.closeWalletModalOk]
 #. defaultMessage is:
@@ -1070,18 +1070,18 @@ msgstr "Konsensänderungen"
 
 #. [votingPreferences.description]
 #. defaultMessage is:
-#. Consensus changes refer to the on-chain governance aspect of Decred. This
+#. Consensus changes refer to the on-chain governance aspect of PicFight. This
 #. means deciding whether to adopt changes to the consensus rules of the
 #. network. Participation in voting requires (PoS) tickets.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.description"
 msgid ""
-"Consensus changes refer to the on-chain governance aspect of Decred. This "
+"Consensus changes refer to the on-chain governance aspect of PicFight. This "
 "means deciding whether to adopt changes to the consensus rules of the "
 "network. Participation in voting requires (PoS) tickets."
 msgstr ""
 "Konsensänderungen beziehen sich auf den On-Chain-Governance-Aspekt von "
-"Decred. Das bedingt eine Entscheidung, ob Änderungen der Konsensregeln des "
+"PicFight. Das bedingt eine Entscheidung, ob Änderungen der Konsensregeln des "
 "Netzwerks übernommen werden sollen. Die Teilnahme an einer Abstimmung "
 "erfordert (PoS) Tickets."
 
@@ -1363,83 +1363,83 @@ msgctxt "charts.keys.day"
 msgid "Days"
 msgstr "Tage"
 
-#. [settings.privacy.dcrdata.label]
+#. [settings.privacy.pfcdata.label]
 #. defaultMessage is:
-#. Decred Block Explorer
+#. PicFight Block Explorer
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
-msgctxt "settings.privacy.dcrdata.label"
-msgid "Decred Block Explorer"
-msgstr "Decred Block Explorer"
+msgctxt "settings.privacy.pfcdata.label"
+msgid "PicFight Block Explorer"
+msgstr "PicFight Block Explorer"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
-#. Decred Constitution
+#. PicFight Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.modal.title"
-msgid "Decred Constitution"
-msgstr "Decred-Konstitution"
+msgid "PicFight Constitution"
+msgstr "PicFight-Konstitution"
 
 #. [help.constitution.subtitle]
 #. defaultMessage is:
-#. Decred Project Constitution
+#. PicFight Project Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.subtitle"
-msgid "Decred Project Constitution"
-msgstr "Decred Projektsatzung"
+msgid "PicFight Project Constitution"
+msgstr "PicFight Projektsatzung"
 
 #. [aboutModal.paragraph2b]
 #. defaultMessage is:
-#. Decred contributors
+#. PicFight contributors
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2b"
-msgid "Decred contributors"
-msgstr "Decred Mitwirkende"
+msgid "PicFight contributors"
+msgstr "PicFight Mitwirkende"
 
-#. [aboutModal.decrediton]
+#. [aboutModal.pfcredit]
 #. defaultMessage is:
-#. Decrediton
+#. Pfcredit
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
-msgctxt "aboutModal.decrediton"
-msgid "Decrediton"
-msgstr "Decrediton"
+msgctxt "aboutModal.pfcredit"
+msgid "Pfcredit"
+msgstr "Pfcredit"
 
-#. [appMenu.decrediton]
+#. [appMenu.pfcredit]
 #. defaultMessage is:
-#. Decrediton
+#. Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.decrediton"
-msgid "Decrediton"
-msgstr "Decrediton"
+msgctxt "appMenu.pfcredit"
+msgid "Pfcredit"
+msgstr "Pfcredit"
 
 #. [aboutModal.paragraph2a]
 #. defaultMessage is:
-#. Decrediton is free and open source software, developed and designed by the
+#. Pfcredit is free and open source software, developed and designed by the
 #. global team of
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2a"
 msgid ""
-"Decrediton is free and open source software, developed and designed by the "
+"Pfcredit is free and open source software, developed and designed by the "
 "global team of"
 msgstr ""
-"Decredition ist eine kostenlose und Open Source-Software, und wurde "
+"PicFightition ist eine kostenlose und Open Source-Software, und wurde "
 "entwickelt und gestaltet vom globalen Team von "
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
-#. Decrediton must remain running for tickets to be automatically purchased.
+#. Pfcredit must remain running for tickets to be automatically purchased.
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "tickets.startAutoBuyerConfirmation.description"
 msgid ""
-"Decrediton must remain running for tickets to be automatically purchased."
-msgstr "Decrediton muss laufen, damit Tickets automatisch gekauft werden."
+"Pfcredit must remain running for tickets to be automatically purchased."
+msgstr "Pfcredit muss laufen, damit Tickets automatisch gekauft werden."
 
 #. [getStarted.releaseNotesTitle]
 #. defaultMessage is:
-#. Decrediton v{version} Released
+#. Pfcredit v{version} Released
 #: app/i18n/extracted/app/components/views/GetStartedPage/ReleaseNotes/Form.json
 msgctxt "getStarted.releaseNotesTitle"
-msgid "Decrediton v{version} Released"
-msgstr "Decrediton V{version} veröffentlicht"
+msgid "Pfcredit v{version} Released"
+msgstr "Pfcredit V{version} veröffentlicht"
 
 #. [getStarted.decrypt.label]
 #. defaultMessage is:
@@ -1552,17 +1552,17 @@ msgstr "Deaktiviert"
 
 #. [privacy.options.disabled.description]
 #. defaultMessage is:
-#. Disables all connections to third party (non-dcrd/non-dcrwallet) services.
+#. Disables all connections to third party (non-pfcd/non-pfcwallet) services.
 #. This may prevent you from using certain features of the app. Recommended
 #. for advanced users.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.disabled.description"
 msgid ""
-"Disables all connections to third party (non-dcrd/non-dcrwallet) services. "
+"Disables all connections to third party (non-pfcd/non-pfcwallet) services. "
 "This may prevent you from using certain features of the app. Recommended for"
 " advanced users."
 msgstr ""
-"Deaktiviert alle Verbindungen zu Drittanbieterdiensten (non-dcrd/non-"
+"Deaktiviert alle Verbindungen zu Drittanbieterdiensten (non-pfcd/non-"
 "drwallet). Dies verhindert möglicherweise die Nutzung bestimmter Funktionen "
 "der App. Für fortgeschrittene Benutzer empfohlen."
 
@@ -1774,17 +1774,17 @@ msgstr "Hexadezimale Darstellung Ihres Seeds eingeben …"
 #. Enter the passphrase you just created to scan the blockchain for additional
 #. accounts you may have previously created with your wallet.
 #.   Your account names aren't stored on the blockchain, so you will have to
-#. rename them after setting up Decrediton.
+#. rename them after setting up Pfcredit.
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.discoverAccountsInfo"
 msgid ""
 "Enter the passphrase you just created to scan the blockchain for additional accounts you may have previously created with your wallet.\n"
 "\n"
-"  Your account names aren't stored on the blockchain, so you will have to rename them after setting up Decrediton."
+"  Your account names aren't stored on the blockchain, so you will have to rename them after setting up Pfcredit."
 msgstr ""
 "Geben Sie die Passphrase, die Sie soeben erstellt haben, ein, um die Blockchain nach zusätzlichen Accounts zu durchsuchen, die Sie möglicherweise mit Ihrem Wallet bereits erstellt haben.\n"
 "\n"
-"Ihre Account Namen sind nicht in der Blockchain gespeichert. Daher müssen Sie diese umbenennen, nachdem Sie Decredition eingerichtet haben."
+"Ihre Account Namen sind nicht in der Blockchain gespeichert. Daher müssen Sie diese umbenennen, nachdem Sie PicFightition eingerichtet haben."
 
 #. [securitycenter.signMessage.field.message.placeholder]
 #. defaultMessage is:
@@ -2225,19 +2225,19 @@ msgstr "Allgemein"
 
 #. [settings.privacy.networkStatus.description]
 #. defaultMessage is:
-#. General network information (block height, etc) from decred.org
+#. General network information (block height, etc) from picfight.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.networkStatus.description"
-msgid "General network information (block height, etc) from decred.org"
-msgstr "Allgemeine Netzwerkinformation (Blockhöhe, etc.) von decred.org"
+msgid "General network information (block height, etc) from picfight.org"
+msgstr "Allgemeine Netzwerkinformation (Blockhöhe, etc.) von picfight.org"
 
 #. [home.noTransactions.receiveLink]
 #. defaultMessage is:
-#. Generate a DCR Address for receiving funds
+#. Generate a PFC Address for receiving funds
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTransactionsLinks.json
 msgctxt "home.noTransactions.receiveLink"
-msgid "Generate a DCR Address for receiving funds"
-msgstr "DCR-Adresse zum Empfang von Zahlungen generieren"
+msgid "Generate a PFC Address for receiving funds"
+msgstr "PFC-Adresse zum Empfang von Zahlungen generieren"
 
 #. [receive.newAddressBtn]
 #. defaultMessage is:
@@ -2313,11 +2313,11 @@ msgstr "Governance"
 
 #. [governance.description]
 #. defaultMessage is:
-#. Governance aspects of Decred.
+#. Governance aspects of PicFight.
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.description"
-msgid "Governance aspects of Decred."
-msgstr "Governance-Aspekte von Decred"
+msgid "Governance aspects of PicFight."
+msgstr "Governance-Aspekte von PicFight"
 
 #. [accounts.hdPath]
 #. defaultMessage is:
@@ -2375,13 +2375,13 @@ msgctxt "accounts.hide.tip"
 msgid "Hide"
 msgstr "Ausblenden"
 
-#. [appMenu.hideDecrediton]
+#. [appMenu.hidePfcredit]
 #. defaultMessage is:
-#. Hide Decrediton
+#. Hide Pfcredit
 #: app/i18n/extracted/static/menus.json
-msgctxt "appMenu.hideDecrediton"
-msgid "Hide Decrediton"
-msgstr "Decrediton ausblenden"
+msgctxt "appMenu.hidePfcredit"
+msgid "Hide Pfcredit"
+msgstr "Pfcredit ausblenden"
 
 #. [appMenu.hideOthers]
 #. defaultMessage is:
@@ -2425,15 +2425,15 @@ msgstr "I/O Details"
 
 #. [help.description.links]
 #. defaultMessage is:
-#. If you have any difficulty with decrediton, please use the following links
+#. If you have any difficulty with pfcredit, please use the following links
 #. to help find a solution.
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.description.links"
 msgid ""
-"If you have any difficulty with decrediton, please use the following links "
+"If you have any difficulty with pfcredit, please use the following links "
 "to help find a solution."
 msgstr ""
-"Bei Problemen mit Decrediton finden Sie in den folgenden Links Lösungen."
+"Bei Problemen mit Pfcredit finden Sie in den folgenden Links Lösungen."
 
 #. [charts.keys.immature]
 #. defaultMessage is:
@@ -2703,12 +2703,12 @@ msgstr "Mehr erfahren"
 
 #. [help.description.tutorials]
 #. defaultMessage is:
-#. Learn about the various aspects of the Decred network.
+#. Learn about the various aspects of the PicFight network.
 #: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
 msgctxt "help.description.tutorials"
-msgid "Learn about the various aspects of the Decred network."
+msgid "Learn about the various aspects of the PicFight network."
 msgstr ""
-"Erfahren Sie mehr über die verschiedenen Aspekte des Decred-Netzwerks."
+"Erfahren Sie mehr über die verschiedenen Aspekte des PicFight-Netzwerks."
 
 #. [getStarted.learnBasics]
 #. defaultMessage is:
@@ -2728,19 +2728,19 @@ msgstr "Lizenzinformationen"
 
 #. [settings.privacy.politeia.description]
 #. defaultMessage is:
-#. List and vote on proposals on proposals.decred.org
+#. List and vote on proposals on proposals.picfight.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.politeia.description"
-msgid "List and vote on proposals on proposals.decred.org"
-msgstr "Proposals auf proposals.decred.org auflisten und abstimmen"
+msgid "List and vote on proposals on proposals.picfight.org"
+msgstr "Proposals auf proposals.picfight.org auflisten und abstimmen"
 
 #. [settings.privacy.stakepoolListing.description]
 #. defaultMessage is:
-#. List of currently available stakepools from decred.org
+#. List of currently available stakepools from picfight.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.stakepoolListing.description"
-msgid "List of currently available stakepools from decred.org"
-msgstr "Liste der derzeit verfügbaren Stakepools von decred.org."
+msgid "List of currently available stakepools from picfight.org"
+msgstr "Liste der derzeit verfügbaren Stakepools von picfight.org."
 
 #. [transaction.type.live]
 #. defaultMessage is:
@@ -2760,11 +2760,11 @@ msgstr "Live-Tickets"
 
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
-#. Loading Decred blockchain, estimated time left
+#. Loading PicFight blockchain, estimated time left
 #: app/i18n/extracted/app/components/indicators/LoaderBarBottom.json
 msgctxt "getStarted.chainLoading.syncEstimation.small"
-msgid "Loading Decred blockchain, estimated time left"
-msgstr "Decred-Blockchain wird geladen, geschätzte verbleibende Zeit"
+msgid "Loading PicFight blockchain, estimated time left"
+msgstr "PicFight-Blockchain wird geladen, geschätzte verbleibende Zeit"
 
 #. [myTickets.loadingMoreTickets]
 #. defaultMessage is:
@@ -2848,16 +2848,16 @@ msgstr "Mainnet"
 
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
-#. Mainnet Decred addresses always begin with letter D and contain 26-35
+#. Mainnet PicFight addresses always begin with letter D and contain 26-35
 #. alphanumeric characters
 #. (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.mainnet"
 msgid ""
-"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
+"Mainnet PicFight addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
 "(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
-"Mainnet-Decred-Adressen beginnen immer mit dem Buchstaben D und umfassen 26-35 alphanumerische Zeichen\n"
+"Mainnet-PicFight-Adressen beginnen immer mit dem Buchstaben D und umfassen 26-35 alphanumerische Zeichen\n"
 "(z. B. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 
 #. [purchaseTickets.import]
@@ -3925,11 +3925,11 @@ msgstr "Erhalten"
 
 #. [receive.subtitle]
 #. defaultMessage is:
-#. Receive DCR
+#. Receive PFC
 #: app/i18n/extracted/app/components/views/TransactionsPage/ReceiveTab/Page.json
 msgctxt "receive.subtitle"
-msgid "Receive DCR"
-msgstr "DCR empfangen"
+msgid "Receive PFC"
+msgstr "PFC empfangen"
 
 #. [charts.keys.received]
 #. defaultMessage is:
@@ -4109,12 +4109,12 @@ msgstr "Private Passphrase wiederholen"
 
 #. [send.publishUnminedTransactions.success]
 #. defaultMessage is:
-#. Republished unmined transactions to the decred network.
+#. Republished unmined transactions to the picfight network.
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "send.publishUnminedTransactions.success"
-msgid "Republished unmined transactions to the decred network."
+msgid "Republished unmined transactions to the picfight network."
 msgstr ""
-"Sortenreine Transaktionen wurden im Decred-Netzwerk neu veröffentlicht."
+"Sortenreine Transaktionen wurden im PicFight-Netzwerk neu veröffentlicht."
 
 #. [getStarted.walletRescan.progress]
 #. defaultMessage is:
@@ -4472,41 +4472,41 @@ msgstr "Account auswählen"
 
 #. [privacy.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton should connect to external services. You can change
+#. Select how Pfcredit should connect to external services. You can change
 #. this in the application settings later.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.titleSub"
 msgid ""
-"Select how Decrediton should connect to external services. You can change "
+"Select how Pfcredit should connect to external services. You can change "
 "this in the application settings later."
 msgstr ""
-"Wählen Sie, wie Decredition sich mit externen Services verbindet. Sie können"
+"Wählen Sie, wie PicFightition sich mit externen Services verbindet. Sie können"
 " dies in den Anwendungseinstellungen später noch ändern."
 
 #. [spv.titleSub]
 #. defaultMessage is:
-#. Select how Decrediton wallet's should connect to the network. You can
+#. Select how Pfcredit wallet's should connect to the network. You can
 #. change this in the application settings later.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.titleSub"
 msgid ""
-"Select how Decrediton wallet's should connect to the network. You can change"
+"Select how Pfcredit wallet's should connect to the network. You can change"
 " this in the application settings later."
 msgstr ""
-"Wählen Sie, wie Decredition Wallets sich mit dem Netzwerk verbinden. Sie "
+"Wählen Sie, wie PicFightition Wallets sich mit dem Netzwerk verbinden. Sie "
 "können dies in den Anwendungseinstellungen später noch ändern."
 
 #. [privacy.custom.titleSub]
 #. defaultMessage is:
-#. Select which external requests Decrediton is allowed to make. You can
+#. Select which external requests Pfcredit is allowed to make. You can
 #. change this later on the app settings page.
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.json
 msgctxt "privacy.custom.titleSub"
 msgid ""
-"Select which external requests Decrediton is allowed to make. You can change"
+"Select which external requests Pfcredit is allowed to make. You can change"
 " this later on the app settings page."
 msgstr ""
-"Legen Sie fest, welche externen Anfragen Decredition machen darf. Sie können"
+"Legen Sie fest, welche externen Anfragen PicFightition machen darf. Sie können"
 " dies später noch auf der Einstellungsseite der App ändern."
 
 #. [send.sendBtn]
@@ -4527,11 +4527,11 @@ msgstr "Senden"
 
 #. [send.subtitle]
 #. defaultMessage is:
-#. Send DCR
+#. Send PFC
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.subtitle"
-msgid "Send DCR"
-msgstr "DCR senden"
+msgid "Send PFC"
+msgstr "PFC senden"
 
 #. [send.sendAllTitle]
 #. defaultMessage is:
@@ -4679,11 +4679,11 @@ msgstr "Wallet-Protokolldateien anzeigen"
 
 #. [shutdown.header.title]
 #. defaultMessage is:
-#. Shutting down Decrediton
+#. Shutting down Pfcredit
 #: app/i18n/extracted/app/components/views/ShutdownAppPage.json
 msgctxt "shutdown.header.title"
-msgid "Shutting down Decrediton"
-msgstr "Decrediton herunterfahren"
+msgid "Shutting down Pfcredit"
+msgstr "Pfcredit herunterfahren"
 
 #. [securitycenter.signMessageBtn]
 #. defaultMessage is:
@@ -4765,11 +4765,11 @@ msgctxt "history.min.value"
 msgid "Slider min"
 msgstr "Schieber min."
 
-#. [help.about.decrediton.subtitle]
+#. [help.about.pfcredit.subtitle]
 #. defaultMessage is:
 #. Software Summary
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.about.decrediton.subtitle"
+msgctxt "help.about.pfcredit.subtitle"
 msgid "Software Summary"
 msgstr "Software-Übersicht"
 
@@ -5169,46 +5169,46 @@ msgstr "Testnet"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
-#. Testnet Decred addresses always begin with letter T and contain 26-35
+#. Testnet PicFight addresses always begin with letter T and contain 26-35
 #. alphanumeric characters
 #. (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.testnet"
 msgid ""
-"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
+"Testnet PicFight addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
 "(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
-"Testnet-Decred-Adressen beginnen immer mit dem Buchstaben T und umfassen 26-35 alphanumerische Zeichen\n"
+"Testnet-PicFight-Adressen beginnen immer mit dem Buchstaben T und umfassen 26-35 alphanumerische Zeichen\n"
 "(z. B. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 
 #. [invalidRPCVersion.info]
 #. defaultMessage is:
 #. The API of the currently running wallet ({walletRPCVersion}) is not
-#. compatible with Decrediton (required version {requiredWalletRPCVersion}).
-#.         Please update the daemon (dcrd) and wallet (dcrwallet) to the
+#. compatible with Pfcredit (required version {requiredWalletRPCVersion}).
+#.         Please update the daemon (pfcd) and wallet (pfcwallet) to the
 #. latest version, then try again.
 #: app/i18n/extracted/app/components/views/InvalidRPCVersion.json
 msgctxt "invalidRPCVersion.info"
 msgid ""
-"The API of the currently running wallet ({walletRPCVersion}) is not compatible with Decrediton (required version {requiredWalletRPCVersion}).\n"
+"The API of the currently running wallet ({walletRPCVersion}) is not compatible with Pfcredit (required version {requiredWalletRPCVersion}).\n"
 "\n"
-"        Please update the daemon (dcrd) and wallet (dcrwallet) to the latest version, then try again."
+"        Please update the daemon (pfcd) and wallet (pfcwallet) to the latest version, then try again."
 msgstr ""
-"Die API des aktuellen Wallets ({walletRPCVersion}) ist nicht kompatibel mit Decrediton (erforderliche Version {requiredWalletRPCVersion}).\n"
+"Die API des aktuellen Wallets ({walletRPCVersion}) ist nicht kompatibel mit Pfcredit (erforderliche Version {requiredWalletRPCVersion}).\n"
 "\n"
-"        Bitte aktualisieren Sie Daemon (dcrd) und Wallet (dcrwallet) auf die aktuellste Version und versuchen Sie es anschließend erneut."
+"        Bitte aktualisieren Sie Daemon (pfcd) und Wallet (pfcwallet) auf die aktuellste Version und versuchen Sie es anschließend erneut."
 
 #. [settings.resetNetworkContent]
 #. defaultMessage is:
-#. The setting you have chosen to change requires Decrediton to be restarted.
+#. The setting you have chosen to change requires Pfcredit to be restarted.
 #. Please confirm this action before proceeding.
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.resetNetworkContent"
 msgid ""
-"The setting you have chosen to change requires Decrediton to be restarted.  "
+"The setting you have chosen to change requires Pfcredit to be restarted.  "
 "Please confirm this action before proceeding."
 msgstr ""
-"Damit Sie die ausgewählte Einstellung ändern können, muss Decredition neu "
+"Damit Sie die ausgewählte Einstellung ändern können, muss PicFightition neu "
 "gestartet werden. Bitte bestätigen Sie diesen Vorgang, bevor Sie fortfahren."
 
 #. [votingPreferences.noAgenda]
@@ -5247,7 +5247,7 @@ msgstr ""
 #. built-in SMART didn't repair it, or the more likely case, there was a
 #. memory issue which corrupted the data.  To resolve, you must delete your
 #. blockchain data and re-download.  Press the button below to complete the
-#. process. When you restart Decrediton, it will automatically begin your
+#. process. When you restart Pfcredit, it will automatically begin your
 #. blockchain download. Please come to our support channel on
 #. slack/matrix/discord/rocketchat to get advice about running disk utilities.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
@@ -5258,7 +5258,7 @@ msgid ""
 "built-in SMART didn't repair it, or the more likely case, there was a memory"
 " issue which corrupted the data.  To resolve, you must delete your "
 "blockchain data and re-download.  Press the button below to complete the "
-"process. When you restart Decrediton, it will automatically begin your "
+"process. When you restart Pfcredit, it will automatically begin your "
 "blockchain download. Please come to our support channel on "
 "slack/matrix/discord/rocketchat to get advice about running disk utilities."
 msgstr ""
@@ -5268,7 +5268,7 @@ msgstr ""
 " noch wahrscheinlicher ist ein Speicherproblem aufgetreten, das die Daten "
 "beschädigt hat. Um den Fehler zu beheben, müssen Sie Ihre Blockchain-Daten "
 "löschen und sie erneut herunterladen. Bitte drücken Sie auf untenstehende "
-"Schaltfläche, um den Prozess abzuschließen. Wenn Sie Decredition erneut "
+"Schaltfläche, um den Prozess abzuschließen. Wenn Sie PicFightition erneut "
 "starten, beginnt Ihr Blockchain-Download automatisch. Bitte konsultieren Sie"
 " unsere Support-Kanäle auf Slack/Matrix/Discord/Rocketchat, um Hilfe zu "
 "Festplattendienstprogrammen zu erhalten."
@@ -5291,16 +5291,16 @@ msgstr ""
 
 #. [fatal.suggestion.diffConnection]
 #. defaultMessage is:
-#. This error typically means you have the testnet flag in your dcrd.conf
-#. file. You should check your dcrd.conf file and remove the testnet=1.
+#. This error typically means you have the testnet flag in your pfcd.conf
+#. file. You should check your pfcd.conf file and remove the testnet=1.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.suggestion.diffConnection"
 msgid ""
-"This error typically means you have the testnet flag in your dcrd.conf file."
-" You should check your dcrd.conf file and remove the testnet=1."
+"This error typically means you have the testnet flag in your pfcd.conf file."
+" You should check your pfcd.conf file and remove the testnet=1."
 msgstr ""
-"Dieser Fehler bedeutet normalerweise, dass das Testnet-Flag in Ihrer dcrd"
-".conf-Datei gesetzt ist. Überprüfen Sie Ihre dcrd.conf-Datei und entfernen "
+"Dieser Fehler bedeutet normalerweise, dass das Testnet-Flag in Ihrer pfcd"
+".conf-Datei gesetzt ist. Überprüfen Sie Ihre pfcd.conf-Datei und entfernen "
 "Sie testnet=1."
 
 #. [input.requiredInput]
@@ -5361,17 +5361,17 @@ msgstr ""
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Decred Daemon and fully verify blocks.  This will
+#. This will use the regular PicFight Daemon and fully verify blocks.  This will
 #. take longer, but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular Decred Daemon and fully verify blocks.  This will "
+"This will use the regular PicFight Daemon and fully verify blocks.  This will "
 "take longer, but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
-"Dadurch werden der reguläre Decred Daemon und vollständig überprüfte Blocks "
+"Dadurch werden der reguläre PicFight Daemon und vollständig überprüfte Blocks "
 "verwendet. Das benötigt mehr Zeit, ist aber vollkommen sicher. Sie können "
 "jedem Block und jeder gemineden Transaktion vollkommen vertrauen."
 
@@ -5761,11 +5761,11 @@ msgstr "Gesamt-Stake:"
 
 #. [export.balances.fields.totalStake]
 #. defaultMessage is:
-#. Total amount of DCR used on staking.
+#. Total amount of PFC used on staking.
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.totalStake"
-msgid "Total amount of DCR used on staking."
-msgstr "Gesamtbetrag an DCR, die beim Staking verwendet wurden."
+msgid "Total amount of PFC used on staking."
+msgstr "Gesamtbetrag an PFC, die beim Staking verwendet wurden."
 
 #. [export.dailyBalances.fields.received]
 #. defaultMessage is:
@@ -6606,17 +6606,17 @@ msgstr ""
 #. [fatal.removeConfirmModal.content]
 #. defaultMessage is:
 #. Warning this action is permanent! Please make sure you want to remove your
-#. blockchain data before proceeding. Decrediton will automatically shutdown
+#. blockchain data before proceeding. Pfcredit will automatically shutdown
 #. after deleting the folder. Please manually restart it afterwards.
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.removeConfirmModal.content"
 msgid ""
 "Warning this action is permanent! Please make sure you want to remove your "
-"blockchain data before proceeding. Decrediton will automatically shutdown "
+"blockchain data before proceeding. Pfcredit will automatically shutdown "
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "Achtung! Diese Aktion ist endgültig! Bitte überprüfen Sie, ob Sie Ihre "
-"Blockchain-Daten wirklich löschen möchten, bevor Sie fortfahren. Decredition"
+"Blockchain-Daten wirklich löschen möchten, bevor Sie fortfahren. PicFightition"
 " wird nach dem Löschen des Ordners automatisch geschlossen. Bitte starten "
 "Sie es anschließend manuell neu."
 
@@ -6646,19 +6646,19 @@ msgstr "Nur ansehen"
 
 #. [selectLang.title]
 #. defaultMessage is:
-#. Welcome to Decrediton Wallet
+#. Welcome to Pfcredit Wallet
 #: app/i18n/extracted/app/components/views/GetStartedPage/LanguageSelectPage/Page.json
 msgctxt "selectLang.title"
-msgid "Welcome to Decrediton Wallet"
-msgstr "Willkommen zum Decrediton-Wallet"
+msgid "Welcome to Pfcredit Wallet"
+msgstr "Willkommen zum Pfcredit-Wallet"
 
 #. [loader.title]
 #. defaultMessage is:
-#. Welcome to Decrediton Wallet
+#. Welcome to Pfcredit Wallet
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "loader.title"
-msgid "Welcome to Decrediton Wallet"
-msgstr "Willkommen beim Decredition-Wallet"
+msgid "Welcome to Pfcredit Wallet"
+msgstr "Willkommen beim PicFightition-Wallet"
 
 #. [tutorials.staking]
 #. defaultMessage is:
@@ -6731,12 +6731,12 @@ msgstr ""
 
 #. [getStarted.longWaitWarning]
 #. defaultMessage is:
-#. You are currently upgrading to a new dcrd version.  Typically, this one-
+#. You are currently upgrading to a new pfcd version.  Typically, this one-
 #. time reindexing will take 30-45 minutes on an average machine.
 #: app/i18n/extracted/app/components/views/GetStartedPage/DaemonLoading/Form.json
 msgctxt "getStarted.longWaitWarning"
 msgid ""
-"You are currently upgrading to a new dcrd version.  Typically, this one-time"
+"You are currently upgrading to a new pfcd version.  Typically, this one-time"
 " reindexing will take 30-45 minutes on an average machine."
 msgstr ""
 
@@ -6831,45 +6831,45 @@ msgctxt "trezor.pinModal.clear"
 msgid "clear"
 msgstr "löschen"
 
-#. [help.logs.dcrd]
+#. [help.logs.pfcd]
 #. defaultMessage is:
-#. dcrd
+#. pfcd
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
-msgctxt "help.logs.dcrd"
-msgid "dcrd"
-msgstr "dcrd"
+msgctxt "help.logs.pfcd"
+msgid "pfcd"
+msgstr "pfcd"
 
-#. [help.logs.dcrwallet]
+#. [help.logs.pfcwallet]
 #. defaultMessage is:
-#. dcrwallet
+#. pfcwallet
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
-msgctxt "help.logs.dcrwallet"
-msgid "dcrwallet"
-msgstr "dcrwallet"
+msgctxt "help.logs.pfcwallet"
+msgid "pfcwallet"
+msgstr "pfcwallet"
 
 #. [help.stakepools.subtitle]
 #. defaultMessage is:
-#. decred.org/stakepools
+#. picfight.org/stakepools
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.stakepools.subtitle"
-msgid "decred.org/stakepools"
-msgstr "decred.org/stakepools"
+msgid "picfight.org/stakepools"
+msgstr "picfight.org/stakepools"
 
-#. [help.logs.decrediton]
+#. [help.logs.pfcredit]
 #. defaultMessage is:
-#. decrediton
+#. pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LogsTab/Page.json
-msgctxt "help.logs.decrediton"
-msgid "decrediton"
-msgstr "Decrediton"
+msgctxt "help.logs.pfcredit"
+msgid "pfcredit"
+msgstr "Pfcredit"
 
 #. [help.documentation.subtitle]
 #. defaultMessage is:
-#. docs.decred.org
+#. docs.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.documentation.subtitle"
-msgid "docs.decred.org"
-msgstr "docs.decred.org"
+msgid "docs.picfight.org"
+msgstr "docs.picfight.org"
 
 #. [ticket.status.expired]
 #. defaultMessage is:
@@ -6889,27 +6889,27 @@ msgstr "abgelaufen"
 
 #. [help.blockchain.subtitle]
 #. defaultMessage is:
-#. explorer.dcrdata.org
+#. explorer.pfcdata.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.blockchain.subtitle"
-msgid "explorer.dcrdata.org"
-msgstr "explorer.dcrdata.org"
+msgid "explorer.pfcdata.org"
+msgstr "explorer.pfcdata.org"
 
 #. [help.forum.subtitle]
 #. defaultMessage is:
-#. forum.decred.org
+#. forum.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.forum.subtitle"
-msgid "forum.decred.org"
-msgstr "forum.decred.org"
+msgid "forum.picfight.org"
+msgstr "forum.picfight.org"
 
 #. [help.github.subtitle]
 #. defaultMessage is:
-#. github.com/decred/decrediton
+#. github.com/decred/pfcredit
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.subtitle"
-msgid "github.com/decred/decrediton"
-msgstr "github.com/decred/decrediton"
+msgid "github.com/decred/pfcredit"
+msgstr "github.com/decred/pfcredit"
 
 #. [ticket.status.immature]
 #. defaultMessage is:
@@ -6993,19 +6993,19 @@ msgstr "riot.im"
 
 #. [help.rocketchat.subtitle]
 #. defaultMessage is:
-#. rocketchat.decred.org
+#. rocketchat.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.rocketchat.subtitle"
-msgid "rocketchat.decred.org"
-msgstr "rocketchat.decred.org"
+msgid "rocketchat.picfight.org"
+msgstr "rocketchat.picfight.org"
 
 #. [help.slack.subtitle]
 #. defaultMessage is:
-#. slack.decred.org
+#. slack.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.slack.subtitle"
-msgid "slack.decred.org"
-msgstr "slack.decred.org"
+msgid "slack.picfight.org"
+msgstr "slack.picfight.org"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
