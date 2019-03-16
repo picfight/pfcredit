@@ -13,7 +13,7 @@ Currently pfcredit is available on Windows, Linux, and macOS.
 Pfcredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
-Download the pfcredit release for your operating system on [decred/decred-binaries](https://github.com/decred/decred-binaries/releases).
+Download the pfcredit release for your operating system on [decred/picfight-binaries](https://github.com/decred/picfight-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/decred/pfcredit/issues/1404)).
