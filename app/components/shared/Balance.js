@@ -6,7 +6,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
   flat, title, noSmallAmount, classNameWrapper, classNameUnit, preScaled
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
-  if (currencyDisplay === "PFC") {
+  if (currencyDisplay === "DCR") {
     var totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
       totalDcr = preScaled ? parseFloat(amount) : parseInt(amount) / 100000000;
@@ -26,7 +26,7 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
             { tail + " " }
           </span> }
           <span className={ [ secondary,classNameUnit ].join(" ") }>
-            PFC
+            DCR
           </span>
         </span>
       </div>

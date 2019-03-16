@@ -1,12 +1,12 @@
 {
-  "name": "pfcredit",
-  "productName": "pfcredit",
+  "name": "decrediton",
+  "productName": "decrediton",
   "version": "1.4.0",
   "description": "Cross-platform decred gui based on Electron and React",
   "main": "./main.js",
   "author": {
-    "name": "PicFight Team",
-    "email": "info@picfight.org",
+    "name": "Decred Team",
+    "email": "info@decred.org",
     "url": "https://github.com/decred"
   },
   "license": "ISC",

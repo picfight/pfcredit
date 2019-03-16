@@ -16,11 +16,11 @@ test("atoms display", () => {
   expect(spy.calledOnce).toEqual(true);
 });
 
-test("PFC display", () => {
+test("DCR display", () => {
   const spy = sinon.spy();
 
   const balance = shallow(
-    <Balance currencyDisplay="PFC" amount={420000001} onClick={spy} />
+    <Balance currencyDisplay="DCR" amount={420000001} onClick={spy} />
   );
 
   expect(balance.childAt(0).childAt(0).childAt(0).prop("value")).toEqual("4.20");

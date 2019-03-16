@@ -1,5 +1,5 @@
 import SpvSyncFormBody from "./Form";
-import { getPfcwalletLastLogLine } from "wallet";
+import { getDcrwalletLastLogLine } from "wallet";
 import ReactTimeout from "react-timeout";
 
 function parseLogLine(line) {
@@ -17,12 +17,12 @@ class SpvSync extends React.Component {
   componentDidMount() {
     this.props.setInterval(() => {
       Promise
-        .all([ getPfcwalletLastLogLine() ])
-        .then(([ pfcwalletLine ]) => {
-          const lastPfcwalletLogLine = parseLogLine(pfcwalletLine);
-          if (lastPfcwalletLogLine !== this.lastPfcwalletLogLine)
+        .all([ getDcrwalletLastLogLine() ])
+        .then(([ dcrwalletLine ]) => {
+          const lastDcrwalletLogLine = parseLogLine(dcrwalletLine);
+          if (lastDcrwalletLogLine !== this.lastDcrwalletLogLine)
           {
-            this.lastPfcwalletLogLine = lastPfcwalletLogLine;
+            this.lastDcrwalletLogLine = lastDcrwalletLogLine;
           }
         });
     }, 2000);
@@ -37,15 +37,15 @@ class SpvSync extends React.Component {
 
   getInitialState() {
     return {
-      lastPfcdLogLine: "",
-      lastPfcwalletLogLine: "",
+      lastDcrdLogLine: "",
+      lastDcrwalletLogLine: "",
       passPhrase: "",
       hasAttemptedDiscover: false
     };
   }
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
-    const { onSetPassPhrase, onSpvSync, onKeyDown, lastPfcwalletLogLine } = this;
+    const { onSetPassPhrase, onSpvSync, onKeyDown, lastDcrwalletLogLine } = this;
     const { Form,
       firstBlockTime,
       syncFetchTimeStart,
@@ -59,7 +59,7 @@ class SpvSync extends React.Component {
         syncFetchTimeStart,
         syncFetchHeadersLastHeaderTime,
         Form,
-        lastPfcwalletLogLine,
+        lastDcrwalletLogLine,
         passPhrase,
         hasAttemptedDiscover,
         onSetPassPhrase,

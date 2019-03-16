@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   submitWord: trza.submitWord,
   togglePinProtection: trza.togglePinProtection,
   togglePassPhraseProtection: trza.togglePassPhraseProtection,
-  changeToPicFightHomeScreen: trza.changeToPicFightHomeScreen,
+  changeToDecredHomeScreen: trza.changeToDecredHomeScreen,
   changeLabel: trza.changeLabel,
   wipeDevice: trza.wipeDevice,
   recoverDevice: trza.recoverDevice,

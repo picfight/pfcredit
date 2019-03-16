@@ -1,14 +1,14 @@
 import { app } from "electron";
-import { cleanShutdown, GetPfcdPID, GetDcrwPID } from "./launch";
+import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./launch";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
   {
-    label: locale.messages["appMenu.pfcredit"],
+    label: locale.messages["appMenu.decrediton"],
     submenu: [ {
-      label: locale.messages["appMenu.aboutPfcredit"],
+      label: locale.messages["appMenu.aboutDecrediton"],
       selector: "orderFrontStandardAboutPanel:",
       click() {
         mainWindow.webContents.send("show-about-modal");
@@ -21,7 +21,7 @@ const darwinTemplate = (mainWindow, locale) => [
     }, {
       type: "separator"
     }, {
-      label: locale.messages["appMenu.hidePfcredit"],
+      label: locale.messages["appMenu.hideDecrediton"],
       accelerator: "Command+H",
       selector: "hide:"
     }, {
@@ -37,7 +37,7 @@ const darwinTemplate = (mainWindow, locale) => [
       label: locale.messages["appMenu.quit"],
       accelerator: "Command+Q",
       click() {
-        cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+        cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
       }
     } ]
   }, {

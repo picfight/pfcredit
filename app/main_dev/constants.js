@@ -38,8 +38,8 @@ Options
   --debug  -d        Debug daemon/wallet messages
   --testnet          Connect to testnet
   --mainnet          Connect to mainnet
-  --extrawalletargs  Pass extra arguments to pfcwallet
-  --customBinPath    Custom path for pfcd/pfcwallet/pfcctl binaries
+  --extrawalletargs  Pass extra arguments to dcrwallet
+  --customBinPath    Custom path for dcrd/dcrwallet/dcrctl binaries
 ` : null;
 
-export const DIFF_CONNECTION_ERROR = "daemon and pfcredit does not have the same network";
+export const DIFF_CONNECTION_ERROR = "daemon and decrediton does not have the same network";

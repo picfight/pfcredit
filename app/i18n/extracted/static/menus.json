@@ -96,20 +96,20 @@
     "defaultMessage": "Select All"
   },
   {
-    "id": "appMenu.pfcredit",
-    "defaultMessage": "Pfcredit"
+    "id": "appMenu.decrediton",
+    "defaultMessage": "Decrediton"
   },
   {
-    "id": "appMenu.aboutPfcredit",
-    "defaultMessage": "About Pfcredit"
+    "id": "appMenu.aboutDecrediton",
+    "defaultMessage": "About Decrediton"
   },
   {
     "id": "appMenu.services",
     "defaultMessage": "Services"
   },
   {
-    "id": "appMenu.hidePfcredit",
-    "defaultMessage": "Hide Pfcredit"
+    "id": "appMenu.hideDecrediton",
+    "defaultMessage": "Hide Decrediton"
   },
   {
     "id": "appMenu.hideOthers",

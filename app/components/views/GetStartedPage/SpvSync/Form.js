@@ -26,7 +26,7 @@ const SpvSyncBody = ({
   firstBlockTime,
   syncFetchTimeStart,
   syncFetchHeadersLastHeaderTime,
-  lastPfcwalletLogLine,
+  lastDcrwalletLogLine,
   hasAttemptedDiscover,
   Form,
   syncFetchHeadersAttempt,
@@ -113,7 +113,7 @@ const SpvSyncBody = ({
             </div>
           </div> :
           <div className="get-started-last-log-lines">
-            <div className="last-pfcwallet-log-line">{lastPfcwalletLogLine}</div>
+            <div className="last-dcrwallet-log-line">{lastDcrwalletLogLine}</div>
           </div>
         }
       </Aux>

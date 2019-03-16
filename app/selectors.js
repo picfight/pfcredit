@@ -7,9 +7,9 @@ import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
 import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALREQUEST_PFCDATA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
-import { PFCDATA_URL_TESTNET, PFCDATA_URL_MAINNET } from "./middleware/pfcdataapi";
+import { DCRDATA_URL_TESTNET, DCRDATA_URL_MAINNET } from "./middleware/dcrdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
 import * as wallet from "wallet";
 
@@ -167,10 +167,10 @@ export const network = get([ "settings", "currentSettings", "network" ]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
 export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
-export const currencies = () => [ { name: "PFC" }, { name: "atoms" } ];
+export const currencies = () => [ { name: "DCR" }, { name: "atoms" } ];
 export const needNetworkReset = get([ "settings", "needNetworkReset" ]);
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
-export const unitDivisor = compose(disp => disp === "PFC" ? 100000000 : 1, currencyDisplay);
+export const unitDivisor = compose(disp => disp === "DCR" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
 export const timezone = get([ "settings", "currentSettings", "timezone" ]);
 export const defaultLocaleName = createSelector(
@@ -200,13 +200,13 @@ const getTxTypeStr = type => (TRANSACTION_TYPES)[type];
 export const txURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.pfcdata.org/${network == "testnet" ? "explorer/" : ""}tx/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}tx/${txHash}`
 );
 
 export const blockURLBuilder= createSelector(
   [ network ],
   (network) =>
-    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.pfcdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
+    (txHash) => `https://${network !== "testnet" ? "explorer" : network}.dcrdata.org/${network == "testnet" ? "explorer/" : ""}block/${txHash}`
 );
 
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
@@ -935,9 +935,9 @@ export const politeiaURL = createSelector(
   (isTestNet) => isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
 );
 
-export const pfcdataURL = createSelector(
+export const dcrdataURL = createSelector(
   [ isTestNet ],
-  (isTestNet) => isTestNet ? PFCDATA_URL_TESTNET : PFCDATA_URL_MAINNET
+  (isTestNet) => isTestNet ? DCRDATA_URL_TESTNET : DCRDATA_URL_MAINNET
 );
 
 export const politeiaEnabled = compose(
@@ -945,8 +945,8 @@ export const politeiaEnabled = compose(
   allowedExternalRequests
 );
 
-export const pfcdataEnabled = compose(
-  l => l.indexOf(EXTERNALREQUEST_PFCDATA) > -1,
+export const dcrdataEnabled = compose(
+  l => l.indexOf(EXTERNALREQUEST_DCRDATA) > -1,
   allowedExternalRequests
 );
 

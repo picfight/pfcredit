@@ -92,7 +92,7 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 );
 
 // This changes links to never open. Debatable whether we want to
-// allow proposals to link somewhere directly from pfcredit.
+// allow proposals to link somewhere directly from decrediton.
 const renderInternalProposalLink = ({ children }) => {
   return <a onClick={() => {} } href="#">{children}</a>;
 };
@@ -118,7 +118,7 @@ export const ProposalText = ({ text }) => (
       linkReference: renderInternalProposalLink,
 
       // debatable whether we wanna allow inline image references in proposals
-      // in pfcredit.
+      // in decrediton.
       imageReference: () => renderProposalImage,
       image: () => renderProposalImage,
 

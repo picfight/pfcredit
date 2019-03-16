@@ -2,69 +2,69 @@ import { FormattedMessage as T } from "react-intl";
 import "style/Logs.less";
 
 const Logs = ({
-  showPfcdLogs,
-  showPfcwalletLogs,
-  onShowPfcdLogs,
-  onShowPfcwalletLogs,
-  onHidePfcdLogs,
-  onHidePfcwalletLogs,
-  pfcdLogs,
-  pfcwalletLogs,
+  showDcrdLogs,
+  showDcrwalletLogs,
+  onShowDcrdLogs,
+  onShowDcrwalletLogs,
+  onHideDcrdLogs,
+  onHideDcrwalletLogs,
+  dcrdLogs,
+  dcrwalletLogs,
   isDaemonRemote,
   isDaemonStarted,
   walletReady,
-  pfcreditLogs,
-  showPfcreditLogs,
-  onShowPfcreditLogs,
-  onHidePfcreditLogs,
+  decreditonLogs,
+  showDecreditonLogs,
+  onShowDecreditonLogs,
+  onHideDecreditonLogs,
 }
 ) => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="logs.subtitle" m="System Logs"/></div>
     {!isDaemonRemote && isDaemonStarted ?
-      !showPfcdLogs ?
+      !showDcrdLogs ?
         <div className="log-area hidden">
-          <div className="log-area-title hidden" onClick={onShowPfcdLogs}>
-            <T id="help.logs.pfcd" m="pfcd" />
+          <div className="log-area-title hidden" onClick={onShowDcrdLogs}>
+            <T id="help.logs.dcrd" m="dcrd" />
           </div>
         </div>:
         <div className="log-area expanded">
-          <div className="log-area-title expanded" onClick={onHidePfcdLogs}>
-            <T id="help.logs.pfcd" m="pfcd" />
+          <div className="log-area-title expanded" onClick={onHideDcrdLogs}>
+            <T id="help.logs.dcrd" m="dcrd" />
           </div>
           <div className="log-area-logs">
-            <textarea rows="30" value={pfcdLogs} disabled />
+            <textarea rows="30" value={dcrdLogs} disabled />
           </div>
         </div> :
       <div/>
     }
-    {!walletReady ? null : !showPfcwalletLogs ?
+    {!walletReady ? null : !showDcrwalletLogs ?
       <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowPfcwalletLogs}>
-          <T id="help.logs.pfcwallet" m="pfcwallet" />
+        <div className="log-area-title hidden" onClick={onShowDcrwalletLogs}>
+          <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
       </div>:
       <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHidePfcwalletLogs}>
-          <T id="help.logs.pfcwallet" m="pfcwallet" />
+        <div className="log-area-title expanded" onClick={onHideDcrwalletLogs}>
+          <T id="help.logs.dcrwallet" m="dcrwallet" />
         </div>
         <div className="log-area-logs">
-          <textarea rows="30" value={pfcwalletLogs} disabled />
+          <textarea rows="30" value={dcrwalletLogs} disabled />
         </div>
       </div>
     }
-    {!showPfcreditLogs ?
+    {!showDecreditonLogs ?
       <div className="log-area hidden">
-        <div className="log-area-title hidden" onClick={onShowPfcreditLogs}>
-          <T id="help.logs.pfcredit" m="pfcredit" />
+        <div className="log-area-title hidden" onClick={onShowDecreditonLogs}>
+          <T id="help.logs.decrediton" m="decrediton" />
         </div>
       </div>:
       <div className="log-area expanded">
-        <div className="log-area-title expanded" onClick={onHidePfcreditLogs}>
-          <T id="help.logs.pfcredit" m="pfcredit" />
+        <div className="log-area-title expanded" onClick={onHideDecreditonLogs}>
+          <T id="help.logs.decrediton" m="decrediton" />
         </div>
         <div className="log-area-logs">
-          <textarea rows="30" value={pfcreditLogs} disabled />
+          <textarea rows="30" value={decreditonLogs} disabled />
         </div>
       </div>
     }

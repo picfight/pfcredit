@@ -9,11 +9,11 @@ import { initWalletCfg, newWalletConfigCreation } from "../config";
 // electron in production mode.
 export function appDataDirectory() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Pfcredit");
+    return path.join(os.homedir(), "AppData", "Local", "Decrediton");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","pfcredit");
+    return path.join(os.homedir(), "Library","Application Support","decrediton");
   } else {
-    return path.join(os.homedir(),".config","pfcredit");
+    return path.join(os.homedir(),".config","decrediton");
   }
 }
 
@@ -49,44 +49,44 @@ export function getWalletDBPathFromWallets(testnet, walletPath) {
   return path.join(getWalletsDirectoryPath(), network, walletPath, networkFolder, "wallet.db");
 }
 
-export function getPfcreditWalletDBPath(testnet) {
+export function getDecreditonWalletDBPath(testnet) {
   return path.join(appDataDirectory(), testnet ? "testnet3" : "mainnet", "wallet.db");
 }
 
-export function pfcctlCfg(configPath) {
-  return path.resolve(configPath, "pfcctl.conf");
+export function dcrctlCfg(configPath) {
+  return path.resolve(configPath, "dcrctl.conf");
 }
 
-export function pfcdCfg(configPath) {
-  return path.resolve(configPath, "pfcd.conf");
+export function dcrdCfg(configPath) {
+  return path.resolve(configPath, "dcrd.conf");
 }
 
-export function pfcwalletCfg(configPath) {
-  return path.resolve(configPath, "pfcwallet.conf");
+export function dcrwalletCfg(configPath) {
+  return path.resolve(configPath, "dcrwallet.conf");
 }
 
-export function getPfcdPath() {
+export function getDcrdPath() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Pfcd");
+    return path.join(os.homedir(), "AppData", "Local", "Dcrd");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","pfcd");
+    return path.join(os.homedir(), "Library","Application Support","dcrd");
   } else {
-    return path.join(os.homedir(),".pfcd");
+    return path.join(os.homedir(),".dcrd");
   }
 }
 
-export function getPfcwalletPath() {
+export function getDcrwalletPath() {
   if (os.platform() == "win32") {
-    return path.join(os.homedir(), "AppData", "Local", "Pfcwallet");
+    return path.join(os.homedir(), "AppData", "Local", "Dcrwallet");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","pfcwallet");
+    return path.join(os.homedir(), "Library","Application Support","dcrwallet");
   } else {
-    return path.join(os.homedir(),".pfcwallet");
+    return path.join(os.homedir(),".dcrwallet");
   }
 }
 
-export function getPfcdRpcCert (appDataPath) {
-  return path.resolve(appDataPath ? appDataPath : getPfcdPath(), "rpc.cert");
+export function getDcrdRpcCert (appDataPath) {
+  return path.resolve(appDataPath ? appDataPath : getDcrdPath(), "rpc.cert");
 }
 
 export function getExecutablePath(name, customBinPath) {
@@ -106,12 +106,12 @@ export function getDirectoryLogs(dir) {
 export function checkAndInitWalletCfg (testnet) {
   const walletDirectory = getDefaultWalletDirectory(testnet);
 
-  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(getPfcreditWalletDBPath(testnet))) {
+  if (!fs.pathExistsSync(walletDirectory) && fs.pathExistsSync(getDecreditonWalletDBPath(testnet))) {
     fs.mkdirsSync(walletDirectory);
 
     // check for existing mainnet directories
-    if ( fs.pathExistsSync(getPfcreditWalletDBPath(testnet)) ) {
-      fs.copySync(getPfcreditWalletDBPath(testnet), path.join(getDefaultWalletDirectory(testnet, testnet),"wallet.db"));
+    if ( fs.pathExistsSync(getDecreditonWalletDBPath(testnet)) ) {
+      fs.copySync(getDecreditonWalletDBPath(testnet), path.join(getDefaultWalletDirectory(testnet, testnet),"wallet.db"));
     }
 
     // copy over existing config.json if it exists

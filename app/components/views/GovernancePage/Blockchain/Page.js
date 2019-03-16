@@ -16,11 +16,11 @@ const VotingPrefsPage = ({
     <div className="consensus-changes-header">
       <div className="proposals-community-header-title"><T id="votingPreferences.title" m="Consensus Changes" /></div>
       <p className="proposals-community-header-description">
-        <T id="votingPreferences.description" m="Consensus changes refer to the on-chain governance aspect of PicFight. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets." />
+        <T id="votingPreferences.description" m="Consensus changes refer to the on-chain governance aspect of Decred. This means deciding whether to adopt changes to the consensus rules of the network. Participation in voting requires (PoS) tickets." />
       </p>
       <div className="links">
-        <ExternalLink className="info-modal-button" href="https://docs.picfight.org/getting-started/user-guides/agenda-voting/"/>
-        <ExternalLink href="https://voting.picfight.org"><T id="votingPreferences.dashboard" m="Voting Dashboard" /></ExternalLink>
+        <ExternalLink className="info-modal-button" href="https://docs.decred.org/getting-started/user-guides/agenda-voting/"/>
+        <ExternalLink href="https://voting.decred.org"><T id="votingPreferences.dashboard" m="Voting Dashboard" /></ExternalLink>
       </div>
     </div>
     <div className="stakepool-voting-agenda-area">

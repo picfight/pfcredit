@@ -2,7 +2,7 @@ import fs from "fs";
 import Store from "electron-store";
 import ini from "ini";
 import { stakePoolInfo } from "./middleware/stakepoolapi";
-import { appDataDirectory, getGlobalCfgPath, pfcdCfg, getWalletPath, pfcwalletCfg, getPfcdRpcCert } from "./main_dev/paths";
+import { appDataDirectory, getGlobalCfgPath, dcrdCfg, getWalletPath, dcrwalletCfg, getDcrdRpcCert } from "./main_dev/paths";
 
 export function getGlobalCfg() {
   const config = new Store();
@@ -23,7 +23,7 @@ export function initWalletCfg(testnet, walletPath) {
     config.set("balancetomaintain","0");
   }
   if (!config.has("currency_display")) {
-    config.set("currency_display","PFC");
+    config.set("currency_display","DCR");
   }
   if (!config.has("hiddenaccounts")) {
     var hiddenAccounts = Array();
@@ -190,7 +190,7 @@ export function validateGlobalCfgFile() {
 
 export function getWalletCert(certPath) {
   var cert;
-  certPath = getPfcdRpcCert(certPath);
+  certPath = getDcrdRpcCert(certPath);
   try {
     cert = fs.readFileSync(certPath);
   } catch (err) {
@@ -206,22 +206,22 @@ export function getWalletCert(certPath) {
   return(cert);
 }
 
-export function readPfcdConfig(configPath, testnet) {
+export function readDcrdConfig(configPath, testnet) {
   try {
     let readCfg;
-    if (fs.existsSync(pfcdCfg(configPath))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(pfcdCfg(configPath))).toString());
-    } else if (fs.existsSync(pfcdCfg(appDataDirectory()))) {
-      readCfg = ini.parse(Buffer.from(fs.readFileSync(pfcdCfg(appDataDirectory()))).toString());
+    if (fs.existsSync(dcrdCfg(configPath))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(configPath))).toString());
+    } else if (fs.existsSync(dcrdCfg(appDataDirectory()))) {
+      readCfg = ini.parse(Buffer.from(fs.readFileSync(dcrdCfg(appDataDirectory()))).toString());
     } else {
       return;
     }
     let newCfg = {};
     newCfg.rpc_host = "127.0.0.1";
     if (testnet) {
-      newCfg.rpc_port = "19709";
+      newCfg.rpc_port = "19109";
     } else {
-      newCfg.rpc_port = "9709";
+      newCfg.rpc_port = "9109";
     }
     let userFound, passFound = false;
     // Look through all top level config entries
@@ -269,12 +269,12 @@ export function readPfcdConfig(configPath, testnet) {
   }
 }
 
-export function getPfcdCert(pfcdCertPath) {
-  if(pfcdCertPath)
-    if(fs.existsSync(pfcdCertPath))
-      return fs.readFileSync(pfcdCertPath);
+export function getDcrdCert(dcrdCertPath) {
+  if(dcrdCertPath)
+    if(fs.existsSync(dcrdCertPath))
+      return fs.readFileSync(dcrdCertPath);
 
-  var certPath = getPfcdRpcCert();
+  var certPath = getDcrdRpcCert();
 
   var cert = fs.readFileSync(certPath);
   return(cert);
@@ -353,20 +353,20 @@ function makeRandomString(length) {
   return text;
 }
 
-export function createTempPfcdConf() {
-  if (!fs.existsSync(pfcdCfg(appDataDirectory()))) {
+export function createTempDcrdConf() {
+  if (!fs.existsSync(dcrdCfg(appDataDirectory()))) {
     var rpcUser = makeRandomString(10);
     var rpcPass = makeRandomString(10);
 
-    var pfcdConf = {
+    var dcrdConf = {
       "Application Options":
       {
         rpcuser: rpcUser,
         rpcpass: rpcPass,
-        rpclisten: "127.0.0.1:9709"
+        rpclisten: "127.0.0.1:9109"
       }
     };
-    fs.writeFileSync(pfcdCfg(appDataDirectory()), ini.stringify(pfcdConf));
+    fs.writeFileSync(dcrdCfg(appDataDirectory()), ini.stringify(dcrdConf));
   }
   return appDataDirectory();
 }
@@ -385,5 +385,5 @@ export function newWalletConfigCreation(testnet, walletPath) {
       nolegacyrpc: "1",
     },
   };
-  fs.writeFileSync(pfcwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
+  fs.writeFileSync(dcrwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
 }

@@ -6,7 +6,7 @@ import * as wallet from "wallet";
 import { closeWalletRequest } from "actions/WalletLoaderActions";
 import { closeDaemonRequest, getAvailableWallets } from "actions/DaemonActions";
 import { getTreasuryBalance, resetTreasuryBalance } from "actions/ClientActions";
-import { EXTERNALREQUEST_PFCDATA } from "main_dev/externalRequests";
+import { EXTERNALREQUEST_DCRDATA } from "main_dev/externalRequests";
 
 export const SETTINGS_SAVE = "SETTINGS_SAVE";
 export const SETTINGS_CHANGED = "SETTINGS_CHANGED";
@@ -42,12 +42,12 @@ export const saveSettings = (settings) => (dispatch, getState) => {
     wallet.reloadAllowedExternalRequests();
   }
 
-  const oldPfcdataEnabled = oldAllowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1;
-  const newPfcdataEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1;
-  if (newPfcdataEnabled === true && oldPfcdataEnabled === false) {
+  const oldDcrdataEnabled = oldAllowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
+  const newDcrdataEnabled = settings.allowedExternalRequests.indexOf(EXTERNALREQUEST_DCRDATA) > -1;
+  if (newDcrdataEnabled === true && oldDcrdataEnabled === false) {
     dispatch(getTreasuryBalance());
   }
-  if (newPfcdataEnabled === false && oldPfcdataEnabled === true) {
+  if (newDcrdataEnabled === false && oldDcrdataEnabled === true) {
     dispatch(resetTreasuryBalance());
   }
 

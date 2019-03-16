@@ -3,18 +3,18 @@ import parseArgs from "minimist";
 import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
-import { createLogger, lastLogLine, GetPfcdLogs, GetPfcwalletLogs } from "./main_dev/logging";
+import { createLogger, lastLogLine, GetDcrdLogs, GetDcrwalletLogs } from "./main_dev/logging";
 import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, GetPfcdPID, GetDcrwPID } from "./main_dev/launch";
+import { cleanShutdown, GetDcrdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
 
-// setPath as pfcredit
+// setPath as decrediton
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -81,7 +81,7 @@ checkAndInitWalletCfg(true);
 checkAndInitWalletCfg(false);
 
 logger.log("info", "Using config/data from:" + app.getPath("userData"));
-logger.log("info", "Versions: Pfcredit: %s, Electron: %s, Chrome: %s",
+logger.log("info", "Versions: Decrediton: %s, Electron: %s, Chrome: %s",
   app.getVersion(), process.versions.electron, process.versions.chrome);
 
 process.on("uncaughtException", err => {
@@ -171,7 +171,7 @@ ipcMain.on("get-info", (event, rpcCreds) => {
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+  const stopped = await cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -193,15 +193,15 @@ ipcMain.on("main-log", (event, ...args) => {
   logger.log(...args);
 });
 
-ipcMain.on("get-pfcd-logs", (event) => {
-  event.returnValue = GetPfcdLogs();
+ipcMain.on("get-dcrd-logs", (event) => {
+  event.returnValue = GetDcrdLogs();
 });
 
-ipcMain.on("get-pfcwallet-logs", (event) => {
-  event.returnValue = GetPfcwalletLogs();
+ipcMain.on("get-dcrwallet-logs", (event) => {
+  event.returnValue = GetDcrwalletLogs();
 });
 
-ipcMain.on("get-pfcredit-logs", (event) => {
+ipcMain.on("get-decrediton-logs", (event) => {
   const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
   readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
     if (err) {
@@ -212,12 +212,12 @@ ipcMain.on("get-pfcredit-logs", (event) => {
   });
 });
 
-ipcMain.on("get-last-log-line-pfcd", event => {
-  event.returnValue = lastLogLine(GetPfcdLogs());
+ipcMain.on("get-last-log-line-dcrd", event => {
+  event.returnValue = lastLogLine(GetDcrdLogs());
 });
 
-ipcMain.on("get-last-log-line-pfcwallet", event => {
-  event.returnValue = lastLogLine(GetPfcwalletLogs());
+ipcMain.on("get-last-log-line-dcrwallet", event => {
+  event.returnValue = lastLogLine(GetDcrwalletLogs());
 });
 
 ipcMain.on("get-previous-wallet", (event) => {
@@ -246,7 +246,7 @@ if (stopSecondInstance) {
 
 app.on("ready", async () => {
   // when installing (on first run) locale will be empty. Determine the user's
-  // OS locale and set that as pfcredit's locale.
+  // OS locale and set that as decrediton's locale.
   const cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
@@ -279,7 +279,7 @@ app.on("ready", async () => {
     await installExtensions();
     await setupProxy(logger);
   }
-  windowOpts.title = "Pfcredit - " + app.getVersion();
+  windowOpts.title = "Decrediton - " + app.getVersion();
 
   mainWindow = new BrowserWindow(windowOpts);
   installSessionHandlers(logger);
@@ -329,7 +329,7 @@ app.on("ready", async () => {
 app.on("before-quit", (event) => {
   logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
-  cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+  cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID());
   setMustOpenForm(true);
   app.exit(0);
 });

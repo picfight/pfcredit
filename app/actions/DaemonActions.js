@@ -43,26 +43,26 @@ export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
 export const WALLET_SETTINGS = "WALLET_SETTINGS";
 export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
-export const DELETE_PFCD_ATTEMPT = "DELETE_PFCD_ATTEMPT";
-export const DELETE_PFCD_FAILED = "DELETE_PFCD_FAILED";
-export const DELETE_PFCD_SUCCESS = "DELETE_PFCD_SUCCESS";
+export const DELETE_DCRD_ATTEMPT = "DELETE_DCRD_ATTEMPT";
+export const DELETE_DCRD_FAILED = "DELETE_DCRD_FAILED";
+export const DELETE_DCRD_SUCCESS = "DELETE_DCRD_SUCCESS";
 export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
 export const NETWORK_MATCH = "NETWORK_MATCH";
 
-export const checkPfcreditVersion = () => (dispatch, getState) =>{
+export const checkDecreditonVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
-  const releaseApiURL = "https://api.github.com/repos/decred/pfcredit/releases";
+  const releaseApiURL = "https://api.github.com/repos/decred/decrediton/releases";
   axios.get(releaseApiURL, { timeout: 5000 })
     .then(function (response) {
       const currentVersion = response.data[0].tag_name.split("v")[1];
       if (semverCompatible(currentVersion, detectedVersion)) {
-        wallet.log("info", "Pfcredit version up to date.");
+        wallet.log("info", "Decrediton version up to date.");
       } else {
         dispatch({ type: DECREDITON_VERSION, msg:  response.data[0].tag_name });
       }
     })
     .catch(function (error) {
-      console.log("Unable to check latest pfcredit release version.", error);
+      console.log("Unable to check latest decrediton release version.", error);
     });
 };
 
@@ -192,13 +192,13 @@ export const registerForErrors = () => (dispatch) => {
 
 export const deleteDaemonData = () => (dispatch, getState) => {
   const { appData } = getState().daemon;
-  dispatch({ type: DELETE_PFCD_ATTEMPT });
+  dispatch({ type: DELETE_DCRD_ATTEMPT });
   wallet.deleteDaemonData(appData, isTestNet(getState()))
     .then(() => {
-      dispatch({ type: DELETE_PFCD_SUCCESS });
+      dispatch({ type: DELETE_DCRD_SUCCESS });
       dispatch(shutdownApp());
     })
-    .catch((err) => dispatch({ err, type: DELETE_PFCD_FAILED }));
+    .catch((err) => dispatch({ err, type: DELETE_DCRD_FAILED }));
 };
 
 export const shutdownApp = () => (dispatch, getState) => {
@@ -316,7 +316,7 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
 export const prepStartDaemon = () => (dispatch, getState) => {
   const { daemon: { daemonAdvanced, openForm, walletName } } = getState();
   dispatch(registerForErrors());
-  dispatch(checkPfcreditVersion());
+  dispatch(checkDecreditonVersion());
   if (!daemonAdvanced) {
     dispatch(startDaemon());
     return;
@@ -386,8 +386,8 @@ export const syncDaemon = () =>
     updateBlockCount();
   };
 
-export const getPfcdLogs = () => {
-  wallet.getPfcdLogs()
+export const getDcrdLogs = () => {
+  wallet.getDcrdLogs()
     .then(logs => {
       return(logs);
     }).catch(
@@ -397,8 +397,8 @@ export const getPfcdLogs = () => {
       });
 };
 
-export const getPfcwalletLogs = () => {
-  wallet.getPfcwalletLogs()
+export const getDcrwalletLogs = () => {
+  wallet.getDcrwalletLogs()
     .then(logs => {
       return(logs);
     }).catch(
@@ -408,8 +408,8 @@ export const getPfcwalletLogs = () => {
       });
 };
 
-export const getPfcreditLogs = () => {
-  wallet.getPfcreditLogs()
+export const getDecreditonLogs = () => {
+  wallet.getDecreditonLogs()
     .then(logs => {
       return(logs);
     }).catch(

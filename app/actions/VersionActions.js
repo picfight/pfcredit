@@ -37,13 +37,13 @@ export const getWalletRPCVersionAttempt = () => (dispatch, getState) => {
       let walletVersion = getWalletRPCVersionResponse.getVersionString();
       ipcRenderer.send("grpc-versions-determined", { requiredVersion, walletVersion });
       if (!walletVersion) {
-        versionErr = "Unable to obtain Pfcwallet API version";
+        versionErr = "Unable to obtain Dcrwallet API version";
       } else {
         if (!semverCompatible(requiredVersion, walletVersion)) {
-          versionErr = "API versions not compatible..  Pfcredit requires "
+          versionErr = "API versions not compatible..  Decrediton requires "
             + requiredVersion + " but wallet " + walletVersion
             + " does not satisfy the requirement. Please check your"
-            + " installation, Pfcredit and Pfcwallet versions should match.";
+            + " installation, Decrediton and Dcrwallet versions should match.";
         }
       }
       if (versionErr) {

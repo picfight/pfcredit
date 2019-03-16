@@ -125,7 +125,7 @@ class History extends React.Component {
   onChangeSliderValue(value, minOrMax) {
     const { unitDivisor, currencyDisplay } = this.props;
     // this is needed because transactions at filter are all at atoms
-    const amount = currencyDisplay === "PFC" ? value*unitDivisor : value;
+    const amount = currencyDisplay === "DCR" ? value*unitDivisor : value;
 
     if(minOrMax === "min") {
       this.onChangeFilter({ minAmount: amount });

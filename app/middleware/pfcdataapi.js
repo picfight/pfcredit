@@ -1,8 +1,8 @@
 // @flow
 import axios from "axios";
 
-export const PFCDATA_URL_TESTNET = "https://testnet.pfcdata.org/api";
-export const PFCDATA_URL_MAINNET = "https://explorer.pfcdata.org/api";
+export const DCRDATA_URL_TESTNET = "https://testnet.dcrdata.org/api";
+export const DCRDATA_URL_MAINNET = "https://explorer.dcrdata.org/api";
 
 const GET = (path) => {
   return axios.get(path);
