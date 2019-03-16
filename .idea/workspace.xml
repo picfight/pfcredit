@@ -2,422 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c78d2a8-f4d3-4d27-9fbf-0e646082f4bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.development.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/grpc/client.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/pfcdataapi.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/pfcdataapi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/politeiaapi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/regen.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/stakepoolapi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/walletrpc/api_grpc_pb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/walletrpc/api_pb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/binding.gyp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/module.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/moduleTest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/moduleTestWallet.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.cc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/control.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/daemon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/governance.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/grpc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/locales.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/notifications.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/settings.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/sidebar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/snackbar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/stakepool.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/statistics.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/trezor.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/version.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/reducers/walletLoader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/selectors.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/sprites.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/staticPages/SourceSansPro-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/staticPages/secondInstance.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/configureStore.development.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/configureStore.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/store/configureStore.production.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/AccountRow.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/AccountsPage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/AgendaCard.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/AgendaOverview.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Balance.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Chart.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/CreateWalletForm.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/ExportPage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/EyeFilterMenu.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Fonts.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/GetStarted.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Global.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Governance.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Header.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Help.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/HistoryPage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/HomePage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Icons.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Input.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/LanguageSelect.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Layout.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Loading.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Logs.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/MiscComponents.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Modals.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/MyTickets.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/NumTicketsInput.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Paginator.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/ReactSelectGlobal.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/ReceivePage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/ReleaseNotes.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/SecurityCenterMessagePage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/SendPage.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Settings.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/SideBar.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/SimpleLoading.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Snackbar.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/StakePool.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Stakey.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/TextToggle.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Themes.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Tooltip.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Trezor.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Tutorial.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/TxDetails.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/TxHistory.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/accountsMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/blockChainLoading.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/daemonWaiting.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/discoveringAddresses.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/establishingRpc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/fetchingHeaders.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/finalizingSetup.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/governanceMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/helpMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/overviewMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/scanningBlocks.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/securityMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/settingsMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/ticketsMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/animations/transactionsMotion.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/Inconsolata-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/Inconsolata-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-Bold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-BoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-Italic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-LightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-Regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-SemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/fonts/SourceSansPro-SemiBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/3D_Loading.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherCurrentWalletDeactivate.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherCurrentWalletDeactivateHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherNetworkActive.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherWalletActivate.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherWalletActivateHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherWalletDelete.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/LauncherWalletDeleteHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/account-download.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/account-eye-hide.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/account-eye-open.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/account-rename.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accountDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accountImported.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accountInButton.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accounts-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accounts-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accountsHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/accountspage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/activeLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/add.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-down-key-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-down-mid-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-right-gray.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-right-key-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-right-smoke.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-up-key-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-up-light-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow-up-turquiose.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/arrow.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/au-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/availLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/balance-to-maintain.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/bell-notification.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/blockReward.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/blockchain.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/blockchainExplorerGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/blockchain_syncing_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/buy-picfight.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/changepasswordDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/checkMarkContextMenu.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/checkbox.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/checkmarkBlue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/checkmarkGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/closeWallet.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/closeWhite.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/constitutionGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/contextbutton-eye-default.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/contextbutton-eye-disabled.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/copy-to-clipboard-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/createnewwallet.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/daemon_waiting_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/de-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/delete.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/disableSpv.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/discovering_addresses_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/docsGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/dummy-icon.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/editDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/editHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/enableSpv.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/eng-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/es-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/establishing_rpc_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/expandDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/expandHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/expiry.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/externalDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/externalHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/fetching_headers_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/finalizing_setup_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/forumGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/fr-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/freenodeGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/gb-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/generate-address.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/githubGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/governance-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/governance-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/governanceHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/hamburger.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/help-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/help-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/help-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/help.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/helpHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/helppage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/img.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/import-script.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/indicator-confirmed.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/indicator-finished.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/indicator-invalid.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/indicator-pending.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/information.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ja-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/launcher-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-03.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-04.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-05.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-06.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lifecycle-06.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/lockedLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/matrixGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/max-fee.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/max-per-block.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/max-price-absolute.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/max-price-relative.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-arrow-up.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-cancel-rescan.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-rescan-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-rescan.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/menu-wallet.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/minus-big.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/minus-small.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/network.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/no-tickets.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/no-tx.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/notificationError.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/notificationSuccess.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-blockchain.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-check.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-checkcircle.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-safetytips.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-seed.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-stakingandgov.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/onboarding-wallet.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/overview-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/overview-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/overview-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/password.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/passwordInactive.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/pending_dots.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/picfight-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/picfight-macos-1024-logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/plus-big.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/plus-small.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/politeia-loading.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/pool-fee-address.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/pool-fees.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/privacyCustom.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/privacyDisabled.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/privacyStandard.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ptbr-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/qrcode-1.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/rebroadcastTransaction.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/receivedLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/release-note-v130.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/release-note-v140.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/release-note.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/restorewallet.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/rocketchat-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/rocketchat.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/rocketchatGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/scanning_blocks_loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/search.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/searchHightWidth.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/securityCenterHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/securitycenterpage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/securitycntr-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/securitycntr-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/securitycntr-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/send-to-others.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sendMaxDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sendMaxHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sendSelfDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sendSelfHover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sentLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/settings-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/settings-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/settings-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/settingsHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/settingspage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sidebar-balance.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/slackGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/sort-by.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/split-fee.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stake-pool.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakeRewardsActive.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakeRewardsDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakepoolsActive.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakepoolsDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakepoolsGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stakeySprites.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/starGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stats-disabled.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/stripe.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/telegramGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/testnet-logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-expired.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-immature.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-lifecycle.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-live.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-missed.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-revoked.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-reward.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-unmined.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticket-voted.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticketFeeTransaction.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-cebab-disabled.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-cebab-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-cebab.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-kebab-disabled.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-kebab-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-card-kebab.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-agenda-close.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-cogs-closed.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-cogs-opened.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-info.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-manage-stakepools.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/tickets-ticket.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticketsHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/ticketspage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/time-lock.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transactions-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transactions-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transactions-hover.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transactionsHeader.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transactionspage.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/transparent.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/trezor-active.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/trezor-default.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/trezor-hover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/txDetailsArrowLeft.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/vote-time-stats.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/voteTimeActive.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/voteTimeDefault.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/votedLegend.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/voting-address.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/votingGrey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/wallet-blue.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/wallet-gray.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/wallet-smoke.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/wallet-turquoise.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/warningExclamationOrange.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/warrior.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/watchOnlyNav.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/what-is-staking.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/x-grey.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/icons/zh-flag.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/main.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/theme.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/app.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/client.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/constants.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/control.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/daemon.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/loader.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/message.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/notifications.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/seed.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/service.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/stakePool.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/version.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/yarn.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/appveyor.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/babel.config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icon.icns" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/128x128.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/16x16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/24x24.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/256x256.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/32x32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/512x512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/64x64.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/icons/96x96.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/picfightiton.desktop" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/aliasDefaultMessage.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/assembleTranslated.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/checkDuplicateTranslationIds.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/docsTranslationStatus.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/prepareUntranslated.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/somefile.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/data/FullProposalMarkdown.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/mocks/electronMock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/mocks/fileMock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/mocks/grpcMock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/mocks/styleMock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/setup.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/components/Balance.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/components/SideBar/LastBlockTime.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/components/views/GovernancePage/Proposals/Details/ProposalText.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/helpers/addresses.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/unit/helpers/date.spec.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.base.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.development.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.electron.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.config.production.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -427,11 +12,41 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="yarn.lock" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/yarn.lock">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="9680" column="29" selection-start-line="9680" selection-start-column="29" selection-end-line="9680" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>spdx-exceptions</find>
+    </findStrings>
+    <dirStrings>
+      <dir>D:\PICFIGHT\src\github.com\picfight\pfcredit</dir>
+    </dirStrings>
   </component>
   <component name="GOROOT" path="D:\Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/yarn.lock" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
@@ -440,7 +55,11 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="NodePackageJsonFileManager">
-    <packageJsonPaths />
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/app/modules/win32ipc/package.json" />
+      <path value="$PROJECT_DIR$/app/package.json" />
+      <path value="$PROJECT_DIR$/package.json" />
+    </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="260" />
@@ -453,6 +72,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -464,7 +84,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -491,7 +110,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19189766" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25266525" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
       <window_info anchor="right" id="Database" order="9" />
@@ -505,10 +124,8 @@
       <window_info id="Favorites" order="8" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
@@ -549,6 +166,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="28" column="38" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/yarn.lock">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="9680" column="29" selection-start-line="9680" selection-start-column="29" selection-end-line="9680" selection-end-column="29" />
         </state>
       </provider>
     </entry>
