@@ -1,87 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c78d2a8-f4d3-4d27-9fbf-0e646082f4bc" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.tx/config" beforeDir="false" afterPath="$PROJECT_DIR$/.tx/config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/actions/ClientActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/actions/ClientActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/actions/DaemonActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/actions/DaemonActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/actions/TrezorActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/actions/TrezorActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/actions/VersionActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/actions/VersionActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/modals/AboutModal/AboutModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/modals/AboutModal/AboutModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/FatalErrorPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/FatalErrorPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/LanguageSelectPage/Page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/LanguageSelectPage/Page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/ReleaseNotes/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/ReleaseNotes/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GetStartedPage/messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GetStartedPage/messages.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/GovernancePage/Proposals/Details/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/GovernancePage/Proposals/Details/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/HelpPage/LinksTab/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/HelpPage/LinksTab/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/HelpPage/LogsTab/Page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/HelpPage/LogsTab/Page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/HelpPage/LogsTab/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/HelpPage/LogsTab/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/InvalidRPCVersion.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/InvalidRPCVersion.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/SettingsPage/Page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/SettingsPage/Page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/ShutdownAppPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/ShutdownAppPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/views/WalletError/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/views/WalletError/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/InfoModals/GapLimit.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/InfoModals/GapLimit.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/InfoModals/PurchaseTickets.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/InfoModals/PurchaseTickets.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.3.0.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.3.0.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.3.1.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.3.1.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.4.0.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/ReleaseNotes/v1.4.0.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/en/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/en/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/es/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/es/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/fr/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/fr/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/ja/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/ja/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/pt/InfoModals/GapLimit.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/pt/InfoModals/GapLimit.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/pt/InfoModals/PurchaseTickets.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/pt/InfoModals/PurchaseTickets.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/pt/ReleaseNotes/v1.4.0.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/pt/ReleaseNotes/v1.4.0.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/pt/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/pt/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/zh/ReleaseNotes/v1.4.0.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/zh/ReleaseNotes/v1.4.0.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/docs/zh/Warnings/TrezorWipe.md" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/docs/zh/Warnings/TrezorWipe.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/extracted/static/menus.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/extracted/static/menus.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.de.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.de.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.es.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.es.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.fr.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.fr.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.ja.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.ja.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.pt.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.pt.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/po/picfightiton.zh.po" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/po/picfightiton.zh.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/pot/picfightiton.pot" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/pot/picfightiton.pot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/de.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/de.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/dev.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/dev.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/es.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/es.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/fr.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/fr.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/ja.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/ja.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/original.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/original.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/pt.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/pt.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/i18n/translations/zh.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/i18n/translations/zh.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main.development.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.development.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/externalRequests.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/externalRequests.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/launch.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/launch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/logging.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/logging.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/paths.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/paths.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/main_dev/templates.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/main_dev/templates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/middleware/api.proto" beforeDir="false" afterPath="$PROJECT_DIR$/app/middleware/api.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/binding.gyp" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/win32ipc/binding.gyp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/module.cc" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/win32ipc/module.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/moduleTestWallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/win32ipc/moduleTestWallet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.cc" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/modules/win32ipc/pipe_wrapper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/staticPages/secondInstance.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/staticPages/secondInstance.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/style/Global.less" beforeDir="false" afterPath="$PROJECT_DIR$/app/style/Global.less" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/daemon.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/wallet/daemon.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/wallet/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/wallet/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appveyor.yml" beforeDir="false" afterPath="$PROJECT_DIR$/appveyor.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/picfightiton.desktop" beforeDir="false" afterPath="$PROJECT_DIR$/picfightiton.desktop" afterDir="false" />
-    </list>
+    <list default="true" id="8c78d2a8-f4d3-4d27-9fbf-0e646082f4bc" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +37,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -129,6 +48,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -159,7 +79,6 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="right" id="Database" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" />
@@ -167,24 +86,13 @@
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
