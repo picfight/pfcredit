@@ -1,6 +1,6 @@
 # pfcredit
 
-[![Build Status](https://travis-ci.org/decred/pfcredit.png?branch=master)](https://travis-ci.org/decred/pfcredit)
+[![Build Status](https://travis-ci.org/picfight/pfcredit.png?branch=master)](https://travis-ci.org/picfight/pfcredit)
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
 pfcredit is a cross-platform GUI for picfight written in node.js using
@@ -84,7 +84,7 @@ Adjust the following steps for the paths you want to use.
 ``` bash
 mkdir code
 cd code
-git clone https://github.com/decred/pfcredit.git
+git clone https://github.com/picfight/pfcredit.git
 cd pfcredit
 yarn
 mkdir bin/
@@ -189,7 +189,7 @@ If you have any further questions you can find us at:
 ## Issue Tracker
 
 The
-[integrated github issue tracker](https://github.com/decred/pfcredit/issues)
+[integrated github issue tracker](https://github.com/picfight/pfcredit/issues)
 is used for this project.
 
 ## License

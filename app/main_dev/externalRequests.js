@@ -84,7 +84,7 @@ export const allowExternalRequest = (externalReqType) => {
     addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
     break;
   case EXTERNALREQUEST_UPDATE_CHECK:
-    addAllowedURL("https://api.github.com/repos/decred/pfcredit/releases");
+    addAllowedURL("https://api.github.com/repos/picfight/pfcredit/releases");
     break;
   case EXTERNALREQUEST_POLITEIA:
     addAllowedURL(POLITEIA_URL_TESTNET);

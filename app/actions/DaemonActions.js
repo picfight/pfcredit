@@ -44,7 +44,7 @@ export const DELETE_PFCD_SUCCESS = "DELETE_PFCD_SUCCESS";
 
 export const checkPfcreditVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
-  const releaseApiURL = "https://api.github.com/repos/decred/pfcredit/releases";
+  const releaseApiURL = "https://api.github.com/repos/picfight/pfcredit/releases";
   axios.get(releaseApiURL, { timeout: 5000 })
     .then(function (response) {
       const currentVersion = response.data[0].tag_name.split("v")[1];

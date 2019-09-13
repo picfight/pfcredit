@@ -14,7 +14,7 @@ export const LinksTab = () => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="help.subtitle" m="Community Platforms"/></div>
     <div className="help-icons-list">
-      <HelpLink className={"help-github-icon"} href="https://github.com/decred/pfcredit"><T id="help.github" m="Github" /></HelpLink>
+      <HelpLink className={"help-github-icon"} href="https://github.com/picfight/pfcredit"><T id="help.github" m="Github" /></HelpLink>
       <HelpLink className={"help-docs-icon"} href="https://docs.picfight.org/"><T id="help.documentation" m="Documentation" /></HelpLink>
       <HelpLink className={"help-stakepools-icon"} href="https://picfight.org/stakepools"><T id="help.stakepools" m=" Stakepools" /></HelpLink>
       <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.picfight.org"><T id="help.rocketchat" m="RocketChat" /></HelpLink>
