@@ -81,7 +81,7 @@ class RoutedTabsHeader extends React.Component {
     return (
       <div className="tabs">
         {tabLinks}
-        {this.props.caret ? this.props.caret : caret}
+        {caret}
       </div>
     );
   }

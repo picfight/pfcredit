@@ -9,17 +9,14 @@ const Modal = ({
   updateConfirmPrivatePassphrase,
   confirmPrivPassError,
   hasFailedAttempt,
-  triggerPassphraseModalSubmit,
   onSubmit,
-  onTriggerPassphraseModalSubmit,
   ...props
 }) => (
   <PassphraseModal
     {...{
       ...props,
       onSubmit,
-      prependPassphraseRow: true,
-      triggerSubmit: triggerPassphraseModalSubmit,
+      prependPassphraseRow: true
     }}
   >
     <PassphraseModalField
@@ -32,7 +29,6 @@ const Modal = ({
         placeholder=""
         value={privPass}
         onChange={(e) => updatePrivatePassphrase(e.target.value)}
-        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
     </PassphraseModalField>
 
@@ -47,7 +43,6 @@ const Modal = ({
         placeholder=""
         value={confirmPrivPass}
         onChange={(e) => updateConfirmPrivatePassphrase(e.target.value)}
-        onKeyDownSubmit={onTriggerPassphraseModalSubmit}
       />
     </PassphraseModalField>
   </PassphraseModal>

@@ -9,24 +9,22 @@ import {
   PUBLISHTX_FAILED,
   SIGNTX_FAILED, CONSTRUCTTX_FAILED,
   PURCHASETICKETS_SUCCESS, PURCHASETICKETS_FAILED,
-  STARTTICKETBUYERV2_SUCCESS, STARTTICKETBUYERV2_FAILED,
-  STOPTICKETBUYERV2_SUCCESS,
+  STARTAUTOBUYER_SUCCESS, STARTAUTOBUYER_FAILED,
+  STOPAUTOBUYER_SUCCESS,
   REVOKETICKETS_SUCCESS, REVOKETICKETS_FAILED,
-  IMPORTSCRIPT_MANUAL_SUCCESS, IMPORTSCRIPT_MANUAL_FAILED,
+  IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_FAILED,
   RENAMEACCOUNT_SUCCESS, RENAMEACCOUNT_FAILED,
   GETNEXTACCOUNT_SUCCESS, GETNEXTACCOUNT_FAILED,
   CHANGEPASSPHRASE_SUCCESS, CHANGEPASSPHRASE_FAILED,
   SIGNMESSAGE_FAILED, VERIFYMESSAGE_FAILED,
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS, PUBLISHUNMINEDTRANSACTIONS_FAILED,
   GETACCOUNTEXTENDEDKEY_FAILED,
-  PUBLISHTX_SUCCESS,
 } from "../actions/ControlActions";
 import {
   UPDATESTAKEPOOLCONFIG_SUCCESS, UPDATESTAKEPOOLCONFIG_FAILED,
   SETSTAKEPOOLVOTECHOICES_SUCCESS, SETSTAKEPOOLVOTECHOICES_FAILED,
   REMOVESTAKEPOOLCONFIG,
   ADDCUSTOMSTAKEPOOL_SUCCESS, ADDCUSTOMSTAKEPOOL_FAILED,
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED
 } from "../actions/StakePoolActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
@@ -45,25 +43,11 @@ import {
   GETWALLETSEEDSVC_FAILED,
   SPVSYNC_FAILED,
 } from "actions/WalletLoaderActions";
-import {
-  TRZ_TOGGLEPINPROTECTION_SUCCESS, TRZ_TOGGLEPINPROTECTION_FAILED,
-  TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS, TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED,
-  TRZ_CHANGEHOMESCREEN_SUCCESS, TRZ_CHANGEHOMESCREEN_FAILED,
-  TRZ_CHANGELABEL_SUCCESS, TRZ_CHANGELABEL_FAILED,
-  TRZ_WIPEDEVICE_SUCCESS, TRZ_WIPEDEVICE_FAILED,
-  TRZ_RECOVERDEVICE_SUCCESS, TRZ_RECOVERDEVICE_FAILED,
-  TRZ_INITDEVICE_SUCCESS, TRZ_INITDEVICE_FAILED,
-  TRZ_UPDATEFIRMWARE_SUCCESS, TRZ_UPDATEFIRMWARE_FAILED,
-  TRZ_NOCONNECTEDDEVICE,
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
-} from "actions/TrezorActions";
 
 import {
   GETACTIVEVOTE_FAILED, GETVETTED_FAILED, GETPROPOSAL_FAILED,
-  UPDATEVOTECHOICE_FAILED, GETVETTED_UPDATEDVOTERESULTS_FAILED
+  UPDATEVOTECHOICE_FAILED
 } from "actions/GovernanceActions";
-
-const WRONG_PASSPHRASE_MSG = "WRONG_PASSPHRASE_MSG";
 
 const messages = defineMessages({
   defaultSuccessMessage: {
@@ -114,11 +98,11 @@ const messages = defineMessages({
     id: "tickets.errors.revokeTicketsFailed",
     defaultMessage: "{originalError}"
   },
-  IMPORTSCRIPT_MANUAL_SUCCESS: {
+  IMPORTSCRIPT_SUCCESS: {
     id: "tickets.importScriptHeader",
-    defaultMessage: "You successfully imported a script"
+    defaultMessage: "You successfully imported a script tickets"
   },
-  IMPORTSCRIPT_MANUAL_FAILED: {
+  IMPORTSCRIPT_FAILED: {
     id: "tickets.errors.importScriptFailed",
     defaultMessage: "{originalError}"
   },
@@ -141,10 +125,6 @@ const messages = defineMessages({
   UPDATESTAKEPOOLCONFIG_FAILED: {
     id: "tickets.errors.updateStakePoolConfigFailed",
     defaultMessage: "{originalError}"
-  },
-  REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED: {
-    id: "tickets.errors.refreshStakePoolInfo",
-    defaultMessage: "Error refreshing stakepool data from {host}: {originalError}"
   },
   SETSTAKEPOOLVOTECHOICES_SUCCESS: {
     id: "tickets.setStakePoolVoteChoices",
@@ -176,7 +156,7 @@ const messages = defineMessages({
   },
   CHANGEPASSPHRASE_FAILED: {
     id: "settings.errors.changePassphraseFailed",
-    defaultMessage: "Update passphrase failed. Incorrect private passphrase, please try again."
+    defaultMessage: "{originalError}"
   },
   DECODERAWTXS_FAILED: {
     id: "decodeRawTx.errors.decodeFailed",
@@ -221,77 +201,11 @@ const messages = defineMessages({
   SPVSYNC_FAILED: {
     id: "spvSync.Failed",
     defaultMessage: "Error syncing SPV wallet: {originalError}"
-  },
-  STARTTICKETBUYERV2_SUCCESS: {
-    id: "runTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully started."
-  },
-  STARTTICKETBUYERV2_FAILED: {
-    id: "runTicketBuyer.Failed",
-    defaultMessage: "Invalid private password.  Please try again."
-  },
-  STOPTICKETBUYERV2_SUCCESS: {
-    id: "stopTicketBuyer.Success",
-    defaultMessage: "Ticket Buyer successfully stopped."
-  },
-  WRONG_PASSPHRASE_MSG: {
-    id: "errors.wrongPassphrase",
-    defaultMessage: "Wrong private passphrase entered. Please verify you have typed the correct private passphrase for the wallet."
-  },
-  TRZ_TOGGLEPINPROTECTION_SUCCESS_ENABLED: {
-    id: "trezor.pinProtectionSuccess.enabled",
-    defaultMessage: "Pin protection has been enabled in trezor '{label}'"
-  },
-  TRZ_TOGGLEPINPROTECTION_SUCCESS_DISABLED: {
-    id: "trezor.pinProtectionSuccess.disabled",
-    defaultMessage: "Pin protection has been disabled in trezor '{label}'"
-  },
-  TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_ENABLED: {
-    id: "trezor.passphraseProtectionSuccess.enabled",
-    defaultMessage: "Passphrase protection has been enabled in trezor '{label}'"
-  },
-  TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS_DISABLED: {
-    id: "trezor.passphraseProtectionSuccess.disabled",
-    defaultMessage: "Passphrase protection has been disabled in trezor '{label}'"
-  },
-  TRZ_CHANGEHOMESCREEN_SUCCESS: {
-    id: "trezor.changeHomeScreen.success",
-    defaultMessage: "Trezor home screen successfully changed"
-  },
-  TRZ_CHANGELABEL_SUCCESS: {
-    id: "trezor.changeLabel.success",
-    defaultMessage: "Changed label on selected trezor to '{label}'"
-  },
-  TRZ_WIPEDEVICE_SUCCESS: {
-    id: "trezor.wipeDevice.success",
-    defaultMessage: "Trezor device wiped"
-  },
-  TRZ_RECOVERDEVICE_SUCCESS: {
-    id: "trezor.recoverDevice.success",
-    defaultMessage: "Trezor device recovered"
-  },
-  TRZ_INITDEVICE_SUCCESS: {
-    id: "trezor.initDevice.success",
-    defaultMessage: "Trezor device initialized with new seed"
-  },
-  TRZ_UPDATEFIRMWARE_SUCCESS: {
-    id: "trezor.updateFirmware.success",
-    defaultMessage: "Firmware updated on trezor device"
-  },
-  TRZ_NOCONNECTEDDEVICE: {
-    id: "trezor.noConnectedDevice",
-    defaultMessage: "No trezor device connected. Check the device connection and trezor bridge."
-  },
-  TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
-    id: "trezor.getWalletCreationMasterPubKey.failed",
-    defaultMessage: "Failed to obtain master extended pubkey from trezor device: {originalError}"
   }
 });
 
 export default function snackbar(state = {}, action) {
   let values, type, message;
-
-  const oldMessages = state.messages || [];
 
   switch (action.type) {
   case SNACKBAR_SIMPLE_MESSAGE: {
@@ -302,19 +216,13 @@ export default function snackbar(state = {}, action) {
   }
   // snackbar management events
   case SNACKBAR_DISMISS_MESSAGES:
-    return { ...state, messages: action.newMessages };
+    return { ...state, messages: Array() };
 
   case NEW_TRANSACTIONS_RECEIVED: {
+    // TODO: show more notifications or a summary when receiving many transactions.
     const tx = action.newlyMinedTransactions.length
-      ? action.newlyMinedTransactions[action.newlyMinedTransactions.length-1]
-      : action.newlyUnminedTransactions[action.newlyUnminedTransactions.length-1];
-
-    // check if this transaction is already in the message stack and don't add it
-    // if it is to prevent double notifications (eg: published tx and it got mined
-    // very fast)
-    if (oldMessages.some(m => m.txHash === tx.txHash)) {
-      break;
-    }
+      ? action.newlyMinedTransactions[0]
+      : action.newlyUnminedTransactions[0];
 
     type = tx.direction || wallet.TRANSACTION_TYPES[tx.type];
     message = { ...tx, type };
@@ -322,57 +230,31 @@ export default function snackbar(state = {}, action) {
     break;
   }
 
-  // Success messages
-
+  // all simple success notifications. Just add the type below and the message
+  // on the messages variable above if you need a simple message, without extra
+  // data.
   case EXPORT_COMPLETED:
+    values = { filename: action.filename };
   case RENAMEACCOUNT_SUCCESS:
   case GETNEXTACCOUNT_SUCCESS:
   case CHANGEPASSPHRASE_SUCCESS:
   case REVOKETICKETS_SUCCESS:
-  case IMPORTSCRIPT_MANUAL_SUCCESS:
-  case STARTTICKETBUYERV2_SUCCESS:
-  case STOPTICKETBUYERV2_SUCCESS:
+  case IMPORTSCRIPT_SUCCESS:
+    // willRescan will be false when importing just prior to a ticket purchase
+    if (action.willRescan === false) break;
+  case STOPAUTOBUYER_SUCCESS:
+  case STARTAUTOBUYER_SUCCESS:
   case UPDATESTAKEPOOLCONFIG_SUCCESS:
   case SETSTAKEPOOLVOTECHOICES_SUCCESS:
   case REMOVESTAKEPOOLCONFIG:
   case SEEDCOPIEDTOCLIPBOARD:
   case PUBLISHUNMINEDTRANSACTIONS_SUCCESS:
-  case PURCHASETICKETS_SUCCESS:
-  case ADDCUSTOMSTAKEPOOL_SUCCESS:
-  case PUBLISHTX_SUCCESS:
-  case TRZ_CHANGEHOMESCREEN_SUCCESS:
-  case TRZ_WIPEDEVICE_SUCCESS:
-  case TRZ_RECOVERDEVICE_SUCCESS:
-  case TRZ_INITDEVICE_SUCCESS:
-  case TRZ_UPDATEFIRMWARE_SUCCESS:
-  case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
     type = "Success";
     message = messages[action.type] || messages.defaultSuccessMessage;
-
-    // custom values for some success messages
-    switch (action.type) {
-    case ADDCUSTOMSTAKEPOOL_SUCCESS:
-      values = { host: action.poolInfo.Host };
-      break;
-    case EXPORT_COMPLETED:
-      values = { filename: action.filename };
-      break;
-    case PURCHASETICKETS_SUCCESS:
-      values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
-      break;
-    case PUBLISHTX_SUCCESS:
-      values = { hash: action.hash };
-      break;
-    case TRZ_TOGGLEPINPROTECTION_SUCCESS:
-    case TRZ_TOGGLEPASSPHRASEPROTECTION_SUCCESS:
-    case TRZ_CHANGELABEL_SUCCESS:
-      values = { label: action.deviceLabel };
-      break;
-    }
-
     break;
 
-  // Error messages
+  // all simple error messages. Note that the action *must* have an action.error
+  // attribute.
   case WALLETREMOVED_FAILED:
   case RENAMEACCOUNT_FAILED:
   case GETNEXTACCOUNT_FAILED:
@@ -382,9 +264,9 @@ export default function snackbar(state = {}, action) {
   case PUBLISHTX_FAILED:
   case PURCHASETICKETS_FAILED:
   case REVOKETICKETS_FAILED:
-  case IMPORTSCRIPT_MANUAL_FAILED:
+  case IMPORTSCRIPT_FAILED:
+  case STARTAUTOBUYER_FAILED:
   case UPDATESTAKEPOOLCONFIG_FAILED:
-  case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
   case SETSTAKEPOOLVOTECHOICES_FAILED:
   case ADDCUSTOMSTAKEPOOL_FAILED:
   case DECODERAWTXS_FAILED:
@@ -398,62 +280,33 @@ export default function snackbar(state = {}, action) {
   case GETWALLETSEEDSVC_FAILED:
   case GETACTIVEVOTE_FAILED:
   case GETVETTED_FAILED:
-  case GETVETTED_UPDATEDVOTERESULTS_FAILED:
   case GETPROPOSAL_FAILED:
   case SPVSYNC_FAILED:
   case UPDATEVOTECHOICE_FAILED:
   case GETACCOUNTEXTENDEDKEY_FAILED:
-  case STARTTICKETBUYERV2_FAILED:
-  case TRZ_TOGGLEPINPROTECTION_FAILED:
-  case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
-  case TRZ_CHANGEHOMESCREEN_FAILED:
-  case TRZ_CHANGELABEL_FAILED:
-  case TRZ_WIPEDEVICE_FAILED:
-  case TRZ_RECOVERDEVICE_FAILED:
-  case TRZ_INITDEVICE_FAILED:
-  case TRZ_UPDATEFIRMWARE_FAILED:
-  case TRZ_NOCONNECTEDDEVICE:
-  case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
-    if (action.error && String(action.error).indexOf("wallet.Unlock: invalid passphrase:: secretkey.DeriveKey") > -1) {
-      // intercepting all wrong passphrase errors, independently of which error
-      // state was triggered. Not terribly pretty.
-      message = messages[WRONG_PASSPHRASE_MSG];
-    } else {
-      message = messages[action.type] || messages.defaultErrorMessage;
-    }
-
     type = "Error";
+    message = messages[action.type] || messages.defaultErrorMessage;
     values = { originalError: String(action.error) };
-
-    // custom values for some error messages
-    switch (action.type) {
-    case REFRESHSTAKEPOOLPURCHASEINFORMATION_FAILED:
-      values = { ...values, host: action.host };
-    }
-
-    if ((process.env.NODE_ENV === "development") && action.error) {
-      // in development mode, log failures as errors in the console which helps
-      // in determining where the failure came from when it's being correctly
-      // handled in an action.
-      console.error(action.type, "\n", action.error);
-    }
-
     break;
 
-  case TRZ_TOGGLEPINPROTECTION_SUCCESS:
+  // success messages that add some context/interpolation/values.
+  case PURCHASETICKETS_SUCCESS:
     type = "Success";
-    message = messages["TRZ_TOGGLEPINPROTECTION_SUCCESS_" + (action.clearProtection ? "DISABLED" : "ENABLED")];
-    values = { label: action.deviceLabel };
+    message = messages[PURCHASETICKETS_SUCCESS];
+    values = { numTickets: action.purchaseTicketsResponse.getTicketHashesList().length };
+    break;
+
+  case ADDCUSTOMSTAKEPOOL_SUCCESS:
+    type = "Success";
+    message = messages[ADDCUSTOMSTAKEPOOL_SUCCESS];
+    values = { host: action.poolInfo.Host };
     break;
   }
 
-  if (!message || !type) {
-    // no new messages
-    return { ...state };
+  if (message && type) {
+    const newMessage = { type, message, values };
+    return { ...state, messages: [ ...state.messages, newMessage ] };
   }
 
-  const key = "ntf"+Math.random();
-  const newMessage = { type, message, values, key };
-
-  return { ...state, messages: [ ...state.messages, newMessage ] };
+  return { ...state };
 }

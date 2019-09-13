@@ -165,27 +165,11 @@ The files inside the `po/` and `pot/` subdir are managed by the scripts and by t
 
 ## Generating files for translation
 
-Assuming all strings in the app have been properly recorded on the `extracted/` dir by the babel plugin, to generate the `pfcredit.pot` file to be sent for translation, run the following:
+Assuming all strings in the app have been properly recorded on the `extracted/` dir by the babel plugin, to generate the `decrediton.pot` file to be sent for translation, run the following:
 
 ```shell
 $ npm run i18n-prepare-untranslated
 ```
-
-## Obtaining translated files
-
-To download the translated files from Transifex you have two options: log in to the Transifex admin UI, go into each resource, click on the action menu (the three vertical dots menu at the top right corner of the UI) and select "Download All Translations". You'll get a zip file with all translated files in your email.
-
-A second option is to use the [Transifex CLI client](https://docs.transifex.com/client/config). Again, log into Transifex, go to your settings page and create an API token. Then configure an environment variable `TX_TOKEN` holding the value of the generated token.
-
-Then install the Transifex CLI client via pip (minimum version: **0.13.4**) and run `tx pull -a`. For example:
-
-```
-$ cd src/pfcredit
-$ export TX_TOKEN="<your api token>"
-$ tx pull -a
-```
-
-**:exclamation: Note**: I (@matheusd) haven't personally tested the `tx push` command within the Pfcredit project, so pushing might wrongly replace the resources in Transifex. Use with care!
 
 ## Assembling translated files
 
@@ -195,7 +179,7 @@ Transifex will generate a bunch of *.po files (one per language). Save them on t
 $ npm run i18n-assemble-translated
 ```
 
-**:exclamation: Note**: Transifex generates files with a filename following the pattern `pfcredit_(lang).po` but react-intl-po expects a filename with the pattern `pfcredit.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
+**:exclamation: Note**: Transifex generates files with a filename following the pattern `decrediton_(lang).po` but react-intl-po expects a filename with the pattern `decrediton.(lang).po`. The `i18n-assemble-translated` script deletes old and renames the files in the po dir accordingly, so just extract the zip with all translations in the appropriate directory and the script will take care of the rest.
 
 
 ## Adding a new locale
@@ -210,4 +194,4 @@ The "dev" locale ("Dev Locale for testing" in the app) is used mainly for testin
 
 Any developer can change any string, format or property of this locale as needed for testing and without risking to modify a locale actually used in production.
 
-**:exclamation: Note**: If you test a packaged version of pfcredit locally while still using the `dev` locale, you'll get an error on the debug console saying _language is not defined_. Just edit your local `config.json` and change locale to "en".
+**:exclamation: Note**: If you test a packaged version of picfightiton locally while still using the `dev` locale, you'll get an error on the debug console saying _language is not defined_. Just edit your local `config.json` and change locale to "en".

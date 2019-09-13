@@ -1,7 +1,6 @@
 import { pfcwalletCfg, getWalletPath, getExecutablePath, pfcdCfg, getPfcdRpcCert } from "./paths";
 import { getWalletCfg, readPfcdConfig } from "../config";
-import { createLogger, AddToPfcdLog, AddToPfcwalletLog, GetPfcdLogs,
-  GetPfcwalletLogs, lastErrorLine, lastPanicLine, ClearPfcwalletLogs, CheckDaemonLogs } from "./logging";
+import { createLogger, AddToPfcdLog, AddToPfcwalletLog, GetPfcdLogs, GetPfcwalletLogs, lastErrorLine } from "./logging";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import os from "os";
@@ -16,10 +15,6 @@ const logger = createLogger(debug);
 let pfcdPID;
 let dcrwPID;
 
-// windows-only stuff
-let dcrwPipeRx;
-let pfcdPipeRx;
-
 let dcrwPort;
 
 function closeClis() {
@@ -31,22 +26,11 @@ function closeClis() {
     closePFCW(dcrwPID);
 }
 
-export function closePFCD() {
+function closePFCD() {
   if (require("is-running")(pfcdPID) && os.platform() != "win32") {
     logger.log("info", "Sending SIGINT to pfcd at pid:" + pfcdPID);
     process.kill(pfcdPID, "SIGINT");
-    pfcdPID = null;
-  } else if (require("is-running")(pfcdPID)) {
-    try {
-      const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      win32ipc.closePipe(pfcdPipeRx);
-      pfcdPID = null;
-    } catch (e) {
-      logger.log("error", "Error closing pfcd piperx: " + e);
-      return false;
-    }
   }
-  return true;
 }
 
 export const closePFCW = () => {
@@ -54,13 +38,6 @@ export const closePFCW = () => {
     if (require("is-running")(dcrwPID) && os.platform() != "win32") {
       logger.log("info", "Sending SIGINT to pfcwallet at pid:" + dcrwPID);
       process.kill(dcrwPID, "SIGINT");
-    } else if (require("is-running")(dcrwPID)) {
-      try {
-        const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-        win32ipc.closePipe(dcrwPipeRx);
-      } catch (e) {
-        logger.log("error", "Error closing pfcwallet piperx: " + e);
-      }
     }
     dcrwPID = null;
     return true;
@@ -79,7 +56,7 @@ export async function cleanShutdown(mainWindow, app) {
     // Sent shutdown message again as we have seen it missed in the past if they
     // are still running.
     setTimeout(function () { closeClis(); }, cliShutDownPause * 1000);
-    logger.log("info", "Closing pfcredit.");
+    logger.log("info", "Closing picfightiton.");
 
     let shutdownTimer = setInterval(function () {
       const stillRunning = (require("is-running")(pfcdPID) && os.platform() != "win32");
@@ -120,7 +97,7 @@ export const launchPFCD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
 
   const pfcdExe = getExecutablePath("pfcd", argv.customBinPath);
   if (!fs.existsSync(pfcdExe)) {
-    logger.log("error", "The pfcd executable does not exist. Expected to find it at " + pfcdExe);
+    logger.log("error", "The pfcd file does not exists");
     return;
   }
 
@@ -128,8 +105,8 @@ export const launchPFCD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     try {
       const util = require("util");
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      pfcdPipeRx = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", pfcdPipeRx.readEnd));
+      var pipe = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
       logger.log("error", "can't find proper module to launch pfcd: " + e);
     }
@@ -152,11 +129,7 @@ export const launchPFCD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      var lastPfcdErr = lastErrorLine(GetPfcdLogs());
-      if (!lastPfcdErr || lastPfcdErr == "") {
-        lastPfcdErr = lastPanicLine(GetPfcdLogs());
-        console.log("panic error", lastPfcdErr);
-      }
+      const lastPfcdErr = lastErrorLine(GetPfcdLogs());
       logger.log("error", "pfcd closed due to an error: ", lastPfcdErr);
       reactIPC.send("error-received", true, lastPfcdErr);
     } else {
@@ -164,12 +137,7 @@ export const launchPFCD = (mainWindow, daemonIsAdvanced, daemonPath, appdata, te
     }
   });
 
-  pfcd.stdout.on("data", (data) => {
-    AddToPfcdLog(process.stdout, data, debug);
-    if (CheckDaemonLogs(data)) {
-      reactIPC.send("warning-received", true, data.toString("utf-8"));
-    }
-  });
+  pfcd.stdout.on("data", (data) => AddToPfcdLog(process.stdout, data, debug));
   pfcd.stderr.on("data", (data) => AddToPfcdLog(process.stderr, data, debug));
 
   newConfig.pid = pfcd.pid;
@@ -207,11 +175,15 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
 
   args.push("--ticketbuyer.nospreadticketpurchases");
   args.push("--ticketbuyer.balancetomaintainabsolute=" + cfg.get("balancetomaintain"));
+  args.push("--ticketbuyer.maxfee=" + cfg.get("maxfee"));
+  args.push("--ticketbuyer.maxpricerelative=" + cfg.get("maxpricerelative"));
+  args.push("--ticketbuyer.maxpriceabsolute=" + cfg.get("maxpriceabsolute"));
+  args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
   const dcrwExe = getExecutablePath("pfcwallet", argv.customBinPath);
   if (!fs.existsSync(dcrwExe)) {
-    logger.log("error", "The pfcwallet executable does not exist. Expected to find it at " + dcrwExe);
+    logger.log("error", "The pfcwallet file does not exists");
     return;
   }
 
@@ -219,8 +191,8 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     try {
       const util = require("util");
       const win32ipc = require("../node_modules/win32ipc/build/Release/win32ipc.node");
-      dcrwPipeRx = win32ipc.createPipe("out");
-      args.push(util.format("--piperx=%d", dcrwPipeRx.readEnd));
+      const pipe = win32ipc.createPipe("out");
+      args.push(util.format("--piperx=%d", pipe.readEnd));
     } catch (e) {
       logger.log("error", "can't find proper module to launch pfcwallet: " + e);
     }
@@ -269,16 +241,12 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     if (daemonIsAdvanced)
       return;
     if (code !== 0) {
-      var lastPfcwalletErr = lastErrorLine(GetPfcwalletLogs());
-      if (!lastPfcwalletErr || lastPfcwalletErr == "") {
-        lastPfcwalletErr = lastPanicLine(GetPfcwalletLogs());
-      }
+      const lastPfcwalletErr = lastErrorLine(GetPfcwalletLogs());
       logger.log("error", "pfcwallet closed due to an error: ", lastPfcwalletErr);
-      reactIPC.send("error-received", false, lastPfcwalletErr);
+      reactIPC.sendSync("error-received", false, lastPfcwalletErr);
     } else {
       logger.log("info", `pfcwallet exited with code ${code}`);
     }
-    ClearPfcwalletLogs();
   });
 
   const addStdoutToLogListener = (data) => AddToPfcwalletLog(process.stdout, data, debug);
@@ -286,7 +254,7 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   // waitForGrpcPortListener is added as a stdout on("data") listener only on
   // win32 because so far that's the only way we found to get back the grpc port
   // on that platform. For linux/macOS users, the --pipetx argument is used to
-  // provide a pipe back to pfcredit, which reads the grpc port in a secure and
+  // provide a pipe back to picfightiton, which reads the grpc port in a secure and
   // reliable way.
   const waitForGrpcPortListener = (data) => {
     const matches = /PFCW: gRPC server listening on [^ ]+:(\d+)/.exec(data);
@@ -311,11 +279,11 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   return dcrwPID;
 };
 
-export const GetDcrwPort = () => dcrwPort;
+export const GetPfcwPort = () => dcrwPort;
 
 export const GetPfcdPID = () => pfcdPID;
 
-export const GetDcrwPID = () => dcrwPID;
+export const GetPfcwPID = () => dcrwPID;
 
 export const readExesVersion = (app, grpcVersions) => {
   let spawn = require("child_process").spawnSync;
@@ -323,13 +291,13 @@ export const readExesVersion = (app, grpcVersions) => {
   let exes = [ "pfcd", "pfcwallet", "pfcctl" ];
   let versions = {
     grpc: grpcVersions,
-    pfcredit: app.getVersion()
+    picfightiton: app.getVersion()
   };
 
   for (let exe of exes) {
     let exePath = getExecutablePath("pfcd", argv.customBinPath);
     if (!fs.existsSync(exePath)) {
-      logger.log("error", "The pfcd executable does not exist. Expected to find it at " + exePath);
+      logger.log("error", "The pfcd file does not exists");
     }
 
     let proc = spawn(exePath, args, { encoding: "utf8" });

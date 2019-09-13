@@ -1,70 +1,48 @@
-import SpvSyncFormBody from "./Form";
-import { getPfcwalletLastLogLine } from "wallet";
-import ReactTimeout from "react-timeout";
-
-function parseLogLine(line) {
-  const res = /^[\d :\-.]+ \[...\] (.+)$/.exec(line);
-  return res ? res[1] : "";
-}
+import {
+  SpvSyncFormHeader as SpvSyncHeader,
+  SpvSyncFormBody
+} from "./Form";
 
 @autobind
-class SpvSync extends React.Component {
+class SpvSyncBody extends React.Component {
   constructor(props)  {
     super(props);
     this.state = this.getInitialState();
-  }
-
-  componentDidMount() {
-    this.props.setInterval(() => {
-      Promise
-        .all([ getPfcwalletLastLogLine() ])
-        .then(([ pfcwalletLine ]) => {
-          const lastPfcwalletLogLine = parseLogLine(pfcwalletLine);
-          if (lastPfcwalletLogLine !== this.lastPfcwalletLogLine)
-          {
-            this.lastPfcwalletLogLine = lastPfcwalletLogLine;
-          }
-        });
-    }, 2000);
-    if (this.props.walletPrivatePassphrase) {
-      this.props.startSPVSync(this.props.walletPrivatePassphrase);
-    }
   }
 
   componentWillUnmount() {
     this.resetState();
   }
 
+  componentDidMount() {
+    if (this.props.walletPrivatePassphrase && this.props.fetchHeadersDone !== null) {
+      this.props.onSpvSynces(this.props.walletPrivatePassphrase);
+    }
+  }
+
   getInitialState() {
     return {
-      lastPfcdLogLine: "",
-      lastPfcwalletLogLine: "",
       passPhrase: "",
       hasAttemptedDiscover: false
     };
   }
+
   render() {
     const { passPhrase, hasAttemptedDiscover } = this.state;
-    const { onSetPassPhrase, onSpvSync, onKeyDown, lastPfcwalletLogLine } = this;
-    const { Form,
-      firstBlockTime,
-      syncFetchTimeStart,
-      syncFetchHeadersLastHeaderTime,
-      syncFetchHeadersComplete } = this.props;
+    const { onSetPassPhrase, onSpvSync, onKeyDown } = this;
+
     return (
-      <SpvSyncFormBody {...{
-        ...this.props,
-        firstBlockTime,
-        syncFetchHeadersComplete,
-        syncFetchTimeStart,
-        syncFetchHeadersLastHeaderTime,
-        Form,
-        lastPfcwalletLogLine,
-        passPhrase,
-        hasAttemptedDiscover,
-        onSetPassPhrase,
-        onSpvSync,
-        onKeyDown }}/>);
+      <SpvSyncFormBody
+        {...{
+          ...this.props,
+          passPhrase,
+          hasAttemptedDiscover,
+          onSetPassPhrase,
+          onSpvSync,
+          onKeyDown
+        }}
+      />
+    );
   }
 
   resetState() {
@@ -72,10 +50,6 @@ class SpvSync extends React.Component {
   }
 
   onSetPassPhrase(passPhrase) {
-    if (passPhrase != "") {
-      this.setState({ hasAttemptedDiscover: true });
-    }
-
     this.setState({ passPhrase });
   }
 
@@ -94,7 +68,7 @@ class SpvSync extends React.Component {
   }
 
   onKeyDown(e) {
-    if (e.keyCode == 13) {   // Enter key
+    if(e.keyCode == 13) {   // Enter key
       e.preventDefault();
       this.onSpvSync();
     }
@@ -102,4 +76,4 @@ class SpvSync extends React.Component {
 
 }
 
-export default ReactTimeout(SpvSync);
+export { SpvSyncHeader, SpvSyncBody };

@@ -29,19 +29,19 @@ class AccountsSelect extends React.Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps(nextProps) {
     let newState = null;
 
-    if (prevProps.account !== this.props.account) {
-      newState = { account: this.props.account };
+    if (this.props.account !== nextProps.account) {
+      newState = { account: nextProps.account };
     }
 
-    if ((prevProps.spendingAccounts !== this.props.spendingAccounts) ||
-        (prevProps.visibleAccounts !== this.props.visibleAccounts) ||
-        (prevProps.accountsType !== this.props.accountsType)) {
-      newState = { accounts: this.getAccountsToShow(this.props), ...newState };
-      if (this.props.account && !newState.account) {
-        const newAccount = newState.accounts.find(a => a.value === this.props.account.value);
+    if ((this.props.spendingAccounts !== nextProps.spendingAccounts) ||
+        (this.props.visibleAccounts !== nextProps.visibleAccounts) ||
+        (this.props.accountsType !== nextProps.accountsType)) {
+      newState = { accounts: this.getAccountsToShow(nextProps), ...newState };
+      if (nextProps.account && !newState.account) {
+        const newAccount = newState.accounts.find(a => a.value === nextProps.account.value);
         newState = { account: newAccount, ...newState };
       }
     }
@@ -61,11 +61,10 @@ class AccountsSelect extends React.Component {
 
   render() {
     const { formatMessage } = this.props.intl;
-    const { className, showAccountsButton, disabled } = this.props;
+    const { className, showAccountsButton } = this.props;
     return (
       <div className={className}>
         <Select
-          disabled={disabled}
           clearable={false}
           style={{ zIndex:"9" }}
           placeholder={formatMessage(messages.placeholder)}
@@ -102,11 +101,9 @@ class AccountsSelect extends React.Component {
     return (
       <div className="accounts-select-value">
         <div className="accounts-select-name">{option.name}</div>
-        {!this.props.hideSpendable &&
-          <div className="accounts-select-spendable">
-            <Balance flat amount={option.spendable} />
-          </div>
-        }
+        <div className="accounts-select-spendable">
+          <Balance flat amount={option.spendable} />
+        </div>
       </div>
     );
   }

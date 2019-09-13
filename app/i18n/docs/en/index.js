@@ -10,18 +10,11 @@ export { default as ScriptNotRedeemableInfo } from "./InfoModals/ScriptNotRedeem
 
 export { default as SeedCopyWarning } from "./Warnings/SeedCopy.md";
 export { default as WalletCreationWarning } from "./Warnings/WalletCreation.md";
-export { default as TrezorWipeWarning } from "./Warnings/TrezorWipe.md";
-export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwareUpdate.md";
-export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
 export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02.md";
 export { default as GetStartedTutorialPage03 } from "./GetStarted/TutorialPage03.md";
 export { default as GetStartedTutorialPage04 } from "./GetStarted/TutorialPage04.md";
-
-export { default as ReleaseNote1_3_0 } from "./ReleaseNotes/v1.3.0.md";
-export { default as ReleaseNote1_3_1 } from "./ReleaseNotes/v1.3.1.md";
-export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
 
 export { default as StakingTutorialPage01 } from "./StakingTutorial/Page01.md";
 export { default as StakingTutorialPage02 } from "./StakingTutorial/Page02.md";

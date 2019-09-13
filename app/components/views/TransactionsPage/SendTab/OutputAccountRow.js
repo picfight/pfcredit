@@ -1,10 +1,10 @@
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { DcrInput, ReceiveAccountsSelect } from "inputs";
+import { PfcInput, ReceiveAccountsSelect } from "inputs";
 import "style/SendPage.less";
 
 const messages = defineMessages({
   amountPlaceholder: {
-    id: "sendToAccount.amountPlaceholder",
+    id: "send.amountPlaceholder",
     defaultMessage: "Amount"
   }
 });
@@ -21,7 +21,7 @@ const SendOutputAccountRow = ({
 }) => (
   <div className="send-row">
     <div className="send-output-row">
-      <div className="send-label"><T id="sendToAccount.to" m="To" />:</div>
+      <div className="send-label"><T id="send.to" m="To" />:</div>
       <div className="send-address">
         <ReceiveAccountsSelect
           getAddressForSelected={true}
@@ -31,9 +31,9 @@ const SendOutputAccountRow = ({
       </div>
 
       <div className="send-amount">
-        <div className="send-amount-label"><T id="sendToAccount.amount" m="Amount" />:</div>
+        <div className="send-amount-label"><T id="send.amount" m="Amount" />:</div>
         <div className="send-address-amount-sum-and-currency">
-          <DcrInput
+          <PfcInput
             showErrors={true}
             hidden={!isSendAll}
             className="send-address-input-amount"
@@ -41,7 +41,7 @@ const SendOutputAccountRow = ({
             amount={totalSpent}
             onKeyDown={onKeyDown}
           />
-          <DcrInput
+          <PfcInput
             showErrors={true}
             invalid={!!amountError}
             invalidMessage={amountError}

@@ -4,28 +4,23 @@ import {
   GETBALANCE_ATTEMPT, GETBALANCE_FAILED, GETBALANCE_SUCCESS,
   GETACCOUNTNUMBER_ATTEMPT, GETACCOUNTNUMBER_FAILED, GETACCOUNTNUMBER_SUCCESS,
   GETNETWORK_ATTEMPT, GETNETWORK_FAILED, GETNETWORK_SUCCESS,
-  GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS, GETPING_CANCELED,
+  GETPING_ATTEMPT, GETPING_FAILED, GETPING_SUCCESS,
   GETSTAKEINFO_ATTEMPT, GETSTAKEINFO_FAILED, GETSTAKEINFO_SUCCESS,
   GETTICKETPRICE_ATTEMPT, GETTICKETPRICE_FAILED, GETTICKETPRICE_SUCCESS,
   GETACCOUNTS_ATTEMPT, GETACCOUNTS_FAILED, GETACCOUNTS_SUCCESS,
   GETTRANSACTIONS_ATTEMPT, GETTRANSACTIONS_FAILED,  GETTRANSACTIONS_COMPLETE,
   NEW_TRANSACTIONS_RECEIVED, CHANGE_TRANSACTIONS_FILTER,
   UPDATETIMESINCEBLOCK,
-  GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE, CLEAR_TICKETS,
-  GETTICKETS_PROGRESS, GETTICKETS_CANCEL,
+  GETTICKETS_ATTEMPT, GETTICKETS_FAILED, GETTICKETS_COMPLETE,
   GETAGENDASERVICE_ATTEMPT, GETAGENDASERVICE_FAILED, GETAGENDASERVICE_SUCCESS,
-  RAWTICKETTRANSACTIONS_DECODED, CHANGE_TICKETS_FILTER,
   GETMESSAGEVERIFICATIONSERVICE_ATTEMPT, GETMESSAGEVERIFICATIONSERVICE_FAILED, GETMESSAGEVERIFICATIONSERVICE_SUCCESS,
   GETVOTINGSERVICE_ATTEMPT, GETVOTINGSERVICE_FAILED, GETVOTINGSERVICE_SUCCESS,
   GETAGENDAS_ATTEMPT, GETAGENDAS_FAILED, GETAGENDAS_SUCCESS,
   GETVOTECHOICES_ATTEMPT, GETVOTECHOICES_FAILED, GETVOTECHOICES_SUCCESS,
   SETVOTECHOICES_ATTEMPT, SETVOTECHOICES_FAILED, SETVOTECHOICES_SUCCESS,
-  MATURINGHEIGHTS_CHANGED,
+  MATURINGHEIGHTS_CHANGED, GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT, GETTRANSACTIONSSINCELASTOPPENED_FAILED,
   GETBESTBLOCK_ATTEMPT, GETBESTBLOCK_FAILED, GETBESTBLOCK_SUCCESS,
-  STARTWALLETSERVICE_ATTEMPT,
-  STARTWALLETSERVICE_FAILED, STARTWALLETSERVICE_SUCCESS, GETTREASURY_BALANCE_SUCCESS, RESET_TREASURY_BALANCE,
-  FETCHMISSINGSTAKETXDATA_ATTEMPT, FETCHMISSINGSTAKETXDATA_SUCCESS, FETCHMISSINGSTAKETXDATA_FAILED,
-  GETSTARTUPTRANSACTIONS_SUCCESS
+  GETTRANSACTIONSSINCELASTOPPENED_SUCCESS,
 } from "../actions/ClientActions";
 import { STARTUPBLOCK, WALLETREADY } from "../actions/DaemonActions";
 import { NEWBLOCKCONNECTED } from "../actions/NotificationActions";
@@ -35,22 +30,9 @@ import {
 } from "../actions/DecodeMessageActions";
 import { SIGNMESSAGE_ATTEMPT, SIGNMESSAGE_SUCCESS, SIGNMESSAGE_FAILED, SIGNMESSAGE_CLEANSTORE } from "../actions/ControlActions";
 import { VERIFYMESSAGE_ATTEMPT, VERIFYMESSAGE_SUCCESS, VERIFYMESSAGE_FAILED, VERIFYMESSAGE_CLEANSTORE } from "../actions/ControlActions";
-import {
-  CLOSEWALLET_SUCCESS,
-} from "actions/WalletLoaderActions";
 
 export default function grpc(state = {}, action) {
   switch (action.type) {
-  case GETTREASURY_BALANCE_SUCCESS:
-    return {
-      ...state,
-      treasuryBalance: action.treasuryBalance
-    };
-  case RESET_TREASURY_BALANCE:
-    return {
-      ...state,
-      treasuryBalance: null
-    };
   case GETWALLETSERVICE_ATTEMPT:
     return {
       ...state,
@@ -107,6 +89,24 @@ export default function grpc(state = {}, action) {
       getTicketBuyerError: null,
       getTicketBuyerServiceRequestAttempt: false,
       ticketBuyerService: action.ticketBuyerService,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedError: null,
+      getTransactionsSinceLastOpenedAttempt: true,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_SUCCESS:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedAttempt: false,
+      transactionsSinceLastOpened: action.transactionsSinceLastOpened,
+    };
+  case GETTRANSACTIONSSINCELASTOPPENED_FAILED:
+    return {
+      ...state,
+      getTransactionsSinceLastOpenedError: String(action.error),
+      getTransactionsSinceLastOpenedAttempt: false,
     };
   case GETBALANCE_ATTEMPT:
     return {
@@ -189,14 +189,12 @@ export default function grpc(state = {}, action) {
       ...state,
       getPingError: "",
       getPingRequestAttempt: true,
-      pingTimer: null,
     };
   case GETPING_FAILED:
     return {
       ...state,
       getPingError: String(action.error),
       getPingRequestAttempt: false,
-      pingTimer: null,
     };
   case GETPING_SUCCESS:
     return {
@@ -204,15 +202,6 @@ export default function grpc(state = {}, action) {
       getPingError: "",
       getPingRequestAttempt: false,
       getPingResponse: action.getPingResponse,
-      pingTimer: action.pingTimer,
-    };
-  case GETPING_CANCELED:
-    return {
-      ...state,
-      getPingError: "",
-      getPingRequestAttempt: false,
-      getPingResponse: null,
-      pingTimer: null,
     };
   case GETSTAKEINFO_ATTEMPT:
     return {
@@ -275,73 +264,19 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       getTicketsRequestAttempt: true,
-      getTicketsCancel: false,
     };
   case GETTICKETS_FAILED:
     return {
       ...state,
       getTicketsRequestError: String(action.error),
       getTicketsRequestAttempt: false,
-      getTicketsCancel: false,
-      getTicketsProgressStartRequestHeight: null,
     };
   case GETTICKETS_COMPLETE:
-    var tickets = [ ...action.unminedTickets, ...action.minedTickets ];
     return {
       ...state,
-      tickets: tickets,
-      unminedTickets: action.unminedTickets,
-      minedTickets: action.minedTickets,
-      noMoreTickets: action.noMoreTickets,
+      tickets: action.tickets,
       getTicketsRequestError: "",
       getTicketsRequestAttempt: false,
-      getTicketsStartRequestHeight: action.getTicketsStartRequestHeight,
-      getTicketsCancel: false,
-      getTicketsProgressStartRequestHeight: null,
-    };
-  case GETTICKETS_PROGRESS:
-    return {
-      ...state,
-      getTicketsProgressStartRequestHeight: action.startRequestHeight,
-    };
-  case GETTICKETS_CANCEL:
-    return {
-      ...state,
-      getTicketsCancel: true
-    };
-  case CLEAR_TICKETS:
-    return { ...state,
-      tickets: [],
-      unminedTickets: [],
-      minedTickets: [],
-      noMoreTickets: false,
-      lastTicket: null,
-      getTicketsStartRequestHeight: null,
-    };
-  case RAWTICKETTRANSACTIONS_DECODED:
-    var idxOldTicket = state.tickets.indexOf(action.ticket);
-    if (idxOldTicket < 0) {
-      console.log("decoded did not find", idxOldTicket);
-      return state;
-    }
-    var newTickets = state.tickets.slice();
-    newTickets.splice(idxOldTicket, 1, action.newTicket);
-    return {
-      ...state,
-      tickets: newTickets
-    };
-  case CHANGE_TICKETS_FILTER:
-    return {
-      ...state,
-      ticketsFilter: action.ticketsFilter,
-      tickets: [],
-      unminedTickets: [],
-      minedTickets: [],
-      noMoreTickets: false,
-      lastTicket: null,
-      getTicketsRequestError: "",
-      getTicketsRequestAttempt: false,
-      getTicketsStartRequestHeight: null,
     };
   case GETTRANSACTIONS_ATTEMPT:
     return {
@@ -365,6 +300,12 @@ export default function grpc(state = {}, action) {
       lastTransaction: action.lastTransaction,
       getTransactionsRequestError: "",
       getTransactionsRequestAttempt: false,
+      recentRegularTransactions: action.recentRegularTransactions
+        ? action.recentRegularTransactions
+        : state.recentRegularTransactions,
+      recentStakeTransactions: action.recentStakeTransactions
+        ? action.recentStakeTransactions
+        : state.recentStakeTransactions
     };
   case NEW_TRANSACTIONS_RECEIVED:
     return {
@@ -384,32 +325,6 @@ export default function grpc(state = {}, action) {
       transactions: [],
       lastTransaction: null,
       noMoreTransactions: false
-    };
-  case FETCHMISSINGSTAKETXDATA_ATTEMPT:
-    return {
-      ...state,
-      fetchMissingStakeTxDataAttempt: {
-        ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: true,
-      }
-    };
-  case FETCHMISSINGSTAKETXDATA_SUCCESS:
-    return {
-      ...state,
-      transactions: action.transactions || state.transactions,
-      recentStakeTransactions: action.recentStakeTransactions || state.recentStakeTransactions,
-      fetchMissingStakeTxDataAttempt: {
-        ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: false,
-      }
-    };
-  case FETCHMISSINGSTAKETXDATA_FAILED:
-    return {
-      ...state,
-      fetchMissingStakeTxDataAttempt: {
-        ...state.fetchMissingStakeTxDataAttempt,
-        [action.txHash]: false,
-      }
     };
   case UPDATETIMESINCEBLOCK:
     return {
@@ -602,13 +517,6 @@ export default function grpc(state = {}, action) {
         ...action.transactions
       }
     };
-  case GETSTARTUPTRANSACTIONS_SUCCESS:
-    return {
-      ...state,
-      maturingBlockHeights: action.maturingBlockHeights,
-      recentRegularTransactions: action.recentRegularTxs,
-      recentStakeTransactions: action.recentStakeTxs,
-    };
   case MATURINGHEIGHTS_CHANGED:
     return {
       ...state,
@@ -618,60 +526,6 @@ export default function grpc(state = {}, action) {
     return {
       ...state,
       port: action.port
-    };
-  case CLOSEWALLET_SUCCESS:
-    return {
-      ...state,
-      port: "9121",
-      agendaService: null,
-      balances: [],
-      decodeMessageService: null,
-      decodedTransactions: {},
-      getAccountsResponse: null,
-      getAgendasResponse: null,
-      getNetworkResponse: null,
-      getStakeInfoResponse: null,
-      getTicketPriceResponse: null,
-      lastTransaction: null,
-      maturingBlockHeights: {},
-      minedTransactions: Array(),
-      unminedTransactions: Array(),
-      tickets: Array(),
-      transactions: Array(),
-      noMoreTransactions: false,
-      transactionsFilter: {
-        search: null,
-        listDirection: "desc",
-        types: [],
-        direction: null,
-      },
-      recentRegularTransactions: Array(),
-      recentStakeTransactions: Array(),
-      ticketBuyerService: null,
-      transactionsSinceLastOpened: null,
-      votingService: null,
-      walletService: null,
-    };
-  case STARTWALLETSERVICE_ATTEMPT:
-    return {
-      ...state,
-      startWalletServiceAttempt: true,
-      startWalletServiceSuccess: null,
-      startWalletServiceFailed: null,
-    };
-  case STARTWALLETSERVICE_FAILED:
-    return {
-      ... state,
-      startWalletServiceAttempt: false,
-      startWalletServiceFailed: action.error,
-      startWalletServiceSuccess: null,
-    };
-  case STARTWALLETSERVICE_SUCCESS:
-    return {
-      ... state,
-      startWalletServiceAttempt: false,
-      startWalletServiceFailed: null,
-      startWalletServiceSuccess: action.success,
     };
   default:
     return state;

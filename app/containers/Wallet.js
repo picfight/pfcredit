@@ -14,7 +14,6 @@ import TransactionPage from "components/views/TransactionPage";
 import TicketsPage from "components/views/TicketsPage";
 import TutorialsPage from "components/views/TutorialsPage";
 import GovernancePage from "components/views/GovernancePage";
-import TrezorPage from "components/views/TrezorPage";
 import SideBar from "components/SideBar";
 import { BlurableContainer } from "layout";
 import { walletContainer, theming } from "connectors";
@@ -28,7 +27,7 @@ class Wallet extends React.Component {
     const MainSwitch = this.props.uiAnimations ? AnimatedSwitch : StaticSwitch;
 
     return (
-      <div className={"page-body"}>
+      <div className="page-body">
         <SideBar />
         <BlurableContainer className={expandSideBar ? "page-view" : "page-view-reduced-bar"}>
           <MainSwitch {...pageAnimation}>
@@ -45,7 +44,6 @@ class Wallet extends React.Component {
             <Route path="/tickets"                        component={TicketsPage} />
             <Route path="/tutorial"                       component={TutorialsPage} />
             <Route path="/governance"                     component={GovernancePage} />
-            <Route path="/trezor"                         component={TrezorPage} />
           </MainSwitch>
         </BlurableContainer>
       </div>

@@ -2,7 +2,7 @@
 export { default as AccountsSelect } from "./AccountsSelect";
 export { default as AddressInput } from "./AddressInput";
 export { default as BlocksInput } from "./BlocksInput";
-export { default as DcrInput } from "./DcrInput";
+export { default as PfcInput } from "./PfcInput";
 export { default as FeeInput } from "./FeeInput";
 export { default as Input } from "./Input";
 export { default as LanguageSelect } from "./LanguageSelect";
@@ -20,5 +20,5 @@ export { default as IntegerInput } from "./IntegerInput";
 export * from "./PathBrowseInput";
 export { default as PassphraseModalField } from "./PassphraseModalField";
 export { default as InlineField } from "./InlineField";
-export { FixedDcrInput } from "./DcrInput";
+export { FixedPfcInput } from "./PfcInput";
 export { default as SettingsTextInput } from "./SettingsTextInput";

@@ -1,7 +1,7 @@
-import { EyeFilterMenu, EyeFilterMenuWithSlider } from "buttons";
+import { EyeFilterMenu } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { Tooltip } from "shared";
-import { TextInput } from "inputs";
+import { TextInput } from "../../../inputs";
 import TxHistory from "TxHistory";
 import { LoadingMoreTransactionsIndicator, NoMoreTransactionsIndicator, NoTransactions } from "indicators";
 import InfiniteScroll from "react-infinite-scroller";
@@ -29,10 +29,6 @@ const Page = ({
   onChangeSortType,
   onChangeSearchText,
   onLoadMoreTransactions,
-  onChangeSliderValue,
-  currencyDisplay,
-  transactionsFilter,
-  unitDivisor,
 }) => (
   <InfiniteScroll
     hasMore={!noMoreTransactions}
@@ -41,11 +37,13 @@ const Page = ({
     useWindow={false}
     threshold={loadMoreThreshold}
   >
-    <div className="history-content-title">
+    <div className="history-content-title"
+      style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
       <div className="history-content-title-text">
         <T id="history.title" m="Transaction History" />
       </div>
-      <div className="history-select-tx-types-area">
+      <div className="history-select-tx-types-area"
+        style = {{ display: transactions.length == 0 ? "none" : "initial" }} >
         <div className="history-select-tx-types">
           <div className="history-search-tx">
             <TextInput
@@ -56,17 +54,13 @@ const Page = ({
             />
           </div>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.sortby.tooltip" m="Sort By" />}>
-            <EyeFilterMenuWithSlider
-              {...{ unitDivisor, currencyDisplay }}
+            <EyeFilterMenu
               labelKey="label"
               keyField="value"
               options={sortTypes}
               selected={selectedSortOrderKey}
               onChange={onChangeSortType}
               className="sort-by"
-              onChangeSlider={onChangeSliderValue}
-              minFilterValue={transactionsFilter.minAmount}
-              maxFilterValue={transactionsFilter.maxAmount}
             />
           </Tooltip>
           <Tooltip tipWidth={ 300 } text={<T id="transactions.txtypes.tooltip" m="Transaction Type" />}>

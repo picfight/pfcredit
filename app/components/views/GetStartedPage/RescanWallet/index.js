@@ -26,25 +26,12 @@ class RescanWalletBody extends React.Component {
 
   render() {
     const { showLongWaitMessage } = this.state;
-    const { isSPV,
-      rescanEndBlock,
-      rescanStartBlock,
-      rescanCurrentBlock,
-      syncRescanProgress,
-    } = this.props;
-    var rescanEnd = rescanEndBlock;
-    var rescanStart = rescanStartBlock;
-    var rescanCurrent = rescanCurrentBlock;
-    rescanCurrent = syncRescanProgress;
+
     return (
       <RescanWalletFormBody
         {...{
           ...this.props,
-          showLongWaitMessage,
-          rescanEndBlock: rescanEnd,
-          rescanStartBlock: rescanStart,
-          rescanCurrentBlock: rescanCurrent,
-          isSPV,
+          showLongWaitMessage
         }}
       />
     );

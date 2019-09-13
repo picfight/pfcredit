@@ -41,10 +41,9 @@ export function Vote(token, ticket, voteBitInt, signature) {
 
 export const getActiveVotes = (piURL) => GET(piURL, "/v1/proposals/activevote");
 export const getVetted = (piURL) => GET(piURL, "/v1/proposals/vetted");
-export const getVotesStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
+export const getVoteStatus = (piURL) => GET(piURL, "/v1/proposals/votestatus");
 export const getProposal = (piURL, token) => GET(piURL, "/v1/proposals/" + token);
-export const getProposalVotes = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
-export const getProposalVoteStatus = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votestatus");
+export const getVoteResults = (piURL, token) => GET(piURL, "/v1/proposals/" + token + "/votes");
 
 // votes must be an array of Vote()-produced objects.
 export const castVotes = (piURL, votes) => POST(piURL, "/v1/proposals/castvotes", { votes });

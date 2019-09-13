@@ -22,7 +22,7 @@ const ConfirmModal = ({ modalTitle, modalContent, show, onCancelModal }) => (
     </div>
     <div className="confirm-modal-toolbar">
       <CloseButton className="confirm-modal-close-button" onClick={onCancelModal}>
-        <T id="infoConfirmModal.btnClose" m="Close" />
+        <T id="confirmModal.btnCancel" m="Close" />
       </CloseButton>
     </div>
   </Modal>

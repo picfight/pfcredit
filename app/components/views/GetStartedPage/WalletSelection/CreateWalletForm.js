@@ -1,7 +1,7 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput } from "inputs";
-import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch, TrezorWalletSwitch } from "buttons";
-import { NewSeedTabMsg, RestoreTabMsg } from "../messages";
+import { KeyBlueButton, InvisibleButton, WatchOnlyWalletSwitch } from "buttons";
+import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageWalletNamePlaceholder: {
@@ -32,14 +32,11 @@ const CreateWalletForm = ({
   hasFailedAttemptName,
   hasFailedAttemptPubKey,
   intl,
-  isWatchingOnly,
+  isWatchOnly,
   walletMasterPubKey,
   toggleWatchOnly,
   onChangeCreateWalletMasterPubKey,
   masterPubKeyError,
-  isTrezor,
-  toggleTrezor,
-  onShowTrezorConfig,
 }) => {
   return (
     <Aux>
@@ -47,13 +44,13 @@ const CreateWalletForm = ({
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small createnew" />
           <div className="new-wallet-title">
-            <NewSeedTabMsg />
+            <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
           </div>
         </div> :
         <div className="new-wallet-title-area">
           <div className="wallet-icon-small restore" />
           <div className="new-wallet-title">
-            <RestoreTabMsg />
+            <T id="getStarted.restore" m="Restore Existing Wallet"/>
           </div>
         </div>
       }
@@ -80,19 +77,10 @@ const CreateWalletForm = ({
               <T id="createwallet.walletOnly.label" m="Watch only" />
             </div>
             <div className="advanced-daemon-input">
-              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchingOnly } onClick={ toggleWatchOnly } />
+              <WatchOnlyWalletSwitch className="wallet-switch" enabled={ isWatchOnly } onClick={ toggleWatchOnly } />
             </div>
           </div>
-          <div className="advanced-daemon-row">
-            <div className="advanced-daemon-label">
-              <T id="createwallet.isTrezor.label" m="Trezor" />
-            </div>
-            <div className="advanced-daemon-input">
-              <TrezorWalletSwitch className="wallet-switch" enabled={ isTrezor } onClick={ toggleTrezor } />
-              <span onClick={onShowTrezorConfig} className="whatsnew"><T id="createWallet.isTrezor.setupLink" m="(setup device)" /></span>
-            </div>
-          </div>
-          {isWatchingOnly &&
+          {isWatchOnly &&
             <div className="advanced-daemon-row">
               <div className="advanced-daemon-label">
                 <T id="createwallet.walletmasterpubkey.label" m="Master Pub Key" />

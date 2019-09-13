@@ -510,17 +510,6 @@ function deserialize_walletrpc_GetAccountExtendedPubKeyResponse(buffer_arg) {
   return api_pb.GetAccountExtendedPubKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_GetTicketRequest(arg) {
-  if (!(arg instanceof api_pb.GetTicketRequest)) {
-    throw new Error('Expected argument of type walletrpc.GetTicketRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_GetTicketRequest(buffer_arg) {
-  return api_pb.GetTicketRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_walletrpc_GetTicketsRequest(arg) {
   if (!(arg instanceof api_pb.GetTicketsRequest)) {
     throw new Error('Expected argument of type walletrpc.GetTicketsRequest');
@@ -915,50 +904,6 @@ function serialize_walletrpc_RevokeTicketsResponse(arg) {
 
 function deserialize_walletrpc_RevokeTicketsResponse(buffer_arg) {
   return api_pb.RevokeTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RpcSyncRequest(arg) {
-  if (!(arg instanceof api_pb.RpcSyncRequest)) {
-    throw new Error('Expected argument of type walletrpc.RpcSyncRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RpcSyncRequest(buffer_arg) {
-  return api_pb.RpcSyncRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RpcSyncResponse(arg) {
-  if (!(arg instanceof api_pb.RpcSyncResponse)) {
-    throw new Error('Expected argument of type walletrpc.RpcSyncResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RpcSyncResponse(buffer_arg) {
-  return api_pb.RpcSyncResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RunTicketBuyerRequest(arg) {
-  if (!(arg instanceof api_pb.RunTicketBuyerRequest)) {
-    throw new Error('Expected argument of type walletrpc.RunTicketBuyerRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RunTicketBuyerRequest(buffer_arg) {
-  return api_pb.RunTicketBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RunTicketBuyerResponse(arg) {
-  if (!(arg instanceof api_pb.RunTicketBuyerResponse)) {
-    throw new Error('Expected argument of type walletrpc.RunTicketBuyerResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RunTicketBuyerResponse(buffer_arg) {
-  return api_pb.RunTicketBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_SetAccountRequest(arg) {
@@ -1401,28 +1346,6 @@ function deserialize_walletrpc_SubscribeToBlockNotificationsResponse(buffer_arg)
   return api_pb.SubscribeToBlockNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_SweepAccountRequest(arg) {
-  if (!(arg instanceof api_pb.SweepAccountRequest)) {
-    throw new Error('Expected argument of type walletrpc.SweepAccountRequest');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SweepAccountRequest(buffer_arg) {
-  return api_pb.SweepAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SweepAccountResponse(arg) {
-  if (!(arg instanceof api_pb.SweepAccountResponse)) {
-    throw new Error('Expected argument of type walletrpc.SweepAccountResponse');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SweepAccountResponse(buffer_arg) {
-  return api_pb.SweepAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_walletrpc_TicketBuyerConfigRequest(arg) {
   if (!(arg instanceof api_pb.TicketBuyerConfigRequest)) {
     throw new Error('Expected argument of type walletrpc.TicketBuyerConfigRequest');
@@ -1726,17 +1649,6 @@ var WalletServiceService = exports.WalletServiceService = {
     requestDeserialize: deserialize_walletrpc_GetTransactionsRequest,
     responseSerialize: serialize_walletrpc_GetTransactionsResponse,
     responseDeserialize: deserialize_walletrpc_GetTransactionsResponse,
-  },
-  getTicket: {
-    path: '/walletrpc.WalletService/GetTicket',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.GetTicketRequest,
-    responseType: api_pb.GetTicketsResponse,
-    requestSerialize: serialize_walletrpc_GetTicketRequest,
-    requestDeserialize: deserialize_walletrpc_GetTicketRequest,
-    responseSerialize: serialize_walletrpc_GetTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_GetTicketsResponse,
   },
   getTickets: {
     path: '/walletrpc.WalletService/GetTickets',
@@ -2070,17 +1982,6 @@ var WalletServiceService = exports.WalletServiceService = {
     responseSerialize: serialize_walletrpc_CommittedTicketsResponse,
     responseDeserialize: deserialize_walletrpc_CommittedTicketsResponse,
   },
-  sweepAccount: {
-    path: '/walletrpc.WalletService/SweepAccount',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SweepAccountRequest,
-    responseType: api_pb.SweepAccountResponse,
-    requestSerialize: serialize_walletrpc_SweepAccountRequest,
-    requestDeserialize: deserialize_walletrpc_SweepAccountRequest,
-    responseSerialize: serialize_walletrpc_SweepAccountResponse,
-    responseDeserialize: deserialize_walletrpc_SweepAccountResponse,
-  },
 };
 
 exports.WalletServiceClient = grpc.makeGenericClientConstructor(WalletServiceService);
@@ -2206,17 +2107,6 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
     responseSerialize: serialize_walletrpc_SpvSyncResponse,
     responseDeserialize: deserialize_walletrpc_SpvSyncResponse,
   },
-  rpcSync: {
-    path: '/walletrpc.WalletLoaderService/RpcSync',
-    requestStream: false,
-    responseStream: true,
-    requestType: api_pb.RpcSyncRequest,
-    responseType: api_pb.RpcSyncResponse,
-    requestSerialize: serialize_walletrpc_RpcSyncRequest,
-    requestDeserialize: deserialize_walletrpc_RpcSyncRequest,
-    responseSerialize: serialize_walletrpc_RpcSyncResponse,
-    responseDeserialize: deserialize_walletrpc_RpcSyncResponse,
-  },
   rescanPoint: {
     path: '/walletrpc.WalletLoaderService/RescanPoint',
     requestStream: false,
@@ -2231,21 +2121,6 @@ var WalletLoaderServiceService = exports.WalletLoaderServiceService = {
 };
 
 exports.WalletLoaderServiceClient = grpc.makeGenericClientConstructor(WalletLoaderServiceService);
-var TicketBuyerV2ServiceService = exports.TicketBuyerV2ServiceService = {
-  runTicketBuyer: {
-    path: '/walletrpc.TicketBuyerV2Service/RunTicketBuyer',
-    requestStream: false,
-    responseStream: true,
-    requestType: api_pb.RunTicketBuyerRequest,
-    responseType: api_pb.RunTicketBuyerResponse,
-    requestSerialize: serialize_walletrpc_RunTicketBuyerRequest,
-    requestDeserialize: deserialize_walletrpc_RunTicketBuyerRequest,
-    responseSerialize: serialize_walletrpc_RunTicketBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_RunTicketBuyerResponse,
-  },
-};
-
-exports.TicketBuyerV2ServiceClient = grpc.makeGenericClientConstructor(TicketBuyerV2ServiceService);
 var TicketBuyerServiceService = exports.TicketBuyerServiceService = {
   startAutoBuyer: {
     path: '/walletrpc.TicketBuyerService/StartAutoBuyer',

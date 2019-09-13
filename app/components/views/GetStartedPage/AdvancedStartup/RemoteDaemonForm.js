@@ -1,5 +1,6 @@
 import { FormattedMessage as T, defineMessages } from "react-intl";
 import { TextInput, PasswordInput, PathBrowseInput } from "inputs";
+import "style/LoginForm.less";
 
 const messages = defineMessages({
   messageLoginPlaceholder: {

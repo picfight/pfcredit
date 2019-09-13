@@ -8,26 +8,27 @@ class AccountRow extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
       isShowingRenameAccount: false,
       renameAccountName: null,
       renameAccountNumber: this.props.account.accountNumber,
       hidden: this.props.account.hidden,
       hasFailedAttempt: false,
       showPubKey: false,
-      isShowingDetails: false,
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const { account, accountNumDetailsShown } = prevProps;
-    if (accountNumDetailsShown === this.props.accountNumDetailsShown) {
-      return;
-    }
-    if (account.accountNumber !== this.props.accountNumDetailsShown) {
-      this.setState({ isShowingDetails: false });
-    }
-    if (accountNumDetailsShown === account.accountNumber) {
+  componentWillUnmount() {
+    this.setState(this.getInitialState());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { account, accountNumDetailsShown } = this.props;
+    if (accountNumDetailsShown !== nextProps.accountNumDetailsShown && accountNumDetailsShown == account.accountNumber) {
       this.setState({ showPubKey: false });
     }
   }
@@ -72,10 +73,10 @@ class AccountRow extends React.Component {
     this.setState({ showPubKey: true });
   }
 
-  onToggleShowDetails() {
-    this.setState({ isShowingDetails: !this.state.isShowingDetails });
-    this.state.isShowingDetails ? this.props.hideAccountDetails()
-      : this.props.showAccountDetails(this.props.account.accountNumber);
+  onToggleShowDetails(accountNum, isVisible) {
+    isVisible && accountNum === this.props.accountNumDetailsShown
+      ? this.props.hideAccountDetails()
+      : this.props.showAccountDetails(accountNum);
   }
 
   getRenameAccountStyles () {
@@ -138,8 +139,7 @@ class AccountRow extends React.Component {
     } = this.props;
     const {
       isShowingRenameAccount,
-      hidden,
-      isShowingDetails,
+      hidden
     } = this.state;
 
     return (
@@ -152,7 +152,6 @@ class AccountRow extends React.Component {
           getRenameAccountStyles,
           getAccountDetailsStyles,
           onToggleShowDetails,
-          isShowingDetails,
         }}
       />
     );

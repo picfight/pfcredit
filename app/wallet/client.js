@@ -34,45 +34,20 @@ export const getAccountNumber = log((walletService, accountName) => new Promise(
   walletService.accountNumber(request, (err, res) => err ? fail(err) : ok(res));
 }), "Get Account Number");
 
-export const getTickets = log((walletService, startHeight, endHeight, targetCount) => new Promise((ok, fail) => {
+export const getTickets = log((walletService, startHeight, endHeight) => new Promise((ok, fail) => {
   const tickets = [];
   const request = new api.GetTicketsRequest();
   request.setStartingBlockHeight(startHeight);
   request.setEndingBlockHeight(endHeight);
-  request.setTargetTicketCount(targetCount);
   const getTx = walletService.getTickets(request);
-  getTx.on("data", res => {
-    tickets.push({
-      status: TicketTypes.get(res.getTicket().getTicketStatus()),
-      ticket: res.getTicket().getTicket(),
-      spender: res.getTicket().getSpender(),
-      block: res.getBlock(),
-    });
-  });
+  getTx.on("data", res => tickets.unshift({
+    status: TicketTypes.get(res.getTicket().getTicketStatus()),
+    ticket: res.getTicket().getTicket(),
+    spender: res.getTicket().getSpender()
+  }));
   getTx.on("end", () => ok(tickets));
   getTx.on("error", fail);
 }), "Get Tickets", logOptionNoResponseData());
-
-export const getTicket = log((walletService, ticketHash) =>
-  new Promise((ok, fail) => {
-    const request = new api.GetTicketRequest();
-    request.setTicketHash(ticketHash);
-    walletService.getTicket(request, (err, res) => {
-      if (err) {
-        fail(err);
-        return;
-      }
-
-      const ticket = {
-        status: TicketTypes.get(res.getTicket().getTicketStatus()),
-        ticket: res.getTicket().getTicket(),
-        spender: res.getTicket().getSpender(),
-        block: res.getBlock(),
-      };
-
-      ok(ticket);
-    });
-  }), "Get Ticket", logOptionNoResponseData());
 
 export const setAgendaVote = log((votingService, agendaId, choiceId) =>
   new Promise((ok, fail) => {

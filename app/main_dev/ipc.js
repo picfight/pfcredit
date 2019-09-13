@@ -5,7 +5,7 @@ import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getPfcdPath, pfcdCfg, pfcctlCfg, appDataDirectory, getExecutablePath, getPfcdRpcCert } from "./paths";
 import { createTempPfcdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readPfcdConfig } from "../config";
-import { launchPFCD, launchPFCWallet, GetPfcdPID, GetDcrwPID, closePFCD, closePFCW, GetDcrwPort } from "./launch";
+import { launchPFCD, launchPFCWallet, GetPfcdPID, GetPfcwPID, closePFCW, GetPfcwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
@@ -24,11 +24,10 @@ export const getAvailableWallets = (network) => {
 
     const cfg = getWalletCfg(isTestNet, wallet);
     const lastAccess = cfg.get("lastaccess");
-    const watchingOnly = cfg.get("iswatchonly");
-    const isTrezor = cfg.get("trezor");
+    const watchOnly = cfg.get("iswatchonly");
     const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
     const finished = fs.pathExistsSync(walletDbFilePath);
-    availableWallets.push({ network, wallet, finished, lastAccess, watchingOnly, isTrezor });
+    availableWallets.push({ network, wallet, finished, lastAccess, watchOnly });
   });
 
   return availableWallets;
@@ -117,10 +116,10 @@ export const removeWallet = (testnet, walletPath) => {
 };
 
 export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC) => {
-  if (GetDcrwPID()) {
-    logger.log("info", "pfcwallet already started " + GetDcrwPID());
-    mainWindow.webContents.send("pfcwallet-port", GetDcrwPort());
-    return GetDcrwPID();
+  if (GetPfcwPID()) {
+    logger.log("info", "pfcwallet already started " + GetPfcwPID());
+    mainWindow.webContents.send("pfcwallet-port", GetPfcwPort());
+    return GetPfcwPID();
   }
   initWalletCfg(testnet, walletPath);
   try {
@@ -130,64 +129,14 @@ export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, r
   }
 };
 
-export const stopDaemon = () => {
-  return closePFCD(GetPfcdPID());
-};
-
 export const stopWallet = () => {
-  return closePFCW(GetDcrwPID());
-};
-
-export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {
-  let args = [ "getinfo" ];
-
-  if (!rpcCreds){
-    args.push(`--configfile=${pfcctlCfg(appDataDirectory())}`);
-  } else if (rpcCreds) {
-    if (rpcCreds.rpc_user) {
-      args.push(`--rpcuser=${rpcCreds.rpc_user}`);
-    }
-    if (rpcCreds.rpc_password) {
-      args.push(`--rpcpass=${rpcCreds.rpc_password}`);
-    }
-    if (rpcCreds.rpc_cert) {
-      args.push(`--rpccert=${rpcCreds.rpc_cert}`);
-    }
-  }
-
-  // retry using testnet to check connection
-  if (isRetry) {
-    args.push("--testnet");
-  }
-
-  const pfcctlExe = getExecutablePath("pfcctl", argv.customBinPath);
-  if (!fs.existsSync(pfcctlExe)) {
-    logger.log("error", "The pfcctl executable does not exist. Expected to find it at " + pfcctlExe);
-  }
-
-  logger.log("info", `checking daemon network with pfcctl ${args}`);
-
-  const spawn = require("child_process").spawn;
-  const pfcctl = spawn(pfcctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
-
-  pfcctl.stdout.on("data", (data) => {
-    const parsedData = JSON.parse(data);
-    logger.log("info", "is daemon testnet: " + parsedData.testnet);
-    mainWindow.webContents.send("check-getinfo-response", parsedData);
-  });
-  pfcctl.stderr.on("data", (data) => {
-    logger.log("error", data.toString());
-    if (isRetry) {
-      mainWindow.webContents.send("check-getinfo-response", null );
-    } else {
-      getDaemonInfo(mainWindow, rpcCreds, true);
-    }
-  });
+  return closePFCW(GetPfcwPID());
 };
 
 export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
-  let args = [ "getblockchaininfo" ];
+  let args = [ "getblockcount" ];
   let host, port;
+  let currentBlockCount;
 
   if (!rpcCreds){
     args.push(`--configfile=${pfcctlCfg(appDataDirectory())}`);
@@ -216,7 +165,7 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
 
   const pfcctlExe = getExecutablePath("pfcctl", argv.customBinPath);
   if (!fs.existsSync(pfcctlExe)) {
-    logger.log("error", "The pfcctl executable does not exist. Expected to find it at " + pfcctlExe);
+    logger.log("error", "The pfcctl file does not exists");
   }
 
   logger.log("info", `checking if daemon is ready  with pfcctl ${args}`);
@@ -225,15 +174,13 @@ export const checkDaemon = (mainWindow, rpcCreds, testnet) => {
   const pfcctl = spawn(pfcctlExe, args, { detached: false, stdio: [ "ignore", "pipe", "pipe", "pipe" ] });
 
   pfcctl.stdout.on("data", (data) => {
-    const parsedData = JSON.parse(data);
-    const blockCount = parsedData.blocks;
-    const syncHeight = parsedData.syncheight;
-    logger.log("info", parsedData.blocks, parsedData.syncheight, parsedData.verificationprogress);
-    mainWindow.webContents.send("check-daemon-response", { blockCount, syncHeight });
+    currentBlockCount = data.toString();
+    logger.log("info", data.toString());
+    mainWindow.webContents.send("check-daemon-response", currentBlockCount);
   });
   pfcctl.stderr.on("data", (data) => {
     logger.log("error", data.toString());
-    mainWindow.webContents.send("check-daemon-response", { blockCount: 0, syncHeight: 0 });
+    mainWindow.webContents.send("check-daemon-response", 0);
   });
 };
 

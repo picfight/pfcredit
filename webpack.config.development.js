@@ -10,13 +10,12 @@ import baseConfig from "./webpack.config.base";
 const port = process.env.PORT || 3000;
 
 export default merge(baseConfig, {
-  mode: "development",
 
   devtool: "inline-source-map",
 
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
-    "@babel/polyfill",
+    "babel-polyfill",
     "./app/index"
   ],
 
@@ -26,6 +25,32 @@ export default merge(baseConfig, {
 
   module: {
     rules: [
+      {
+        test: /\.min\.css$/,
+        use: [ {
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true
+          }
+        } ]
+      },
+
+      {
+        test: /^((?!\.min).)*\.css$/,
+        use: [ {
+          loader: "style-loader"
+        }, {
+          loader: "css-loader",
+          options: {
+            sourceMap: true,
+            modules: true,
+            localIdentName: "[name]__[local]___[hash:base64:5]"
+          }
+        } ]
+      },
+
       {
         test: /\.less$/,
         use: [ {
@@ -41,7 +66,6 @@ export default merge(baseConfig, {
         }, {
           loader: "less-loader",
           options: {
-            sourceMap: true,
             noIeCompat: true,
             strictMath: true
           }

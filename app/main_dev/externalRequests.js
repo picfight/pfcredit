@@ -9,21 +9,17 @@ import { session } from "electron";
 import { isRegExp } from "util";
 import { getGlobalCfg } from "../config";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "../middleware/politeiaapi";
-import { PFCDATA_URL_TESTNET, PFCDATA_URL_MAINNET } from "../middleware/pfcdataapi";
 
 export const EXTERNALREQUEST_NETWORK_STATUS = "EXTERNALREQUEST_NETWORK_STATUS";
 export const EXTERNALREQUEST_STAKEPOOL_LISTING = "EXTERNALREQUEST_STAKEPOOL_LISTING";
 export const EXTERNALREQUEST_UPDATE_CHECK = "EXTERNALREQUEST_UPDATE_CHECK";
 export const EXTERNALREQUEST_POLITEIA = "EXTERNALREQUEST_POLITEIA";
-export const EXTERNALREQUEST_PFCDATA = "EXTERNALREQUEST_PFCDATA";
-export const EXTERNALREQUEST_TREZOR_BRIDGE = "EXTERNALREQUEST_TREZOR_BRIDGE";
 
 // These are the requests allowed when the standard privacy mode is selected.
 export const STANDARD_EXTERNAL_REQUESTS = [
   EXTERNALREQUEST_NETWORK_STATUS,
   EXTERNALREQUEST_STAKEPOOL_LISTING,
   EXTERNALREQUEST_UPDATE_CHECK,
-  EXTERNALREQUEST_PFCDATA
 ];
 
 let allowedURLs = [];
@@ -47,9 +43,8 @@ export const installSessionHandlers = (mainLogger) => {
   // This MUST NOT go enabled into production, as it's a possible security
   // vulnerability, so any PRs enabling this by default will be rejected.
   // if (process.env.NODE_ENV === "development") {
-  //   const app = require("electron").app;
   //   app.on("certificate-error", (event, webContents, url, error, certificate, callback) => {
-  //     if (url.match(/^https:\/\/localhost:4443\/.*$/)) {
+  //     if (url.match(/^https:\/\/localhost:4443\/v1\/.*$/)) {
   //       event.preventDefault();
   //       callback(true);
   //     } else {
@@ -59,20 +54,14 @@ export const installSessionHandlers = (mainLogger) => {
   // }
 
   // TODO: check if this filtering is working even when multiple windows are
-  // created (relevant to multi-wallet usage)
+  // created (relevent to multi-wallet usage)
   session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     const isURLAllowed = (urlRegexp) => urlRegexp.test(details.url);
     if (!allowedURLs.some(isURLAllowed)) {
-      logger.log("error", "Blocking external request: " + details.method + " " + details.url);
-      logger.log("error", "Make sure that the request is whitelisted in main_dev/externalRequests.js");
+      logger.log("warn", "Cancelling external request " + details.method + " " + details.url);
       callback({ cancel: true, requestHeaders: details.requestHeaders });
     } else {
       logger.log("verbose", details.method + " " + details.url);
-      if (allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] && /^http:\/\/127.0.0.1:21325\//.test(details.url)) {
-        // trezor bridge requires this as an origin to prevent unwanted access.
-        details.requestHeaders["Origin"] = "https://dummy-origin-to-fool-trezor-bridge.trezor.io";
-      }
-
       callback({ cancel: false, requestHeaders: details.requestHeaders });
     }
   });
@@ -100,21 +89,6 @@ export const allowExternalRequest = (externalReqType) => {
   case EXTERNALREQUEST_POLITEIA:
     addAllowedURL(POLITEIA_URL_TESTNET);
     addAllowedURL(POLITEIA_URL_MAINNET);
-    break;
-  case EXTERNALREQUEST_PFCDATA:
-    addAllowedURL(PFCDATA_URL_TESTNET);
-    addAllowedURL(PFCDATA_URL_MAINNET);
-    break;
-  case EXTERNALREQUEST_TREZOR_BRIDGE:
-    addAllowedURL(/^http:\/\/127.0.0.1:21324\//);
-    addAllowedURL(/^http:\/\/127.0.0.1:21325\//);
-
-    // TODO: decide whether we want to provide our own signed config
-    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/config_signed.bin\?[\d]+$/);
-
-    // TODO: decide if we wanna block this
-    addAllowedURL(/^https:\/\/wallet.trezor.io\/data\/bridge\/latest.txt\?[\d]+$/);
-
     break;
   default:
     logger.log("error", "Unknown external request type: " + externalReqType);

@@ -1,29 +1,29 @@
 import { format } from "util";
 
-// dateToLocal converts the specified unix timestamp (possibly a block or
-// transaction timestamp) from seconds to a JS Date object.
-export function dateToLocal(timestamp) {
-  return new Date(timestamp * 1000);
+export function dateToLocal(d) {
+  Date.prototype.stdTimezoneOffset = function () {
+    var jan = new Date(this.getFullYear(), 0, 1);
+    var jul = new Date(this.getFullYear(), 6, 1);
+    return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+  };
+
+  Date.prototype.dst = function () {
+    return this.getTimezoneOffset() < this.stdTimezoneOffset();
+  };
+
+  var date = new Date(d * 1000);
+  if (date.dst()) {
+    date.setHours(date.getHours() + 1);
+    return date;
+  }
+  return date;
 }
 
-// dateToUTC converts the specified unix timestamp (possibly a block or
-// transaction timestamp) from seconds to a JS Date object in such a way that,
-// when formatted using the local timezone, the actual time displayed is the UTC
-// equivalent of the timestamp.
-// This function is slightly cheating, because javascript Date objects do *not*
-// have an internal timezone; they are always internally stored as unix
-// timestamps and formatted using the local timezone with no way to change the
-// timezone offset they use.
-// While this particular trick works for UTC, it's not great, and not easily
-// generalizable to using multiple timezones. If in the future we want to add
-// the ability to use timezones other than UTC and local, we should really
-// start using a decent library like momentjs.
-export function dateToUTC(timestamp) {
-  const date = new Date(timestamp * 1000);
+export function dateToUTC(d) {
+  const date = new Date(d * 1000);
   return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
     date.getUTCHours(), date.getUTCMinutes(),  date.getUTCSeconds());
 }
-
 // endOfDay returns a new date pointing to the end of the day (last second)
 // of the day stored in the given date.
 export function endOfDay(dt) {
@@ -39,7 +39,7 @@ export function endOfDay(dt) {
 
 // formatLocalISODate formats the given Date object d in an ISO8601 format, using
 // the local timezone (instead of UTC as d.ToISOString())
-export function formatLocalISODate(d, timezone) {
+export function formatLocalISODate(d) {
   const pad = (s, n) => {
     n = n || 2;
     s = Array(n).join("0") + s;
@@ -54,13 +54,12 @@ export function formatLocalISODate(d, timezone) {
   }
   let tzOffsetHours = Math.trunc(tzOffset / 60);
   let tzOffsetMinutes = Math.trunc(tzOffset % 60);
-  let tz = timezone === "utc" ? "Z" : tzOffsetSign + pad(tzOffsetHours, 2) + pad(tzOffsetMinutes, 2);
 
-  return format("%s-%s-%sT%s:%s:%s.%s%s",
+  return format("%s-%s-%sT%s:%s:%s.%s%s%s%s",
     d.getFullYear(), pad(d.getMonth()+1, 2), pad(d.getDate(), 2),
     pad(d.getHours(), 2), pad(d.getMinutes(), 2),
     pad(d.getSeconds(), 2), pad(d.getMilliseconds(), 3),
-    tz);
+    tzOffsetSign, pad(tzOffsetHours, 2), pad(tzOffsetMinutes, 2));
 }
 
 // calculate the difference between two timestamps and return an int
@@ -70,18 +69,4 @@ export function diffBetweenTwoTs(date1, date2) {
   const firstDate = dateToLocal(date1);
   const secondDate = dateToLocal(date2);
   return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
-}
-
-// isSameDate receives two dates and return true if they are the same
-// day/month/yeah, false otherwise.
-export function isSameDate(d1,d2) {
-  if (
-    (!d1) || (!d2) ||
-      (d1.getYear() !== d2.getYear()) ||
-      (d1.getMonth() !== d2.getMonth()) ||
-      (d1.getDate() !== d2.getDate())
-  ) {
-    return false;
-  }
-  return true;
 }

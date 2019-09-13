@@ -3,7 +3,7 @@
 
 .page-body.getstarted {
   padding: 40px;
-  background-color: var(--background-container);
+  background-color: #f7f8f9;
   display: block;
 }
 
@@ -13,8 +13,15 @@
   }
 }
 
+.getstarted-logo {
+  background-repeat: no-repeat;
+  background-image: @logo-launcher;
+  z-index: 3;
+  height: 32px;
+}
+
 .getstarted-new {
-  color: var(--title-text-and-button-background);
+  color: #48566e;
   padding-left: 52px;
   padding-top: 106px;
 }
@@ -42,7 +49,7 @@
 
   .language-select-input {
     .Select-control {
-      border: 1px solid var(--disabled-background-color);
+      border: 1px solid #e7eaed;
       border-radius: 5px;
       height: 29px;
       padding-top: 5px;
@@ -50,7 +57,7 @@
     }
 
     .Select-control:hover {
-      border: 1px solid var(--disabled-color);
+      border: 1px solid #959dac;
     }
   }
 
@@ -79,14 +86,6 @@
     margin-top: 2px;
   }
 
-  .flag.en-AU {
-    background-image: @flag-au;
-  }
-
-  .flag.de {
-    background-image: @flag-de;
-  }
-
   .flag.en {
     background-image: @flag-en;
   }
@@ -95,24 +94,12 @@
     background-image: @flag-gb;
   }
 
-  .flag.es {
-    background-image: @flag-es;
-  }
-
-  .flag.fr {
-    background-image: @flag-fr;
-  }
-
-  .flag.ja {
-    background-image: @flag-ja;
+  .flag.en-AU {
+    background-image: @flag-au;
   }
 
   .flag.pt-BR {
     background-image: @flag-ptbr;
-  }
-
-  .flag.zh {
-    background-image: @flag-zh;
   }
 
   .name {

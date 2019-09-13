@@ -1,25 +1,33 @@
 import TransitionMotionWrapper from "./TransitionMotionWrapper";
 import { spring } from "react-motion";
 
+/**
+ * A vertical accordion. Can be used in two modes:
+ *
+ * 1. Standalone: Provide header, height, and children props to render. It will
+ *    be expanded/contracted when the header is clicked.
+ *
+ * 2. Group: Provide the previous props + groupKey, activeGroupKey and
+ *    onToggleAccordion. Then the accordion will be expanded only when
+ *    activeGroupKey === groupKey. onToggleAccordion will be triggered once the
+ *    accordion header is clicked.
+ */
 @autobind
 class VerticalAccordion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      show: false,
       shownStyles: this.chosenStyles(props, false),
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const needUpdate =
-      (prevProps.show !== this.props.show) ||
-      (prevProps.children !== this.props.children) ||
-      (prevProps.height !== this.props.height);
-
-    if (needUpdate) {
-      this.setState({
-        shownStyles: this.chosenStyles(this.props, this.props.show),
-      });
+  componentWillReceiveProps(nextProps) {
+    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
+      const show = nextProps.groupKey === nextProps.activeGroupKey;
+      this.setState({ shownStyles: this.chosenStyles(nextProps, show), show });
+    } else {
+      this.setState({ shownStyles: this.chosenStyles(nextProps, this.state.show) });
     }
   }
 
@@ -69,13 +77,20 @@ class VerticalAccordion extends React.Component {
   }
 
   onToggleAccordion() {
-    this.props.onToggleAccordion && this.props.onToggleAccordion();
+    if ((this.props.groupKey !== undefined) && this.props.onToggleAccordion) {
+      this.props.onToggleAccordion(this.props.groupKey, this.state.show);
+    } else {
+      this.setState({
+        show: !this.state.show,
+        shownStyles: this.chosenStyles(this.props, !this.state.show),
+      });
+    }
   }
 
   render() {
     const classNames = [
       "vertical-accordion",
-      this.props.show ? "active" : "",
+      this.state.show ? "active" : "",
       this.props.className || "",
     ].join(" ");
 

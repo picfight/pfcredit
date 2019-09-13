@@ -1,5 +1,4 @@
 export { default as EyeFilterMenu } from "./EyeFilterMenu";
-export { default as EyeFilterMenuWithSlider } from "./EyeFilterMenuWithSlider";
 export { default as HelpLink } from "./HelpLink";
 export { default as SlateGrayButton } from "./SlateGrayButton";
 export { default as PathButton } from "./PathButton";
@@ -13,8 +12,6 @@ export { default as EnableExternalRequestButton } from "./EnableExternalRequestB
 export { default as SendTransactionButton } from "./SendTransactionButton";
 export { default as SignMessageButton } from "./SignMessageButton";
 export { default as GoBackIconButton } from "./GoBackIconButton";
-export { default as ImportScriptIconButton } from "./ImportScriptIconButton";
-export { default as TrezorWalletSwitch } from "./TrezorWalletSwitch";
 
 import ModalButton from "./ModalButton";
 import KeyBlueButton from "./KeyBlueButton";
@@ -23,7 +20,6 @@ import WatchOnlyWalletSwitch from "./WatchOnlyWalletSwitch";
 import NetworkSwitch from "./NetworkSwitch";
 import DangerButton from "./DangerButton";
 import CloseButton from "./CloseButton";
-import HelpLink from "./HelpLink";
 import InvisibleButton from "./InvisibleButton";
 export { ModalButton, AutoBuyerSwitch, KeyBlueButton, DangerButton,
   CloseButton, NetworkSwitch, InvisibleButton, WatchOnlyWalletSwitch };
@@ -48,14 +44,10 @@ const mbb = (className, modalComponent, buttonComponent) => p =>
     }}
   />;
 
-const helpLinkButtonNew = ({ className, onClick, title, subtitle }) =>
-  <HelpLink className={className} onClick={onClick} title={title} subtitle={subtitle} expand/>;
-
 const helpLinkButton = ({ className, onClick, buttonLabel }) =>
   <div className={className} onClick={onClick}>{buttonLabel}</div>;
 
-export const HelpLinkInfoModal = mbb(null, InfoModal, helpLinkButtonNew);
-export const HelpLinkAboutModal = mbb(null, AboutModal, helpLinkButtonNew);
+export const HelpLinkInfoModal = mbb("help-icon", InfoModal, helpLinkButton);
 export const InfoModalButton = mbb("info-modal-button", InfoModal);
 export const InfoDocModalButton = mbb("info-modal-button", InfoDocumentModal);
 export const InfoDocFieldModalButton = mbb("info-field-modal-button", InfoDocumentModal);
@@ -66,8 +58,6 @@ export const PassphraseModalSwitch = mbb(null, PassphraseModal, AutoBuyerSwitch)
 export const RemoveStakePoolButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveWalletButton = mbb(null, ConfirmModal, DangerButton);
 export const RemoveDaemonButton = mbb(null, ConfirmModal, DangerButton);
-export const ResetNetworkButton = mbb(null, ConfirmModal, KeyBlueButton);
 export const ScriptRedeemableButton = mbb(null, InfoModal, helpLinkButton);
 export const AboutModalButton = mbb(null, AboutModal, KeyBlueButton);
 export const AboutModalButtonInvisible = mbb(null, AboutModal, InvisibleButton);
-export const CloseWalletModalButton = mbb("close-modal-button", ConfirmModal, InvisibleButton);

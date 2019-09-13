@@ -3,7 +3,6 @@ import { bindActionCreators } from "redux";
 import { selectorMap } from "../fp";
 import * as sel from "../selectors";
 import * as ca from "../actions/ControlActions";
-import * as tza from "../actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   defaultSpendingAccount: sel.defaultSpendingAccount,
@@ -11,17 +10,15 @@ const mapStateToProps = selectorMap({
   unsignedTransaction: sel.unsignedTransaction,
   estimatedFee: sel.estimatedFee,
   totalSpent: sel.totalSpent,
+  publishedTransactionHash: sel.publishedTransactionHash,
   isSendingTransaction: sel.isSendingTransaction,
   isConstructingTransaction: sel.isConstructingTransaction,
   nextAddress: sel.nextAddress,
   nextAddressAccount: sel.nextAddressAccount,
   unitDivisor: sel.unitDivisor,
+  hasUnminedTransactions: sel.hasUnminedTransactions,
   constructTxLowBalance: sel.constructTxLowBalance,
   isTransactionsSendTabDisabled: sel.isTransactionsSendTabDisabled,
-  constructTxResponse: sel.constructTxResponse,
-  isTrezor: sel.isTrezor,
-  unsignedRawTx: sel.unsignedRawTx,
-  isWatchingOnly: sel.isWatchingOnly,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -30,7 +27,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   onClearTransaction: ca.clearTransaction,
   getNextAddressAttempt: ca.getNextAddressAttempt,
   validateAddress: ca.validateAddress,
-  onAttemptSignTransactionTrezor: tza.signTransactionAttemptTrezor,
+  publishUnminedTransactions: ca.publishUnminedTransactionsAttempt
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

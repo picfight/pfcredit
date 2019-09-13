@@ -3,12 +3,12 @@ import { GoBackIconButton } from "buttons";
 import { PoliteiaLink } from "shared";
 import {
   ProposalNotVoting, NoTicketsVotingInfo, OverviewField, OverviewVotingProgressInfo,
-  NoElligibleTicketsVotingInfo, UpdatingVoteChoice, TimeValue,
-  ChosenVoteOption, ProposalText, ProposalAbandoned
+  NoElligibleTicketsVotingInfo, VotingChoicesInfo, UpdatingVoteChoice, TimeValue,
+  ChosenVoteOption, ProposalText, ProposalVoted,
 } from "./helpers";
 import { politeiaMarkdownIndexMd } from "helpers";
 import {
-  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED, VOTESTATUS_ABANDONED
+  VOTESTATUS_ACTIVEVOTE, VOTESTATUS_VOTED
 } from "actions/GovernanceActions";
 
 export default ({ viewedProposalDetails,
@@ -16,8 +16,7 @@ export default ({ viewedProposalDetails,
   newVoteChoice, updateVoteChoiceAttempt, tsDate }) =>
 {
   const { name, token, hasEligibleTickets, voteStatus, voteOptions,
-    voteCounts, creator, timestamp, endTimestamp, currentVoteChoice,
-    version } = viewedProposalDetails;
+    voteCounts, creator, timestamp, voteDetails, currentVoteChoice } = viewedProposalDetails;
   const eligibleTicketCount = viewedProposalDetails.eligibleTickets.length;
 
   let text = "";
@@ -29,17 +28,17 @@ export default ({ viewedProposalDetails,
 
   const voted = voteStatus === VOTESTATUS_VOTED;
   const voting = voteStatus === VOTESTATUS_ACTIVEVOTE;
-  const abandoned = voteStatus === VOTESTATUS_ABANDONED;
-
 
   let voteInfo = null;
   if (updateVoteChoiceAttempt) voteInfo = <UpdatingVoteChoice />;
-  else if (abandoned) voteInfo = <ProposalAbandoned />;
-  else if (voted) voteInfo = <ChosenVoteOption {...{ voteOptions, currentVoteChoice, votingComplete: true }} />;
+  else if (voted) voteInfo = <ProposalVoted />;
   else if (!voting) voteInfo = <ProposalNotVoting />;
   else if (!hasTickets) voteInfo = <NoTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
   else if (!hasEligibleTickets) voteInfo = <NoElligibleTicketsVotingInfo {...{ showPurchaseTicketsPage }} />;
-  else voteInfo = <ChosenVoteOption {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount, currentVoteChoice, votingComplete: currentVoteChoice !== "abstain" }} />;
+  else if (currentVoteChoice !== "abstain") voteInfo = <ChosenVoteOption {...{ currentVoteChoice }} />;
+  else {
+    voteInfo = <VotingChoicesInfo {...{ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, eligibleTicketCount }}  />;
+  }
 
   return (
     <Aux>
@@ -54,15 +53,12 @@ export default ({ viewedProposalDetails,
               label={<T id="proposal.overview.created.label" m="Created by" />}
               value={creator} />
             <OverviewField
-              label={<T id="proposal.overview.version.label" m="Version" />}
-              value={version} />
-            <OverviewField
-              label={<T id="proposal.overview.lastUpdated.label" m="Last Updated" />}
+              label={<T id="proposal.overview.submitted.label" m="Submitted" />}
               value={<TimeValue timestamp={timestamp} tsDate={tsDate} />} />
             <OverviewField
-              show={voting && endTimestamp}
+              show={voting && voteDetails && voteDetails.endTimestamp}
               label={<T id="proposal.overview.deadline.label" m="Voting Deadline" />}
-              value={voting ? <TimeValue timestamp={endTimestamp} tsDate={tsDate} /> : null } />
+              value={voting ? <TimeValue timestamp={voteDetails.endTimestamp} tsDate={tsDate} /> : null } />
           </div>
         </div>
         <div className="proposal-details-overview-voting">

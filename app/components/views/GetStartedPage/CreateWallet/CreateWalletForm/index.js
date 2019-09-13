@@ -19,17 +19,17 @@ class CreateWalletForm extends React.Component {
   }
 
   componentDidMount() {
-    const { isCreatingWatchingOnly, masterPubKey } = this.props;
-    if (isCreatingWatchingOnly && masterPubKey) {
+    const { isWatchOnly, masterPubKey } = this.props;
+    if (isWatchOnly && masterPubKey) {
       this.props.createWatchOnlyWalletRequest(masterPubKey);
       return;
     }
     this.generateSeed();
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.decodeSeedError !== this.props.decodeSeedError) {
-      this.setState({ seedError: this.props.decodeSeedError });
+  componentWillUpdate(nextProps) {
+    if (this.props.decodeSeedError !== nextProps.decodeSeedError) {
+      this.setState({ seedError: nextProps.decodeSeedError });
     }
   }
 

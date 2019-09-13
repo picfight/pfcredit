@@ -17,7 +17,7 @@ class ValidateAddress extends React.Component {
     });
   }
 
-  componentDidMount () {
+  componentWillMount () {
     this.props.validateAddressCleanStore();
   }
 

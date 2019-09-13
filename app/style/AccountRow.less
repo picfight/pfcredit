@@ -2,25 +2,25 @@
 @import (reference) "./Icons.less";
 
 .account-row-top-spendable {
-  color: var(--stroke-color-hovered);
+  color: #596d81;
   font-size: 13px;
   line-height: 17px;
 }
 
 .account-row-top-spendable-value {
-  color: var(--input-color-default);
+  color: #091440;
   display: inline-block;
   width: 140px;
 }
 
 .account-row-top-account-name {
-  color: var(--input-color-default);
+  color: #091440;
   font-size: 19px;
   line-height: 24px;
 }
 
 .account-row-top-account-funds {
-  color: var(--input-color-default);
+  color: #091440;
   font-size: 19px;
   text-align: right;
 }
@@ -32,38 +32,38 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background-image: @accounts-default;
+  background-image: @wallet-gray-icon;
   background-size: 20px auto;
   background-repeat: no-repeat;
   background-position: 15px center;
-  background-color: var(--background-back-color);
-  border-top: 1px solid var(--background-container-hover);
-
-  &.imported {
-    background-image: @accounts-imported;
-  }
+  background-color: #fff;
+  border-top: 1px solid #f0f4f4;
 }
 
 .account-row-details-top:hover {
-  background-color: var(--background-container-hover);
+  background-color: #f0f4f4;
 }
 
 .account-row-details-bottom {
-  background-color: var(--background-container);
+  background-color: #f9fafa;
+}
+
+.account-row-details-bottom-column-left {
+  width: 24em;
 }
 
 .account-row-details-bottom-columns {
   width: 100%;
-  color: var(--stroke-color-hovered);
+  color: #596d81;
   margin-bottom: 20px;
+  margin-top: 15px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
 
-.account-row-details-bottom-column-left,
 .account-row-details-bottom-column-right {
-  margin-top: 15px;
+  width: 22em;
 }
 
 .account-row-details-bottom-columns::after,
@@ -73,42 +73,45 @@
   .clearfloat-mixin;
 }
 
-.account-row-details-bottom-title {
-  font-size: 19px;
-  text-align: right;
-  padding-right: 200px;
-  margin-bottom: 10px;
-}
-
+.account-row-details-bottom-title,
 .account-row-rename-bottom-title {
   font-size: 19px;
 }
 
+.account-row-details-bottom-title-name {
+  margin-bottom: 0.5em;
+  width: 134px;
+  text-align: right;
+  margin-left: 23px;
+}
+
 .account-row-details-bottom-spec {
+  text-align: right;
   font-size: 12px;
   margin-bottom: 0.5em;
-  display: grid;
-  grid-template-columns: 160px 200px;
+  display: flex;
 }
 
 .account-row-details-bottom-spec-last {
-  border-bottom: 1px solid var(--disabled-background-color);
-  color: var(--input-color-default);
+  border-bottom: 1px solid #e7eaed;
+  color: #091440;
   font-size: 12px;
 }
 
 .account-row-details-bottom-spec-name {
-  text-align: right;
+  margin-right: 10px;
+  width: 117px;
+  margin-left: 40px;
 }
 
 .account-row-details-bottom-spec-value {
-  margin-left: 1em;
+  width: 200px;
   text-align: left;
-  color: var(--input-color-default);
+  color: #091440;
 }
 
 .account-row-rename-bottom {
-  color: var(--input-color-default);
+  color: #091440;
   font-size: 12px;
   padding: 14px;
 }
@@ -142,7 +145,7 @@
   width: 20px;
   height: 20px;
   padding: 0px;
-  background-color: var(--input-color);
+  background-color: #2971ff;
   border: 0;
   line-height: inherit;
   text-decoration: none;
@@ -172,7 +175,7 @@
 .account-actions {
   width: 93%;
   margin-left: 20px;
-  border-top: 1px solid var(--disabled-background-color);
+  border-top: 1px solid #c4cbd2;
   display: flex;
   flex-direction: row;
 }
@@ -194,32 +197,34 @@
   .account-actions-pubkey-button {
     height: 15px;
     width: 37px;
-    color: var(--input-color-default);
+    color: #091440;
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
-    background-color: var(--disabled-color);
+    background-color: #8997a5;
     padding: 2px 20px 3px 20px;
     box-shadow: none;
     transition: all 131ms @easeInOutQuart;
   }
 
   .account-actions-pubkey-button:hover {
-    color: var(--background-back-color);
-    background-color: var(--disabled-color);
+    color: #fff;
+    background-color: #8997a5;
   }
 
   .account-actions-pubkey-area {
-    color: var(--background-back-color);
+    color: #fff;
     font-size: 13px;
     line-height: 17px;
     font-weight: 400;
     padding: 2px 20px 3px 20px;
     border-radius: 3px;
-    background-color: var(--disabled-color);
-    height: 32px;
-    width: 390px;
-    word-break: break-all;
+    background-color: #8997a5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    height: 15px;
+    width: 378px;
     transition: all 131ms @easeInOutQuart;
   }
 

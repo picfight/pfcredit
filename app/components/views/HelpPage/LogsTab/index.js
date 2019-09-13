@@ -1,5 +1,5 @@
 import Logs from "./Page";
-import { getPfcdLogs, getPfcwalletLogs, getPfcreditLogs } from "wallet";
+import { getPfcdLogs, getPfcwalletLogs } from "wallet";
 import { logging } from "connectors";
 import { DescriptionHeader } from "layout";
 import { FormattedMessage as T } from "react-intl";
@@ -17,15 +17,17 @@ class LogsTabBody extends React.Component {
   }
 
   componentDidMount() {
-    this.getLogs();
-  }
-
-  componentDidUpdate() {
-    if(this.state.interval) {
-      return;
-    }
     const interval = this.props.setInterval(() => {
-      this.getLogs();
+      Promise
+        .all([ getPfcdLogs(), getPfcwalletLogs() ])
+        .then(([ rawPfcdLogs, rawPfcwalletLogs ]) => {
+          const pfcdLogs = Buffer.from(rawPfcdLogs).toString("utf8");
+          const pfcwalletLogs = Buffer.from(rawPfcwalletLogs).toString("utf8");
+          if ( pfcdLogs !== this.state.pfcdLogs )
+            this.setState({ pfcdLogs });
+          if ( pfcwalletLogs !== this.state.pfcwalletLogs )
+            this.setState({ pfcwalletLogs });
+        });
     }, 2000);
     this.setState({ interval });
   }
@@ -39,7 +41,7 @@ class LogsTabBody extends React.Component {
       interval: null,
       pfcdLogs: "",
       pfcwalletLogs: "",
-      pfcreditLogs: "",
+      picfightitonLogs: null,
       showPfcdLogs: false,
       showPfcwalletLogs: false,
       showPfcreditLogs: false
@@ -50,38 +52,32 @@ class LogsTabBody extends React.Component {
     const { onShowPfcreditLogs, onShowPfcdLogs, onShowPfcwalletLogs,
       onHidePfcreditLogs, onHidePfcdLogs, onHidePfcwalletLogs
     } = this;
+    const { isDaemonRemote, isDaemonStarted } = this.props;
+    const {
+      pfcdLogs, pfcwalletLogs, picfightitonLogs, showPfcdLogs, showPfcwalletLogs, showPfcreditLogs
+    } = this.state;
     return (
       <Logs
         {...{
-          ...this.props,
-          ...this.state,
+          ...this.props, ...this.state }}
+        {...{
+          showPfcreditLogs,
+          showPfcdLogs,
+          showPfcwalletLogs,
           onShowPfcreditLogs,
           onShowPfcdLogs,
           onShowPfcwalletLogs,
           onHidePfcreditLogs,
           onHidePfcdLogs,
           onHidePfcwalletLogs,
+          pfcdLogs,
+          pfcwalletLogs,
+          picfightitonLogs,
+          isDaemonRemote,
+          isDaemonStarted
         }}
       />
     );
-  }
-
-  getLogs() {
-    return Promise
-      .all([ getPfcdLogs(), getPfcwalletLogs(), getPfcreditLogs() ])
-      .then(([ rawPfcdLogs, rawPfcwalletLogs, pfcreditLogs ]) => {
-        const pfcdLogs = Buffer.from(rawPfcdLogs).toString("utf8");
-        const pfcwalletLogs = Buffer.from(rawPfcwalletLogs).toString("utf8");
-        if ( pfcdLogs !== this.state.pfcdLogs ) {
-          this.setState({ pfcdLogs });
-        }
-        if ( pfcwalletLogs !== this.state.pfcwalletLogs ) {
-          this.setState({ pfcwalletLogs });
-        }
-        if ( pfcreditLogs !== this.state.pfcreditLogs ) {
-          this.setState({ pfcreditLogs });
-        }
-      });
   }
 
   onShowPfcreditLogs() {

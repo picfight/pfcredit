@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
 import { LoaderBarBottom } from "indicators";
-import { NewSeedTabMsg } from "../messages";
 import "style/CreateWalletForm.less";
 
 const ExistingOrNewScreen = ({
@@ -18,7 +17,7 @@ const ExistingOrNewScreen = ({
       </div>
       <div className="createwallet-button new" onClick={()=> onSetCreateWalletFromExisting(false)}>
         <div className="createwallet-button-label">
-          <NewSeedTabMsg />
+          <T id="getStarted.newSeedTab" m="Create a New Wallet"/>
         </div>
       </div>
       <div className="createwallet-button restore" onClick={()=> onSetCreateWalletFromExisting(true)}>

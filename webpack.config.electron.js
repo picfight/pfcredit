@@ -9,7 +9,7 @@ import baseConfig from "./webpack.config.base";
 export default merge(baseConfig, {
   devtool: "source-map",
 
-  entry: [ "@babel/polyfill", "./app/main.development" ],
+  entry: [ "babel-polyfill", "./app/main.development" ],
 
   // 'main.js' in root
   output: {
@@ -18,6 +18,12 @@ export default merge(baseConfig, {
   },
 
   plugins: [
+    // Minify the output
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }),
     // Add source map support for stack traces in node
     // https://github.com/evanw/node-source-map-support
     // new webpack.BannerPlugin(

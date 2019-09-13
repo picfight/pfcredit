@@ -1,6 +1,8 @@
 import ticketAutoBuyer from "connectors/ticketAutoBuyer";
 import { substruct, compose, eq, get } from "fp";
 import { injectIntl } from "react-intl";
+import { spring } from "react-motion";
+import Details from "./Details";
 import TicketAutoBuyerForm from "./Form";
 
 @autobind
@@ -13,12 +15,14 @@ class TicketAutoBuyer extends React.Component {
   getInitialState() {
     return {
       ...this.getCurrentSettings(),
+      isHidingDetails: true,
       isScrollingDown: false,
       canNotEnableAutobuyer: false,
       balanceToMaintainError: false,
-      stakePool: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.stakepool : this.props.stakePool,
-      account: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.account : this.props.account,
-      balanceToMaintain: this.props.ticketBuyerSettings ? this.props.ticketBuyerSettings.balanceToMaintain : 0,
+      maxFeeError: false,
+      maxPriceAbsoluteError: false,
+      maxPriceRelativeError: false,
+      maxPerBlockError: false
     };
   }
 
@@ -53,24 +57,68 @@ class TicketAutoBuyer extends React.Component {
     this.scrollTo(content, content.scrollHeight, 150);
   }
 
+  getDetailsComponent () {
+    const v = e => e.target.value;
+    const changeBalanceToMaintain = e => this.onChangeBalanceToMaintain(v(e));
+    const changeMaxFee = e => this.onChangeMaxFee(v(e));
+    const changeMaxPriceAbsolute = e => this.onChangeMaxPriceAbsolute(v(e));
+    const changeMaxPriceRelative = e => this.onChangeMaxPriceRelative(v(e));
+    const changeMaxPerBlock = e => this.onChangeMaxPerBlock(v(e));
+    const isTicketAutoBuyerConfigDirty = this.getIsDirty();
+
+    const {
+      getTicketBuyerConfigResponse,
+      intl : { formatMessage }
+    } = this.props;
+
+    const { onUpdateTicketAutoBuyerConfig } = this;
+
+    return [ {
+      data: <Details {...{
+        ...this.state,
+        isTicketAutoBuyerConfigDirty,
+        getTicketBuyerConfigResponse,
+        formatMessage,
+        onChangeBalanceToMaintain: changeBalanceToMaintain,
+        onChangeMaxFee: changeMaxFee,
+        onChangeMaxPriceAbsolute: changeMaxPriceAbsolute,
+        onChangeMaxPriceRelative: changeMaxPriceRelative,
+        onChangeMaxPerBlock: changeMaxPerBlock,
+        onUpdateTicketAutoBuyerConfig,
+      }}
+      />,
+      key: "output_0",
+      style: {
+        height: spring(150, { stiffness: 170, damping: 15 }),
+        opacity: spring(1, { stiffness: 100, damping: 20 }),
+      }
+    } ];
+  }
+
+  getNullStyles() {
+    return [ {
+      data: <div></div>,
+      key: "output_0",
+      style: {
+        height: spring(0, { stiffness: 100, damping: 14 }),
+        opacity: spring(0, { stiffness: 100, damping: 20 }),
+      }
+    } ];
+  }
+
   render() {
-    const changeBalanceToMaintain = e => this.onChangeBalanceToMaintain(e);
-    const changeAccount = e => this.onChangeAccount(e);
-    const changeStakePool = e => this.onChangeStakePool(e);
     return (
       <TicketAutoBuyerForm
         {...{
           isTicketAutoBuyerConfigDirty: this.getIsDirty(),
           formatMessage: this.props.intl.formatMessage,
-          onChangeBalanceToMaintain: changeBalanceToMaintain,
-          changeAccount,
-          changeStakePool,
-          account: this.getAccount(),
-          stakePool: this.getStakePool(),
           ...this.props,
           ...this.state,
           ...substruct({
+            onToggleShowDetails: null,
             onStartAutoBuyer: null,
+            getNullStyles: null,
+            getDetailsComponent: null,
           }, this)
         }}
       />
@@ -87,15 +135,11 @@ class TicketAutoBuyer extends React.Component {
   getCurrentSettings() {
     return substruct({
       balanceToMaintain: null,
+      maxFee: null,
+      maxPriceAbsolute: null,
+      maxPriceRelative: null,
+      maxPerBlock: null
     }, this.props);
-  }
-
-  onChangeStakePool(stakePool) {
-    this.setState({ stakePool });
-  }
-
-  onChangeAccount(account) {
-    this.setState({ account });
   }
 
   getIsDirty() {
@@ -104,15 +148,20 @@ class TicketAutoBuyer extends React.Component {
   }
 
   getAccount() {
-    const account = this.state.account;
+    const account = this.props.onChangeAccount ? this.props.account : this.state.account;
     return this.props.spendingAccounts.find(compose(eq(account.value), get("value")));
   }
 
-  getStakePool() {
-    const pool = this.state.stakePool;
-    return pool
-      ? this.props.configuredStakePools.find(compose(eq(pool.Host), get("Host")))
-      : null;
+  onToggleShowDetails() {
+    this.state.isHidingDetails ? this.onShowDetails() : this.onHideDetails();
+  }
+
+  onShowDetails() {
+    this.setState({ isHidingDetails: false, isScrollingDown: true });
+  }
+
+  onHideDetails() {
+    this.setState({ isHidingDetails: true });
   }
 
   onChangeBalanceToMaintain(balanceToMaintain) {
@@ -129,20 +178,69 @@ class TicketAutoBuyer extends React.Component {
     });
   }
 
+  onChangeMaxFee(maxFee) {
+    const maxFeeError = (isNaN(maxFee) || maxFee <= 0 || maxFee >= 0.1) || !maxFee;
+    this.setState({
+      maxFee: maxFee,
+      maxFeeError: maxFeeError
+    });
+  }
+
+  onChangeMaxPriceAbsolute(maxPriceAbsolute) {
+    const maxPriceAbsoluteError = (isNaN(maxPriceAbsolute) || maxPriceAbsolute < 0) || !maxPriceAbsolute;
+    this.setState({
+      maxPriceAbsolute: maxPriceAbsolute,
+      maxPriceAbsoluteError: maxPriceAbsoluteError
+    });
+  }
+
+  onChangeMaxPriceRelative(maxPriceRelative) {
+    const maxPriceRelativeError = (isNaN(maxPriceRelative) || maxPriceRelative < 0) || !maxPriceRelative;
+    this.setState({
+      maxPriceRelative: maxPriceRelative,
+      maxPriceRelativeError: maxPriceRelativeError
+    });
+  }
+
+  onChangeMaxPerBlock(maxPerBlock) {
+    const maxPerBlockError = !maxPerBlock;
+    this.setState({
+      maxPerBlock: maxPerBlock,
+      maxPerBlockError: maxPerBlockError
+    });
+  }
+
   onStartAutoBuyer(passphrase) {
     const { onEnableTicketAutoBuyer } = this.props;
     onEnableTicketAutoBuyer && onEnableTicketAutoBuyer(
       passphrase,
-      this.getAccount(),
+      this.getAccount().value,
       this.state.balanceToMaintain,
-      this.getStakePool()
+      this.state.maxFee,
+      this.state.maxPriceRelative,
+      this.state.maxPriceAbsolute,
+      this.state.maxPerBlock,
+      this.props.stakePool.value
     );
   }
 
-  getErrors() {
-    const { balanceToMaintainError } = this.state;
+  onUpdateTicketAutoBuyerConfig() {
+    const { onUpdateTicketAutoBuyerConfig: onUpdateConfig } = this.props;
+    this.getIsDirty() ? (onUpdateConfig && onUpdateConfig(
+      this.getAccount().value,
+      this.state.balanceToMaintain,
+      this.state.maxFee,
+      this.state.maxPriceAbsolute,
+      this.state.maxPriceRelative,
+      this.props.stakePool.value,
+      this.state.maxPerBlock
+    )) : null;
+  }
 
-    if (balanceToMaintainError) {
+  getErrors() {
+    const { balanceToMaintainError, maxFeeError, maxPriceAbsoluteError, maxPriceRelativeError, maxPerBlockError } = this.state;
+
+    if (balanceToMaintainError || maxFeeError || maxPriceAbsoluteError || maxPriceRelativeError || maxPerBlockError) {
       this.setState({
         canNotEnableAutobuyer: true
       });

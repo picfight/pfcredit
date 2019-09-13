@@ -3,68 +3,14 @@
 
 .settings-wrapper {
   display: flex;
-  background: var(--background-back-color);
-  margin-top: 10px;
+  background: white;
   margin-bottom: 20px;
   padding: 26px 26px 26px 40px;
   justify-content: space-between;
 }
 
-.settings-columns,
-.get-started-custom-privacy-settings {
+.settings-columns {
   flex: 50%;
-  
-  input[type="checkbox"],
-  input[type="radio"] {
-    display: none;
-  }
-  
-  input[type="checkbox"]:disabled + label,
-  input[type="radio"]:disabled + label {
-    display: inline-block;
-    background-color: var(--disabled-background-color);
-    border: 1px solid var(--disabled-color);
-  }
-  
-  input[type="checkbox"]:checked:disabled + label,
-  input[type="radio"]:checked:disabled + label {
-    display: inline-block;
-    border: 1px solid var(--disabled-color);
-    background-color: var(--disabled-background-color);
-    background-image: @checkmarkGrey;
-    background-repeat: no-repeat;
-    background-size: 10px;
-  }
-  
-  input[type="checkbox"] + label,
-  input[type="radio"] + label {
-    display: inline-block;
-    border: 1px solid var(--disabled-color);
-    background-color: none;
-  }
-  
-  input[type="checkbox"]:checked + label,
-  input[type="radio"]:checked + label {
-    display: inline-block;
-    border: 1px solid var(--input-color);
-    background-color: none;
-    background-image: @checkmarkBlue;
-    background-repeat: no-repeat;
-    background-size: 10px;
-  }
-  
-  input[type="radio"] + label {
-    border-radius: 50%;
-    width: 14px;
-    height: 14px;
-    background-position: 2px;
-  }
-  
-  input[type="checkbox"] + label {
-    width: 12px;
-    height: 12px;
-    background-position: 1px;
-  }
 }
 
 .settings-wrapper .settings-label {
@@ -79,16 +25,14 @@
 }
 
 .settings-privacy,
-.settings-security,
-.settings-timezone {
+.settings-security {
   width: 100%;
   float: left;
   margin-bottom: 20px;
 }
 
 .settings-privacy .settings-column-title,
-.settings-security .settings-column-title,
-.settings-timezone .settings-column-title {
+.settings-security .settings-column-title {
   text-align: right;
   margin-right: 145px;
 }
@@ -110,7 +54,7 @@
   font-style: italic;
   text-align: right;
   margin: -16px 28px 10px 0px;
-  color: var(--disabled-color);
+  color: #8997a5;
   font-size: 11px;
   line-height: 15px;
   width: 175px;
@@ -121,16 +65,15 @@
 
   text-align: right;
   margin: -1px 10px 20px 0;
-  width: 125px;
 }
 
 .change-password-default-icon {
   background: @change-password-default-icon no-repeat center;
-  background-color: var(--input-color);
+  background-color: #2971ff;
   background-size: 16px;
   cursor: pointer;
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
   margin-left: 10px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -139,21 +82,19 @@
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13);
 }
 
-.change-password-disabled-icon,
-.change-password-loading {
+.change-password-disabled-icon {
   background: @password-inactive-icon no-repeat center;
-  background-color: var(--disabled-background-color);
+  background-color: #e7eaed;
   cursor: default;
 }
 
-.change-password-disabled-icon:hover,
-.change-password-loading:hover {
-  background-color: var(--disabled-background-color) !important;
+.change-password-disabled-icon:hover {
+  background-color: #e7eaed !important;
   box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.13) !important;
 }
 
 .change-password-default-icon:hover {
-  background-color: var(--input-color-hover);
+  background-color: #1b58ff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
@@ -174,7 +115,7 @@
   float: right;
   height: 100%;
   text-align: left;
-  color: var(--error-red);
+  color: red;
   padding-top: 5px;
 }
 
@@ -184,12 +125,6 @@
 
 .settings-save-button {
   .inline-block-mixin;
-}
-
-.settings-close-wallet-button {
-  .inline-block-mixin;
-
-  float: right;
 }
 
 .settings-update-passphrase-button {
@@ -203,6 +138,10 @@
   line-height: 17px;
 }
 
+.inverted-colors .settings-general {
+  color: #fff;
+}
+
 .get-started-content-new-seed .settings-general {
   max-width: 400px;
 }
@@ -211,6 +150,57 @@
   margin-top: 2px;
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
+}
+
+input[type="checkbox"]:disabled + label,
+input[type="radio"]:disabled + label {
+  display: inline-block;
+  background-color: #e7eaed;
+  border: 1px solid #8997a5;
+}
+
+input[type="checkbox"]:checked:disabled + label,
+input[type="radio"]:checked:disabled + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: #e7eaed;
+  background-image: @checkmarkGrey;
+  background-repeat: no-repeat;
+  background-size: 10px;
+}
+
+input[type="checkbox"] + label,
+input[type="radio"] + label {
+  display: inline-block;
+  border: 1px solid #8997a5;
+  background-color: none;
+}
+
+input[type="checkbox"]:checked + label,
+input[type="radio"]:checked + label {
+  display: inline-block;
+  border: 1px solid #2970ff;
+  background-color: none;
+  background-image: @checkmarkBlue;
+  background-repeat: no-repeat;
+  background-size: 10px;
+}
+
+input[type="radio"] + label {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  background-position: 2px;
+}
+
+input[type="checkbox"] + label {
+  width: 12px;
+  height: 12px;
+  background-position: 1px;
+}
 
 @media screen and (max-width: 676px) {
   .app-modal.about-modal,
@@ -237,27 +227,4 @@
   .settings-security .settings-column-title {
     text-align: left;
   }
-}
-
-.close-modal-button {
-  height: 23px;
-  background-color: #8997a5;
-  color: #f3f6f6;
-  background-image: @close-wallet-icon;
-  background-repeat: no-repeat;
-  background-size: 13px;
-  width: 134px;
-  background-position: 10px 8px;
-  border-radius: 10px;
-  padding: 0;
-  padding-top: 6px;
-}
-
-.toggle-theme-button-wrapper {
-  margin-top: 30px;
-  float: right;
-}
-
-.privacy-buttons {
-  text-align: right;
 }

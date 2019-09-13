@@ -1,18 +1,16 @@
-import { app } from "electron";
-import { cleanShutdown, GetPfcdPID, GetDcrwPID } from "./launch";
+import { app, shell } from "electron";
+import { cleanShutdown, GetPfcdPID, GetPfcwPID } from "./launch";
+import { getDirectoryLogs, getPfcwalletPath, getPfcdPath } from "./paths";
 
 let versionWin = null;
 let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
   {
-    label: locale.messages["appMenu.pfcredit"],
+    label: locale.messages["appMenu.decrediton"],
     submenu: [ {
       label: locale.messages["appMenu.aboutPfcredit"],
-      selector: "orderFrontStandardAboutPanel:",
-      click() {
-        mainWindow.webContents.send("show-about-modal");
-      }
+      selector: "orderFrontStandardAboutPanel:"
     }, {
       type: "separator"
     }, {
@@ -37,7 +35,7 @@ const darwinTemplate = (mainWindow, locale) => [
       label: locale.messages["appMenu.quit"],
       accelerator: "Command+Q",
       click() {
-        cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+        cleanShutdown(mainWindow, app, GetPfcdPID(), GetPfcwPID());
       }
     } ]
   }, {
@@ -120,11 +118,26 @@ const regularTemplate = (mainWindow, locale) => [ {
     click() {
       mainWindow.webContents.send("app-reload-requested", mainWindow);
     },
-  }, {
+  } ]
+} ];
+
+const defaultTemplate = (mainWindow, locale) => [ {
+  label: locale.messages["appMenu.advanced"],
+  submenu: [ {
     label: locale.messages["appMenu.developerTools"],
     accelerator: "Alt+Ctrl+I",
     click() {
       mainWindow.toggleDevTools();
+    }
+  }, {
+    label: locale.messages["appMenu.showWalletLog"],
+    click() {
+      shell.openItem(getDirectoryLogs(getPfcwalletPath()));
+    }
+  }, {
+    label: locale.messages["appMenu.showDaemonLog"],
+    click() {
+      shell.openItem(getDirectoryLogs(getPfcdPath()));
     }
   } ]
 } ];
@@ -137,6 +150,7 @@ export const initTemplate = (mainWindow, locale) => {
   } else {
     template = regularTemplate(mainWindow, locale);
   }
+  template.push(...defaultTemplate(mainWindow, locale));
 
   return template;
 };

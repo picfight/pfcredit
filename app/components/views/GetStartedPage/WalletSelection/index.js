@@ -1,5 +1,6 @@
 import { WalletSelectionFormBody } from "./Form";
 import { createWallet } from "connectors";
+
 @autobind
 class WalletSelectionBody extends React.Component {
   constructor(props) {
@@ -15,25 +16,15 @@ class WalletSelectionBody extends React.Component {
       newWalletName: "",
       selectedWallet: this.props.availableWallets ? this.props.availableWallets[0] : null,
       hasFailedAttempt: false,
-      isWatchingOnly: false,
+      isWatchOnly: false,
       walletMasterPubKey: "",
       masterPubKeyError: false,
       walletNameError: null,
-      isTrezor: false,
     };
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.selectedWallet && this.props.availableWallets.length === 0) {
-      this.setState({ selectedWallet: null });
-    } else if (prevProps.availableWallets.length !== this.props.availableWallets.length) {
-      this.setState({ selectedWallet: this.props.availableWallets[0] });
-    } else {
-      for (var i = 0; i < prevProps.availableWallets.length; i++) {
-        if (this.props.availableWallets[i].label !== prevProps.availableWallets[i].label) {
-          this.setState({ selectedWallet: this.props.availableWallets[0] });
-          break;
-        }
-      }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.availableWallets && this.props.availableWallets.length !== nextProps.availableWallets.length) {
+      this.setState({ selectedWallet: nextProps.availableWallets[0] });
     }
   }
 
@@ -58,7 +49,6 @@ class WalletSelectionBody extends React.Component {
       onCloseEditWallets,
       toggleWatchOnly,
       onChangeCreateWalletMasterPubKey,
-      toggleTrezor,
     } = this;
     const {
       selectedWallet,
@@ -70,7 +60,7 @@ class WalletSelectionBody extends React.Component {
       editWallets,
       hasFailedAttemptName,
       hasFailedAttemptPubKey,
-      isWatchingOnly,
+      isWatchOnly,
       walletMasterPubKey,
       masterPubKeyError,
       walletNameError,
@@ -98,14 +88,13 @@ class WalletSelectionBody extends React.Component {
           networkSelected: newWalletNetwork == "mainnet",
           getDaemonSynced,
           toggleWatchOnly,
-          isWatchingOnly,
+          isWatchOnly,
           onChangeCreateWalletMasterPubKey,
           walletMasterPubKey,
           masterPubKeyError,
           walletNameError,
           maxWalletCount,
           isSPV,
-          toggleTrezor,
           ...this.props,
           ...this.state,
         }}
@@ -121,19 +110,8 @@ class WalletSelectionBody extends React.Component {
   showCreateWalletForm(createNewWallet) {
     this.setState({ createNewWallet, createWalletForm: true });
   }
-  hideCreateWalletForm() {
-    if (this.state.isTrezor) {
-      this.props.trezorDisable();
-    }
-
-    this.setState({ hasFailedAttemptName: false,
-      hasFailedAttemptPubKey: false,
-      createWalletForm: false,
-      newWalletName: "",
-      isWatchingOnly: false,
-      isTrezor: false,
-      walletMasterPubKey: "",
-    });
+  hideCreateWalletForm(createNewWallet) {
+    this.setState({ hasFailedAttemptName: false, hasFailedAttemptPubKey: false, createNewWallet, createWalletForm: false });
   }
   onChangeAvailableWallets(selectedWallet) {
     this.setState({ selectedWallet });
@@ -142,8 +120,6 @@ class WalletSelectionBody extends React.Component {
     const { availableWallets } = this.props;
     this.setState({ hasFailedAttemptName: true });
     var nameAvailable = true;
-    // replace all special path symbols
-    newWalletName = newWalletName.replace(/[/\\.;:~]/g, "");
     for (var i = 0; i < availableWallets.length; i++) {
       if (newWalletName == availableWallets[i].value.wallet) {
         nameAvailable = false;
@@ -157,49 +133,24 @@ class WalletSelectionBody extends React.Component {
   }
   createWallet() {
     const { newWalletName, createNewWallet,
-      isWatchingOnly, masterPubKeyError, walletMasterPubKey, walletNameError,
-      isTrezor } = this.state;
+      isWatchOnly, masterPubKeyError, walletMasterPubKey, walletNameError } = this.state;
     if (newWalletName == "" || walletNameError) {
       this.setState({ hasFailedAttemptName: true });
       return;
     }
-    if (isWatchingOnly) {
+    if (isWatchOnly) {
       if (masterPubKeyError || !walletMasterPubKey) {
         this.setState({ hasFailedAttemptPubKey: true });
         return;
       }
     }
-    if (isTrezor && !this.props.trezorDevice) {
-      this.props.trezorAlertNoConnectedDevice();
-      return;
-    }
-    if (isTrezor) {
-      this.props.trezorGetWalletCreationMasterPubKey()
-        .then(() => {
-          this.props.onCreateWallet(
-            createNewWallet,
-            { label: newWalletName, value: { wallet: newWalletName,
-              watchingOnly: true, isTrezor } } );
-        });
-    } else {
-      this.props.onCreateWallet(
-        createNewWallet,
-        { label: newWalletName, value: { wallet: newWalletName,
-          watchingOnly: isWatchingOnly, isTrezor } } );
-    }
+    this.props.onCreateWallet(
+      createNewWallet,
+      { label: newWalletName, value: { wallet: newWalletName } });
   }
   toggleWatchOnly() {
-    const { isWatchingOnly } = this.state;
-    this.setState({ isWatchingOnly : !isWatchingOnly, isTrezor: false });
-  }
-  toggleTrezor() {
-    const isTrezor = !this.state.isTrezor;
-    this.setState({ isTrezor, isWatchingOnly: false });
-    if (isTrezor) {
-      this.props.trezorEnable();
-    } else {
-      this.props.trezorDisable();
-    }
+    const { isWatchOnly } = this.state;
+    this.setState({ isWatchOnly : !isWatchOnly });
   }
   async onChangeCreateWalletMasterPubKey(walletMasterPubKey) {
     if (walletMasterPubKey === "") {

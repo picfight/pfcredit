@@ -27,8 +27,7 @@ class StakePoolSelect extends React.Component {
     if (value.newOption) {
       if (!addCustomStakePool) return;
 
-      const formattedHost = value.Host.replace(/\/$/, "");
-      addCustomStakePool(formattedHost).then(poolInfo => {
+      addCustomStakePool(value.Host).then(poolInfo => {
         if (!poolInfo) return;
         const opt = { ...poolInfo, label: poolInfo.Host, value: poolInfo,
           isVersionValid: true };
@@ -39,13 +38,12 @@ class StakePoolSelect extends React.Component {
     onChange(value);
   }
 
-  addStakePoolLabel() {
-    return <T id="stakePoolSelect.addNewPrompt" m="Add StakePool {host}"
-      values={{ host: this.lastInput }} />;
+  addStakePoolLabel(host) {
+    return <T id="stakePoolSelect.addNewPrompt" m="Add StakePool {host}" values={{ host }} />;
   }
 
-  newOptionCreator(obj) {
-    return { label: obj.label, Host: this.lastInput, newOption: true };
+  newOptionCreator({ label }) {
+    return { label, Host: this.lastInput, newOption: true };
   }
 
   onInputChange(input) {
@@ -62,10 +60,6 @@ class StakePoolSelect extends React.Component {
       Host: null
     });
     return options;
-  }
-
-  isValidNewOption() {
-    return true;
   }
 
   render() {

@@ -10,7 +10,7 @@
   content: "";
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 5px solid var(--background-back-color);
+  border-bottom: 5px solid #fff;
   position: absolute;
   top: 30px;
   right: 10px;
@@ -32,7 +32,7 @@
   border-radius: 4px;
   padding: 0px;
   background-image: @contextbutton-eye-default-icon;
-  background-color: var(--disabled-color);
+  background-color: @disabled-color;
 }
 
 .eye-filter-menu-button-icon-disabled {
@@ -43,7 +43,7 @@
 
 .eye-filter-menu-button-icon::after {
   content: "";
-  border-color: var(--background-back-color) transparent transparent;
+  border-color: #fff transparent transparent;
   border-style: solid;
   border-width: 5px 5px 2.5px;
   height: 0;
@@ -54,11 +54,11 @@
 }
 
 .eye-filter-menu-button-icon:hover {
-  background-color: var(--stroke-color-hovered);
+  background-color: @enabled-color;
 }
 
 .eye-filter-menu-button-icon-disabled:hover {
-  background-color: var(--stroke-color-hovered);
+  background-color: @enabled-color;
 }
 
 .eye-filter-menu-button-icon:disabled {
@@ -71,14 +71,14 @@
 
 .eye-filter-menu-items {
   border-radius: 5px;
-  background-color: var(--background-back-color);
+  background-color: #fff;
   position: absolute;
   right: 0px;
   padding: 8px 0px;
   width: 168px;
-  color: var(--input-color-default);
+  color: #132f4b;
   text-align: left;
-  box-shadow: 0px 3px 8px var(--input-color-shadow);
+  box-shadow: 0px 3px 8px rgba(9, 20, 64, 0.21);
   user-select: none;
 
   .context-menu-item {
@@ -86,10 +86,9 @@
     line-height: 2em;
     min-width: 10em;
     padding-left: 28px;
-    padding-bottom: 5px;
 
     &:hover {
-      background-color: var(--white-border);
+      background-color: #e9f8ff;
     }
   }
 
@@ -112,6 +111,7 @@
     height: 0;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
-    border-bottom: 5px solid var(--background-back-color);
+    border-bottom: 5px solid #fff;
   }
 }
+

@@ -21,53 +21,31 @@ class StakePools extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    const configuredHost = this.state.selectedUnconfigured ? this.state.selectedUnconfigured.Host : "";
-    const hasUnconfigured = this.props.unconfiguredStakePools.some(p => p.Host ===  configuredHost);
-    if (!hasUnconfigured && this.props.unconfiguredStakePools.length) {
-      // We just added a stakepool, so it has been removed from the list of
-      // unconfigured. Select the next one on the list.
-      this.setState({
-        selectedUnconfigured: this.props.unconfiguredStakePools[0],
-        apiKey: "",
-        hasFailedAttempt: false
-      });
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.selectedUnconfigured) {
+      this.setState({ selectedUnconfigured: nextProps.unconfiguredStakePools[0] });
     }
-  }
-
-  componentDidMount() {
-    if(!this.state.selectedUnconfigured) {
-      this.setState({ selectedUnconfigured: this.props.unconfiguredStakePools[0] });
-    }
-    if (!this.getStakepoolListingEnabled() && this.props.stakePoolListingEnabled) {
+    if (!this.getStakepoolListingEnabled() && nextProps.stakePoolListingEnabled) {
       this.props.discoverAvailableStakepools();
     }
   }
 
-  renderStakepoolListingDisabled() {
-    return (
+  render() {
+    return this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled() ? (
       <div>
         <p><T id="stake.enableStakePoolListing.description" m="StakePool listing from external API endpoint is currently disabled. Please enable the access to this third party service or manually configure the stakepool." /></p>
         <EnableExternalRequestButton requestType={EXTERNALREQUEST_STAKEPOOL_LISTING}>
           <T id="stake.enableStakePoolListing.button" m="Enable StakePool Listing" />
         </EnableExternalRequestButton>
       </div>
-    );
-  }
-
-  renderNoAvailableStakepools() {
-    return (
+    ) : this.getNoAvailableStakepools() ? (
       <T
         id="stake.noAvailableStakepools"
         m="No stakepool found. Check your internet connection or {link} to see if the StakePool API is down."
         values={{
           link: (<a className="stakepool-link" onClick={() => shell.openExternal("https://api.picfight.org/?c=gsd")}><T id="stake.discoverStakeOoolsAPILink" m="this link" /></a>)
         }} />
-    );
-  }
-
-  renderAddForm() {
-    return (
+    ) : this.getIsAdding() ? (
       <StakePoolsAddForm
         {...{
           ...this.props,
@@ -84,21 +62,7 @@ class StakePools extends React.Component {
           }, this),
         }}
       />
-    );
-  }
-
-  render() {
-    if (this.getNoAvailableStakepools() && !this.getStakepoolListingEnabled()) {
-      return this.renderStakepoolListingDisabled();
-    }
-    if (this.getNoAvailableStakepools()) {
-      return this.renderNoAvailableStakepools();
-    }
-    if (this.getIsAdding()) {
-      return this.renderAddForm();
-    }
-
-    return (
+    ) : (
       <StakePoolsList
         {...{
           ...this.props,
@@ -111,9 +75,7 @@ class StakePools extends React.Component {
   }
 
   getIsAdding() {
-    return this.state.isAdding
-      || this.props.configuredStakePools.length <= 0
-      || this.props.isImportingScript;
+    return this.state.isAdding || this.props.configuredStakePools.length <= 0;
   }
 
   getNoAvailableStakepools() {
@@ -151,12 +113,7 @@ class StakePools extends React.Component {
   onSetStakePoolInfo(privpass) {
     const { apiKey } = this.state;
     const onSetInfo = this.props.onSetStakePoolInfo;
-    if (!onSetInfo) return;
-    if (!apiKey) {
-      this.setState({ hasFailedAttempt: true });
-      return;
-    }
-    onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, true);
+    apiKey ? (onSetInfo && onSetInfo(privpass, this.getSelectedUnconfigured().Host, apiKey, 0)) : this.setState({ hasFailedAttempt: true });
   }
 
   onRemoveStakePool(host) {

@@ -11,9 +11,9 @@ export function appDataDirectory() {
   if (os.platform() == "win32") {
     return path.join(os.homedir(), "AppData", "Local", "Pfcredit");
   } else if (process.platform === "darwin") {
-    return path.join(os.homedir(), "Library","Application Support","pfcredit");
+    return path.join(os.homedir(), "Library","Application Support","decrediton");
   } else {
-    return path.join(os.homedir(),".config","pfcredit");
+    return path.join(os.homedir(),".config","decrediton");
   }
 }
 

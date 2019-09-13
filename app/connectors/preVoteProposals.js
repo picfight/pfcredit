@@ -5,7 +5,7 @@ import * as sel from "../selectors";
 
 const mapStateToProps = selectorMap({
   proposals: sel.preVoteProposals,
-  loading: sel.initialProposalLoading,
+  loading: sel.getVettedProposalsAttempt,
 });
 
 export default connect(mapStateToProps);

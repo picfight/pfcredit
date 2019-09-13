@@ -4,17 +4,16 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { initGlobalCfg, validateGlobalCfgFile, setMustOpenForm } from "./config";
 import { appLocaleFromElectronLocale, default as locales } from "./i18n/locales";
 import { createLogger, lastLogLine, GetPfcdLogs, GetPfcwalletLogs } from "./main_dev/logging";
-import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE, MAX_LOG_LENGTH } from "./main_dev/constants";
+import { OPTIONS, USAGE_MESSAGE, VERSION_MESSAGE, BOTH_CONNECTION_ERR_MESSAGE } from "./main_dev/constants";
 import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirectory } from "./main_dev/paths";
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
-import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
+import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, GetPfcdPID, GetDcrwPID } from "./main_dev/launch";
-import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
+import { cleanShutdown, GetPfcdPID, GetPfcwPID } from "./main_dev/launch";
+import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
-import { readFileBackward } from "./helpers/byteActions";
 
-// setPath as pfcredit
+// setPath as picfightiton
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -40,10 +39,6 @@ const daemonIsAdvanced = globalCfg.get("daemon_start_advanced");
 const walletsDirectory = getWalletsDirectoryPath();
 const mainnetWalletsPath = getWalletsDirectoryPathNetwork(false);
 const testnetWalletsPath = getWalletsDirectoryPathNetwork(true);
-if (globalCfg.get("disable_hardware_accel")) {
-  logger.log("info", "Disabling hardware acceleration");
-  app.disableHardwareAcceleration();
-}
 
 if (argv.help) {
   console.log(USAGE_MESSAGE);
@@ -114,14 +109,8 @@ ipcMain.on("reload-allowed-external-request", (event) => {
   reloadAllowedExternalRequests();
   event.returnValue = true;
 });
-
 ipcMain.on("allow-stakepool-host", (event, host) => {
   allowStakepoolRequests(host);
-  event.returnValue = true;
-});
-
-ipcMain.on("allow-external-request", (event, requestType) => {
-  allowExternalRequest(requestType);
   event.returnValue = true;
 });
 
@@ -149,10 +138,6 @@ ipcMain.on("remove-wallet", (event, walletPath, testnet) => {
   event.returnValue = removeWallet(testnet, walletPath);
 });
 
-ipcMain.on("stop-daemon", (event) => {
-  event.returnValue = stopDaemon();
-});
-
 ipcMain.on("stop-wallet", (event) => {
   previousWallet = null;
   event.returnValue = stopWallet();
@@ -166,12 +151,8 @@ ipcMain.on("check-daemon", (event, rpcCreds, testnet) => {
   checkDaemon(mainWindow, rpcCreds, testnet);
 });
 
-ipcMain.on("get-info", (event, rpcCreds) => {
-  getDaemonInfo(mainWindow, rpcCreds, false);
-});
-
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+  const stopped = await cleanShutdown(mainWindow, app, GetPfcdPID(), GetPfcwPID());
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -201,15 +182,8 @@ ipcMain.on("get-pfcwallet-logs", (event) => {
   event.returnValue = GetPfcwalletLogs();
 });
 
-ipcMain.on("get-pfcredit-logs", (event) => {
-  const logFileName = logger.transports.file.dirname + "/" +logger.transports.file.filename;
-  readFileBackward(logFileName, MAX_LOG_LENGTH, (err, data) => {
-    if (err) {
-      logger.log("error", "Error reading log: "+ err );
-      return event.returnValue = null;
-    }
-    event.returnValue = data.toString("utf8");
-  });
+ipcMain.on("get-picfightiton-logs", (event) => {
+  event.returnValue = "decrediton logs!";
 });
 
 ipcMain.on("get-last-log-line-pfcd", event => {
@@ -238,7 +212,7 @@ ipcMain.on("get-is-watching-only", (event) => {
   event.returnValue = getWatchingOnlyWallet();
 });
 
-primaryInstance = app.requestSingleInstanceLock();
+primaryInstance = !app.makeSingleInstance(() => true);
 const stopSecondInstance = !primaryInstance && !daemonIsAdvanced;
 if (stopSecondInstance) {
   logger.log("error", "Preventing second instance from running.");
@@ -246,7 +220,7 @@ if (stopSecondInstance) {
 
 app.on("ready", async () => {
   // when installing (on first run) locale will be empty. Determine the user's
-  // OS locale and set that as pfcredit's locale.
+  // OS locale and set that as picfightiton's locale.
   const cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {
@@ -327,9 +301,9 @@ app.on("ready", async () => {
 });
 
 app.on("before-quit", (event) => {
-  logger.log("info","Caught before-quit. Set decredition as was closed");
+  logger.log("info","Caught before-quit. Set picfightition as was closed");
   event.preventDefault();
-  cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
+  cleanShutdown(mainWindow, app, GetPfcdPID(), GetPfcwPID());
   setMustOpenForm(true);
   app.exit(0);
 });

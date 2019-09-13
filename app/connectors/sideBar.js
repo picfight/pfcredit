@@ -11,8 +11,10 @@ const mapStateToProps = selectorMap({
   currentBlockHeight: sel.currentBlockHeight,
   lastBlockTimestamp: sel.lastBlockTimestamp,
   totalBalance: sel.totalBalance,
+  showingSidebar: sel.showingSidebar,
+  showingSidebarMenu: sel.showingSidebarMenu,
   expandSideBar: sel.expandSideBar,
-  isWatchingOnly: sel.isWatchingOnly,
+  isWatchOnly: sel.isWatchingOnly,
   tsDate: sel.tsDate,
 });
 

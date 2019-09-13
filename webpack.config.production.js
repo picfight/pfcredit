@@ -4,8 +4,7 @@
 
 import path from "path";
 import webpack from "webpack";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import ExtractTextPlugin from "extract-text-webpack-plugin";
 import merge from "webpack-merge";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import baseConfig from "./webpack.config.base";
@@ -14,7 +13,7 @@ const config = merge(baseConfig, {
   devtool: "cheap-module-source-map",
 
   entry: [
-    "@babel/polyfill",
+    "babel-polyfill",
     "./app/index"
   ],
 
@@ -25,26 +24,50 @@ const config = merge(baseConfig, {
 
   module: {
     rules: [
+      // Extract all .global.css to style.css as is
+      {
+        test: /\.global\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
+      },
+
+      // Pipe other styles through css modules and append to style.css
+      {
+        test: /^((?!\.global).)*\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [ {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: "[name]__[local]___[hash:base64:5]"
+            }
+          } ]
+        })
+      },
+
       {
         test: /\.less$/,
-        use: [ {
-          loader: MiniCssExtractPlugin.loader
-        }, {
-          loader: "css-loader",
-          options: {
-            sourceMap: true,
-            modules: true,
-            importLoaders: 1,
-            localIdentName: "[local]"
-          }
-        }, {
-          loader: "less-loader",
-          options: {
-            sourceMap: true,
-            noIeCompat: true,
-            strictMath: true
-          }
-        } ]
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: [ {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              importLoaders: 1,
+              localIdentName: "[local]"
+            }
+          }, {
+            loader: "less-loader",
+            options: {
+              noIeCompat: true,
+              strictMath: true
+            }
+          } ]
+        })
       },
 
       {
@@ -96,38 +119,25 @@ const config = merge(baseConfig, {
     // https://github.com/webpack/webpack/issues/864
     new webpack.optimize.OccurrenceOrderPlugin(),
 
-    new MiniCssExtractPlugin({ filename: "style.css" }),
+    // NODE_ENV should be production so that modules do not perform certain development checks
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("production")
+    }),
 
+    // Minify without warning messages and IE8 support
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        screw_ie8: true,
+        warnings: false
+      }
+    }),
+    new ExtractTextPlugin({ filename: "style.css", allChunks: true }),
     new HtmlWebpackPlugin({
       filename: "../app.html",
       template: "app/app.html",
       inject: false
     })
   ],
-
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          mangle: {
-            reserved: [
-              "Buffer",
-              "BigInteger",
-              "Point",
-              "ECPubKey",
-              "ECKey",
-              "ECSignature",
-              "sha512_asm",
-              "asm",
-              "ECPair",
-              "HDNode",
-              "BridgeTransport"
-            ]
-          }
-        }
-      })
-    ]
-  },
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: "electron-renderer"

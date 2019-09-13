@@ -1,5 +1,5 @@
 import MenuLink from "./MenuLink";
-import { routing, theming, newProposalCounts } from "connectors";
+import { routing, theming } from "connectors";
 import { FormattedMessage as T } from "react-intl";
 import { spring, Motion } from "react-motion";
 import theme from "theme";
@@ -7,12 +7,12 @@ import theme from "theme";
 const linkList = [
   { path: "/home",          link: <T id="sidebar.link.home" m="Overview" />,             icon:"overview" },
   { path: "/transactions",  link: <T id="sidebar.link.transactions" m="Transactions" />, icon:"transactions" },
-  { path: "/governance",    link: <T id="sidebar.link.governance" m="Governance" />,     icon:"governance",      notifProp: "newProposalsStartedVoting" },
   { path: "/tickets",       link: <T id="sidebar.link.tickets" m="Tickets" /> ,          icon:"tickets" },
+  { path: "/governance",    link: <T id="sidebar.link.governance" m="Governance" />,     icon:"governance" },
   { path: "/accounts",      link: <T id="sidebar.link.accounts" m="Accounts" />,         icon:"accounts" },
   { path: "/security",      link: <T id="activesidebar.link.security" m="Security" />,   icon:"securitycntr" },
-  { path: "/help",          link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
   { path: "/settings",      link: <T id="sidebar.link.settings" m="Settings" />,         icon:"settings" },
+  { path: "/help",          link: <T id="sidebar.link.help" m="Help" />,                 icon:"help" },
 ];
 
 @autobind
@@ -24,9 +24,11 @@ class MenuLinks extends React.Component {
   constructor (props) {
     super(props);
 
-    this.links = [ ...linkList ];
-    if (props.isTrezor) {
-      this.links.push({ path: "/trezor", link: <T id="sidebar.link.trezor" m="Trezor Setup" />, icon:"trezor" });
+    // TODO: remove once politeia hits production
+    // it's ugly, but sufficient for this, as it's temporary :)
+    if (!props.politeiaBetaEnabled) {
+      const idx = linkList.findIndex(l => l.path === "/governance");
+      idx === -1 ? null : linkList.splice(idx, 1);
     }
   }
 
@@ -70,33 +72,20 @@ class MenuLinks extends React.Component {
     return <div className="menu-caret" style={ { top: this.state.top.val } } />;
   }
 
-  getMenuLink(linkItem) {
-    const { path, link, icon, notifProp } = linkItem;
-    const hasNotif = notifProp ? this.props[notifProp] : false;
-
-    return (
-      <MenuLink
-        icon={ icon }
-        to={ path }
-        key={ path }
-        hasNotification={ hasNotif }
-        linkRef={ ref => this._nodes.set(path, ref) }
-      >
-        {link}
-      </MenuLink>
-    );
-  }
-
   render () {
     const caret = this.props.uiAnimations ? this.getAnimatedCaret() : this.getStaticCaret();
 
     return (
       <Aux>
-        {this.links.map(link => this.getMenuLink(link))}
+        { linkList.map(({ path, link, icon }) =>
+          <MenuLink icon={icon} to={ path } linkRef={ ref => this._nodes.set(path, ref) } key={ path }>
+            {link}
+          </MenuLink>
+        )}
         {caret}
       </Aux>
     );
   }
 }
 
-export default routing(theming(newProposalCounts(MenuLinks)));
+export default routing(theming(MenuLinks));

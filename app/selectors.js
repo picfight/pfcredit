@@ -1,21 +1,17 @@
 import {
-  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply, some,
+  compose, reduce, filter, get, not, or, and, eq, find, bool, map, apply,
   createSelectorEager as createSelector
 } from "./fp";
 import { appLocaleFromElectronLocale } from "./i18n/locales";
 import { reverseHash } from "./helpers/byteActions";
 import { TRANSACTION_TYPES }  from "wallet/service";
 import { MainNetParams, TestNetParams } from "wallet/constants";
-import { /*TicketTypes,*/ decodeVoteScript } from "./helpers/tickets";
-import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA, EXTERNALREQUEST_PFCDATA } from "main_dev/externalRequests";
+import { TicketTypes, decodeVoteScript } from "./helpers/tickets";
+import { EXTERNALREQUEST_STAKEPOOL_LISTING, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 import { POLITEIA_URL_TESTNET, POLITEIA_URL_MAINNET } from "./middleware/politeiaapi";
-import { PFCDATA_URL_TESTNET, PFCDATA_URL_MAINNET } from "./middleware/pfcdataapi";
 import { dateToLocal, dateToUTC } from "./helpers/dateFormat";
-import * as wallet from "wallet";
-
 const EMPTY_ARRAY = [];  // Maintaining identity (will) improve performance;
 
-export const theme = get([ "settings", "theme" ]);
 export const daemonError = get([ "daemon" , "daemonError" ]);
 export const walletError = get([ "daemon", "walletError" ]);
 export const appVersion = get([ "daemon", "appVersion" ]);
@@ -25,7 +21,7 @@ export const isDaemonRemote = get([ "daemon", "daemonRemote" ]);
 export const getDaemonStarted = get([ "daemon", "daemonStarted" ]);
 export const getRemoteAppdataError = get([ "daemon", "remoteAppdataError" ]);
 export const getCurrentBlockCount = get([ "daemon", "currentBlockCount" ]);
-export const getNeededBlocks = get([ "daemon", "neededBlocks" ]);
+export const getNeededBlocks = get([ "walletLoader", "neededBlocks" ]);
 export const getEstimatedTimeLeft = get([ "daemon", "timeLeftEstimate" ]);
 export const getDaemonSynced = get([ "daemon", "daemonSynced" ]);
 export const isAdvancedDaemon = get([ "daemon", "daemonAdvanced" ]);
@@ -41,12 +37,12 @@ export const getCredentials = get([ "daemon", "credentials" ]);
 const START_STEP_OPEN = 2;
 const START_STEP_RPC1 = 3;
 const START_STEP_RPC2 = 4;
+const START_STEP_DISCOVER = 5;
+const START_STEP_FETCH = 6;
 
 export const setLanguage = get([ "daemon", "setLanguage" ]);
 export const showTutorial = get([ "daemon", "tutorial" ]);
 export const showPrivacy = get([ "daemon", "showPrivacy" ]);
-export const showSpvChoice = get([ "daemon", "showSpvChoice" ]);
-export const daemonWarning = get([ "daemon", "daemonWarning" ]);
 export const versionInvalid = get([ "version", "versionInvalid" ]);
 export const requiredWalletRPCVersion = get([ "version", "requiredVersion" ]);
 export const walletRPCVersion = createSelector(
@@ -64,29 +60,20 @@ export const versionInvalidError = createSelector(
   [ versionInvalid, get([ "version", "versionInvalidError" ]) ],
   (invalid, error) => invalid ? error || "Unknown Error" : null
 );
-
-export const syncInput = get([ "walletLoader", "syncInput" ]);
-export const peerCount = get([ "walletLoader", "peerCount" ]);
-export const synced = get([ "walletLoader", "synced" ]);
-export const syncFetchMissingCfiltersAttempt = get([ "walletLoader", "syncFetchMissingCfiltersAttempt" ]);
-export const syncFetchMissingCfiltersStart = get([ "walletLoader", "syncFetchMissingCfiltersStart" ]);
-export const syncFetchMissingCfiltersEnd = get([ "walletLoader", "syncFetchMissingCfiltersEnd" ]);
-export const syncFetchHeadersAttempt = get([ "walletLoader", "syncFetchHeadersAttempt" ]);
-export const syncFetchHeadersCount = get([ "walletLoader", "syncFetchHeadersCount" ]);
-export const syncFetchHeadersLastHeaderTime = get([ "walletLoader", "syncLastFetchedHeaderTime" ]);
-export const syncDiscoverAddressesAttempt = get([ "walletLoader", "syncDiscoverAddressesAttempt" ]);
-export const syncRescanAttempt = get([ "walletLoader", "syncRescanAttempt" ]);
-export const syncRescanProgress = get([ "walletLoader", "syncRescanProgress" ]);
-export const syncFetchHeadersComplete = get([ "walletLoader" , "syncFetchHeadersComplete" ]);
-export const syncFetchTimeStart = get([ "walletLoader" , "syncFetchTimeStart" ]);
+export const spvInput = get([ "walletLoader", "spvInput" ]);
 
 const isStartStepOpen = compose(eq(START_STEP_OPEN), startStepIndex);
+const isStartStepDiscover = compose(eq(START_STEP_DISCOVER), startStepIndex);
 const isStartStepRPC = compose(or(eq(START_STEP_RPC1), eq(START_STEP_RPC2)), startStepIndex);
+const isStartStepFetch = compose(eq(START_STEP_FETCH), startStepIndex);
 
 const walletExistError = and(get([ "walletLoader", "walletExistError" ]), isStartStepOpen);
 const walletCreateError = and(get([ "walletLoader", "walletCreateError" ]), isStartStepOpen);
 const walletOpenError = and(get([ "walletLoader", "walletOpenError" ]), isStartStepOpen);
 const startRpcError = and(get([ "walletLoader", "startRpcError" ]), isStartStepRPC);
+const discoverAddrError = and(get([ "walletLoader", "discoverAddressError" ]), isStartStepDiscover);
+const fetchHeadersError = and(get([ "walletLoader", "fetchHeadersError" ]), isStartStepFetch);
+export const fetchHeadersDone = (get([ "walletLoader", "fetchHeadersResponse" ]));
 
 export const startupError = or(
   getVersionServiceError,
@@ -96,6 +83,8 @@ export const startupError = or(
   walletCreateError,
   walletOpenError,
   startRpcError,
+  discoverAddrError,
+  fetchHeadersError
 );
 
 const availableWallets = get([ "daemon", "availableWallets" ]);
@@ -108,7 +97,7 @@ const availableWalletsSelect = createSelector(
       value: wallet,
       network: wallet.network,
       finished: wallet.finished,
-      isWatchingOnly: wallet.watchingOnly,
+      isWatchOnly: wallet.watchOnly,
       lastAccess: wallet.lastAccess ? new Date(wallet.lastAccess) : null,
     }),
     wallets
@@ -122,7 +111,21 @@ export const sortedAvailableWallets = createSelector(
 export const previousWallet = get([ "daemon", "previousWallet" ]);
 export const getWalletName = get([ "daemon", "walletName" ]);
 
-export const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
+const openWalletInputRequest = get([ "walletLoader", "openWalletInputRequest" ]);
+const createWalletInputRequest = get([ "walletLoader", "createWalletInputRequest" ]);
+const discoverAddressInputRequest = get([ "walletLoader", "discoverAddressInputRequest" ]);
+const advancedDaemonInputRequest = get([ "walletLoader", "advancedDaemonInputRequest" ]);
+const selectCreateWalletInputRequest = get([ "daemon", "selectCreateWalletInputRequest" ]);
+
+export const isInputRequest = or(
+  openWalletInputRequest,
+  createWalletInputRequest,
+  discoverAddressInputRequest,
+  and(openForm, isAdvancedDaemon, advancedDaemonInputRequest),
+  selectCreateWalletInputRequest
+);
+
+export const isDiscoverAddressAttempt = get([ "walletLoader", "discoverAddressRequestAttempt" ]);
 
 export const balances = or(get([ "grpc", "balances" ]), () => []);
 export const walletService = get([ "grpc", "walletService" ]);
@@ -134,7 +137,8 @@ export const getNetworkResponse = get([ "grpc", "getNetworkResponse" ]);
 export const getNetworkError = get([ "grpc", "getNetworkError" ]);
 const accounts = createSelector([ getAccountsResponse ], r => r ? r.getAccountsList() : []);
 
-export const isWatchingOnly = bool(get([ "walletLoader", "isWatchingOnly" ]));
+// set as watching only when openning wallet
+export const isWatchingOnly = get([ "walletLoader", "isWatchingOnly" ]);
 export const accountExtendedKey = createSelector(
   [ get([ "control", "getAccountExtendedKeyResponse" ]) ],
   (response) => response ? response.getAccExtendedPubKey() : null
@@ -163,12 +167,10 @@ export const lockedBalance = createSelector(
 );
 
 export const networks = () => [ { name: "testnet" }, { name: "mainnet" } ];
-export const network = get([ "settings", "currentSettings", "network" ]);
+export const network = get([ "daemon", "network" ]);
 export const isTestNet = compose(eq("testnet"), network);
 export const isMainNet = not(isTestNet);
-export const firstBlockTime = compose(isMainNet => isMainNet ? new Date("2016-02-08 18:00:00 UTC") : new Date("2018-08-06 00:00:00 UTC"), isMainNet);
 export const currencies = () => [ { name: "PFC" }, { name: "atoms" } ];
-export const needNetworkReset = get([ "settings", "needNetworkReset" ]);
 export const currencyDisplay = get([ "settings", "currentSettings", "currencyDisplay" ]);
 export const unitDivisor = compose(disp => disp === "PFC" ? 100000000 : 1, currencyDisplay);
 export const currentLocaleName = get([ "settings", "currentSettings", "locale" ]);
@@ -212,8 +214,8 @@ export const blockURLBuilder= createSelector(
 export const decodedTransactions = get([ "grpc", "decodedTransactions" ]);
 
 export const ticketNormalizer = createSelector(
-  [ network ],
-  (network) => {
+  [ decodedTransactions, network ],
+  (decodedTransactions, network) => {
     return ticket => {
       const hasSpender = ticket.spender && ticket.spender.getHash();
       const isVote = ticket.status === "voted";
@@ -221,17 +223,15 @@ export const ticketNormalizer = createSelector(
       const spenderTx = hasSpender ? ticket.spender : null;
       const hash = reverseHash(Buffer.from(ticketTx.getHash()).toString("hex"));
       const spenderHash = hasSpender ? reverseHash(Buffer.from(spenderTx.getHash()).toString("hex")) : null;
+      const decodedTicketTx = decodedTransactions[hash] || null;
+      const decodedSpenderTx = hasSpender ? (decodedTransactions[spenderHash] || null) : null;
       const hasCredits = ticketTx.getCreditsList().length > 0;
 
-      let ticketPrice = 0;
-      if (hasCredits) {
-        ticketPrice = ticketTx.getCreditsList()[0].getAmount();
-      } else {
-        // we don't have a credit when we don't have the voting rights (unimported
-        // stakepool script, solo voting ticket, split ticket, etc)
-        const decodedTicketTx = wallet.decodeRawTransaction(Buffer.from(ticketTx.getTransaction()));
-        ticketPrice = decodedTicketTx.outputs[0].value;
-      }
+      // effective ticket price is the output 0 for the ticket transaction
+      // (stakesubmission script class)
+      const ticketPrice = decodedTicketTx
+        ? decodedTicketTx.transaction.getOutputsList()[0].getValue()
+        : hasCredits ? ticketTx.getCreditsList()[0].getAmount() : 0;
 
       // ticket tx fee is the fee for the transaction where the ticket was bought
       const ticketTxFee = ticketTx.getFee();
@@ -247,7 +247,7 @@ export const ticketNormalizer = createSelector(
       const ticketInvestment = ticketTx.getDebitsList().reduce((a, v) => a+v.getPreviousAmount(), 0)
         - ticketChange;
 
-      let ticketReward, ticketStakeRewards, ticketReturnAmount, ticketPoolFee, voteChoices;
+      let ticketReward, ticketStakeRewards, ticketReturnAmount;
       if (hasSpender) {
         // everything returned to the wallet after voting/revoking
         ticketReturnAmount = spenderTx.getCreditsList().reduce((a, v) => a+v.getAmount(), 0);
@@ -256,25 +256,23 @@ export const ticketNormalizer = createSelector(
         ticketReward = ticketReturnAmount - ticketInvestment;
 
         ticketStakeRewards = ticketReward / ticketInvestment;
+      }
 
-        const decodedSpenderTx = wallet.decodeRawTransaction(Buffer.from(spenderTx.getTransaction()));
+      let ticketPoolFee, voteChoices;
+      if (decodedSpenderTx) {
+        // pool fees are all (OP_SSGEN/OP_SSRTX) txo that have not made it into our own wallet.
+        // the match to know whether an output is directed to our wallet
+        // is made between fields "index" (on creditsList) and "index" (on outputsList).
+        const scriptTag = isVote ? /^OP_SSGEN / : /^OP_SSRTX /;
 
-        // Check pool fee. If there is a debit at index=0 of the ticket but not
-        // a corresponding credit at the expected index on the spender, then
-        // that was a pool fee.
-        const hasIndex0Debit = ticketTx.getDebitsList().some(d => d.getIndex() === 0);
-        const hasIndex0Credit = spenderTx.getCreditsList().some(c => {
-          // In votes, the first 2 outputs are voting block and vote bits
-          // OP_RETURNs, so ignore those.
-          return (isVote && c.getIndex() === 2) || (!isVote && c.getIndex() === 0);
-        });
-        if (hasIndex0Debit && !hasIndex0Credit) {
-          const poolFeeDebit = ticketTx.getDebitsList().find(d => d.getIndex() === 0);
-          ticketPoolFee = poolFeeDebit.getPreviousAmount();
-        }
+        const walletOutputIndices = spenderTx.getCreditsList().reduce((a, v) => [ ...a, v.getIndex() ], []);
+        ticketPoolFee = decodedSpenderTx.transaction.getOutputsList().reduce((a, v) => {
+          if (!v.getScriptAsm().match(scriptTag)) return a;
+          return walletOutputIndices.indexOf(v.getIndex()) > -1 ? a : a + v.getValue();
+        }, 0);
 
         if (isVote) {
-          let voteScript = decodedSpenderTx.outputs[1].script;
+          let voteScript = decodedSpenderTx.transaction.getOutputsList()[1].getScript();
           voteChoices = decodeVoteScript(network, voteScript);
         }
       }
@@ -284,6 +282,8 @@ export const ticketNormalizer = createSelector(
         spenderHash,
         ticketTx,
         spenderTx,
+        decodedSpenderTx,
+        decodedTicketTx,
         ticketPrice,
         ticketReward,
         ticketChange,
@@ -299,26 +299,21 @@ export const ticketNormalizer = createSelector(
         status: ticket.status,
         ticketRawTx: Buffer.from(ticketTx.getTransaction()).toString("hex"),
         spenderRawTx: hasSpender ? Buffer.from(spenderTx.getTransaction()).toString("hex") : null,
-        originalTicket: ticket,
       };
     };
   }
 );
 
-export const noMoreTickets = get([ "grpc", "noMoreTickets" ]);
-export const ticketsFilter = get([ "grpc", "ticketsFilter" ]);
-export const getTicketsProgressStartRequestHeight = get([ "grpc", "getTicketsProgressStartRequestHeight" ]);
-export const ticketsNormalizer = createSelector([ ticketNormalizer ], map);
-export const tickets = get([ "grpc", "tickets" ]);
-export const numTicketsToBuy = get([ "control", "numTicketsToBuy" ]);
+const ticketSorter = (a, b) => (b.leaveTimestamp||b.enterTimestamp) - (a.leaveTimestamp||a.enterTimestamp);
 
-// note that hasTickets means "ever had any tickets", **NOT** "currently has live
-// tickets".
-export const hasTickets = compose(t => t && t.length > 0, tickets);
+export const allTickets = createSelector(
+  [ ticketNormalizer, get([ "grpc", "tickets" ]) ],
+  (normalizer, tickets) => tickets.map(normalizer).sort(ticketSorter)
+);
 
 // aux map from ticket/spender hash => ticket info
 const txHashToTicket = createSelector(
-  [ tickets ],
+  [ allTickets ],
   reduce((m, t) => {
     m[t.hash] = t;
     m[t.spenderHash] = t;
@@ -327,16 +322,22 @@ const txHashToTicket = createSelector(
 );
 
 const transactionNormalizer = createSelector(
-  [ accounts, txURLBuilder, blockURLBuilder ],
-  (accounts, txURLBuilder, blockURLBuilder) => {
+  [ accounts, txURLBuilder, blockURLBuilder, txHashToTicket ],
+  (accounts, txURLBuilder, blockURLBuilder, txHashToTicket) => {
     const findAccount = num => accounts.find(account => account.getAccountNumber() === num);
     const getAccountName = num => (act => act ? act.getAccountName() : "")(findAccount(num));
-    return origTx => {
-      const { blockHash } = origTx;
-      const type = origTx.type || (origTx.getTransactionType ? origTx.getTransactionType() : null);
-      let txInfo = origTx.tx ? origTx : {};
-      let timestamp = origTx.timestamp;
-      const tx = origTx.tx || origTx;
+    return tx => {
+      let status;
+      const ticketDecoded = txHashToTicket[tx.txHash];
+      if (ticketDecoded) {
+        status = ticketDecoded.status;
+      }
+
+      const { blockHash } = tx;
+      const type = tx.type || (tx.getTransactionType ? tx.getTransactionType() : null);
+      let txInfo = tx.tx ? tx : {};
+      let timestamp = tx.timestamp;
+      tx = tx.tx || tx;
       timestamp = timestamp || tx.timestamp;
       let totalFundsReceived = 0;
       let totalChange = 0;
@@ -387,16 +388,11 @@ const transactionNormalizer = createSelector(
             txAccountName: getAccountName(creditedAccount)
           };
 
-      let stakeInfo = {};
-      if (origTx.ticketPrice) stakeInfo.ticketPrice = origTx.ticketPrice;
-      if (origTx.enterTimestamp) stakeInfo.enterTimestamp = origTx.enterTimestamp;
-      if (origTx.leaveTimestamp) stakeInfo.leaveTimestamp = origTx.leaveTimestamp;
-      if (origTx.ticketReward) stakeInfo.ticketReward = origTx.ticketReward;
-
       return {
         txUrl: txURLBuilder(txHash),
         txBlockUrl: txBlockHash ? blockURLBuilder(txBlockHash) : null,
         txHash,
+        status,
         txHeight: txInfo.height,
         txType: getTxTypeStr(type),
         txTimestamp: timestamp,
@@ -406,9 +402,7 @@ const transactionNormalizer = createSelector(
         txBlockHash,
         txNumericType: type,
         rawTx: Buffer.from(tx.getTransaction()).toString("hex"),
-        originalTx: origTx,
-        ...txDetails,
-        ...stakeInfo,
+        ...txDetails
       };
     };
   }
@@ -424,6 +418,13 @@ export const transactions = createSelector(
 
 export const homeHistoryTransactions = createSelector(
   [ transactionsNormalizer, get([ "grpc", "recentRegularTransactions" ]) ], apply
+);
+
+const txSinceLastOpened = get([ "grpc", "transactionsSinceLastOpened" ]);
+
+export const transactionsSinceLastOpened = createSelector(
+  [ txSinceLastOpened ],
+  (txSinceLastOpened) => txSinceLastOpened ? txSinceLastOpened : []
 );
 
 export const dailyBalancesStats = get([ "statistics", "dailyBalances" ]);
@@ -461,7 +462,7 @@ export const totalValueOfLiveTickets = createSelector(
     if (!balances) return 0;
     const lastBalance = balances[balances.length-1];
     if (!lastBalance) return 0;
-    return lastBalance.series.locked;
+    return lastBalance.series.locked + lastBalance.series.lockedNonWallet;
   }
 );
 
@@ -472,8 +473,8 @@ export const ticketDataChart = createSelector(
     voted: s.series.voted / unitDivisor,
     revoked: s.series.revoked / unitDivisor,
     ticket: s.series.ticket / unitDivisor,
-    locked: (s.series.locked + s.series.immature) / unitDivisor,
-    immature: s.series.immature / unitDivisor,
+    locked: (s.series.locked + s.series.lockedNonWallet) / unitDivisor,
+    immature: (s.series.immature + s.series.immatureNonWallet) / unitDivisor,
   })));
 
 export const viewedDecodedTransaction = createSelector(
@@ -498,13 +499,11 @@ export const homeHistoryTickets = createSelector(
         // the filter for the moment.
         return null;
       }
-      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
-      if (ticketDecoded.status != "voted") {
-        tx.status = ticketDecoded.status;
-      }
-      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
+      tx.ticketPrice = ticketDecoded.ticketPrice;
+      tx.status = ticketDecoded.status;
+      tx.enterTimestamp = ticketDecoded.enterTimestamp;
+      tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
+      tx.ticketReward = ticketDecoded.ticketReward;
 
       return tx;
     }).filter(v => !!v);
@@ -516,22 +515,29 @@ export const viewableTransactions = createSelector(
   (transactions, homeTransactions, homeHistoryTickets) => [ ...transactions, ...homeTransactions, ...homeHistoryTickets ]
 );
 export const viewedTransaction = createSelector(
-  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash, txHashToTicket ],
-  (transactions, txHash, txHashToTicket) => {
-    const ticketDecoded = txHashToTicket[txHash];
-    const tx = find({ txHash }, transactions);
-    if (ticketDecoded) {
-      if (ticketDecoded.ticketPrice) tx.ticketPrice = ticketDecoded.ticketPrice;
-      if (ticketDecoded.status != "voted") {
-        tx.status = ticketDecoded.status;
-      }
-      if (ticketDecoded.enterTimestamp) tx.enterTimestamp = ticketDecoded.enterTimestamp;
-      if (ticketDecoded.leaveTimestamp) tx.leaveTimestamp = ticketDecoded.leaveTimestamp;
-      if (ticketDecoded.ticketReward) tx.ticketReward = ticketDecoded.ticketReward;
-    }
-    return tx;
-  }
+  [ viewableTransactions, (state, { match: { params: { txHash } } }) => txHash ],
+  (transactions, txHash) => find({ txHash }, transactions)
 );
+
+export const ticketsPerStatus = createSelector(
+  [ allTickets ],
+  tickets => tickets.reduce(
+    (perStatus, ticket) => {
+      perStatus[ticket.status].push(ticket);
+      return perStatus;
+    },
+    Array.from(TicketTypes.values()).reduce((a, v) => (a[v] = [], a), {}),
+  )
+);
+
+export const viewedTicketListing = createSelector(
+  [ ticketsPerStatus, (state, { match: { params: { status } } }) => status ],
+  (tickets, status) => tickets[status]
+);
+// export const viewedTicketListing = createSelector(
+//   [ticketsPerStatus, (state, something) => { console.log(something); return "voted"; }],
+//   (tickets, status) => tickets[status]
+// );
 
 const rescanResponse = get([ "control", "rescanResponse" ]);
 export const rescanRequest = get([ "control", "rescanRequest" ]);
@@ -609,13 +615,12 @@ export const defaultSpendingAccount = createSelector(
   [ spendingAccounts ], find(compose(eq(0), get("value")))
 );
 
-export const changePassphraseRequestAttempt = get([ "control", "changePassphraseRequestAttempt" ]);
-
 export const constructTxLowBalance = get([ "control", "constructTxLowBalance" ]);
-export const constructTxResponse = get([ "control", "constructTxResponse" ]);
+const constructTxResponse = get([ "control", "constructTxResponse" ]);
 const constructTxRequestAttempt = get([ "control", "constructTxRequestAttempt" ]);
 const signTransactionRequestAttempt = get([ "control", "signTransactionRequestAttempt" ]);
 export const signTransactionError = get([ "control", "signTransactionError" ]);
+const publishTransactionResponse = get([ "control", "publishTransactionResponse" ]);
 const publishTransactionRequestAttempt = get([ "control", "publishTransactionRequestAttempt" ]);
 const totalOutputAmount = compose(r => r ? r.getTotalOutputAmount() : 0, constructTxResponse);
 const totalAmount = compose(res => res ? res.totalAmount : 0, constructTxResponse);
@@ -632,8 +637,6 @@ export const unsignedTransaction = createSelector(
   res => res ? res.getUnsignedTransaction() : null
 );
 
-export const unsignedRawTx = createSelector([ constructTxResponse ], res => res && res.rawTx);
-
 export const estimatedFee = compose(
   bytes => (bytes / 1000) * (0.001 * 100000000), estimatedSignedSize
 );
@@ -642,6 +645,10 @@ export const totalSpent = createSelector(
   [ totalPreviousOutputAmount, totalOutputAmount, totalAmount ],
   (totalPreviousOutputAmount, totalOutputAmount, totalAmount) =>
     totalPreviousOutputAmount - totalOutputAmount + totalAmount
+);
+
+export const publishedTransactionHash = compose(
+  r => r ? reverseHash(r.toString("hex")) : null, publishTransactionResponse
 );
 
 export const isSendingTransaction = bool(or(
@@ -681,6 +688,8 @@ export const validateAddressSuccess = compose(
   r => r ? r.toObject() : null, validateAddressResponse
 );
 
+// set as watching only when creating wallet
+export const isWatchOnly = get([ "control", "isWatchOnly" ]);
 export const masterPubKey = get([ "control", "masterPubKey" ]);
 
 const getStakeInfoResponse = get([ "grpc", "getStakeInfoResponse" ]);
@@ -698,7 +707,6 @@ export const revokedTicketsCount = compose(r => r ? r.getRevoked() : 0, getStake
 export const immatureTicketsCount = compose(r => r ? r.getImmature() : 0, getStakeInfoResponse);
 export const expiredTicketsCount = compose(r => r ? r.getExpired() : 0, getStakeInfoResponse);
 export const liveTicketsCount = compose(r => r ? r.getLive() : 0, getStakeInfoResponse);
-export const unspentTicketsCount = compose(r => r ? r.getUnspent() : 0, getStakeInfoResponse);
 export const totalSubsidy = compose(r => r ? r.getTotalSubsidy() : 0, getStakeInfoResponse);
 export const hasTicketsToRevoke = compose(
   r => r ? r.getRevoked() !== r.getExpired() + r.getMissed() : 0,
@@ -706,10 +714,14 @@ export const hasTicketsToRevoke = compose(
 );
 
 export const ticketBuyerService = get([ "grpc", "ticketBuyerService" ]);
-export const ticketBuyerConfig = get([ "control" , "ticketBuyerConfig" ]);
 const startAutoBuyerResponse = get([ "control", "startAutoBuyerResponse" ]);
 
 export const balanceToMaintain = get([ "control", "balanceToMaintain" ]);
+export const maxFee = get([ "control", "maxFee" ]);
+export const maxPriceRelative = get([ "control", "maxPriceRelative" ]);
+export const maxPriceAbsolute = get([ "control", "maxPriceAbsolute" ]);
+export const maxPerBlock = get([ "control", "maxPerBlock" ]);
+export const getTicketBuyerConfigResponse = get([ "control", "getTicketBuyerConfigResponse" ]);
 
 const getTicketPriceResponse = get([ "grpc", "getTicketPriceResponse" ]);
 
@@ -814,10 +826,8 @@ export const renameAccountError = get([ "control", "renameAccountError" ]);
 export const renameAccountSuccess = get([ "control", "renameAccountSuccess" ]);
 export const renameAccountRequestAttempt = get([ "control", "renameAccountRequestAttempt" ]);
 
-export const location = get([ "routing", "location" ]);
-export const isGetStarted = compose(l => /^\/getstarted\//.test(l.pathname), location);
-
-export const showingSidebarMenu = not(isGetStarted);
+export const showingSidebar = get([ "sidebar", "showingSidebar" ]);
+export const showingSidebarMenu = get([ "sidebar", "showingSidebarMenu" ]);
 export const expandSideBar = get([ "sidebar", "expandSideBar" ]);
 
 export const snackbarMessages = get([ "snackbar", "messages" ]);
@@ -839,28 +849,14 @@ export const blocksPassedOnTicketInterval = createSelector(
 );
 
 export const blocksNumberToNextTicket = createSelector(
-  [ chainParams, blocksPassedOnTicketInterval ],
-  (chainParams, blocksPassedOnTicketInterval) => {
-    const { WorkDiffWindowSize } = chainParams;
-    return WorkDiffWindowSize - blocksPassedOnTicketInterval;
-  }
+  [ blocksPassedOnTicketInterval, chainParams ],
+  (chainParams, blocksPassedOnTicketInterval) =>
+    chainParams.WorkDiffWindowSize - blocksPassedOnTicketInterval
 );
 
-// blockTimestampFromNow is a selector that returns a function that can be used
-// to estimate when a given future block will be received. This is isn't super
-// accurate, and depends on the fact that blocks will take on average the
-// TargetTimePerBlock of their chain, but is sufficient for most display
-// purposes.
-export const blockTimestampFromNow = createSelector(
-  [ chainParams, currentBlockHeight ],
-  ( chainParams, currentHeight ) => {
-    const currentTimestamp = new Date().getTime() / 1000;
-    return (block) => {
-      return Math.trunc(currentTimestamp + ((block - currentHeight) * chainParams.TargetTimePerBlock));
-    };
-  }
-);
 export const exportingData = get([ "control", "exportingData" ]);
+
+export const location = get([ "routing", "location" ]);
 
 export const voteTimeStats = get([ "statistics", "voteTime" ]);
 export const averageVoteTime = createSelector(
@@ -868,7 +864,6 @@ export const averageVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
-    if (ticketCount === 0) return 0;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
       sum += voteTimeStats.data[i].series.count * i;
@@ -881,7 +876,6 @@ export const medianVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
-    if (ticketCount === 0) return 0;
     const ticketLimit = ticketCount * 0.5;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
@@ -895,7 +889,6 @@ export const ninetyFifthPercentileVoteTime = createSelector(
   (voteTimeStats) => {
     if (!voteTimeStats || !voteTimeStats.data.length) return 0;
     const ticketCount = voteTimeStats.data.reduce((s, v) => s + v.series.count, 0);
-    if (ticketCount === 0) return 0;
     const ticketLimit = ticketCount * 0.95;
     let sum = 0;
     for (let i = 0; i < voteTimeStats.data.length; i++) {
@@ -915,29 +908,26 @@ export const stakeRewardsStats = createSelector(
     stakeRewards: s.series.stakeRewards / unitDivisor,
     stakeFees: s.series.stakeFees / unitDivisor,
     totalStake: s.series.totalStake / unitDivisor,
-    stakeRewardPerc: (s.series.stakeRewards / (s.series.totalStake || 1)),
-    stakeFeesPerc: (s.series.stakeFees / (s.series.totalStake || 1)),
+    stakeRewardPerc: (s.series.stakeRewards / s.series.totalStake),
+    stakeFeesPerc: (s.series.stakeFees / s.series.totalStake),
   })));
 
 export const modalVisible = get([ "control", "modalVisible" ]);
-export const aboutModalMacOSVisible = get([ "control", "aboutModalMacOSVisible" ]);
 
-export const isTrezor = get([ "trezor", "enabled" ]);
+export const isSignMessageDisabled = or(isWatchingOnly, isWatchOnly);
 
-export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
-export const isCreateAccountDisabled = isWatchingOnly;
-export const isChangePassPhraseDisabled = isWatchingOnly;
-export const isTransactionsSendTabDisabled = not(isTrezor);
-export const isTicketPurchaseTabDisabled = isWatchingOnly;
+export const isCreateAccountDisabled = or(isWatchingOnly, isWatchOnly);
 
+export const isChangePassPhraseDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const isTransactionsSendTabDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const isTicketPurchaseTabDisabled = or(isWatchingOnly, isWatchOnly);
+
+export const politeiaBetaEnabled = get([ "governance", "politeiaBetaEnabled" ]); // TODO: remove once politeia hits production
 export const politeiaURL = createSelector(
   [ isTestNet ],
   (isTestNet) => isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
-);
-
-export const pfcdataURL = createSelector(
-  [ isTestNet ],
-  (isTestNet) => isTestNet ? PFCDATA_URL_TESTNET : PFCDATA_URL_MAINNET
 );
 
 export const politeiaEnabled = compose(
@@ -945,47 +935,22 @@ export const politeiaEnabled = compose(
   allowedExternalRequests
 );
 
-export const pfcdataEnabled = compose(
-  l => l.indexOf(EXTERNALREQUEST_PFCDATA) > -1,
-  allowedExternalRequests
-);
-
-export const treasuryBalance = get([ "grpc", "treasuryBalance" ]);
-
 export const updateVoteChoiceAttempt = get([ "governance", "updateVoteChoiceAttempt" ]);
 export const activeVoteProposals = get([ "governance", "activeVote" ]);
 export const getVettedProposalsAttempt = get([ "governance", "getVettedAttempt" ]);
 export const preVoteProposals = get([ "governance", "preVote" ]);
 export const votedProposals = get([ "governance", "voted" ]);
-export const abandonedProposals = get([ "governance", "abandoned" ]);
 export const lastVettedFetchTime = get([ "governance", "lastVettedFetchTime" ]);
-export const newActiveVoteProposalsCount = compose(
-  reduce((acc, p) => p.votingSinceLastAccess ? acc + 1 : acc, 0),
-  activeVoteProposals
-);
-export const newPreVoteProposalsCount = compose(
-  reduce((acc, p) => p.modifiedSinceLastAccess ? acc + 1 : acc, 0),
-  preVoteProposals
-);
-export const newProposalsStartedVoting = compose(some(p => p.votingSinceLastAccess), activeVoteProposals);
 
+export const hasTickets = createSelector(
+  [ allTickets ],
+  (tickets) => tickets.length > 0,
+);
 export const getProposalAttempt = get([ "governance", "getProposalAttempt" ]);
 export const getProposalError = get([ "governance", "getProposalError" ]);
-export const proposalsDetails = get([ "governance", "proposals" ]);
+export const proposalDetails = get([ "governance", "proposals" ]);
 export const viewedProposalToken = (state, ctx) => ctx.match && ctx.match.params && ctx.match.params.token ? ctx.match.params.token : null;
 export const viewedProposalDetails = createSelector(
-  [ proposalsDetails, viewedProposalToken ],
+  [ proposalDetails, viewedProposalToken ],
   (proposals, token) => proposals[token]
 );
-export const initialProposalLoading = createSelector(
-  [ proposalsDetails, getVettedProposalsAttempt ],
-  ( proposals, getVettedAttempt ) => (Object.keys(proposals).length === 0) && getVettedAttempt
-);
-
-export const trezorWaitingForPin = get([ "trezor", "waitingForPin" ]);
-export const trezorWaitingForPassPhrase = get([ "trezor", "waitingForPassPhrase" ]);
-export const trezorWaitingForWord = get([ "trezor", "waitingForWord" ]);
-export const trezorPerformingOperation = get([ "trezor", "performingOperation" ]);
-export const trezorDevice = get([ "trezor", "device" ]);
-export const trezorDeviceList = get([ "trezor", "deviceList" ]);
-export const trezorWalletCreationMasterPubkeyAttempt = get([ "trezor", "walletCreationMasterPubkeyAttempt" ]);

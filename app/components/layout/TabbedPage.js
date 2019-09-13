@@ -19,6 +19,7 @@ function getTabs(children) {
 
 @autobind
 class TabbedPage extends React.Component {
+
   constructor(props) {
     super(props);
     this._tabs = getTabs(props.children);
@@ -27,16 +28,19 @@ class TabbedPage extends React.Component {
     this.state = { matchedTab, dir: "l2r", styles };
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.location.pathname === prevProps.location.pathname) {
-      return;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.children !== this.props.children) {
+      this._tabs = getTabs(nextProps.children);
     }
 
-    const matchedTab = this.matchedTab(this.props.location);
-    const dir = prevState.matchedTab && matchedTab &&
-      prevState.matchedTab.index > matchedTab.index ? "r2l" : "l2r";
-    const styles = this.getStyles(matchedTab);
-    this.setState({ matchedTab, dir, styles });
+    if (nextProps.location !== this.props.location) {
+      const matchedTab = this.matchedTab(nextProps.location);
+      const dir =
+        this.state.matchedTab && matchedTab && this.state.matchedTab.index > matchedTab.index
+          ? "r2l" : "l2r";
+      const styles = this.getStyles(matchedTab);
+      this.setState({ matchedTab, dir, styles });
+    }
   }
 
   matchedTab(location) {
@@ -52,18 +56,32 @@ class TabbedPage extends React.Component {
     return [ {
       key: matchedTab.tab.props.path,
       data: { matchedTab, element },
-      style: { left: spring(0, theme("springs.tab")), opacity: 1 }
+      style: { left: spring(0, theme("springs.tab")) }
     } ];
   }
 
   willLeave() {
     const pos = this.state.dir === "l2r" ? -1000 : +1000;
-    return { left: spring(pos, { stiffness: 180, damping: 20 }), opacity: spring(0)  };
+    return { left: spring(pos, spring(theme("springs.tab"))) };
   }
 
   willEnter() {
     const pos = this.state.dir === "l2r" ? +1000 : -1000;
-    return { left: pos, opacity: 1 };
+    return { left: pos };
+  }
+
+  scrollbarOverlayGetStyles(showScroll) {
+    if (!showScroll) return [];
+
+    return [ {
+      key: "scrollbar",
+      data: {},
+      style: { opacity: spring(1, theme("springs.tab")) }
+    } ];
+  }
+
+  scrollbarOverlayWillLeave() {
+    return { opacity: spring(0, theme("springs.tab")) };
   }
 
   // returns the state.styles in a static container, without animations.
@@ -93,15 +111,25 @@ class TabbedPage extends React.Component {
               return (
                 <div
                   className={[ "tab-content", Math.abs(s.style.left) < 0.1 ? "visible" : "" ].join(" ")}
-                  style={{ left: s.style.left, right: -s.style.left,
-                    opacity: s.style.opacity,
-                    visibility: Math.abs(s.style.left) > 990 ? "hidden" : "" }}
+                  style={{ left: s.style.left, right: -s.style.left }}
                   key={s.key}
                 >
                   {s.data.element}
                 </div>
               );
             })}
+            <TransitionMotion
+              styles={this.scrollbarOverlayGetStyles(interpolatedStyles.length !== 1)}
+              willLeave={this.scrollbarOverlayWillLeave}
+            >
+              {sbStyle => {
+                return <Aux>
+                  {sbStyle.map(s =>
+                    <div className="scrollbar-overlay" key={s.key} style={{ opacity: s.style.opacity }} />
+                  )}
+                </Aux>;
+              }}
+            </TransitionMotion>
           </Aux>);
         }}
       </TransitionMotion>
@@ -109,7 +137,7 @@ class TabbedPage extends React.Component {
   }
 
   render() {
-    let { children, header, className } = this.props;
+    let { children, header } = this.props;
     if (!isArray(children)) children = [ children ];
 
     const tabs = children.filter(c => c.type === TabbedPageTab);
@@ -122,15 +150,16 @@ class TabbedPage extends React.Component {
     );
 
     const tabContents = this.props.uiAnimations ? this.animatedStyles() : this.staticStyles();
+
     return (
       <div className="tabbed-page">
         <div className="tabbed-page-header">
           {header}
           <Switch>{headers}</Switch>
-          <RoutedTabsHeader tabs={tabHeaders} caret={this.props.caret}/>
+          <RoutedTabsHeader tabs={tabHeaders} />
         </div>
 
-        <div className={"tabbed-page-body" + (className ? (" " + className) : "")}>
+        <div className="tabbed-page-body">
           {tabContents}
           {nonTabs}
         </div>

@@ -1,6 +1,5 @@
 import { ExternalLink } from "shared";
-import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton,
-  ImportScriptIconButton } from "buttons";
+import { PassphraseModalButton, ScriptRedeemableButton, SlateGrayButton } from "buttons";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
 import { TextInput, StakePoolSelect } from "inputs";
 import { Documentation } from "shared";
@@ -25,7 +24,6 @@ const StakePoolsAddForm = ({
   unconfiguredStakePools,
   configuredStakePools,
   apiKey,
-  isSavingStakePoolConfig,
   intl,
   onChangeSelectedUnconfigured,
   onChangeApiKey,
@@ -82,15 +80,13 @@ const StakePoolsAddForm = ({
             className="stakepool-add-not-redeemable"
             buttonLabel={<T id="stake.notRedeemed" m={"Script not redeemable?"} />}
           />
-          <ImportScriptIconButton />
         </div>
       </div>
     </div>
     <div className="stakepool-add-toolbar">
       <PassphraseModalButton
         modalTitle={<T id="stake.addPoolConfirmation" m="Stakepool Confirmation" />}
-        loading={isSavingStakePoolConfig}
-        disabled={!apiKey || isSavingStakePoolConfig}
+        disabled={!apiKey}
         className="stakepool-confirm-button"
         onSubmit={onSetStakePoolInfo}
         buttonLabel={<T id="stake.addPool.addBtn" m="Continue" />}

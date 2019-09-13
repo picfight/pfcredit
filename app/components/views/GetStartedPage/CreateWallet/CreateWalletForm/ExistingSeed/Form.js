@@ -4,7 +4,6 @@ import { TextToggle } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import "style/CreateWalletForm.less";
 import { SEED_LENGTH, SEED_WORDS } from "wallet/seed";
-import { ConfirmSeedMsg } from "../../../messages";
 
 const shoudShowNonSupportSeedSize = (seedWords, seedType) =>
   seedType === "hex" && seedWords.length !== 64 && seedWords.length > SEED_LENGTH.HEX_MIN;
@@ -91,7 +90,7 @@ class ExistingSeedForm extends React.Component{
         </div>
         <div className="confirm-seed-row seed">
           <div className="confirm-seed-label-text seed">
-            <ConfirmSeedMsg />
+            <T id="confirmSeed.label" m="Confirm Seed" />
           </div>
           {seedType == "words" && Array.isArray(seedWords) ?
             <div className="seedArea">

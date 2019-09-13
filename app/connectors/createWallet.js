@@ -4,7 +4,6 @@ import { selectorMap } from "fp";
 import * as sel from "selectors";
 import * as wla from "actions/WalletLoaderActions";
 import * as ca from "actions/ClientActions";
-import * as trza from "actions/TrezorActions";
 
 const mapStateToProps = selectorMap({
   createWalletExisting: sel.createWalletExisting,
@@ -12,11 +11,9 @@ const mapStateToProps = selectorMap({
   confirmNewSeed: sel.confirmNewSeed,
   createNewWallet: sel.createNewWallet,
   isTestNet: sel.isTestNet,
-  isCreatingWatchingOnly: sel.isWatchingOnly,
+  isWatchOnly: sel.isWatchOnly,
   masterPubKey: sel.masterPubKey,
   maxWalletCount: sel.maxWalletCount,
-  trezorDeviceList: sel.trezorDeviceList,
-  trezorDevice: sel.trezorDevice,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -27,11 +24,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   createWatchOnlyWalletRequest: wla.createWatchOnlyWalletRequest,
   generateSeed: wla.generateSeed,
   decodeSeed: wla.decodeSeed,
-  trezorLoadDeviceList: trza.loadDeviceList,
-  trezorEnable: trza.enableTrezor,
-  trezorDisable: trza.disableTrezor,
-  trezorAlertNoConnectedDevice: trza.alertNoConnectedDevice,
-  trezorGetWalletCreationMasterPubKey: trza.getWalletCreationMasterPubKey
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps);

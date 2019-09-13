@@ -19,7 +19,7 @@
   width: calc(100% - @sidebar-width);
   position: absolute;
   right: 0px;
-  background-color: var(--background-container);
+  background-color: @background-container;
   overflow-x: hidden;
 }
 
@@ -28,7 +28,7 @@
   width: calc(100% - @sidebar-width-reduced);
   position: absolute;
   right: 0px;
-  background-color: var(--background-container);
+  background-color: #f3f6f6;
   overflow-x: hidden;
 }
 
@@ -44,7 +44,7 @@
 .page-content-mixin {
   position: relative;
   padding: 54px 60px 0px 80px;
-  background-color: var(--background-container);
+  background-color: @background-container;
   overflow-y: scroll;
   height: calc(100% - 214px);
 }
@@ -62,7 +62,7 @@
   overflow: visible;
 }
 
-// Main content that has been blured by something positioned on top of it
+// Main content that has been blured by something positioned "on top" of it
 .page-content-blur {
   .page-content-mixin;
 
@@ -78,6 +78,10 @@
   background-color: transparent;
 }
 
+.inverted-colors {
+  background-color: #091440;
+}
+
 .standalone-page {
   position: absolute;
   top: 0px;
@@ -88,8 +92,8 @@
 
 .tabbed-page-header,
 .standalone-page-header {
-  background-color: var(--background-back-color);
-  padding: 43px 60px 0px 63px;
+  background-color: #fff;
+  padding: 42px 60px 0px 63px;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -101,10 +105,10 @@
   overflow: hidden;
   position: absolute;
   right: 0px;
-  top: 163px;
+  top: 173px;
   bottom: 0px;
   left: 0px;
-  background-color: var(--background-container);
+  background-color: @background-container;
 }
 
 .standalone-page-body {
@@ -112,17 +116,17 @@
   overflow-y: scroll;
   position: absolute;
   right: 0px;
-  top: 163px;
+  top: 173px;
   bottom: 0px;
   left: 0px;
   padding: 60px 60px 30px 60px;
-  background-color: var(--background-container);
+  background-color: @background-container;
 }
 
 .tabbed-page-header > .title-header-title,
 .standalone-page-header > .title-header-title {
   margin-bottom: 3px;
-  color: var(--stroke-color-hovered);
+  color: #596d81;
   font-size: 27px;
   line-height: 34px;
   float: left;
@@ -144,11 +148,15 @@
 .tabbed-page-header > .description-header,
 .standalone-page-header > .description-header {
   white-space: pre-wrap;
-  color: var(--input-color-default);
+  color: #091440;
   font-size: 13px;
   float: left;
   width: 100%;
   margin-left: 42px;
+}
+
+.tabbed-page-header > .tabs > .tab {
+  margin-right: 55px;
 }
 
 .description-header > .description-header-action-button {
@@ -160,24 +168,6 @@
   min-width: 76px;
 }
 
-.tabbed-page-body.governance .tabbed-page-header > .tabs {
-  left: unset;
-  padding-left: 100px;
-  margin-left: -63px;
-  width: 100%;
-  background-color: var(--disabled-background-color-lighter);
-  > .tab {
-    margin-right: 20px;
-    > a {
-      padding: 3px 10px 3px 10px;
-      border-radius: 5px;
-      &.active {
-        background-color: var(--background-back-color);
-      }
-    }
-  }
-}
-
 .tabbed-page-header > .tabs {
   position: absolute;
   bottom: 0px;
@@ -186,7 +176,6 @@
 
 .tabbed-page-header > .tabs > .tab {
   line-height: 35px;
-  margin-right: 55px;
 }
 
 .tabbed-page-header > .tabs > .tabs-caret > {
@@ -196,13 +185,9 @@
 }
 
 .tabbed-page-header > .tabs > .tabs-caret > .active {
-  background-color: var(--accent-color);
+  background-color: #2ed8a3;
   position: absolute;
   height: 5px;
-}
-
-.tabbed-page-body.governance>.tab-content {
-  height: 100%;
 }
 
 .tabbed-page .tab-content {
@@ -214,11 +199,15 @@
   bottom: 0px;
   left: 0px;
   padding: 38px 80px 30px 63px;
-  background-color: var(--background-container);
+  background-color: @background-container;
+}
+
+.log-container > .tabbed-page-subtitle {
+  display: none;
 }
 
 .tabbed-page-subtitle {
-  color: var(--stroke-color-hovered);
+  color: #596d81;
   font-size: 20px;
   line-height: 25px;
   margin-bottom: 17px;
@@ -261,7 +250,7 @@
   top: 0px;
   bottom: 0px;
   width: 20px;
-  background-color: var(--background-container);
+  background-color: @background-container;
 }
 
 .fatal-error-page {
@@ -271,7 +260,7 @@
 .fatal-error-area {
   margin: 10px 10% 10px 10%;
   padding: 10px;
-  border: 1px solid var(--title-text-and-button-background);
+  border: 1px solid #48566e;
   border-radius: 3px;
 }
 
@@ -289,7 +278,7 @@
   font-size: 13px;
   margin: 10px 10% 10px 10%;
   padding: 10px;
-  border: 1px solid var(--title-text-and-button-background);
+  border: 1px solid #48566e;
   border-radius: 3px;
   float: left;
 }
@@ -315,7 +304,7 @@
   }
 
   .fatal-error-area {
-    border: 0px solid var(--title-text-and-button-background);
+    border: 0px solid #48566e;
   }
 
   .fatal-error-title {
@@ -324,7 +313,7 @@
 
   .fatal-error-suggestion {
     margin-left: -95px;
-    border: 0px solid var(--background-back-color);
+    border: 0px solid white;
   }
 
   .fatal-error-reset-blockchain {

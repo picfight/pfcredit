@@ -4,13 +4,15 @@ import Tickets from "./Tickets";
 import "style/StakePool.less";
 
 const PurchasePage = ({
+  isSavingStakePoolConfig,
   isPurchasingTickets,
+  isImportingScript,
   stakePool,
   isShowingStakePools,
   onHideStakePoolConfig,
   ...props
 }) => (
-  (isPurchasingTickets)
+  (isSavingStakePoolConfig || isPurchasingTickets || isImportingScript)
     ? <StakeyBounce center/>
     : (isShowingStakePools)
       ? <StakePools {...{ onHideStakePoolConfig }} />

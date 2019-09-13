@@ -22,7 +22,7 @@ class VerifyMessage extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getMessageVerificationServiceAttempt();
   }
 
@@ -39,18 +39,19 @@ class VerifyMessage extends React.Component {
     if (verifyMessageSuccess) {
       const isValid = verifyMessageSuccess.valid;
       let isValidDisplay = null;
-      let resultClassName = "";
       if (isValid) {
         isValidDisplay = <T id="securitycenter.verify.result.valid" m="Valid signature!" />;
-        resultClassName = "verify-valid";
       } else {
         isValidDisplay = <T id="securitycenter.verify.result.invalid" m="Invalid signature!" />;
-        resultClassName = "verify-invalid";
       }
 
       result = (
-        <div className={"security-center-message-result " + resultClassName}>
-          {isValidDisplay}
+        <div className="message">
+          <div className="message-nest">
+            <div className={`message-content ${isValid ? "valid" : "invalid"}`}>
+              {isValidDisplay}
+            </div>
+          </div>
         </div>
       );
     }

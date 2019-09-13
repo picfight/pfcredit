@@ -2,6 +2,7 @@ import { KeyBlueButton, InvisibleButton } from "buttons";
 import RemoteDaemonForm from "./RemoteDaemonForm";
 import AppDataForm from "./AppDataForm";
 import { FormattedMessage as T, injectIntl } from "react-intl";
+import "style/LoginForm.less";
 
 const AdvancedBodyBase = ({
   onShowRemote,

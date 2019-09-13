@@ -4,21 +4,17 @@
 .accounts-button-icon {
   display: inline-block;
   width: 20px;
-  height: 20px;
+  height: 18px;
   background-image: @accounts-button-icon;
-  background-position: 50%;
-  background-size: 12px auto;
+  background-position: 0 0;
+  background-size: 20px auto;
   background-repeat: no-repeat;
-  box-shadow: 0 3px 8px var(--input-color-shadow);
-  border-radius: 5px;
-  background-color: var(--input-color);
   cursor: pointer;
   vertical-align: middle;
 }
 
 .accounts-button-icon:hover {
-  box-shadow: 0 1px 3px var(--input-color-shadow);
-  background-color: var(--account-button-hover);
+  background-image: @accounts-button-hover-icon;
 }
 
 .clipboard-box {
@@ -43,17 +39,16 @@
 
 .copy-to-clipboard-success {
   font-size: 12px;
-  color: var(--background-back-color);
-  background-color: var(--accent-color);
+  color: #fff;
+  background-color: #69d3f5;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  padding: 2px 5px;
+  padding: 5px 10px;
   border-radius: 5px;
   position: absolute;
   bottom: 100%;
   left: 50%;
   transform: translate(-50%, -4px);
   min-width: 4em;
-  text-align: center;
 }
 
 .copy-to-clipboard-success.hidden {
@@ -65,9 +60,9 @@
   display: inline-block;
   padding: 12px 30px 14px 30px;
   border-radius: 5px;
-  background-color: var(--input-color);
+  background-color: #2971ff;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--white-button-text);
+  color: #fff;
   font-size: 13px;
   line-height: 17px;
   text-align: center;
@@ -78,25 +73,25 @@
 }
 
 .key-blue-button:hover {
-  background-color: var(--input-color-hover);
+  background-color: #1b58ff;
 }
 
 .key-blue-button:active {
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
-  background-color: var(--input-color-hover);
+  background-color: #0025cc;
 }
 
 .key-blue-button-disabled,
-.key-blue-button[disabled],
-.danger-button-disabled,
-.danger-button[disabled] {
+  .key-blue-button[disabled],
+  .danger-button-disabled,
+  .danger-button[disabled] {
   cursor: default;
   display: inline-block;
   padding: 12px 30px 14px 30px;
   border-radius: 5px;
-  background-color: var(--disabled-background-color);
+  background-color: @disabled-background-color;
   box-shadow: none;
-  color: var(--disabled-color);
+  color: @disabled-color;
   font-size: 13px;
   line-height: 17px;
   font-weight: 400;
@@ -111,11 +106,12 @@
   display: inline-block;
   padding: 12px 30px 14px 30px;
   border-radius: 5px;
-  background-color: var(--title-text-and-button-background);
+  background-color: #8997a5;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--background-container);
+  color: #fff;
   font-size: 13px;
   line-height: 17px;
+  font-weight: 600;
   text-align: center;
   text-decoration: none;
   text-transform: capitalize;
@@ -124,19 +120,15 @@
 }
 
 .slate-gray-button:hover {
-  background-color: var(--stroke-color-hovered);
-}
-
-.thin-button {
-  padding: 5px 20px 5px 20px;
+  background-color: #596d81;
 }
 
 .invisible-button {
   cursor: pointer;
   display: inline-block;
-  padding: 12px 30px 14px 30px;
+  padding: 17px 18px 18px;
   border-radius: 5px;
-  color: var(--disabled-color);
+  color: #8997a5;
   background-color: inherit;
   font-size: 13px;
   line-height: 17px;
@@ -149,31 +141,27 @@
 }
 
 .invisible-button:hover {
-  color: var(--stroke-color-hovered);
+  color: #596d81;
 }
 
 .update-available-button {
-  color: var(--input-color);
+  color: #2970ff;
   text-decoration: underline;
   user-select: none;
-  cursor: pointer;
-  font-size: 13px;
-  line-height: 17px;
-  font-weight: 600;
 }
 
 .update-available-button:hover {
-  color: var(--input-color-hover);
+  color: #1b58ff;
 }
 
 .danger-button {
   cursor: pointer;
   display: inline-block;
-  padding: 12px 30px 14px 30px;
+  padding: 12px 20px 14px 20px;
   border-radius: 5px;
-  background-color: var(--error-red);
+  background-color: #b12d2d;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--background-back-color);
+  color: #fff;
   font-size: 13px;
   line-height: 17px;
   font-weight: 600;
@@ -185,17 +173,17 @@
 }
 
 .danger-button:hover {
-  background-color: var(--error-red-hover);
+  background-color: #c73434;
 }
 
 .close-button {
   cursor: pointer;
   display: inline-block;
-  padding: 12px 30px 14px 30px;
+  padding: 12px 20px 14px 20px;
   border-radius: 5px;
-  background-color: var(--title-text-and-button-background);
+  background-color: #48566e;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
-  color: var(--stroke-color-default);
+  color: #e9f8fe;
   font-size: 13px;
   line-height: 17px;
   font-weight: 600;
@@ -207,12 +195,12 @@
 }
 
 .close-button:hover {
-  background-color: var(--title-text-and-button-background-hovered);
+  background-color: rgba(72, 86, 110, 0.7);
 }
 
 .manage-pools-button {
   float: left;
-  background-color: var(--input-color);
+  background-color: #2971ff;
   background-image: @manage-pools-icon;
   background-position: 50% 50%;
   background-size: 12px;
@@ -225,6 +213,7 @@
   padding: 0px;
   border-radius: 5px;
   box-shadow: 0 5px 13px rgba(0, 0, 0, 0.21);
+  color: white;
   border: 0;
   line-height: inherit;
   text-decoration: none;
@@ -232,7 +221,7 @@
 }
 
 .manage-pools-button:hover {
-  background-color: var(--input-color-hover);
+  background-color: #1b58ff;
 }
 
 .manage-pools-button:active {
@@ -247,9 +236,10 @@
   cursor: pointer;
   height: 52px;
   padding-left: 65px;
-  color: var(--disabled-color);
+  color: #8997a5;
   font-size: 15px;
   text-decoration: none;
+  text-transform: capitalize;
   transition: color 0.13s ease-in-out;
   background-position: 20px 50%;
   background-size: 20px;
@@ -259,7 +249,7 @@
 
 .menu-link:hover,
 .menu-link-active {
-  color: var(--input-color-default);
+  color: #091440;
 }
 
 .menu-link.settingsIcon {
@@ -272,7 +262,7 @@
 }
 
 .menu-link.settingsIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-settings;
+  background-image: @menu-settings-hover;
 }
 
 .menu-link.helpIcon {
@@ -285,7 +275,7 @@
 }
 
 .menu-link.helpIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-help;
+  background-image: @menu-help-hover;
 }
 
 .menu-link.ticketsIcon {
@@ -298,7 +288,7 @@
 }
 
 .menu-link.ticketsIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-tickets;
+  background-image: @menu-tickets-hover;
 }
 
 .menu-link.transactionsIcon {
@@ -311,7 +301,7 @@
 }
 
 .menu-link.transactionsIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-transactions;
+  background-image: @menu-transactions-hover;
 }
 
 .menu-link.accountsIcon {
@@ -324,9 +314,7 @@
 }
 
 .menu-link.accountsIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-accounts;
-  background-size: 22px;
-  background-position: 19px 50%;
+  background-image: @menu-accounts-hover;
 }
 
 .menu-link.securitycntrIcon {
@@ -339,7 +327,7 @@
 }
 
 .menu-link.securitycntrIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-security;
+  background-image: @menu-securitycntr-hover;
 }
 
 .menu-link.overviewIcon {
@@ -352,7 +340,7 @@
 }
 
 .menu-link.overviewIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-overview;
+  background-image: @menu-overview-hover;
 }
 
 .menu-link.governanceIcon {
@@ -365,34 +353,22 @@
 }
 
 .menu-link.governanceIcon:not(.menu-link-active):hover {
-  background-image: @menu-animation-governance;
-}
-
-.menu-link-active.menu-link.trezorIcon {
-  background-image: @menu-trezor-active;
-}
-
-.menu-link.trezorIcon:not(.menu-link-active):hover {
-  background-image: @menu-trezor-hover;
-}
-
-.menu-link.trezorIcon {
-  background-image: @menu-trezor-default;
+  background-image: @menu-governance-hover;
 }
 
 .menu-caret {
   position: absolute;
   height: 52px;
   width: 100%;
-  border-left: 5px solid var(--accent-color);
+  border-left: 5px solid #2ed8a3;
 }
 
 .sidebar-mainnet .menu-caret {
-  background-color: var(--background-back-color);
+  background-color: #fff;
 }
 
 .sidebar-testnet .menu-caret {
-  background-color: var(--background-back-color);
+  background-color: #fff;
 }
 
 .info-field-modal-button {
@@ -406,6 +382,7 @@
   width: 16px;
   height: 16px;
   background-color: transparent;
+  color: white;
   border: 0;
   line-height: inherit;
   text-decoration: none;
@@ -427,6 +404,7 @@
   height: 20px;
   padding: 3px;
   background-color: transparent;
+  color: white;
   border: 0;
   line-height: inherit;
   text-decoration: none;
@@ -441,7 +419,7 @@
 .path-input-and-button {
   display: flex;
   flex-direction: row;
-  border-bottom: 1px var(--stroke-color-default) solid;
+  border-bottom: 1px @stroke-color-default solid;
 }
 
 .path-input-area {
@@ -457,6 +435,7 @@
   background-color: transparent;
   background-image: @search-icon;
   background-size: 16px 16px;
+  margin-top: 5px;
 }
 
 .path-button:hover {
@@ -478,6 +457,10 @@
   flex-grow: 1;
 }
 
+.inverted-colors .path-input {
+  color: #fff;
+}
+
 .path-input:hover {
   opacity: 0.7;
 }
@@ -494,7 +477,7 @@
   width: 20px;
   height: 20px;
   background-color: transparent;
-  color: var(--background-back-color);
+  color: white;
   border: 0;
   text-decoration: none;
   cursor: pointer;
@@ -514,16 +497,16 @@
 }
 
 .rescan-progress-area {
-  color: var(--disabled-color);
+  color: #8997a5;
   font-size: 13px;
 }
 
 .rescan-progress-percent {
-  color: var(--input-color-default);
+  color: #091440;
 }
 
 .rescan-progress-fraction {
-  color: var(--input-color-default);
+  color: #091440;
   margin: 0px 4px 0px 4px;
 }
 
@@ -533,11 +516,11 @@
 
   .linear-progress.small {
     border-radius: 0px;
-    background-color: var(--input-color-hover);
+    background-color: #132f4b;
   }
 
   .linear-progress.small .linear-progress-bar {
-    background: var(--accent-color);
+    background: #2ed8a3;
     border-radius: 0px;
   }
 }
@@ -587,7 +570,6 @@
   float: right;
 }
 
-.gettickets-cancel-button,
 .rescan-cancel-button {
   width: 16px;
   height: 16px;
@@ -599,18 +581,17 @@
   cursor: pointer;
 }
 
-.gettickets-cancel-button:hover,
 .rescan-cancel-button:hover {
   opacity: 0.7;
 }
 
 .transaction-link {
   cursor: pointer;
-  color: var(--link-color);
+  color: @link-color;
 }
 
 .transaction-link:hover {
-  color: var(--link-hover-color);
+  color: @link-hover-color;
 }
 
 [data-pseudo-content]::before,
@@ -636,13 +617,13 @@
 
 .tabs > .tab > a {
   margin: 0px 5px 0px 5px;
-  color: var(--tab-text);
+  color: #9ca8b5;
   text-decoration: none;
 }
 
 .tabs > .tab > a:hover,
 .tabs > .tab > a.active {
-  color: var(--tab-text-active-hover);
+  color: #3d5873;
 }
 
 .overview-header {
@@ -653,7 +634,7 @@
   }
 
   .tabs > .tab > a.active {
-    border: 1px solid var(--tab-text-active-hover);
+    border: 1px solid #3d5873;
     border-radius: 3px;
     padding: 5px 9px 5px 9px;
   }
@@ -663,7 +644,7 @@
 .no-tickets-indicator,
 .no-stats-indicator {
   text-align: center;
-  color: var(--title-text-and-button-background);
+  color: #617386;
   height: 150px;
   background-repeat: no-repeat;
   background-size: 80px;
@@ -671,7 +652,7 @@
 }
 
 .no-transactions-indicator {
-  color: var(--title-text-and-button-background);
+  color: #617386;
 }
 
 .no-transactions-indicator-img {
@@ -712,7 +693,7 @@
     margin: 12px;
     height: 14px;
     width: 14px;
-    border: 2px solid var(--white-border);
+    border: 2px solid #d1d5db;
     border-radius: 10px;
   }
 
@@ -729,7 +710,7 @@
     margin: 16px;
     height: 10px;
     width: 10px;
-    background-color: var(--white-border);
+    background-color: #d1d5db;
     border-radius: 10px;
   }
 }
@@ -759,20 +740,20 @@
   left: 0;
   height: 12px;
   width: 12px;
-  background-color: var(--background-back-color);
+  background-color: #fff;
   border-radius: 50%;
-  border: 1px solid var(--white-border);
+  border: 1px solid #c4cbd2;
   padding: 1px;
 }
 
 .agenda-options-radio-label:hover input ~ .checkmark {
   opacity: 0.8;
-  border: 2px solid var(--input-color);
+  border: 2px solid #2971ff;
   padding: 0;
 }
 
 .agenda-options-radio-label input:checked ~ .checkmark {
-  border: 2px solid var(--input-color);
+  border: 2px solid #2971ff;
   padding: 0;
 }
 
@@ -794,7 +775,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--input-color);
+  background: #2971ff;
 }
 
 @media screen and (max-width: 511px) {
@@ -877,29 +858,18 @@
   }
 
   .voting-progress-yes {
-    background-color: var(--vote-yes-color);
+    background-color: @vote-yes-color;
     z-index: 10;
     min-width: 10px;
   }
 
   .voting-progress-no {
-    background-color: var(--vote-no-color);
+    background-color: @vote-no-color;
     z-index: 5;
     min-width: 15px;
   }
 
   .voting-progress-abstain {
-    background-color: var(--vote-abstain-color);
+    background-color: @vote-abstain-color;
   }
-}
-
-.rebroadcast-button {
-  background-image: @rebroadcastTransaction;
-  background-position: 20px 12px;
-  background-size: 20px;
-  background-repeat: no-repeat;
-  padding-left: 48px;
-  float: right;
-  margin-top: -22px;
-  margin-right: 68px;
 }

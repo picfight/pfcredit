@@ -17,7 +17,7 @@ class SettingsInput extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { value } = this.props;
     if(value) {
       this.setState({ value: value });

@@ -2,7 +2,7 @@
 @import (reference) "./Icons.less";
 
 .new-seed {
-  background-color: var(--input-color-default);
+  background-color: #091440;
 }
 
 .help-text {
@@ -13,6 +13,13 @@
   .clearfloat-mixin;
 }
 
+.paragraph {
+  width: 300px;
+  color: #b7d1f0;
+  font-size: 13px;
+  line-height: 16px;
+}
+
 .left {
   float: left;
 }
@@ -21,28 +28,31 @@
   float: right;
 }
 
+.paragraph.right {
+  white-space: pre-line;
+}
+
 .cyan-bold {
-  color: var(--cyan-bold);
+  color: #69d5f7;
   font-weight: 700;
 }
 
 .cyan-regular {
-  color: var(--cyan-bold);
+  color: #69d5f7;
 }
 
 .orange {
-  color: var(--error-text-color);
+  color: #fd714b;
 }
 
 .orange-warning {
-  color: var(--error-text-color);
+  color: #fd714b;
   position: fixed;
   top: 122px;
-  margin-right: 5px;
 }
 
 .seedArea > .seedError {
-  color: var(--error-red);
+  color: red;
   position: fixed;
   top: 122px;
 }
@@ -98,7 +108,7 @@
 
 .create-wallet-label {
   float: left;
-  color: var(--title-text-and-button-background);
+  color: #48566e;
   font-size: 13px;
   line-height: 17px;
   height: 17px;
@@ -120,34 +130,34 @@
     height: 29px;
 
     .text-toggle-button-left {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
+      color: #959dac;
+      background-color: #f7f8f9;
+      border: 1px solid #e7eaed;
       border-radius: 3px 0px 0px 3px;
       min-width: 0px;
       padding: 6px 20px 6px 20px;
     }
 
     .text-toggle-button-right {
-      color: var(--disabled-color);
-      background-color: var(--background-container);
-      border: 1px solid var(--disabled-background-color);
+      color: #959dac;
+      background-color: #f7f8f9;
+      border: 1px solid #e7eaed;
       border-radius: 0px 3px 3px 0px;
       min-width: 0px;
       padding: 6px 20px 6px 20px;
     }
 
     .text-toggle-button-left.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
+      color: #091440;
+      background-color: #fff;
+      border: 1px solid #e7eaed;
       font-weight: 400;
     }
 
     .text-toggle-button-right.text-toggle-button-active {
-      color: var(--input-color-default);
-      background-color: var(--background-back-color);
-      border: 1px solid var(--disabled-background-color);
+      color: #091440;
+      background-color: #fff;
+      border: 1px solid #e7eaed;
       font-weight: 400;
     }
   }
@@ -165,6 +175,21 @@
   padding-bottom: 3px;
 }
 
+.input-seed-text-area {
+  width: 100%;
+  min-height: 108px;
+  padding-right: 10px;
+  padding-left: 10px;
+  border-style: none none solid;
+  border-width: 0px 0px 1px;
+  border-color: #000 #000 #69d5f7;
+  font-family: Inconsolata, monospace;
+  color: #2971ff;
+  font-size: 13px;
+  overflow: auto;
+  margin: 0px;
+}
+
 .input-form {
   -moz-appearance: none !important;
   position: relative;
@@ -180,7 +205,7 @@
   .words-input {
     height: 200px;
     min-height: 44px;
-    border-bottom: 1px solid var(--input-color);
+    border-bottom: 1px solid @input-color;
   }
 
   .Select-control {
@@ -189,7 +214,7 @@
     input,
     .Select-value-label,
     .Select-value-icon {
-      color: var(--background-back-color);
+      color: #fff;
     }
 
     .Select-arrow {
@@ -203,7 +228,7 @@
 }
 
 .input-form-error {
-  color: var(--error-text-color);
+  color: @error-text-color;
   float: left;
 }
 
@@ -227,7 +252,7 @@
   }
 
   em {
-    color: var(--error-text-color);
+    color: #fd714b;
   }
 }
 
@@ -275,38 +300,38 @@
   .Select-control {
     padding-left: 2px;
     border-radius: 3px;
-    border: 1px solid var(--white-border);
-    background-color: var(--background-back-color);
-    color: var(--title-text-and-button-background);
+    border: 1px solid #d1d5db;
+    background-color: #fff;
+    color: #48566e;
   }
 
   .Select-control:hover,
   .Select-control:focus {
-    border: 1px solid var(--disabled-color);
+    border: 1px solid #959dac;
   }
 }
 
 .seedWord.match {
   .Select-control {
-    color: var(--input-color-default);
-    border: 1px solid var(--accent-color);
+    color: #091440;
+    border: 1px solid #2ed8a3;
   }
 
   .Select-control:hover {
-    color: var(--input-color-default);
-    border: 1px solid var(--accent-color);
+    color: #091440;
+    border: 1px solid #2ed8a3;
   }
 }
 
 .seedWord.no-match {
   .Select-control {
-    color: var(--input-color-default);
-    border: 1px solid var(--error-red);
+    color: #091440;
+    border: 1px solid red;
   }
 
   .Select-control:hover {
-    color: var(--input-color-default);
-    border: 1px solid var(--error-red);
+    color: #091440;
+    border: 1px solid red;
   }
 }
 
@@ -338,8 +363,8 @@
 }
 
 .createwallet-button {
-  background-color: var(--background-back-color);
-  border: 1px solid var(--background-back-color);
+  background-color: #fff;
+  border: 1px solid #fff;
   border-radius: 5px;
   height: 161px;
   width: 168px;
@@ -360,14 +385,14 @@
 
 .createwallet-button:hover,
 .createwallet-button:focus, {
-  border-color: var(--input-color);
+  border-color: #2970ff;
 }
 
 .createwallet-button-label {
   margin-top: 121px;
   text-align: center;
   font-size: 15px;
-  color: var(--title-text-and-button-background);
+  color: #48566e;
   line-height: 19px;
 }
 

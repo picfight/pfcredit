@@ -1,7 +1,7 @@
+import { app } from "electron";
 import winston from "winston";
 import path from "path";
 import { MAX_LOG_LENGTH } from "./constants";
-import { appDataDirectory } from "./paths";
 import os from "os";
 
 let pfcdLogs = Buffer.from("");
@@ -56,7 +56,7 @@ const logFormatterColorized = (opts) => {
 };
 
 // createLogger creates the main app logger. This stores all logs into the
-// pfcredit app data dir and sends to the console when debug == true.
+// picfightiton app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
   if (logger)
@@ -65,7 +65,7 @@ export function createLogger(debug) {
     transports: [
       new (winston.transports.File)({
         json: false,
-        filename: path.join(appDataDirectory(), "pfcredit.log"),
+        filename: path.join(app.getPath("userData"), "decrediton.log"),
         timestamp: logTimestamp,
         formatter: logFormatter,
       })
@@ -106,8 +106,6 @@ export const GetPfcwalletLogs = () => pfcwalletLogs;
 
 const logError = "[ERR]";
 
-const panicErr = "panic";
-
 export function lastLogLine(log) {
   let lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length -1);
   let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
@@ -119,24 +117,4 @@ export function lastErrorLine(log) {
   let endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
   let lastLineBuff = log.slice(lastLineIdx, endOfErrorLineIdx).toString("utf-8");
   return lastLineBuff.trim();
-}
-
-export function lastPanicLine(log) {
-  let lastLineIdx = log.indexOf(panicErr);
-  if (lastLineIdx < 0) lastLineIdx = log.indexOf("goroutine");
-  let lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
-  return lastLineBuff;
-}
-
-export function ClearPfcwalletLogs() {
-  pfcwalletLogs = Buffer.from("");
-}
-
-const reindexCheck = "Reindexing to height";
-
-export function CheckDaemonLogs(data) {
-  if (data.indexOf(reindexCheck) > 0) {
-    return true;
-  }
-  return false;
 }

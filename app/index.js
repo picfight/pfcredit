@@ -20,26 +20,28 @@ const locale = globalCfg.get("locale");
 
 log("info", "Starting main react app");
 
-const currentSettings = {
-  locale: locale,
-  daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
-  allowedExternalRequests: globalCfg.get("allowed_external_requests"),
-  proxyType: globalCfg.get("proxy_type"),
-  proxyLocation: globalCfg.get("proxy_location"),
-  spvMode: globalCfg.get("spv_mode"),
-  spvConnect: globalCfg.get("spv_connect"),
-  timezone: globalCfg.get("timezone"),
-  currencyDisplay: "PFC",
-  network: globalCfg.get("network"),
-};
 var initialState = {
   settings: {
-    currentSettings: currentSettings,
-    tempSettings: currentSettings,
+    currentSettings: {
+      locale: locale,
+      daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
+      proxyType: globalCfg.get("proxy_type"),
+      proxyLocation: globalCfg.get("proxy_location"),
+      spvMode: globalCfg.get("spv_mode"),
+      timezone: globalCfg.get("timezone"),
+    },
+    tempSettings: {
+      locale: locale,
+      daemonStartAdvanced: globalCfg.get("daemon_start_advanced"),
+      allowedExternalRequests: globalCfg.get("allowed_external_requests"),
+      proxyType: globalCfg.get("proxy_type"),
+      proxyLocation: globalCfg.get("proxy_location"),
+      spvMode: globalCfg.get("spv_mode"),
+      timezone: globalCfg.get("timezone"),
+    },
     settingsChanged: false,
     uiAnimations: globalCfg.get("ui_animations"),
-    needNetworkReset: false,
-    theme: globalCfg.get("theme"),
   },
   stakepool: {
     currentStakePoolConfig: null,
@@ -52,14 +54,13 @@ var initialState = {
     addCustomStakePoolAttempt: false,
   },
   daemon: {
-    networkMatch: false,
     appVersion: pkg.version,
     daemonRemote: false,
+    network: globalCfg.get("network"),
     locale: locale,
     tutorial: globalCfg.get("show_tutorial"),
     showPrivacy: globalCfg.get("show_privacy"),
     setLanguage: globalCfg.get("set_language"),
-    showSpvChoice: globalCfg.get("show_spvchoice"),
     daemonStarted: false,
     daemonSynced: false,
     daemonStopped: false,
@@ -77,12 +78,10 @@ var initialState = {
     previousWallet: null,
     selectCreateWalletInputRequest: true,
     hiddenAccounts: Array(),
-    walletName: null,
-    neededBlocks: 0,
   },
   version: {
     // RequiredVersion
-    requiredVersion: "5.6.0",
+    requiredVersion: "5.1.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -128,7 +127,6 @@ var initialState = {
     getPingError: null,
     getPingRequestAttempt: false,
     getPingResponse: null,
-    pingTimer: null,
     // StakeInfo
     getStakeInfoError: null,
     getStakeInfoRequestAttempt: false,
@@ -153,7 +151,9 @@ var initialState = {
     // Transactions for Overview Page
     recentTransactionCount: 8,
     recentTransactions: Array(),
-    recentStakeTransactions: Array(),
+
+    // Transactions since last opened
+    recentTxSinceLastOpenedCount: 10,
 
     // GetTransactions
     minedTransactions: Array(),
@@ -166,8 +166,6 @@ var initialState = {
       listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
       types: [], // desired transaction types (code). All if blank.
       direction: null, // direction of desired transactions (sent/received/transfer)
-      maxAmount: null,
-      minAmount: null,
     },
     lastTransaction: null, //last transaction obtained
 
@@ -179,16 +177,6 @@ var initialState = {
     getTicketsError: null,
     getTicketsRequestAttempt: false,
     tickets: Array(),
-    minedTickets: Array(),
-    unminedTickets: Array(),
-    noMoreTickets: false,
-    ticketsFilter: {
-      listDirection: "desc", // asc = oldest -> newest, desc => newest -> oldest
-      status: [], // desired ticket status (code). All if blank.
-    },
-    getTicketsStartRequestHeight: null,
-    getTicketsCancel: false, // user requested cancelation (but it hasn't happened yet)
-    getTicketsProgressStartRequestHeight: null,
 
     // Agenda/VoteChoices
     getAgendasResponse: null,
@@ -206,30 +194,16 @@ var initialState = {
     // heights, due to maturing stake transactions. Keys are the heights,
     // values are arrays of account numbers.
     maturingBlockHeights: {},
-
-    // list of outstanding requests for additional stake data from transactions
-    // (indexed by transaction hash)
-    fetchMissingStakeTxDataAttempt: {},
-
-    // Shown under governance tab
-    treasuryBalance: null,
   },
   walletLoader: {
-    syncInput: false,
-    syncError: null,
-    syncAttemptRequest: false,
-    syncCall: null,
-    peerCount: 0,
+    spvConnect: globalCfg.get("spv_connect"),
+    spvInput: false,
     existingOrNew: false,
     rpcRetryAttempts: 0,
+    neededBlocks: 0,
     curBlocks: 0,
     stepIndex: 0,
     maxWalletCount: globalCfg.get("max_wallet_count"),
-    isWatchingOnly: false,
-
-    synced: false,
-    syncFetchHeadersComplete: false,
-
     // Loader
     getLoaderRequestAttempt: false,
     loader: null,
@@ -257,6 +231,18 @@ var initialState = {
     startRpcRequestAttempt: false,
     startRpcResponse: null,
     startRpcError: null,
+    // DiscoverAddress
+    discoverAddressRequestAttempt: false,
+    discoverAddressResponse: null,
+    discoverAddressError: null,
+    // SubscribeBlockNtfns
+    subscribeBlockNtfnsRequestAttempt: false,
+    subscribeBlockNtfnsResponse: null,
+    subscribeBlockNtfnsError: null,
+    // FetchHeaders
+    fetchHeadersRequestAttempt: false,
+    fetchHeadersResponse: null,
+    fetchHeadersError: null,
   },
   notifications: {
     transactionNtfns: null,
@@ -265,7 +251,6 @@ var initialState = {
     accountNtfnsResponse: null,
   },
   control: {
-    numTicketsToBuy: 1,
     // ExtendedPubKey
     getExtendedPubKeyAttempt: false,
     getExtendedPubKeyResponse: null,
@@ -317,6 +302,7 @@ var initialState = {
     signTransactionRespsonse: null,
     // PublishTransaction
     publishTransactionRequestAttempt: false,
+    publishTransactionResponse: null,
     // PurchaseTicket
     purchaseTicketsRequestAttempt: false,
     purchaseTicketsResponse: null,
@@ -332,6 +318,10 @@ var initialState = {
     ticketBuyerService: null,
     // TicketBuyerConfig
     balanceToMaintain: null,
+    maxFee: null,
+    maxPriceAbsolute: null,
+    maxPriceRelative: null,
+    maxPerBlock: null,
     getTicketBuyerConfigRequestAttempt: false,
     getTicketBuyerConfigResponse: null,
     getTicketBuyerConfigSuccess: null,
@@ -356,12 +346,13 @@ var initialState = {
 
     exportingData: false,
     modalVisible: false,
-    aboutModalMacOSVisible: false
   },
   snackbar: {
     messages: Array()
   },
   sidebar: {
+    showingSidebar: !globalCfg.get("show_tutorial"),
+    showingSidebarMenu: false,
     expandSideBar: true,
   },
   statistics: {
@@ -369,10 +360,9 @@ var initialState = {
     fullDailyBalances: Array(),
     voteTime: null,
     getMyTicketsStatsRequest: false,
-    getStartupStatsAttempt: false,
-    startupStatsEndCalcTime: new Date(0),
   },
   governance: {
+    politeiaBetaEnabled: globalCfg.get("politeia_beta"), // TODO: remove once politeia hits production
     getVettedAttempt: false,
     activeVote: [],
     preVote: [],
@@ -382,24 +372,6 @@ var initialState = {
     getProposalError: null,
     proposals: {}, // map from proposal token (id) to proposal details
     lastVettedFetchTime: new Date(0), // time when vetted proposals were requested
-  },
-  trezor: {
-    enabled: false,
-    debug: globalCfg.get("trezor_debug"),
-    deviceList: null,
-    getDeviceListAttempt: false,
-    transportError: false,
-    device: null,
-    performingOperation: false,
-    waitingForPin: false,
-    waitingForPassPhrase: false,
-    waitingForWord: false,
-    pinCallBack: null,
-    passPhraseCallBack: null,
-    pinMessage: null,
-    passPhraseMessage: null,
-    wordCallBack: null,
-    walletCreationMasterPubkeyAttempt: false,
   },
   locales: locales
 };

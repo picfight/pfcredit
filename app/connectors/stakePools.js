@@ -13,7 +13,6 @@ const mapStateToProps = selectorMap({
   stakePoolListingEnabled: sel.stakePoolListingEnabled,
   updatedStakePoolList: sel.updatedStakePoolList,
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
-  isImportingScript: sel.isImportingScript,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
