@@ -5,7 +5,7 @@ import { withLog as log, logOptionNoResponseData } from "./app";
 
 export const checkPfcreditVersion = log(() => Promise
   .resolve(ipcRenderer.sendSync("check-version"))
-  , "Check Pfcredit release version");
+, "Check Pfcredit release version");
 
 export const startDaemon = log((appData, testnet) => Promise
   .resolve(ipcRenderer.sendSync("start-daemon", appData, testnet))
@@ -55,6 +55,12 @@ export const removeWallet = log((walletPath, testnet) => Promise
     throw "Error creating wallet";
   }), "Remove Wallet");
 
+export const stopDaemon = log(() => Promise
+  .resolve(ipcRenderer.sendSync("stop-daemon"))
+  .then(stopped => {
+    return stopped;
+  }), "Stop Daemon");
+
 export const stopWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("stop-wallet"))
   .then(stopped => {
@@ -76,55 +82,68 @@ export const startWallet = log((walletPath, testnet) => new Promise((resolve, re
 
 export const setPreviousWallet = log((cfg) => Promise
   .resolve(ipcRenderer.sendSync("set-previous-wallet", cfg))
-  , "Set Previous Wallet");
+, "Set Previous Wallet");
 
 export const getPreviousWallet = log(() => Promise
   .resolve(ipcRenderer.sendSync("get-previous-wallet"))
-  , "Get Previous Wallet", logOptionNoResponseData());
+, "Get Previous Wallet", logOptionNoResponseData());
 
 export const getBlockCount = log((rpcCreds, testnet) => new Promise(resolve => {
-  ipcRenderer.once("check-daemon-response", (e, block) => {
-    const blockCount = isString(block) ? parseInt(block.trim()) : block;
-    resolve(blockCount);
+  ipcRenderer.once("check-daemon-response", (e, info) => {
+    const blockCount = isString(info.blockCount) ? parseInt(info.blockCount.trim()) : info.blockCount;
+    const syncHeight = isString(info.syncHeight) ? parseInt(info.syncHeight.trim()) : info.syncHeight;
+    resolve({ blockCount, syncHeight });
   });
   ipcRenderer.send("check-daemon", rpcCreds, testnet);
 }), "Get Block Count");
 
-export const getPfcdLogs = log(() => Promise
+export const getDaemonInfo = log((rpcCreds) => new Promise(resolve => {
+  ipcRenderer.once("check-getinfo-response", (e, info) => {
+    const isTestNet = info ? info.testnet : null;
+    resolve({ isTestNet });
+  });
+  ipcRenderer.send("get-info", rpcCreds);
+}), "Get Daemon network info");
+
+export const getPfcdLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-pfcd-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting pfcd logs";
-  }), "Get Pfcd Logs", logOptionNoResponseData());
+  });
 
-export const getPfcwalletLogs = log(() => Promise
+export const getPfcwalletLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-pfcwallet-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting pfcwallet logs";
-  }), "Get Pfcwallet Logs", logOptionNoResponseData());
+  });
 
-export const getPfcreditLogs = log(() => Promise
+export const getPfcreditLogs = () => Promise
   .resolve(ipcRenderer.sendSync("get-pfcredit-logs"))
   .then(logs => {
     if (logs) return logs;
     throw "Error getting pfcredit logs";
-  }), "Get Pfcredit Logs", logOptionNoResponseData());
+  });
 
 export const getAvailableWallets = log((network) => Promise
   .resolve(ipcRenderer.sendSync("get-available-wallets", network))
   .then(availableWallets => {
     if (availableWallets) return availableWallets;
-    throw "Error getting avaiable wallets logs";
+    throw "Error getting available wallets logs";
   }), "Get Available Wallets", logOptionNoResponseData());
 
 export const reloadAllowedExternalRequests = log(() => Promise
   .resolve(ipcRenderer.sendSync("reload-allowed-external-request"))
-  , "Reload allowed external request");
+, "Reload allowed external request");
+
+export const allowExternalRequest = log(requestType => Promise
+  .resolve(ipcRenderer.sendSync("allow-external-request", requestType))
+, "Allow External Request");
 
 export const allowStakePoolHost = log(host => Promise
   .resolve(ipcRenderer.sendSync("allow-stakepool-host", host))
-  , "Allow StakePool Host");
+, "Allow StakePool Host");
 
 export const getPfcdLastLogLine = () => Promise
   .resolve(ipcRenderer.sendSync("get-last-log-line-pfcd"));

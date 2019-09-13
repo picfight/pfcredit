@@ -3,7 +3,7 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   RESCAN_ATTEMPT, RESCAN_FAILED, RESCAN_PROGRESS, RESCAN_COMPLETE, RESCAN_CANCEL,
   GETNEXTACCOUNT_ATTEMPT, GETNEXTACCOUNT_FAILED, GETNEXTACCOUNT_SUCCESS,
   IMPORTPRIVKEY_ATTEMPT, IMPORTPRIVKEY_FAILED, IMPORTPRIVKEY_SUCCESS,
-  IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS,
+  IMPORTSCRIPT_ATTEMPT, IMPORTSCRIPT_FAILED, IMPORTSCRIPT_SUCCESS, IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS,
   CHANGEPASSPHRASE_ATTEMPT, CHANGEPASSPHRASE_FAILED, CHANGEPASSPHRASE_SUCCESS,
   LOADACTIVEDATAFILTERS_ATTEMPT, LOADACTIVEDATAFILTERS_FAILED, LOADACTIVEDATAFILTERS_SUCCESS,
   FUNDTX_ATTEMPT, FUNDTX_FAILED, FUNDTX_SUCCESS,
@@ -16,10 +16,12 @@ import { GETNEXTADDRESS_ATTEMPT, GETNEXTADDRESS_FAILED, GETNEXTADDRESS_SUCCESS,
   SETTICKETBUYERCONFIG_ATTEMPT, SETTICKETBUYERCONFIG_FAILED, SETTICKETBUYERCONFIG_SUCCESS,
   STARTAUTOBUYER_ATTEMPT, STARTAUTOBUYER_FAILED, STARTAUTOBUYER_SUCCESS,
   STOPAUTOBUYER_ATTEMPT, STOPAUTOBUYER_FAILED, STOPAUTOBUYER_SUCCESS,
+  STARTTICKETBUYERV2_ATTEMPT, STARTTICKETBUYERV2_FAILED, STARTTICKETBUYERV2_SUCCESS,
+  STARTTICKETBUYERV2_UPDATE, STOPTICKETBUYERV2_ATTEMPT, STOPTICKETBUYERV2_SUCCESS,
   CONSTRUCTTX_ATTEMPT, CONSTRUCTTX_FAILED, CONSTRUCTTX_SUCCESS, CONSTRUCTTX_FAILED_LOW_BALANCE,
-  SETBALANCETOMAINTAIN, SETMAXFEE, SETMAXPRICEABSOLUTE, SETMAXPRICERELATIVE, SETMAXPERBLOCK,
+  SETBALANCETOMAINTAIN,
   VALIDATEADDRESS_ATTEMPT, VALIDATEADDRESS_SUCCESS, VALIDATEADDRESS_FAILED, VALIDATEADDRESS_CLEANSTORE,
-  MODAL_SHOWN, MODAL_HIDDEN, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
+  MODAL_SHOWN, MODAL_HIDDEN, SHOW_ABOUT_MODAL_MACOS, HIDE_ABOUT_MODAL_MACOS, VALIDATEMASTERPUBKEY_SUCCESS, VALIDATEMASTERPUBKEY_FAILED,
   GETACCOUNTEXTENDEDKEY_ATTEMPT, GETACCOUNTEXTENDEDKEY_FAILED, GETACCOUNTEXTENDEDKEY_SUCCESS,
 } from "../actions/ControlActions";
 import { WALLET_AUTOBUYER_SETTINGS } from "actions/DaemonActions";
@@ -140,6 +142,12 @@ export default function control(state = {}, action) {
       importScriptRequestAttempt: false,
       importScriptResponse: action.importScriptResponse,
     };
+  case IMPORTSCRIPT_SUCCESS_PURCHASE_TICKETS:
+    return { ...state,
+      importScriptError: null,
+      importScriptRequestAttempt: false,
+      importScriptResponse: action.importScriptResponse,
+    };
   case CHANGEPASSPHRASE_ATTEMPT:
     return { ...state,
       changePassphraseError: null,
@@ -230,6 +238,7 @@ export default function control(state = {}, action) {
     return { ...state,
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: true,
+      numTicketsToBuy: action.numTicketsToBuy,
     };
   case PURCHASETICKETS_FAILED:
     return { ...state,
@@ -242,6 +251,7 @@ export default function control(state = {}, action) {
       purchaseTicketsError: null,
       purchaseTicketsRequestAttempt: false,
       purchaseTicketsResponse: action.purchaseTicketsResponse,
+      numTicketsToBuy: 1,
     };
   case REVOKETICKETS_ATTEMPT:
     return { ...state,
@@ -301,26 +311,6 @@ export default function control(state = {}, action) {
       ...state,
       balanceToMaintain: action.balanceToMaintain,
     };
-  case SETMAXFEE:
-    return {
-      ...state,
-      maxFee: action.maxFee,
-    };
-  case SETMAXPRICEABSOLUTE:
-    return {
-      ...state,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-    };
-  case SETMAXPRICERELATIVE:
-    return {
-      ...state,
-      maxPriceRelative: action.maxPriceRelative,
-    };
-  case SETMAXPERBLOCK:
-    return {
-      ...state,
-      maxPerBlock: action.maxPerBlock,
-    };
   case STARTAUTOBUYER_ATTEMPT:
     return { ...state,
       startAutoBuyerError: null,
@@ -338,10 +328,6 @@ export default function control(state = {}, action) {
       startAutoBuyerResponse: action.startAutoBuyerResponse,
       stopAutoBuyerResponse: null,
       balanceToMaintain: action.balanceToMaintain,
-      maxFeePerKb: action.maxFeePerKb,
-      maxPriceRelative: action.maxPriceRelative,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-      maxPerBlock: action.maxPerBlock,
     };
   case STOPAUTOBUYER_ATTEMPT:
     return { ...state,
@@ -360,6 +346,37 @@ export default function control(state = {}, action) {
       stopAutoBuyerRequestAttempt: false,
       stopAutoBuyerResponse: action.stopAutoBuyerResponse,
       startAutoBuyerSuccess: null,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_ATTEMPT:
+    return { ...state,
+      startTicketBuyerAttempt: true,
+      startTicketBuyerError: null,
+      ticketBuyerConfig: action.ticketBuyerConfig,
+    };
+  case STARTTICKETBUYERV2_FAILED:
+    return { ...state,
+      startTicketBuyerAttempt: false,
+      startTicketBuyerError: action.error,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_SUCCESS:
+    return { ...state,
+      startTicketBuyerAttempt: false,
+      startTicketBuyerError: null,
+      startAutoBuyerResponse: null,
+    };
+  case STARTTICKETBUYERV2_UPDATE:
+    return { ...state,
+      ticketBuyerCall: action.ticketBuyerCall,
+      startAutoBuyerResponse: true,
+    };
+  case STOPTICKETBUYERV2_ATTEMPT:
+    return { ...state,
+    };
+  case STOPTICKETBUYERV2_SUCCESS:
+    return { ...state,
+      ticketBuyerCall: null,
       startAutoBuyerResponse: null,
     };
   case CONSTRUCTTX_ATTEMPT:
@@ -405,7 +422,7 @@ export default function control(state = {}, action) {
   case VALIDATEMASTERPUBKEY_SUCCESS:
     return { ...state,
       masterPubKey: action.masterPubKey,
-      isWatchOnly: action.isWatchOnly,
+      isCreatingWatchingOnly: true,
     };
   case VALIDATEMASTERPUBKEY_FAILED:
     return { ...state,
@@ -415,10 +432,6 @@ export default function control(state = {}, action) {
   case WALLET_AUTOBUYER_SETTINGS:
     return { ...state,
       balanceToMaintain: action.balanceToMaintain,
-      maxFee: action.maxFee,
-      maxPriceAbsolute: action.maxPriceAbsolute,
-      maxPriceRelative: action.maxPriceRelative,
-      maxPerBlock: action.maxPerBlock,
     };
   case EXPORT_STARTED:
     return { ...state,
@@ -439,6 +452,14 @@ export default function control(state = {}, action) {
   case MODAL_HIDDEN:
     return { ...state,
       modalVisible: false
+    };
+  case SHOW_ABOUT_MODAL_MACOS:
+    return { ...state,
+      aboutModalMacOSVisible: true
+    };
+  case HIDE_ABOUT_MODAL_MACOS:
+    return { ...state,
+      aboutModalMacOSVisible: false
     };
   case GETACCOUNTEXTENDEDKEY_ATTEMPT:
     return { ...state,

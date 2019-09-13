@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Pfcredit
-Comment=Pfcredit the PicFight wallet
+Comment=Pfcredit the Picfight wallet
 Exec=pfcredit %U
 Terminal=false
 Type=Application

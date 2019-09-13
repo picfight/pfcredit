@@ -6,15 +6,14 @@ import { FormattedMessage as T } from "react-intl";
 import { spring, presets } from "react-motion";
 import OutputRow from "./OutputRow";
 import { DescriptionHeader } from "layout";
-import WatchingOnlyWarnModal from "PseudoModal/WatchingOnlyWarn";
 
 const BASE_OUTPUT = { destination: "", amount: null };
 
 export const SendTabHeader = service(({ isTestNet }) =>
   <DescriptionHeader
     description={isTestNet
-      ? <T id="transactions.description.send.testnet" m={"Testnet PicFight addresses always begin with letter T and contain 26-35 alphanumeric characters\n(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."} />
-      : <T id="transactions.description.send.mainnet" m={"Mainnet PicFight addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."} />}
+      ? <T id="transactions.description.send.testnet" m={"Testnet Picfight addresses always begin with letter T and contain 26-35 alphanumeric characters\n(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."} />
+      : <T id="transactions.description.send.mainnet" m={"Mainnet Picfight addresses always begin with letter D and contain 26-35 alphanumeric characters\n(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."} />}
   />);
 
 @autobind
@@ -36,18 +35,22 @@ class Send extends React.Component {
       lowBalanceError: false,
       canEnterPassphrase: false,
       sendAllAmount: this.props.totalSpent,
+      unsignedRawTx: null,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { nextAddress, constructTxLowBalance } = this.props;
-    const { isSendSelf, outputs } = this.state;
-    if (isSendSelf && (nextAddress != nextProps.nextAddress)) {
-      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: nextProps.nextAddress } }));
+  componentDidUpdate(prevProps, prevState) {
+    const { nextAddress, constructTxLowBalance } = prevProps;
+    const { isSendSelf, outputs } = prevState;
+    if (isSendSelf && (nextAddress != this.props.nextAddress)) {
+      let newOutputs = outputs.map(o => ({ ...o, data:{ ...o.data, destination: this.props.nextAddress } }));
       this.setState({ outputs: newOutputs }, this.onAttemptConstructTransaction);
     }
-    if ( constructTxLowBalance !== nextProps.constructTxLowBalance ) {
-      this.setState({ lowBalanceError: nextProps.constructTxLowBalance });
+    if ( constructTxLowBalance !== this.props.constructTxLowBalance ) {
+      this.setState({ lowBalanceError: this.props.constructTxLowBalance });
+    }
+    if (this.props.unsignedRawTx !== prevProps.unsignedRawTx && this.props.isWatchingOnly) {
+      this.setState({ unsignedRawTx: this.props.unsignedRawTx });
     }
   }
 
@@ -71,7 +74,6 @@ class Send extends React.Component {
       onShowSendOthers,
       onAttemptConstructTransaction,
       onAddOutput,
-      onRebroadcastUnmined,
       getOnRemoveOutput,
       getOnChangeOutputDestination,
       getOnChangeOutputAmount,
@@ -86,14 +88,10 @@ class Send extends React.Component {
     } = this;
     const isValid = this.getIsValid();
     const showPassphraseModal = this.getShowPassphraseModal();
-    const { isTransactionsSendTabDisabled } = this.props;
 
     return (
       <Aux>
-        {
-          isTransactionsSendTabDisabled && <WatchingOnlyWarnModal />
-        }
-        <div className={ isTransactionsSendTabDisabled ? "pseudo-modal-wrapper blur" : null }>
+        <div>
           <SendPage
             {...{ ...this.props, ...this.state }}
             {...{
@@ -109,7 +107,6 @@ class Send extends React.Component {
               onShowSendOthers,
               onAttemptConstructTransaction,
               onAddOutput,
-              onRebroadcastUnmined,
               getOnRemoveOutput,
               getOnChangeOutputDestination,
               getOnChangeOutputAmount,
@@ -240,11 +237,6 @@ class Send extends React.Component {
   onAddOutput() {
     const { outputs } = this.state;
     this.setState({ outputs: [ ...outputs, { key: "output_"+outputs.length, data: { ...BASE_OUTPUT } } ] });
-  }
-
-  onRebroadcastUnmined() {
-    const { publishUnminedTransactions } = this.props;
-    publishUnminedTransactions && publishUnminedTransactions();
   }
 
   onKeyDown(e) {

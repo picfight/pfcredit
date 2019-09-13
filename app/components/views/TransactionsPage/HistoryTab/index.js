@@ -1,12 +1,12 @@
 import { substruct } from "fp";
 import ErrorScreen from "ErrorScreen";
 import HistoryPage from "./Page";
-import { historyPage } from "connectors";
+import { historyPage, balance } from "connectors";
 import { injectIntl } from "react-intl";
 import { TransactionDetails }  from "middleware/walletrpc/api_pb";
 import { FormattedMessage as T } from "react-intl";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERED
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import { DescriptionHeader } from "layout";
 import { Balance } from "shared";
@@ -14,20 +14,22 @@ import { Balance } from "shared";
 export const HistoryTabHeader = historyPage(({ totalBalance }) =>
   <DescriptionHeader
     description={<T id="transactions.description.history" m="Total Balance: {totalBalance}"
-      values={{ totalBalance: <Balance amount={totalBalance} classNameWrapper="header-small-balance"/> }} />
+      values={{ totalBalance: <Balance flat amount={totalBalance} classNameWrapper="header-small-balance"/> }} />
     }
   />
 );
 
 @autobind
 class History extends React.Component {
-
   constructor(props) {
     super(props);
     const selectedTxTypeKey = this.selectedTxTypeFromFilter(this.props.transactionsFilter);
-    const selectedSortOrderKey = this.props.transactionsFilter.listDirection;
-    const searchText = this.props.transactionsFilter.search;
-    this.state = { selectedTxTypeKey, selectedSortOrderKey, searchText };
+    const { search, listDirection } = props.transactionsFilter;
+    this.state = { selectedTxTypeKey,
+      selectedSortOrderKey: listDirection,
+      searchText: search,
+      isChangingFilterTimer: null,
+    };
   }
 
   render() {
@@ -50,6 +52,7 @@ class History extends React.Component {
             onChangeSelectedType: null,
             onChangeSortType: null,
             onChangeSearchText: null,
+            onChangeSliderValue: null,
             onLoadMoreTransactions: null
           }, this)
         }}
@@ -60,14 +63,14 @@ class History extends React.Component {
   getTxTypes() {
     const types = TransactionDetails.TransactionType;
     return [
-      { key: "all",      value: { types: [],                      direction: null },  label: (<T id="transaction.type.all" m="All"/>) },
-      { key: "regular",  value: { types: [ types.REGULAR ],         direction: null },  label: (<T id="transaction.type.regular" m="Regular"/>) },
-      { key: "ticket",   value: { types: [ types.TICKET_PURCHASE ], direction: null },  label: (<T id="transaction.type.tickets" m="Tickets"/>) },
-      { key: "vote",     value: { types: [ types.VOTE ],            direction: null },  label: (<T id="transaction.type.votes" m="Votes"/>) },
-      { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="transaction.type.revokes" m="Revokes"/>) },
-      { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="transaction.type.sent" m="Sent"/>) },
-      { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="transaction.type.received" m="Received"/>) },
-      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERED }, label: (<T id="transaction.type.transfered" m="Transfered"/>) },
+      { key: "all",      value: { types: [],                      direction: null },  label: (<T id="txFilter.type.all" m="All"/>) },
+      { key: "regular",  value: { types: [ types.REGULAR ],         direction: null },  label: (<T id="txFilter.type.regular" m="Regular"/>) },
+      { key: "ticket",   value: { types: [ types.TICKET_PURCHASE ], direction: null },  label: (<T id="txFilter.type.tickets" m="Tickets"/>) },
+      { key: "vote",     value: { types: [ types.VOTE ],            direction: null },  label: (<T id="txFilter.type.votes" m="Votes"/>) },
+      { key: "revoke",   value: { types: [ types.REVOCATION ],      direction: null },  label: (<T id="txFilter.type.revokes" m="Revokes"/>) },
+      { key: "sent",     value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_SENT },       label: (<T id="txFilter.type.sent" m="Sent"/>) },
+      { key: "receiv",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_RECEIVED },   label: (<T id="txFilter.type.received" m="Received"/>) },
+      { key: "transf",   value: { types: [ types.REGULAR ],         direction: TRANSACTION_DIR_TRANSFERRED }, label: (<T id="txFilter.type.transfered" m="Transfered"/>) },
     ];
   }
 
@@ -87,10 +90,20 @@ class History extends React.Component {
   }
 
   onChangeFilter(value) {
+    const { isChangingFilterTimer } = this.state;
+    if (isChangingFilterTimer) {
+      clearTimeout(isChangingFilterTimer);
+    }
+    this.setState({ isChangingFilterTimer: setTimeout(() => this.changeFilter(value), 100) });
+  }
+
+  changeFilter(value) {
+    const { isChangingFilterTimer } = this.state;
     const newFilter = {
       ...this.props.transactionsFilter,
       ...value
     };
+    clearTimeout(isChangingFilterTimer);
     this.props.changeTransactionsFilter(newFilter);
   }
 
@@ -109,6 +122,18 @@ class History extends React.Component {
     this.setState({ searchText });
   }
 
+  onChangeSliderValue(value, minOrMax) {
+    const { unitDivisor, currencyDisplay } = this.props;
+    // this is needed because transactions at filter are all at atoms
+    const amount = currencyDisplay === "PFC" ? value*unitDivisor : value;
+
+    if(minOrMax === "min") {
+      this.onChangeFilter({ minAmount: amount });
+    } else if (minOrMax === "max") {
+      this.onChangeFilter({ maxAmount: amount });
+    }
+  }
+
   selectedTxTypeFromFilter(filter) {
     if (filter.types.length === 0) return "all";
     const types = this.getTxTypes();
@@ -116,8 +141,7 @@ class History extends React.Component {
     return types.reduce((a, v) =>
       (v.value.types[0] === filter.types[0] && v.value.direction === filter.direction)
         ? v.key : a, null);
-
   }
 }
 
-export default historyPage(injectIntl(History));
+export default balance(historyPage(injectIntl(History)));

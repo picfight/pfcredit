@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
-import { PicFightLoading } from "indicators";
+import { PicfightLoading } from "indicators";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";
@@ -38,7 +38,7 @@ const AccountsList = ({
   isCreateAccountDisabled,
 }) => (
   <StandalonePage header={<AccountsListHeader {...{ onGetNextAccountAttempt, isCreateAccountDisabled }} />}>
-    { isLoading ? <PicFightLoading/> :
+    { isLoading ? <PicfightLoading/> :
       <Aux>
         <div className="account-content-title-buttons-area">
           <InfoDocModalButton document="BalanceOverviewInfo" modalClassName="info-modal-fields" double/>

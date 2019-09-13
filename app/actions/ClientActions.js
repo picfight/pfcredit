@@ -2,12 +2,10 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import eq from "lodash/fp/eq";
-import { getNextAddressAttempt,
-  stopAutoBuyerAttempt, getTicketBuyerConfigAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
+import { getNextAddressAttempt, publishUnminedTransactionsAttempt } from "./ControlActions";
 import { transactionNtfnsStart, accountNtfnsStart } from "./NotificationActions";
-import { updateStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
-import { getDecodeMessageServiceAttempt } from "./DecodeMessageActions";
-import { showSidebarMenu, showSidebar } from "./SidebarActions";
+import { refreshStakepoolPurchaseInformation, setStakePoolVoteChoices, getStakepoolStats } from "./StakePoolActions";
+import { getDecodeMessageServiceAttempt, decodeRawTransactions } from "./DecodeMessageActions";
 import { push as pushHistory, goBack } from "react-router-redux";
 import { getWalletCfg, getGlobalCfg } from "../config";
 import { onAppReloadRequested } from "wallet";
@@ -15,6 +13,10 @@ import { getTransactions as walletGetTransactions } from "wallet/service";
 import { TransactionDetails } from "middleware/walletrpc/api_pb";
 import { clipboard } from "electron";
 import { getStartupStats } from "./StatisticsActions";
+import { getVettedProposals } from "./GovernanceActions";
+import { rawHashToHex, reverseRawHash, strHashToRaw } from "helpers";
+import * as da from "../middleware/pfcdataapi";
+import { EXTERNALREQUEST_PFCDATA, EXTERNALREQUEST_POLITEIA } from "main_dev/externalRequests";
 
 export const goToTransactionHistory = () => (dispatch) => {
   dispatch(pushHistory("/transactions/history"));
@@ -34,32 +36,51 @@ function getWalletServiceSuccess(walletService) {
   };
 }
 
-export function startWalletServices() {
-  return (dispatch, getState) => {
-    const { spvSynced } = getState().walletLoader;
-    if (!spvSynced) {
-      setTimeout(() => { dispatch(getTicketBuyerServiceAttempt()); }, 1000);
-    }
-    setTimeout(() => { dispatch(getNextAddressAttempt(0)); }, 1000);
-    setTimeout(() => { dispatch(getTicketPriceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getPingAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getNetworkAttempt()); }, 1000);
-    setTimeout(() => { dispatch(transactionNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(accountNtfnsStart()); }, 1000);
-    setTimeout(() => { dispatch(updateStakepoolPurchaseInformation()); }, 1000);
-    setTimeout(() => { dispatch(getDecodeMessageServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getVotingServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getAgendaServiceAttempt()); }, 1000);
-    setTimeout(() => { dispatch(getStakepoolStats()); }, 1000);
+export const STARTWALLETSERVICE_ATTEMPT = "STARTWALLETSERVICE_ATTEMPT";
+export const STARTWALLETSERVICE_FAILED = "STARTWALLETSERVICE_FAILED";
+export const STARTWALLETSERVICE_SUCCESS = "STARTWALLETSERVICE_SUCCESS";
 
-    var goHomeCb = () => {
-      setTimeout(() => { dispatch(pushHistory("/home")); }, 1000);
-      setTimeout(() => { dispatch(showSidebar()); }, 1000);
-      setTimeout(() => { dispatch(showSidebarMenu()); }, 1000);
-    };
-    dispatch(getStartupWalletInfo()).then(goHomeCb);
-  };
-}
+const startWalletServicesTrigger = () => (dispatch, getState) => new Promise((resolve,reject) => {
+  try {
+    setTimeout( async () => {
+      const { spvSynced } = getState().walletLoader;
+      if (!spvSynced) {
+        dispatch(getTicketBuyerServiceAttempt());
+      }
+
+      await dispatch(getNextAddressAttempt(0));
+      await dispatch(getTicketPriceAttempt());
+      await dispatch(getPingAttempt());
+      await dispatch(getNetworkAttempt());
+      await dispatch(refreshStakepoolPurchaseInformation());
+      await dispatch(getDecodeMessageServiceAttempt());
+      await dispatch(getVotingServiceAttempt());
+      await dispatch(getAgendaServiceAttempt());
+      await dispatch(getStakepoolStats());
+      await dispatch(getStartupWalletInfo());
+      await dispatch(transactionNtfnsStart());
+      await dispatch(accountNtfnsStart());
+
+      await dispatch(pushHistory("/home"));
+      resolve();
+    }, 1000);
+  } catch (err) {
+    reject (err);
+  }
+});
+
+export const startWalletServices = () => (dispatch, getState) => {
+  const { startWalletServiceAttempt } = getState().grpc;
+  if( startWalletServiceAttempt ) {
+    return;
+  }
+  dispatch({ type: STARTWALLETSERVICE_ATTEMPT });
+  dispatch(startWalletServicesTrigger()).then(() => {
+    dispatch({ type: STARTWALLETSERVICE_SUCCESS });
+  }).catch(error => {
+    dispatch({ type: STARTWALLETSERVICE_FAILED, error });
+  });
+};
 
 export const GETSTARTUPWALLETINFO_ATTEMPT = "GETSTARTUPWALLETINFO_ATTEMPT";
 export const GETSTARTUPWALLETINFO_SUCCESS = "GETSTARTUPWALLETINFO_SUCCESS";
@@ -67,19 +88,25 @@ export const GETSTARTUPWALLETINFO_FAILED = "GETSTARTUPWALLETINFO_FAILED";
 
 export const getStartupWalletInfo = () => (dispatch) => {
   dispatch({ type: GETSTARTUPWALLETINFO_ATTEMPT });
-  setTimeout( () => { dispatch(getStakeInfoAttempt()); }, 1000);
-  setTimeout( () => { dispatch(getTicketsInfoAttempt()); }, 1000);
+  const config = getGlobalCfg();
+  const pfcdataEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_PFCDATA) > -1;
+  const politeiaEnabled = config.get("allowed_external_requests").indexOf(EXTERNALREQUEST_POLITEIA) > -1;
+
   return new Promise((resolve, reject) => {
     setTimeout( async () => {
       try {
-        await dispatch(getAccountsAttempt(true));
-        await dispatch(getMostRecentRegularTransactions());
-        await dispatch(getTransactionsSinceLastOppened());
-        await dispatch(getMostRecentStakeTransactions());
-        await dispatch(getMostRecentTransactions());
+        await dispatch(getStakeInfoAttempt());
+        await dispatch(reloadTickets());
+        await dispatch(getStartupTransactions());
         await dispatch(publishUnminedTransactionsAttempt());
+        await dispatch(getAccountsAttempt(true));
         await dispatch(getStartupStats());
-        dispatch(findImmatureTransactions());
+        if (pfcdataEnabled) {
+          dispatch(getTreasuryBalance());
+        }
+        if (politeiaEnabled) {
+          dispatch(getVettedProposals());
+        }
         dispatch({ type: GETSTARTUPWALLETINFO_SUCCESS });
         resolve();
       } catch (error) {
@@ -124,42 +151,6 @@ function transactionsMaturingHeights(txs, chainParams) {
   return res;
 }
 
-export const findImmatureTransactions = () => async (dispatch, getState) => {
-  const { currentBlockHeight, walletService } = getState().grpc;
-  const chainParams = sel.chainParams(getState());
-
-  const pageSize = 30;
-  const checkHeightDeltas = [
-    chainParams.TicketExpiry,
-    chainParams.TicketMaturity,
-    chainParams.CoinbaseMaturity,
-    chainParams.SStxChangeMaturity
-  ];
-  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
-
-  let txs = await walletGetTransactions(walletService, immatureHeight,
-    currentBlockHeight, pageSize);
-
-  let checkHeights = {};
-  // const mergeCheckHeights = (h) => (h > currentBlockHeight && checkHeights.indexOf(h) === -1)
-  //   ? checkHeights.push(h) : null;
-  const mergeCheckHeights = (hs) => Object.keys(hs).forEach(h => {
-    if (h < currentBlockHeight) return;
-    const accounts = checkHeights[h] || [];
-    hs[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
-    checkHeights[h] = accounts;
-  });
-
-  while (txs.mined.length > 0) {
-    let lastTx = txs.mined[txs.mined.length-1];
-    mergeCheckHeights(transactionsMaturingHeights(txs.mined, chainParams));
-    txs = await walletGetTransactions(walletService, lastTx.height+1,
-      currentBlockHeight+1, pageSize);
-  }
-
-  dispatch({ maturingBlockHeights: checkHeights, type: MATURINGHEIGHTS_CHANGED });
-};
-
 export const getWalletServiceAttempt = () => (dispatch, getState) => {
   const { grpc: { address, port } } = getState();
   const { daemon: { walletName } } = getState();
@@ -167,49 +158,6 @@ export const getWalletServiceAttempt = () => (dispatch, getState) => {
   wallet.getWalletService(sel.isTestNet(getState()), walletName, address, port)
     .then(walletService => dispatch(getWalletServiceSuccess(walletService)))
     .catch(error => dispatch({ error, type: GETWALLETSERVICE_FAILED }));
-};
-
-export const GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT = "GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT";
-export const GETTRANSACTIONSSINCELASTOPPENED_FAILED = "GETTRANSACTIONSSINCELASTOPPENED_FAILED";
-export const GETTRANSACTIONSSINCELASTOPPENED_SUCCESS = "GETTRANSACTIONSSINCELASTOPPENED_SUCCESS";
-
-export const getTransactionsSinceLastOppened = () => async (dispatch, getState) => {
-  dispatch({ type: GETTRANSACTIONSSINCELASTOPPENED_ATTEMPT });
-  const transactionsSinceLastOpenedInfo = {
-    transactionsReceived: [],
-    ticketsVoted:         [],
-    ticketsRevoked:       [],
-    totalReward:           0,
-    totalPFC:              0,
-  };
-  const config = getGlobalCfg();
-  const lastBlockHeightSeen = config.get("last_height");
-  const { currentBlockHeight, walletService, recentTxSinceLastOpenedCount } = getState().grpc;
-
-  try {
-    const { mined, unmined } =
-      await walletGetTransactions(walletService, lastBlockHeightSeen, currentBlockHeight, recentTxSinceLastOpenedCount);
-    const transactions = [ ...mined, ...unmined ];
-
-    transactions.forEach( tx => {
-      switch (tx.type) {
-      case TransactionDetails.TransactionType.REGULAR:
-        transactionsSinceLastOpenedInfo.totalPFC += tx.amount;
-        transactionsSinceLastOpenedInfo.transactionsReceived.push(tx);
-        break;
-      case TransactionDetails.TransactionType.VOTE:
-        transactionsSinceLastOpenedInfo.totalReward += tx.amount;
-        transactionsSinceLastOpenedInfo.ticketsVoted.push(tx);
-        break;
-      case TransactionDetails.TransactionType.REVOCATION:
-        transactionsSinceLastOpenedInfo.ticketsRevoked.push(tx);
-        break;
-      }
-    });
-    dispatch({ transactionsSinceLastOpened: transactionsSinceLastOpenedInfo, type: GETTRANSACTIONSSINCELASTOPPENED_SUCCESS });
-  } catch (error) {
-    dispatch({ error, type: GETTRANSACTIONSSINCELASTOPPENED_FAILED });
-  }
 };
 
 export const GETTICKETBUYERSERVICE_ATTEMPT = "GETTICKETBUYERSERVICE_ATTEMPT";
@@ -223,8 +171,6 @@ export const getTicketBuyerServiceAttempt = () => (dispatch, getState) => {
   wallet.getTicketBuyerService(sel.isTestNet(getState()), walletName, address, port)
     .then(ticketBuyerService => {
       dispatch({ ticketBuyerService, type: GETTICKETBUYERSERVICE_SUCCESS });
-      setTimeout(() => { dispatch(getTicketBuyerConfigAttempt()); }, 10);
-      setTimeout(() => { dispatch(stopAutoBuyerAttempt()); }, 10);
     })
     .catch(error => dispatch({ error, type: GETTICKETBUYERSERVICE_FAILED }));
 };
@@ -257,7 +203,7 @@ const getAccountsBalances = (accounts) => (dispatch, getState) => {
     };
   });
 
-  Promise.all(promises)
+  return Promise.all(promises)
     .then(balances => dispatch({ balances, type: GETBALANCE_SUCCESS }))
     .catch(error => dispatch({ error, type: GETBALANCE_FAILED }));
 };
@@ -301,6 +247,14 @@ export const GETBESTBLOCK_FAILED = "GETBESTBLOCK_FAILED";
 export const GETBESTBLOCK_SUCCESS = "GETBESTBLOCK_SUCCESS";
 
 export const getBestBlockHeightAttempt = (cb) => (dispatch, getState) => {
+  const { getBestBlockHeightRequest } = getState().grpc;
+  if (getBestBlockHeightRequest) {
+    return;
+  }
+  if (sel.walletService(getState()) == null) {
+    setTimeout(() => dispatch(getBestBlockHeightAttempt(cb)), 100);
+    return;
+  }
   dispatch({ type: GETBESTBLOCK_ATTEMPT });
   wallet.bestBlock(sel.walletService(getState()))
     .then(resp => {
@@ -321,7 +275,8 @@ export const GETNETWORK_SUCCESS = "GETNETWORK_SUCCESS";
 function getNetworkSuccess(getNetworkResponse) {
   return (dispatch, getState) => {
     const { testnet, mainnet } = getState().grpc;
-    const { network } = getState().daemon;
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
     var currentNetwork = getNetworkResponse.getActiveNetwork();
     // XXX remove network magic numbers here
     var networkStr = "";
@@ -350,15 +305,27 @@ export const getNetworkAttempt = () => (dispatch, getState) => {
 export const GETPING_ATTEMPT = "GETPING_ATTEMPT";
 export const GETPING_FAILED = "GETPING_FAILED";
 export const GETPING_SUCCESS = "GETPING_SUCCESS";
+export const GETPING_CANCELED = "GETPING_CANCELED";
 
 export const getPingAttempt = () => (dispatch, getState) =>
   wallet.doPing(sel.walletService(getState()))
-    .then(() => setTimeout(() => dispatch(getPingAttempt()), 10000))
+    .then(() => {
+      const pingTimer = setTimeout(() => dispatch(getPingAttempt()), 10000);
+      dispatch({ pingTimer, type: GETPING_SUCCESS });
+    })
     .catch(error => {
-      const { daemon: { shutdownRequested } } = getState();
+      const { daemon: { shutdownRequested, walletError } } = getState();
       dispatch({ error, type: GETPING_FAILED });
-      if (!shutdownRequested) setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
+      if (!shutdownRequested && !walletError) setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
     });
+
+export const cancelPingAttempt = () => (dispatch, getState) => {
+  const { pingTimer } = getState().grpc;
+  if (pingTimer) {
+    clearTimeout(pingTimer);
+    dispatch({ type: GETPING_CANCELED });
+  }
+};
 
 export const GETSTAKEINFO_ATTEMPT = "GETSTAKEINFO_ATTEMPT";
 export const GETSTAKEINFO_FAILED = "GETSTAKEINFO_FAILED";
@@ -373,14 +340,12 @@ export const getStakeInfoAttempt = () => (dispatch, getState) => {
 
       const checkedFields = [ "getExpired", "getLive", "getMissed", "getOwnMempoolTix",
         "getRevoked", "getVoted" ];
-      const reloadTickets = getStakeInfoResponse
+      const doReloadTickets = getStakeInfoResponse
         ? checkedFields.reduce((a, v) => a||getStakeInfoResponse[v]() !== resp[v](), false)
         : false;
 
-      if (reloadTickets) {
-        // TODO: once we switch to fully streamed getTickets(), just invalidate
-        // the current ticket list.
-        setTimeout( () => {dispatch(getTicketsInfoAttempt());}, 1000);
+      if (doReloadTickets) {
+        setTimeout( () => { dispatch(reloadTickets()); }, 1000);
       }
     })
     .catch(error => dispatch({ error, type: GETSTAKEINFO_FAILED }));
@@ -405,7 +370,7 @@ export const getAccountsAttempt = (startup) => async (dispatch, getState) => {
   dispatch({ type: GETACCOUNTS_ATTEMPT });
   try {
     const response = await wallet.getAccounts(sel.walletService(getState()));
-    if (startup) dispatch(getAccountsBalances(response.getAccountsList()));
+    if (startup) await dispatch(getAccountsBalances(response.getAccountsList()));
     dispatch({ accounts: response.getAccountsList(), response, type: GETACCOUNTS_SUCCESS });
   } catch (error) {
     dispatch({ error, type: GETACCOUNTS_FAILED });
@@ -419,11 +384,24 @@ export function updateAccount(account) {
   return (dispatch, getState) => {
     const { grpc: { balances } } = getState();
     const existingAccount = balances.find(a => a.accountNumber === account.accountNumber);
-    const updatedAccount = { ...existingAccount, ...account };
-    const updatedBalances = balances.map(a =>
-      (a.accountNumber === account.accountNumber) ? updatedAccount : a);
+    let updatedBalances;
     if (!existingAccount) {
-      updatedBalances.push(updatedAccount);
+      const chainParams = sel.chainParams(getState());
+      const newAccount = {
+        immatureReward: 0,
+        immatureStakeGeneration: 0,
+        lockedByTickets: 0,
+        spendable: 0,
+        total: 0,
+        votingAuthority: 0,
+        HDPath: "m / 44' / " + chainParams.HDCoinType + "' / " + account.accountNumber + "'",
+        ...account
+      };
+      updatedBalances = [ ...balances, newAccount ];
+    } else {
+      const updatedAccount = { ...existingAccount, ...account };
+      updatedBalances = balances.map(a =>
+        (a.accountNumber === account.accountNumber) ? updatedAccount : a);
     }
 
     dispatch({ balances: updatedBalances, type: GETBALANCE_SUCCESS });
@@ -463,20 +441,247 @@ export function showAccount(accountNumber) {
 export const GETTICKETS_ATTEMPT = "GETTICKETS_ATTEMPT";
 export const GETTICKETS_FAILED = "GETTICKETS_FAILED";
 export const GETTICKETS_COMPLETE = "GETTICKETS_COMPLETE";
+export const GETTICKETS_PROGRESS = "GETTICKETS_PROGRESS";
+export const GETTICKETS_CANCEL = "GETTICKETS_CANCEL";
 
-export const getTicketsInfoAttempt = () => (dispatch, getState) => {
-  const { grpc: { getTicketsRequestAttempt } } = getState();
+function filterTickets(tickets, filter) {
+  return tickets
+    .filter(v => filter.status.length ? filter.status.indexOf(v.status) > -1 : true );
+}
+
+// getTicketsFromTransactions issues multiple wallet.getTransactions call, as
+// many as needed to fetch maxCount stake transactions from the wallet, which
+// are then converted to tickets via individual wallet.getTicket calls.
+//
+// The purpose of this function is to allow iteration over the tickets in the
+// order of last relevant transaction, as oposed to the native GetTickets call
+// from the wallet, which always iterates in ticket purchase order.
+//
+// This is not suitable to be called when attempting to fetch very large lists
+// of tickets, given that the individual getTicket calls are somewhat expensive
+// to make.
+const getTicketsFromTransactions = async (walletService, startIdx, endIdx, maxCount,
+  currentBlockHeight) => {
+
+  let tickets = [];
+  const pageSize = maxCount*4;
+  const stakeTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION,
+    TransactionDetails.TransactionType.TICKET_PURCHASE ];
+  const desc = endIdx < startIdx;
+
+  // filter the list of transactions, returning the ticket information for stake
+  // transactions of the list.
+  const txsToTickets = async txs => {
+    const hashes = [];
+    const txByTicketHash = {}; // needed to determine when to ignore duplicate elements
+
+    for (let i = 0; i < txs.length; i++) {
+      if (stakeTypes.indexOf(txs[i].type) === -1) continue; // not a stake tx
+
+      let txHash = txs[i].txHash;
+      if (txs[i].type !== TransactionDetails.TransactionType.TICKET_PURCHASE) {
+        // for votes/revocations, we need to grab the prevOutpoint to figure
+        // out the ticket hash
+        const decodedSpender = wallet.decodeRawTransaction(Buffer.from(txs[i].tx.getTransaction()));
+        const spenderInputs = decodedSpender.inputs;
+        txHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+      }
+      if (txByTicketHash[txHash]) continue; // only add first occurrence in resulting list
+
+      hashes.push(txHash);
+      txByTicketHash[txHash] = txs[i];
+    }
+
+    // got hashes of all tickets. Now fetch their info
+    const res = await Promise.all(hashes.map(h => (async () => {
+      try {
+        const ticket = await wallet.getTicket(walletService, strHashToRaw(h));
+        const tx = txByTicketHash[h];
+        const txIsTicket = tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE;
+        const ticketWasSpent = [ "voted", "revoked" ].indexOf(ticket.status) > -1;
+
+        if (!txIsTicket && !ticketWasSpent) {
+          // This is a limitation in wallet.getTicket() when the wallet does not
+          // have the voting rights (output 0) for the ticket. The status of the
+          // original ticket is obviously bogus, given that it doesn't return
+          // the ticket's status as voted/revoked, even though we have found its
+          // corresponding vote/revocation tx. For the moment, we hack around
+          // the returned data to simulate as if the ticket's spend status was
+          // actually returned correctly, but we need to be careful to filter
+          // for duplicate occurrences of the ticket later on the code flow.
+          const statusByTxType = {
+            [TransactionDetails.TransactionType.VOTE]: "voted",
+            [TransactionDetails.TransactionType.REVOCATION]: "revoked",
+          };
+          ticket.status = statusByTxType[tx.type];
+          ticket.spender = tx.tx;
+          return ticket;
+        }
+
+        if (desc && txIsTicket && ticketWasSpent) {
+          // fetching backwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the spender tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        if (!desc && !txIsTicket && ticketWasSpent) {
+          // fetching forwards, we ignore data from voted/revoked tickets given
+          // that we should have seen the ticket tx already, so this ticket has
+          // already been added to the list.
+          return null;
+        }
+
+        return ticket;
+      } catch (error) {
+        if (error.code === 5) { // 5 === grpc/codes.NotFound
+          // might happen if we didn't participate in the ticket (eg: pool fee wallets)
+          return null;
+        }
+        throw error;
+      }
+    })()));
+
+    return res.filter(t => t);
+  };
+
+  if (endIdx === -1) {
+    // grabbing unmined list. Perform a single call and return
+    const { unmined } = await wallet.getTransactions(walletService, -1, -1);
+    const infos = await txsToTickets(unmined);
+    tickets.push(...infos);
+  }
+
+  // iterate mined until enough mined transactions were fetched
+  while (tickets.length < maxCount) {
+    const { mined } = await wallet.getTransactions(walletService, startIdx, endIdx, pageSize);
+
+    if (mined.length === 0) break; // no more transactions in the wallet
+    if (desc && startIdx <= 1) break; // reached genesis
+    if (!desc && mined[0].height > currentBlockHeight) break; // transactions exceded limit
+
+    const infos = await txsToTickets(mined);
+    tickets.push(...infos);
+
+    const lastTx = mined[mined.length-1];
+    startIdx = desc ? lastTx.height -1 : lastTx.height + 1;
+  }
+
+  return { tickets, startIdx };
+};
+
+export const getTickets = () => async (dispatch, getState) => {
+  const { getTicketsRequestAttempt } = getState().grpc;
   if (getTicketsRequestAttempt) return;
 
-  // using 0..-1 requests all+unmined tickets
-  let startRequestHeight = 0;
-  let endRequestHeight = -1;
-
   dispatch({ type: GETTICKETS_ATTEMPT });
-  wallet.getTickets(sel.walletService(getState()), startRequestHeight, endRequestHeight)
-    .then(tickets => setTimeout(() => dispatch({ tickets, type: GETTICKETS_COMPLETE }), 1000))
-    .catch(error => console.error(error + " Please try again"));
+
+  const { ticketsFilter, maximumTransactionCount, walletService,
+    currentBlockHeight } = getState().grpc;
+  let { noMoreTickets, getTicketsStartRequestHeight, minedTickets } = getState().grpc;
+  const pageCount = maximumTransactionCount;
+  const ticketsNormalizer = sel.ticketsNormalizer(getState());
+
+  // List of transactions found after filtering
+  let filtered = [];
+
+  // always request unmined tickets as new ones may be available or some may
+  // have been mined
+  let { tickets } = await getTicketsFromTransactions(walletService, -1, -1, 0, currentBlockHeight);
+  const unminedFiltered = filterTickets(tickets, ticketsFilter);
+  const unminedTickets = ticketsNormalizer(unminedFiltered);
+
+  let startRequestHeight, endRequestHeight, desc;
+  if ( ticketsFilter.listDirection === "desc" ) {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : currentBlockHeight;
+    endRequestHeight = 1;
+    desc = true;
+  } else {
+    startRequestHeight = getTicketsStartRequestHeight ? getTicketsStartRequestHeight : 1;
+    endRequestHeight = currentBlockHeight;
+    desc = false;
+  }
+
+  let lastReportedHeight = startRequestHeight;
+
+  // now, request a batch of mined transactions until `maximumTransactionCount`
+  // transactions have been obtained (after filtering)
+  while (!noMoreTickets && (filtered.length < maximumTransactionCount)) {
+    try {
+      let { tickets, startIdx } = await getTicketsFromTransactions(walletService,
+        startRequestHeight, endRequestHeight, pageCount, currentBlockHeight);
+
+      noMoreTickets =
+        (tickets.length === 0) ||
+        (desc && startIdx <= 1) ||
+        (desc && startIdx >= currentBlockHeight);
+
+      startRequestHeight = startIdx;
+
+      if (Math.abs(lastReportedHeight - startRequestHeight) > 1000) {
+        dispatch({ startRequestHeight, type: GETTICKETS_PROGRESS });
+        lastReportedHeight = startRequestHeight;
+      }
+
+      const thisFiltered = filterTickets(tickets, ticketsFilter);
+      const normalized = ticketsNormalizer(thisFiltered);
+      filtered.push(...normalized);
+
+      if (getState().grpc.getTicketsCancel) {
+        noMoreTickets = true;
+      }
+    } catch (error) {
+      dispatch({ error, type: GETTICKETS_FAILED });
+      return;
+    }
+  }
+
+  // This next bit is required due to wallet.getTicket() not correctly showing
+  // the status of tickets when the wallet doesn't have the voting rights for
+  // it. Without this duplicate filtering, we'd see two transactions (the ticket
+  // and a vote/revocation) shown as the same expired or missed status.
+  const newMinedTickets = [];
+
+  if (desc) {
+    // When iterating in desc mode, we add the first found (most recent) ticket
+    // tx (which should have the correct status) and ignore the next one (the
+    // purchase, which would show as missed/expired)
+    newMinedTickets.push(...minedTickets);
+    const ticketsMap = minedTickets.reduce((m, t) => { m[t.hash] = t; return m; }, {});
+    newMinedTickets.push(...filtered.filter(t => !ticketsMap[t.hash]));
+  } else {
+    // When iterating in asc mode, we unshift the newly found (most recent)
+    // tickets first, then ignore the previous (older) one, as the most recent
+    // one will have the correct status.
+    // This provokes a small UI issue in that the older ticket disappears from
+    // the list, causing a "jump" and if the user backtracks it won't be
+    // there anymore.
+    newMinedTickets.push(...filtered);
+    const ticketsMap = filtered.reduce((m, t) => { m[t.hash] = t; return m; }, {});
+    newMinedTickets.unshift(...minedTickets.filter(t => !ticketsMap[t.hash]));
+  }
+
+  dispatch({ unminedTickets, minedTickets: newMinedTickets, noMoreTickets,
+    getTicketsStartRequestHeight: startRequestHeight,
+    type: GETTICKETS_COMPLETE });
 };
+
+export const CLEAR_TICKETS = "CLEAR_TICKETS";
+export const reloadTickets = () => dispatch => {
+  dispatch({ type: CLEAR_TICKETS });
+  dispatch(getTickets());
+};
+
+export const CHANGE_TICKETS_FILTER = "CHANGE_TICKETS_FILTER";
+export function changeTicketsFilter(newFilter) {
+  return (dispatch) => {
+    dispatch({ ticketsFilter: newFilter, type: CHANGE_TICKETS_FILTER });
+    dispatch(getTickets());
+  };
+}
+
+export const cancelGetTickets = () => dispatch => dispatch({ type: GETTICKETS_CANCEL });
 
 export const GETTRANSACTIONS_ATTEMPT = "GETTRANSACTIONS_ATTEMPT";
 export const GETTRANSACTIONS_FAILED = "GETTRANSACTIONS_FAILED";
@@ -487,14 +692,16 @@ export const GETTRANSACTIONS_COMPLETE = "GETTRANSACTIONS_COMPLETE";
 // Currently supported filters in the filter object:
 // - type (array): Array of types a transaction must belong to, to be accepted.
 // - direction (string): A string of one of the allowed directions for regular
-//   transactions (sent/received/transfered)
+//   transactions (sent/received/transferred)
 //
 // If empty, all transactions are accepted.
 function filterTransactions(transactions, filter) {
   return transactions
     .filter(v => filter.types.length ? filter.types.indexOf(v.type) > -1 : true)
     .filter(v => filter.direction ? filter.direction === v.direction : true)
-    .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true);
+    .filter(v => filter.search ? v.creditAddresses.find(address => address.length > 1 && address.toLowerCase().indexOf(filter.search.toLowerCase()) !== -1) != undefined : true)
+    .filter(v => filter.minAmount ? Math.abs(v.amount) >= filter.minAmount : true)
+    .filter(v => filter.maxAmount ? Math.abs(v.amount) <= filter.maxAmount : true);
 }
 
 // getTransactions loads a list of transactions from the wallet, given the
@@ -621,7 +828,11 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
   accountsToUpdate = Array.from(new Set(accountsToUpdate));
   accountsToUpdate.forEach(v => dispatch(getBalanceUpdateAttempt(v, 0)));
 
-  if (checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions)) dispatch(getStakeInfoAttempt());
+  const hasStakeTxs = checkForStakeTransactions(unminedDupeCheck) || checkForStakeTransactions(newlyMinedTransactions);
+  if (hasStakeTxs) {
+    dispatch(getStakeInfoAttempt());
+    dispatch(reloadTickets());
+  }
 
   unminedTransactions = filterTransactions([
     ...newlyUnminedTransactions,
@@ -677,39 +888,12 @@ export const newTransactionsReceived = (newlyMinedTransactions, newlyUnminedTran
     newlyMinedTransactions, recentRegularTransactions, recentStakeTransactions, type: NEW_TRANSACTIONS_RECEIVED });
 
   if (newlyMinedTransactions.length > 0) {
-    dispatch(getStartupStats());
+    const { startupStatsEndCalcTime, startupStatsCalcSeconds } = getState().statistics;
+    const secFromLastStats = (new Date() - startupStatsEndCalcTime) / 1000;
+    if (secFromLastStats > 5*startupStatsCalcSeconds) {
+      dispatch(getStartupStats());
+    }
   }
-};
-
-// getMostRecentRegularTransactions clears the transaction filter and refetches
-// the first page of transactions. This is used to get and store the initial
-// list of recent transactions.
-export const getMostRecentRegularTransactions = () => dispatch => {
-  const defaultFilter = {
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.REGULAR ],
-    direction: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
-
-export const getMostRecentStakeTransactions = () => dispatch => {
-  const defaultFilter = {
-    listDirection: "desc",
-    types: [ TransactionDetails.TransactionType.TICKET_PURCHASE, TransactionDetails.TransactionType.VOTE, TransactionDetails.TransactionType.REVOCATION ],
-    direction: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
-};
-
-export const getMostRecentTransactions = () => dispatch => {
-  const defaultFilter = {
-    search: null,
-    listDirection: "desc",
-    types: [],
-    direction: null,
-  };
-  return dispatch(changeTransactionsFilter(defaultFilter));
 };
 
 export const CHANGE_TRANSACTIONS_FILTER = "CHANGE_TRANSACTIONS_FILTER";
@@ -719,6 +903,124 @@ export function changeTransactionsFilter(newFilter) {
     return dispatch(getTransactions());
   };
 }
+
+export const GETSTARTUPTRANSACTIONS_ATTEMPT = "GETSTARTUPTRANSACTIONS_ATTEMPT";
+export const GETSTARTUPTRANSACTIONS_SUCCESS = "GETSTARTUPTRANSACTIONS_SUCCESS";
+
+// getStartupTransactions fetches all recent transaction data needed for display
+// and updates. This includes:
+// - Recent regular tx data
+// - Recent stake tx data
+// - Immature future blocks (when we should update balances)
+// - Transactions since last start
+export const getStartupTransactions = () => async (dispatch, getState) => {
+
+  dispatch({ type: GETSTARTUPTRANSACTIONS_ATTEMPT });
+
+  // return the default transaction filter to zero it.
+  const defaultFilter = {
+    search: null,
+    listDirection: "desc",
+    types: [],
+    direction: null,
+    maxAmount: null,
+    minAmount: null,
+  };
+  await dispatch(changeTransactionsFilter(defaultFilter));
+
+  const { currentBlockHeight, walletService, recentTransactionCount } = getState().grpc;
+  const chainParams = sel.chainParams(getState());
+  let startRequestHeight = currentBlockHeight;
+  const pageSize = 50;
+  const voteTypes = [ TransactionDetails.TransactionType.VOTE,
+    TransactionDetails.TransactionType.REVOCATION ];
+  const checkHeightDeltas = [
+    chainParams.TicketMaturity,
+    chainParams.CoinbaseMaturity,
+    chainParams.SStxChangeMaturity
+  ];
+  const immatureHeight = currentBlockHeight - Math.max(...checkHeightDeltas);
+
+  let foundNeededTransactions = false;
+  let recentRegularTxs = [];
+  let recentStakeTxs = [];
+  const maturingBlockHeights = {};
+  const votedTickets = {}; // aux map of ticket hash => true
+
+  // the mergeXXX functions pick a list of transactions returned from
+  // getTransactions and fills the appropriate result variables
+
+  const mergeRegularTxs = txs =>
+    (recentRegularTxs.length < recentTransactionCount) &&
+    (recentRegularTxs.push( ...txs.filter(
+      tx => tx.type === TransactionDetails.TransactionType.REGULAR )));
+
+  const mergeStakeTxs = txs =>
+    (recentStakeTxs.length < recentTransactionCount) &&
+    (recentStakeTxs.push( ...txs.filter(
+      tx => {
+        if (voteTypes.indexOf(tx.type) > -1) {
+          // always include vote or revocation and mark ticket as voted so we
+          // don't include it in the recent list
+          const decodedSpender = wallet.decodeRawTransaction(Buffer.from(tx.tx.getTransaction()));
+          const spenderInputs = decodedSpender.inputs;
+          const ticketHash = reverseRawHash(spenderInputs[spenderInputs.length-1].prevTxId);
+          votedTickets[ticketHash] = true;
+          return true;
+        } else if (tx.type === TransactionDetails.TransactionType.TICKET_PURCHASE) {
+          // tickets are only added to the recent list if they haven't voted yet
+          return !votedTickets[tx.txHash];
+        } else {
+          return false;
+        }
+      }
+    )));
+
+  const mergeImmatureHeights = txs => {
+    if (startRequestHeight < immatureHeight) return;
+    const txHeights = transactionsMaturingHeights(txs, chainParams);
+    Object.keys(txHeights).forEach(h => {
+      if (h < currentBlockHeight) return;
+      const accounts = maturingBlockHeights[h] || [];
+      txHeights[h].forEach(a => accounts.indexOf(a) === -1 ? accounts.push(a) : null);
+      maturingBlockHeights[h] = accounts;
+    });
+  };
+
+  // get any unmined transactions
+  const { unmined } = await wallet.getTransactions(walletService,
+    -1, -1, pageSize);
+  mergeRegularTxs(unmined);
+  mergeStakeTxs(unmined);
+  mergeImmatureHeights(unmined);
+
+  while (!foundNeededTransactions) {
+    const { mined } = await wallet.getTransactions(walletService,
+      startRequestHeight, 1, pageSize);
+
+    if (mined.length === 0) break; // no more transactions
+
+    mergeRegularTxs(mined);
+    mergeStakeTxs(mined);
+    mergeImmatureHeights(mined);
+
+    foundNeededTransactions =
+      (recentRegularTxs.length >= recentTransactionCount) &&
+      (recentStakeTxs.length >= recentTransactionCount) &&
+      (startRequestHeight < immatureHeight);
+
+    const lastTransaction = mined[mined.length-1];
+    startRequestHeight = lastTransaction.height-1;
+    if (startRequestHeight <= 1) break; // reached genesis
+  }
+
+  recentRegularTxs = recentRegularTxs.slice(0, recentTransactionCount);
+  recentStakeTxs = recentStakeTxs.slice(0, recentTransactionCount);
+
+  dispatch({ recentRegularTxs, recentStakeTxs, maturingBlockHeights,
+    type: GETSTARTUPTRANSACTIONS_SUCCESS });
+
+};
 
 export const UPDATETIMESINCEBLOCK = "UPDATETIMESINCEBLOCK";
 export function updateBlockTimeSince() {
@@ -795,12 +1097,15 @@ export const SETVOTECHOICES_ATTEMPT = "SETVOTECHOICES_ATTEMPT";
 export const SETVOTECHOICES_FAILED = "SETVOTECHOICES_FAILED";
 export const SETVOTECHOICES_SUCCESS = "SETVOTECHOICES_SUCCESS";
 
-export const setVoteChoicesAttempt = (stakePool, agendaId, choiceId) => (dispatch, getState) => {
+export const setVoteChoicesAttempt = (agendaId, choiceId) => (dispatch, getState) => {
   dispatch({ payload: { agendaId, choiceId }, type: SETVOTECHOICES_ATTEMPT });
+  const stakePools = sel.configuredStakePools(getState());
   wallet.setAgendaVote(sel.votingService(getState()), agendaId, choiceId)
     .then(response => {
       dispatch({ response, type: SETVOTECHOICES_SUCCESS });
-      dispatch(getVoteChoicesAttempt(stakePool));
+      for( var i = 0; i < stakePools.length; i++) {
+        dispatch(getVoteChoicesAttempt(stakePools[i]));
+      }
     })
     .catch(error => dispatch({ error, type: SETVOTECHOICES_FAILED }));
 };
@@ -834,4 +1139,133 @@ export const copySeedToClipboard = (mnemonic) => (dispatch) => {
   clipboard.clear();
   clipboard.writeText(mnemonic);
   dispatch({ type: SEEDCOPIEDTOCLIPBOARD });
+};
+
+export const FETCHMISSINGSTAKETXDATA_ATTEMPT = "FETCHMISSINGSTAKETXDATA_ATTEMPT";
+export const FETCHMISSINGSTAKETXDATA_SUCCESS = "FETCHMISSINGSTAKETXDATA_SUCCESS";
+export const FETCHMISSINGSTAKETXDATA_FAILED = "FETCHMISSINGSTAKETXDATA_FAILED";
+
+// fetchMissingStakeTxData fetches the missing stake information of a given
+// transaction returned from getTransaction. For tickets, it tries to fill the
+// ticket purchase amount and for votes it tries to fill the purchase info and
+// reward data.
+//
+// This function is not suitable for calling on a list of transactions, since
+// some cases/operations are slow.
+export const fetchMissingStakeTxData = tx => async (dispatch, getState) => {
+
+  if (getState().grpc.fetchMissingStakeTxDataAttempt[tx.txHash]) {
+    return;
+  }
+  dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_ATTEMPT });
+
+  let newTx;
+
+  if (tx.txType == "Ticket") {
+    // TODO: the wallet doesn't have a specific call to get ticket details
+    // (including spender tx) from an arbitrary transaction hash, so for the
+    // moment we can only get the ticket price and purchase date (enterTimestamp).
+    // If this ever changes, we can probably merge this code path with the one
+    // in the else clause below, so that voted/revoked tickets will show
+    // all the relevant information.
+
+    // Use the raw decoded transaction vs credit[0] due to situations where the
+    // ticket submission output is not from this wallet (solo voting tickets and
+    // split tickets)
+    let decodedTx = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedTx) {
+      decodedTx = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: tx.txTimestamp,
+      ticketPrice: decodedTx.transaction.getOutputsList()[0].getValue(),
+    };
+  } else { // vote/revoke
+    let decodedSpender = sel.decodedTransactions(getState())[tx.txHash];
+    if (!decodedSpender) {
+      // don't have the spender decoded. Request it.
+      decodedSpender = (await dispatch(decodeRawTransactions([ tx.rawTx ])))[tx.txHash];
+    }
+
+    // Find the ticket hash of the vote/revoke. Determining whether it's a vote
+    // or revocation by looking at the number of inputs is not great, but works
+    // for now given the current consensus rules.
+    const spenderInputs = decodedSpender.transaction.getInputsList();
+    const outpIdx = spenderInputs.length === 1 ? 0 : 1;
+    const ticketTxHash = rawHashToHex(spenderInputs[outpIdx].getPreviousTransactionHash());
+
+    // given that the ticket may be much older than the transactions currently
+    // in the `transactions` state var, we need to manually fetch the ticket
+    // transaction
+    const ticketTx = await wallet.getTransaction(sel.walletService(getState()),
+      ticketTxHash);
+
+    let decodedTicket = sel.decodedTransactions(getState())[ticketTxHash];
+    if (!decodedTicket) {
+      // don't have the ticket decoded. Request it.
+      const rawTicketTx = Buffer.from(ticketTx.tx.getTransaction()).toString("hex");
+      await dispatch(decodeRawTransactions([ rawTicketTx ]));
+    }
+
+    // normalize ticket+spender as if it was a result item from a wallet.getTickets call
+    const ticket = {
+      ticket: ticketTx.tx,
+      spender: tx.originalTx.tx,
+      status: tx.txType === "Vote" ? "voted" : "revoked",
+    };
+    const ticketNormal = sel.ticketNormalizer(getState())(ticket);
+
+    newTx = {
+      ...tx.originalTx,
+      enterTimestamp: ticketNormal.enterTimestamp,
+      leaveTimestamp: ticketNormal.leaveTimestamp,
+      ticketPrice: ticketNormal.ticketPrice,
+      ticketReward: ticketNormal.ticketReward,
+      // add more stuff from the result of sel.ticketNormalizer if ever needed
+    };
+  }
+
+  const oldTxs = getState().grpc.transactions;
+  const oldStakeTxs = getState().grpc.recentStakeTransactions;
+  const txIdx = oldTxs.findIndex(t => t.txHash === tx.txHash);
+  const stakeTxIdx = oldStakeTxs.findIndex(t => t.txHash === tx.txHash);
+
+  if ((txIdx > -1) || (stakeTxIdx > -1)) {
+    const dispatchState = { txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_SUCCESS };
+    if (txIdx > -1) {
+      const newTxs = [ ...oldTxs ];
+      newTxs[txIdx] = newTx;
+      dispatchState["transactions"] = newTxs;
+    }
+    if (stakeTxIdx > -1) {
+      const newStakeTxs = [ ...oldStakeTxs ];
+      newStakeTxs[stakeTxIdx] = newTx;
+      dispatchState["recentStakeTransactions"] = newStakeTxs;
+    }
+    dispatch(dispatchState);
+  } else {
+    // not supposed to happen in normal usage; this function  should only be
+    // entered from a transaction already in the transaction list
+    // (sel.transactions).
+    dispatch({ txHash: tx.txHash, type: FETCHMISSINGSTAKETXDATA_FAILED });
+  }
+};
+
+export const GETTREASURY_BALANCE_SUCCESS = "GETTREASURY_BALANCE_SUCCESS";
+export const getTreasuryBalance = () => (dispatch, getState) => {
+  const treasuryAddress = sel.chainParams(getState()).TreasuryAddress;
+  const dURL = sel.pfcdataURL(getState());
+  da.getTreasuryInfo(dURL, treasuryAddress)
+    .then(treasuryInfo => {
+      // Manually convert PFC to atom amounts to avoid floating point multiplication errors (eg. 589926.57667882*1e8 => 58992657667881.99)
+      const treasuryBalance = parseInt(treasuryInfo["data"]["pfc_unspent"].toString().replace(".",""));
+      dispatch({ treasuryBalance, type: GETTREASURY_BALANCE_SUCCESS });
+    });
+};
+
+export const RESET_TREASURY_BALANCE = "RESET_TREASURY_BALANCE";
+export const resetTreasuryBalance = () => (dispatch) => {
+  dispatch({ type: RESET_TREASURY_BALANCE });
 };

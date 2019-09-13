@@ -21,9 +21,9 @@ class Purchase extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.stakePool && nextProps.stakePool) {
-      this.setState({ stakePool: nextProps.stakePool });
+  componentDidMount() {
+    if (!this.props.stakePool && this.props.stakePool) {
+      this.setState({ stakePool: this.props.stakePool });
     }
   }
 
@@ -93,7 +93,7 @@ class Purchase extends React.Component {
 
   onImportScript(privpass, script) {
     const { onImportScript } = this.props;
-    onImportScript && onImportScript(privpass, script, true, 0, null);
+    onImportScript && onImportScript(privpass, script);
   }
 
   onRevokeTickets(privpass) {

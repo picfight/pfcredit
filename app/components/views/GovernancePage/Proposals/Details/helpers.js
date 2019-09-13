@@ -11,6 +11,9 @@ export const LoadingProposal = () => (
 
 export const ProposalError = ( { error } ) => <div><T id="proposalDetails.loadingError" m="Error loading Proposal: {error}" values={{ error }} /></div>;
 
+export const ProposalAbandoned = () =>
+  <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.abandoned" m="Proposal has been abandoned" /></div>;
+
 export const ProposalNotVoting = () =>
   <div className="proposal-details-voting-not-voting"><T id="proposalDetails.votingInfo.notVoting" m="Proposal not yet on voting stage" /></div>;
 
@@ -20,7 +23,7 @@ export const ProposalVoted = () =>
 export const NoTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   <Aux>
     <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.noTickets" m="Voting is only available upon participation in Staking." /></div>
-    <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking PFC" /></KeyBlueButton>
+    <KeyBlueButton onClick={showPurchaseTicketsPage}><T id="proposalDetails.votingInfo.startStakingBtn" m="Start Staking" /></KeyBlueButton>
   </Aux>
 );
 
@@ -31,49 +34,34 @@ export const NoElligibleTicketsVotingInfo = ({ showPurchaseTicketsPage }) => (
   </Aux>
 );
 
-const CurrentVoteChoiceLabel = ({ currentVoteChoice }) => {
-  const className = "proposal-details-current-choice-box " + currentVoteChoice;
-  const labels = {
-    yes: <T id="proposal.currentChoice.yes" m="Yes" />,
-    no: <T id="proposal.currentChoice.no" m="No" />,
-    abstain: <T id="proposal.currentChoice.abstain" m="Abstain" />,
-    unknown: <T id="proposal.currentChoice.unknown" m="Unknown" />,
-  };
-  const label = labels[currentVoteChoice] || labels.unknown;
-
-  return (
-    <Aux>
-      <div className={className} />{label}
-    </Aux>
-  );
-};
-
-export const ChosenVoteOption = ({ currentVoteChoice }) => (
-  <Aux>
-    <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
-    <div className="proposal-details-current-choice-box"><CurrentVoteChoiceLabel currentVoteChoice={currentVoteChoice} /></div>
-  </Aux>
+const VoteOption = ({ value, description, onClick, checked }) => (
+  <div className="proposal-vote-option" onClick={onClick ? () => onClick(value) : null}>
+    <input className={value} type="radio" id={value} name="proposalVoteChoice" readOnly={!onClick} onChange={onClick ? () => onClick(value) : null}
+      value={value} checked={checked} />
+    <label className={"radio-label " + value} htmlFor={value}/>{description}
+  </div>
 );
 
-export const VotingChoicesInfo = (props) => (
+export const ChosenVoteOption = ({ voteOptions, onUpdateVoteChoice, onVoteOptionSelected, newVoteChoice, currentVoteChoice, votingComplete, eligibleTicketCount }) => (
   <Aux>
-    <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.vote" m="Vote on this proposal" /></div>
-    <div className="proposal-details-voting-preference-ticket-count" >
-      <T
-        id="proposalDetails.votingInfo.eligibleCount"
-        m="You have {count, plural, one {one ticket} other {# tickets}} eligible for voting"
-        values={{ count: props.eligibleTicketCount }}
-      />
+    <div className="proposal-details-voting-preference">
+      <div className="proposal-details-voting-preference-title"><T id="proposalDetails.votingInfo.votingPreferenceTitle" m="My Voting Preference" /></div>
+      <div className="proposal-details-current-choice-box">
+        {voteOptions.map(o => (
+          <VoteOption value={o.id} description={o.id.charAt(0).toUpperCase()+o.id.slice(1)} key={o.id} checked={currentVoteChoice !== "abstain" ? o.id === currentVoteChoice : o.id === newVoteChoice}
+            onClick={!votingComplete ? onVoteOptionSelected : null}/>
+        ))}
+      </div>
     </div>
-    <UpdateVoteChoiceModalButton {...props} />
+    {!votingComplete && <UpdateVoteChoiceModalButton {...{ newVoteChoice, onUpdateVoteChoice, eligibleTicketCount }} />}
   </Aux>
 );
 
 export const UpdatingVoteChoice = () => (
-  <Aux>
-    <div className="proposal-details-no-tickets"><T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" /></div>
+  <div className="proposal-details-updating-vote-choice">
     <StakeyBounceXs />
-  </Aux>
+    <T id="proposalDetails.votingInfo.updatingVoteChoice" m="Updating vote choice" />...
+  </div>
 );
 
 export const OverviewField = showCheck(( { label, value } ) => (
@@ -86,8 +74,8 @@ export const OverviewField = showCheck(( { label, value } ) => (
 export const OverviewVotingProgressInfo = ({ voteCounts }) => (
   <div className="proposal-details-voting-progress">
     <div className="proposal-details-voting-progress-counts">
-      <div className="yes-count-box" /><T id="proposal.progressCount.yes" m="{count} Yes" values={{ count: voteCounts.yes }} />
-      <div className="no-count-box" /><T id="proposal.progressCount.no" m="{count} No" values={{ count: voteCounts.no }} />
+      <div className="yes-count-box" />{voteCounts.yes}
+      <div className="no-count-box" />{voteCounts.no}
       {/* // TODO: return if we have have quorum/total ticket counts available.
       <div className="abstain-count-box" /><T id="proposal.progressCount.abstain" m="{count} Abstain" values={{ count: voteCounts.abstain }} /> */}
     </div>
@@ -105,9 +93,12 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 
 // This changes links to never open. Debatable whether we want to
 // allow proposals to link somewhere directly from pfcredit.
-const renderInternalProposalLink = ({ href, children }) => {
-  console.log("rendering internal link", href);
+const renderInternalProposalLink = ({ children }) => {
   return <a onClick={() => {} } href="#">{children}</a>;
+};
+
+const renderProposalImage = ({ alt }) => {
+  return <span>{alt}</span>;
 };
 
 export const ProposalText = ({ text }) => (
@@ -128,7 +119,10 @@ export const ProposalText = ({ text }) => (
 
       // debatable whether we wanna allow inline image references in proposals
       // in pfcredit.
-      imageReference: () => {},
+      imageReference: () => renderProposalImage,
+      image: () => renderProposalImage,
+
+      html: () => null,
     }}
   />
 );

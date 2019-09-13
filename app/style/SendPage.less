@@ -16,10 +16,6 @@
   }
 }
 
-.send-address .accounts-select {
-  margin-bottom: 2em;
-}
-
 .send-select-account-area .accounts-button-icon {
   vertical-align: middle;
   margin-top: 0px;
@@ -56,6 +52,7 @@
   .accounts-select {
     width: 300px;
     margin-right: 20px;
+    margin-bottom: 2em;
   }
 }
 
@@ -82,11 +79,15 @@
 
   width: 24px;
   height: 24px;
-  background-image: @send-all-icon;
+  background-image: @send-all-default;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.send-all-wallet-icon:hover {
+  background-image: @send-all-hover;
 }
 
 .send-all-cancel-wallet-icon {
@@ -106,11 +107,15 @@
 
   width: 24px;
   height: 24px;
-  background-image: @send-to-self-icon;
+  background-image: @send-self-default;
   background-position: 50% 50%;
   background-size: 19px;
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.send-self-wallet-icon:hover {
+  background-image: @send-self-hover;
 }
 
 .send-others-wallet-icon {
@@ -126,9 +131,7 @@
 }
 
 .send-to-others-wallet-icon:hover,
-.send-to-self-wallet-icon:hover,
-.send-address-wallet-icon:hover,
-.send-all-wallet-icon:hover {
+.send-address-wallet-icon:hover {
   opacity: 0.85;
 }
 
@@ -151,7 +154,7 @@
 .send-address-amount-sum-and-currency {
   .inline-block-mixin;
 
-  color: #091440;
+  color: var(--input-color-default);
   height: 19px;
   padding-top: 4px;
   width: 150px;
@@ -160,7 +163,7 @@
 .send-address-amount-sum-gradient {
   .inline-block-mixin;
 
-  background-color: #fff;
+  background-color: var(--background-back-color);
   font-family: Inconsolata, monospace;
   font-size: 13px;
   text-transform: uppercase;
@@ -171,7 +174,7 @@
 
   border-style: none;
   border-bottom: 1px solid;
-  color: rgb(41, 113, 255);
+  color: var(--input-color-default);
   text-align: right;
   cursor: text;
 }
@@ -226,7 +229,7 @@
 
 .total-amount-send {
   font-size: 11px;
-  color: #8997a5;
+  color: var(--disabled-color);
   line-height: 14px;
   margin-bottom: 0.3em;
 }
@@ -240,17 +243,17 @@
 .total-amount-send-amount {
   .inline-block-mixin;
 
-  color: #091440;
+  color: var(--input-color-default);
   width: 14vw;
   font-family: Inconsolata, monospace;
 
   .balance-base {
-    color: #8997a5;
+    color: var(--disabled-color);
   }
 }
 
 .total-amount-send-amount-bytes {
-  color: #8997a5;
+  color: var(--disabled-color);
 }
 
 .send-address-hash-to {
@@ -262,7 +265,7 @@
   overflow: hidden;
   width: 100%;
   height: 100%;
-  color: #091440;
+  color: var(--input-color-default);
   font-size: 19px;
 }
 
@@ -288,7 +291,7 @@
 
 .send-flex-height {
   padding: 14px 10px 0px 40px;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -297,4 +300,32 @@
 .output-row {
   display: flex;
   flex-direction: column;
+}
+
+.unsigned-raw-tx-title {
+  color: var(--title-text-and-button-background);
+  font-size: 14pt;
+  padding-bottom: 10px;
+}
+
+.unsigned-raw-tx-area {
+  word-wrap: break-word;
+  width: 600px;
+  height: 110px;
+  background: var(--background-back-color);
+  margin-top: 100px;
+  padding: 20px;
+  border-radius: 10px;
+  display: table;
+}
+
+.unsigned-raw-tx {
+  float: left;
+  width: 550px;
+}
+
+.unsigned-raw-tx-copy-to-clipboard-icon {
+  float: right;
+  margin-left: 20px;
+  margin-top: 10px;
 }

@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandaloneHeader, StandalonePage } from "layout";
-import { ChangePassphraseButton, KeyBlueButton } from "buttons";
+import { ChangePassphraseButton, KeyBlueButton, CloseWalletModalButton, ResetNetworkButton } from "buttons";
 import { WatchOnlyWarnNotification } from "shared";
 import GeneralSettings from "./GeneralSettings";
 import PrivacySettings from "./PrivacySettings";
@@ -9,11 +9,20 @@ import TimezoneSettings from "./TimezoneSettings";
 import "style/StakePool.less";
 import "style/Settings.less";
 
-const SettingsPageHeader = () =>
+const SettingsPageHeader = ({ onCloseWallet, walletName }) =>
   <StandaloneHeader
     title={<T id="settings.title" m="Settings"/>}
     iconClassName="settings"
     description={<T id="settings.description" m="Changing network settings requires a restart"/>}
+    actionButton={
+      <CloseWalletModalButton
+        modalTitle={<T id="settings.closeWalletModalTitle" m="Confirmation Required" />}
+        buttonLabel={<T id="settings.closeWalletModalOk" m="Close Wallet" />}
+        modalContent={
+          <T id="settings.closeWalletModalContent"
+            m="Are you sure you want to close {walletName} and return to the launcher?"
+            values={{ walletName }}/>}
+        onSubmit={onCloseWallet}/>}
   />;
 
 const SettingsPage = ({
@@ -25,14 +34,23 @@ const SettingsPage = ({
   onChangeTempSettings,
   onSaveSettings,
   onAttemptChangePassphrase,
+  onCloseWallet,
   isChangePassPhraseDisabled,
+  changePassphraseRequestAttempt,
+  needNetworkReset,
+  toggleTheme,
+  walletName,
+  walletReady,
 }) => (
-  <StandalonePage header={<SettingsPageHeader />}>
+  <StandalonePage header={<SettingsPageHeader {...{ onCloseWallet, walletName }}/>} >
     <div className="settings-wrapper">
       <div className="settings-columns">
-        <GeneralSettings {...{ tempSettings, networks, currencies, locales,
+        <GeneralSettings {...{ tempSettings, networks, currencies, locales, walletReady,
           onChangeTempSettings }} />
         <ProxySettings {...{ tempSettings, onChangeTempSettings }} />
+        <div className="toggle-theme-button-wrapper">
+          <KeyBlueButton onClick={toggleTheme}><T id="settings.toggleTheme" m="Toggle Theme" /></KeyBlueButton>
+        </div>
       </div>
       <div className="settings-columns">
         <div className="settings-security">
@@ -42,7 +60,9 @@ const SettingsPage = ({
               <T id="settings.updatePrivatePassphrase" m="Update Private Passphrase" />
               <WatchOnlyWarnNotification isActive={ isChangePassPhraseDisabled }>
                 <ChangePassphraseButton
-                  className={isChangePassPhraseDisabled && "change-password-disabled-icon"}
+                  className={[
+                    isChangePassPhraseDisabled ? "change-password-disabled-icon" : "",
+                    changePassphraseRequestAttempt ? "change-password-loading" : "" ].join(" ")}
                   isDisabled={isChangePassPhraseDisabled}
                   modalTitle={<T id="settings.changeConfirmation" m="Change your passphrase" />}
                   onSubmit={onAttemptChangePassphrase} />
@@ -56,13 +76,24 @@ const SettingsPage = ({
     </div>
 
     <div className="settings-save-button">
-      <KeyBlueButton
-        disabled={!areSettingsDirty}
-        size="large"
-        block={false}
-        onClick={onSaveSettings}>
-        <T id="settings.save" m="Save" />
-      </KeyBlueButton>
+      {needNetworkReset ?
+        <ResetNetworkButton
+          modalTitle={<T id="settings.resetNetworkTitle" m="Reset required" />}
+          buttonLabel={<T id="settings.save" m="Save" />}
+          modalContent={
+            <T id="settings.resetNetworkContent" m="The setting you have chosen to change requires Pfcredit to be restarted.  Please confirm this action before proceeding."/>}
+          disabled={!areSettingsDirty}
+          size="large"
+          block={false}
+          onSubmit={onSaveSettings}/>:
+        <KeyBlueButton
+          disabled={!areSettingsDirty}
+          size="large"
+          block={false}
+          onClick={onSaveSettings}>
+          <T id="settings.save" m="Save" />
+        </KeyBlueButton>
+      }
     </div>
   </StandalonePage>
 );

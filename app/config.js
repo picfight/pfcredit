@@ -16,26 +16,11 @@ export function getWalletCfg(testnet, walletPath){
 
 export function initWalletCfg(testnet, walletPath) {
   const config = new Store({ cwd: getWalletPath(testnet, walletPath) });
-  if (!config.has("wallet_start_advanced")) {
-    config.set("wallet_start_advanced", false);
-  }
   if (!config.has("enableticketbuyer")) {
     config.set("enableticketbuyer","0");
   }
   if (!config.has("balancetomaintain")) {
     config.set("balancetomaintain","0");
-  }
-  if (!config.has("maxfee")) {
-    config.set("maxfee","0.1");
-  }
-  if (!config.has("maxpricerelative")) {
-    config.set("maxpricerelative","1.25");
-  }
-  if (!config.has("maxpriceabsolute")) {
-    config.set("maxpriceabsolute","0");
-  }
-  if (!config.has("maxperblock")) {
-    config.set("maxperblock","5");
   }
   if (!config.has("currency_display")) {
     config.set("currency_display","PFC");
@@ -47,25 +32,53 @@ export function initWalletCfg(testnet, walletPath) {
   if (!config.has("discoveraccounts")) {
     config.set("discoveraccounts",true);
   }
-  if (!config.has("appdata_path")) {
-    config.set("appdata_path","");
-  }
   if (!config.has("gaplimit")) {
     config.set("gaplimit","20");
   }
   if (!config.has("iswatchonly")) {
     config.set("iswatchonly", false);
   }
+  if (!config.has("politeia_last_access_time")) {
+    config.set("politeia_last_access_time", 0);
+  }
+  if (!config.has("politeia_last_access_block")) {
+    config.set("politeia_last_access_block", 0);
+  }
+  if (!config.has("trezor")) {
+    config.set("trezor", false);
+  }
   stakePoolInfo(function(foundStakePoolConfigs) {
     if (foundStakePoolConfigs !== null) {
       updateStakePoolConfig(config, foundStakePoolConfigs);
     }
   });
+  cleanWalletCfg(config);
   return (config);
+}
+
+function cleanWalletCfg(config) {
+  var key;
+  const walletCfgFields = [ "enableticketbuyer", "balancetomaintain", "currency_display",
+    "hiddenaccounts", "discoveraccounts", "gaplimit", "iswatchonly", "stakepools",
+    "lastaccess", "politeia_last_access_time", "politeia_last_access_block" ];
+  for (key in config.store) {
+    var found = false;
+    for (var i = 0; i < walletCfgFields.length; i++) {
+      if (key == walletCfgFields[i]) {
+        found = true;
+      }
+    }
+    if (!found) {
+      config.delete(key);
+    }
+  }
 }
 
 export function initGlobalCfg() {
   const config = new Store();
+  if (!config.has("theme")) {
+    config.set("theme", "theme-light");
+  }
   if (!config.has("daemon_start_advanced")) {
     config.set("daemon_start_advanced", false);
   }
@@ -90,6 +103,9 @@ export function initGlobalCfg() {
   if (!config.has("show_privacy")) {
     config.set("show_privacy", true);
   }
+  if (!config.has("show_spvchoice")) {
+    config.set("show_spvchoice", true);
+  }
   if (!config.has("allowed_external_requests")) {
     config.set("allowed_external_requests", []);
   }
@@ -109,14 +125,14 @@ export function initGlobalCfg() {
     };
     config.set("remote_credentials",credentialKeys);
   }
+  if (!config.has("appdata_path")) {
+    config.set("appdata_path", "");
+  }
   if (!config.has("spv_mode")) {
     config.set("spv_mode", false);
   }
   if (!config.has("spv_connect")) {
     config.set("spv_connect", []);
-  }
-  if (!config.has("politeia_beta")) { // TODO: remove once politeia hits production
-    config.set("politeia_beta", false);
   }
   if (!config.has("max_wallet_count")) {
     config.set("max_wallet_count", 3);
@@ -124,7 +140,32 @@ export function initGlobalCfg() {
   if (!config.has("timezone")) {
     config.set("timezone", "local");
   }
+  if (!config.has("disable_hardware_accel")) {
+    config.set("disable_hardware_accel", false);
+  }
+  cleanGlobalCfg(config);
   return(config);
+}
+
+function cleanGlobalCfg(config) {
+  var key;
+  const globalCfgFields = [ "theme", "daemon_start_advanced", "must_open_form",
+    "locale", "network", "set_language", "ui_animations", "show_spvchoice",
+    "show_tutorial", "show_privacy", "allowed_external_requests", "proxy_type",
+    "proxy_location", "remote_credentials", "spv_mode", "spv_connect",
+    "max_wallet_count", "timezone", "last_height", "appdata_path",
+    "disable_hardware_accel" ];
+  for (key in config.store) {
+    var found = false;
+    for (var i = 0; i < globalCfgFields.length; i++) {
+      if (key == globalCfgFields[i]) {
+        found = true;
+      }
+    }
+    if (!found) {
+      config.delete(key);
+    }
+  }
 }
 
 export function validateGlobalCfgFile() {

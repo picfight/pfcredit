@@ -5,30 +5,30 @@
   padding: 56px 30px 10px 72px;
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .overview-balance {
   font-size: 42px;
-  color: #091440;
-  font-family: Inconsolata;
+  color: var(--input-color-default);
+  font-family: @font-family-monospaced;
 }
 
 .overview-balance-label {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: @font-family-regular;
   font-size: 11px;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
 }
 
 .overview-balance-unit {
   font-size: 17px;
-  color: #091440;
+  color: var(--input-color-default);
 }
 
 .overview-content-wrapper {
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: var(--background-back-color);
 }
 
 .overview-spendable-locked-wrapper {
@@ -57,75 +57,129 @@
   bottom: 0px;
   left: 0px;
   padding: 16px 60px 30px 60px;
-  background-color: #f3f5f6;
-  width: 100%;
+  background-color: var(--background-container);
+  display: flex;
+  flex-direction: row;
+}
+
+.overview-spendable-locked-wrapper-area {
+  margin-bottom: 14px;
+  &.tickets {
+    margin-bottom: 8px;
+  }
+}
+
+.overview-spendable-locked-wrapper-row {
+  display: flex;
+  flex-direction: row;
 }
 
 .overview-balance-spendable-locked {
   font-size: 17px;
-  color: #091440;
-  font-family: Inconsolata;
-  line-height: 1;
+  color: var(--input-color-default);
+  font-family: @font-family-monospaced;
+  line-height: 18px;
+  padding-left: 10px;
+  margin-right: 2px;
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: 7px;
+
+  &.active {
+    background-image: @legend-active;
+  }
+  
+  &.voted {
+    background-image: @legend-voted;
+  }
+  
+  &.received {
+    background-image: @legend-received;
+  }
+
+  &.sent {
+    background-image: @legend-sent;
+  }
+
+  &.available {
+    background-image: @legend-available;
+  }
+
+  &.locked {
+    background-image: @legend-locked;
+  }
+}
+
+.overview-balance-spendable-locked-top-label {
+  font-size: 11px;
+  color: var(--input-color-default);
 }
 
 .overview-balance-spendable-locked-unit {
   font-size: 11px;
-  color: #091440;
-  font-family: Inconsolata;
+  color: var(--input-color-default);
+  font-family: @font-family-monospaced;
   line-height: 1;
 }
 
-.overview-balance-spendable-locked-label {
-  margin-bottom: 14px;
+.overview-balance-spendable-locked-text {
   font-size: 11px;
-  color: #596d81;
-  font-family: 'Source Sans Pro', sans-serif;
+  color: var(--stroke-color-hovered);
+  font-family: @font-family-regular;
+  line-height: 13px;
+  padding-top: 3px;
+  margin-left: 10px;
+  &.back {
+    margin-left: 2px;
+  }
+}
+
+.overview-balance-spendable-locked-label {
+  font-size: 11px;
+  color: var(--stroke-color-hovered);
+  font-family: @font-family-regular;
+  line-height: 13px;
+  margin-left: 10px;
+  margin-top: 4px;
 }
 
 .recent-transactions {
-  float: left;
-  width: 352px;
   margin-right: 41px;
   margin-top: 27px;
+  width: 50%;
 }
 
 .home-content-title {
   border-bottom: 1px solid transparent;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 13px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: @font-family-regular;
   margin: 0px 0px 8px 16px;
 }
 
 .home-content-link {
   margin-right: 5px;
-  color: #8997a5;
+  color: var(--disabled-color);
   font-size: 9px;
-  font-family: 'Source Sans Pro';
+  font-family: @font-family-regular;
   cursor: pointer;
   float: right;
 }
 
 .home-content-link > a:hover {
-  color: #091440;
-}
-
-.home-content-nest .overview-no-tickets > a,
-.home-content-nest .overview-no-transactions > a {
-  width: 85%;
+  color: var(--input-color-default);
 }
 
 .overview-no-transactions > a,
 .overview-no-tickets > a {
-  width: 50%;
   display: block;
-  background-color: #fff;
+  background-color: var(--background-back-color);
   padding: 20px 20px 20px 48px;
   background-repeat: no-repeat;
   background-position: 16px 20px;
   background-size: 20px;
   text-decoration: none;
-  color: @input-color-default;
+  color: var(--input-color-default);
   margin-bottom: 1px;
   cursor: pointer;
 }

@@ -1,6 +1,6 @@
-# O que é a Blockchain PicFight?
+# O que é a Blockchain Picfight?
 
-No coração da PicFight está uma lista crescente de registros, compartilhada globalmente através de uma estrutura de dados decentralizada; essa é a blockchain da PicFight.
+No coração da Picfight está uma lista crescente de registros, compartilhada globalmente através de uma estrutura de dados decentralizada; essa é a blockchain da Picfight.
 
 A blockchain armazena todos os dados transacionais e usa um sistema inovador **Proof-of-Stake (PoS)/Proof-of-Work (PoW)** para validar transações e manter a rede segura.
 

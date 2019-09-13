@@ -3,21 +3,21 @@
 
 .header-small-balance {
   display: inline;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
-  line-height: 20px;
-  padding: 0px 5px;
-  color: #091440;
-  background-color: #d4f0fd;
+  line-height: 14px;
+  padding: 3px;
+  color: var(--input-color-default);
+  background-color: var(--blue-highlight-background);
   margin-left: 5px;
   margin-right: 5px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .header-get-started {
   padding-right: 42px;
   padding-left: 80px;
-  background-color: #596d81;
+  background-color: var(--disabled-background-color);
 }
 
 .header-top-get-started {
@@ -29,7 +29,7 @@
 .header-title-overview-get-started {
   height: 54px;
   padding-top: 13px;
-  color: #fff;
+  color: var(--background-back-color);
   font-size: 27px;
 }
 
@@ -37,7 +37,7 @@
   height: 54px;
   padding-top: 5px;
   font-size: 18px;
-  color: #c4cbd2;
+  color: var(--stroke-color-hovered);
   font-family: Inconsolata, monospace;
 }
 
@@ -47,7 +47,7 @@
 
 .header-title-overview {
   padding-top: 14px;
-  color: #596d81;
+  color: var(--stroke-color-hovered);
   font-size: 27px;
 }
 
@@ -57,29 +57,33 @@
   font-size: 53px;
 }
 
-.header-icon-mixin {
+.title-header-icon > div {
   height: 30px;
   width: 30px;
   background-size: 30px;
   background-repeat: no-repeat;
-}
 
-.accounts {
-  .header-icon-mixin;
+  &.accounts { background-image: @header-accounts; }
+  &.help { background-image: @header-help; }
+  &.security { background-image: @header-security; }
+  &.settings { background-image: @header-settings; }
+  &.tickets { background-image: @header-tickets; }
+  &.transactions { background-image: @header-transactions; }
+  &.governance { background-image: @header-governance; }
+  &.trezor { background-image: @menu-trezor-active; }
 
-  background-image: @accounts-page-icon;
-}
+  &.tx-detail-icon-ticket { background-image: @ticket-live-icon; }
+  &.tx-detail-icon-vote { background-image: @ticket-voted-icon; }
+  &.tx-detail-icon-revocation { background-image: @ticket-revoked-icon; }
+  &.tx-detail-icon-transfer { background-image: @transfer-transaction; }
 
-.help {
-  .header-icon-mixin;
+  &.tx-detail-icon-out {
+    background-image: @minus-big-icon;
+  }
 
-  background-image: @help-page-icon;
-}
-
-.history {
-  .header-icon-mixin;
-
-  background-image: @wallet-gray-icon;
+  &.tx-detail-icon-in {
+    background-image: @plus-big-icon;
+  }
 }
 
 .mainnet {
@@ -88,33 +92,7 @@
   width: 150px;
   background-position: left center;
   background-repeat: no-repeat;
-  background-image: @menu-mainnet;
-}
-
-.minusBig {
-  .header-icon-mixin;
-
-  height: 60px;
-  background-image: @minus-big-icon;
-}
-
-.plusBig {
-  .header-icon-mixin;
-
-  height: 60px;
-  background-image: @plus-big-icon;
-}
-
-.security {
-  .header-icon-mixin;
-
-  background-image: @security-center-icon;
-}
-
-.settings {
-  .header-icon-mixin;
-
-  background-image: @settings-page-icon;
+  background-image: @logo;
 }
 
 .testnet {
@@ -122,35 +100,5 @@
   width: 150px;
   background-position: left center;
   background-repeat: no-repeat;
-  background-image: @menu-testnet;
-}
-
-.tickets {
-  .header-icon-mixin;
-
-  background-image: @tickets-page-icon;
-}
-
-.ticketSmall {
-  .header-icon-mixin;
-
-  background-image: @ticket-small-icon;
-}
-
-.transactions {
-  .header-icon-mixin;
-
-  background-image: @transactions-page-icon;
-}
-
-.walletTransfer {
-  .header-icon-mixin;
-
-  background-image: @transfer-transaction;
-}
-
-.governance {
-  .header-icon-mixin;
-
-  background-image: @menu-governance-active;
+  background-image: @testnet-logo;
 }

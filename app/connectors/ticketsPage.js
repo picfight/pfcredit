@@ -30,11 +30,12 @@ const mapStateToProps = selectorMap({
   isSavingStakePoolConfig: sel.isSavingStakePoolConfig,
   isTestNet: sel.isTestNet,
   isTicketPurchaseTabDisabled: sel.isTicketPurchaseTabDisabled,
+  numTicketsToBuy: sel.numTicketsToBuy,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   onRevokeTickets: ca.revokeTicketsAttempt,
-  onImportScript: ca.importScriptAttempt,
+  onImportScript: ca.manualImportScriptAttempt,
   onClearRevokeTicketsError: ca.clearRevokeTicketsError,
   onClearRevokeTicketsSuccess: ca.clearRevokeTicketsSuccess,
   onClearImportScriptError: ca.clearImportScriptError,

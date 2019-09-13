@@ -1,19 +1,20 @@
 // @flow
 import {
-  getLoader, startRpc, getWalletExists, createWallet, openWallet, closeWallet, discoverAddresses,
-  subscribeToBlockNotifications, fetchHeaders, getStakePoolInfo, fetchMissingCFilters,
-  rescanPoint
+  getLoader, getWalletExists, createWallet, openWallet, closeWallet, getStakePoolInfo, rescanPoint
 } from "wallet";
 import * as wallet from "wallet";
-import { loadActiveDataFiltersAttempt } from "./ControlActions";
-import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt } from "./ClientActions";
+import { rescanCancel } from "./ControlActions";
+import { getWalletServiceAttempt, startWalletServices, getBestBlockHeightAttempt,
+  cancelPingAttempt } from "./ClientActions";
 import { getVersionServiceAttempt } from "./VersionActions";
 import { getAvailableWallets, WALLETREMOVED_FAILED } from "./DaemonActions";
 import { getWalletCfg, getPfcdCert } from "../config";
 import { getWalletPath } from "main_dev/paths";
 import { isTestNet } from "selectors";
-import axios from "axios";
-import { SpvSyncRequest } from "../middleware/walletrpc/api_pb";
+import { SpvSyncRequest, SyncNotificationType, RpcSyncRequest } from "../middleware/walletrpc/api_pb";
+import { push as pushHistory } from "react-router-redux";
+import { stopNotifcations } from "./NotificationActions";
+import { clearDeviceSession as trezorClearDeviceSession } from "./TrezorActions";
 
 const MAX_RPC_RETRIES = 5;
 const RPC_RETRY_DELAY = 5000;
@@ -71,16 +72,18 @@ export const walletExistRequest = () =>
 export const CREATEWALLET_NEWSEED_CONFIRM_INPUT = "CREATEWALLET_NEWSEED_CONFIRM_INPUT";
 export const CREATEWALLET_NEWSEED_BACK_INPUT = "CREATEWALLET_NEWSEED_BACK_INPUT";
 export const CREATEWALLET_EXISTINGSEED_INPUT = "CREATEWALLET_EXISTINGSEED_INPUT";
-export const CREATEWALLET_GOBACK_EXISITNG_OR_NEW = "CREATEWALLET_GOBACK_EXISITNG_OR_NEW";
+export const CREATEWALLET_GOBACK_EXISTING_OR_NEW = "CREATEWALLET_GOBACK_EXISTING_OR_NEW";
 export const CREATEWALLET_GOBACK = "CREATEWALLET_GOBACK";
 export const CREATEWALLET_NEWSEED_INPUT = "CREATEWALLET_NEWSEED_INPUT";
 
 export const createWalletConfirmNewSeed = () => ({ type: CREATEWALLET_NEWSEED_CONFIRM_INPUT });
 export const createWalletGoBackNewSeed = () => ({ type: CREATEWALLET_NEWSEED_BACK_INPUT });
-export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISITNG_OR_NEW });
+export const createWalletGoBackExistingOrNew = () => ({ type: CREATEWALLET_GOBACK_EXISTING_OR_NEW });
 
 export const createWalletGoBackWalletSelection = () => (dispatch, getState) => {
-  const { daemon: { walletName, network } } = getState();
+  const { daemon: { walletName } } = getState();
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.stopWallet().then(() => {
     wallet.removeWallet(walletName, network == "testnet")
       .then(() => {
@@ -173,11 +176,25 @@ export const CLOSEWALLET_ATTEMPT = "CLOSEWALLET_ATTEMPT";
 export const CLOSEWALLET_FAILED = "CLOSEWALLET_FAILED";
 export const CLOSEWALLET_SUCCESS = "CLOSEWALLET_SUCCESS";
 
-export const closeWalletRequest = () => (dispatch, getState) => {
+export const closeWalletRequest = () => async(dispatch, getState) => {
+  const { walletReady } = getState().daemon;
   dispatch({ type: CLOSEWALLET_ATTEMPT });
-  return closeWallet(getState().walletLoader.loader)
-    .then(() => dispatch({ type: CLOSEWALLET_SUCCESS }))
-    .catch(error => dispatch({ error, type: CLOSEWALLET_FAILED }));
+  try {
+    await dispatch(cancelPingAttempt());
+    await dispatch(stopNotifcations());
+    await dispatch(syncCancel());
+    await dispatch(rescanCancel());
+    await dispatch(trezorClearDeviceSession());
+    if (walletReady) {
+      await closeWallet(getState().walletLoader.loader);
+    }
+    await wallet.stopWallet();
+    dispatch({ type: CLOSEWALLET_SUCCESS });
+    dispatch(pushHistory("/getstarted/initial"));
+  } catch (error) {
+    dispatch({ error, type: CLOSEWALLET_FAILED });
+    dispatch(pushHistory("/error"));
+  }
 };
 
 export const STARTRPC_ATTEMPT = "STARTRPC_ATTEMPT";
@@ -185,9 +202,13 @@ export const STARTRPC_FAILED = "STARTRPC_FAILED";
 export const STARTRPC_SUCCESS = "STARTRPC_SUCCESS";
 export const STARTRPC_RETRY = "STARTRPC_RETRY";
 
-export const startRpcRequestFunc = (isRetry) =>
+export const startRpcRequestFunc = (isRetry, privPass) =>
   (dispatch, getState) => {
-    const { daemon: { credentials, appData, walletName } }= getState();
+    const { syncAttemptRequest } =  getState().walletLoader;
+    if (syncAttemptRequest) {
+      return;
+    }
+    const { daemon: { credentials, appData, walletName }, walletLoader: { discoverAccountsComplete,isWatchingOnly } }= getState();
     const cfg = getWalletCfg(isTestNet(getState()), walletName);
     let rpcuser, rpccertPath, rpcpass, daemonhost, rpcport;
 
@@ -209,121 +230,56 @@ export const startRpcRequestFunc = (isRetry) =>
       daemonhost = "127.0.0.1";
       rpcport = "9109";
     }
-    const loader = getState().walletLoader.loader;
-
+    var request = new RpcSyncRequest();
     const cert = getPfcdCert(rpccertPath);
-    if (!isRetry) dispatch({ type: STARTRPC_ATTEMPT });
-    return startRpc(loader, daemonhost, rpcport, rpcuser, rpcpass, cert)
-      .then(() => {
-        dispatch({ type: STARTRPC_SUCCESS });
-        dispatch(subscribeBlockAttempt());
-      })
-      .catch(error => {
-        if (error.message.includes("RPC client already created")) {
-          dispatch({ type: STARTRPC_SUCCESS });
-          dispatch(subscribeBlockAttempt());
-        } else if (isRetry) {
-          const { rpcRetryAttempts } = getState().walletLoader;
-          if (rpcRetryAttempts < MAX_RPC_RETRIES) {
-            dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
-            setTimeout(() => dispatch(startRpcRequestFunc(isRetry)), RPC_RETRY_DELAY);
+    request.setNetworkAddress(daemonhost + ":" + rpcport);
+    request.setUsername(rpcuser);
+    request.setPassword(new Uint8Array(Buffer.from(rpcpass)));
+    request.setCertificate(new Uint8Array(cert));
+    if (!discoverAccountsComplete && privPass) {
+      request.setDiscoverAccounts(true);
+      request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
+    } else if (!discoverAccountsComplete && !privPass && !isWatchingOnly) {
+      dispatch({ type: SYNC_INPUT });
+      return;
+    }
+    return new Promise(() => {
+      if (!isRetry) dispatch({ type: SYNC_ATTEMPT });
+      const { loader } = getState().walletLoader;
+      const rpcSyncCall = loader.rpcSync(request);
+      dispatch({ syncCall: rpcSyncCall, type: SYNC_UPDATE });
+      rpcSyncCall.on("data", function(response) {
+        dispatch(syncConsumer(response));
+      });
+      rpcSyncCall.on("end", function() {
+        dispatch({ type: SYNC_SUCCESS });
+      });
+      rpcSyncCall.on("error", function(status) {
+        status = status + "";
+        if (status.indexOf("Cancelled") < 0) {
+          console.error(status);
+          if (isRetry) {
+            const { rpcRetryAttempts } = getState().walletLoader;
+            if (rpcRetryAttempts < MAX_RPC_RETRIES) {
+              dispatch({ rpcRetryAttempts: rpcRetryAttempts+1, type: STARTRPC_RETRY });
+              setTimeout(() => dispatch(startRpcRequestFunc(isRetry, privPass)), RPC_RETRY_DELAY);
+            } else {
+              dispatch({
+                error: `${status}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
+                type: STARTRPC_FAILED
+              });
+            }
           } else {
-            dispatch({
-              error: `${error}.  You may need to edit ${getWalletPath(isTestNet(getState()), walletName)} and try again`,
-              type: STARTRPC_FAILED
-            });
+            if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed")) {
+              dispatch({ error: status, type: SYNC_FAILED });
+            } else {
+              dispatch(startRpcRequestFunc(true, privPass));
+            }
           }
-        } else {
-          dispatch(startRpcRequestFunc(true));
         }
       });
+    });
   };
-
-export const DISCOVERADDRESS_INPUT = "DISCOVERADDRESS_INPUT";
-export const DISCOVERADDRESS_FAILED_INPUT = "DISCOVERADDRESS_FAILED_INPUT";
-export const DISCOVERADDRESS_ATTEMPT = "DISCOVERADDRESS_ATTEMPT";
-export const DISCOVERADDRESS_FAILED = "DISCOVERADDRESS_FAILED";
-export const DISCOVERADDRESS_SUCCESS = "DISCOVERADDRESS_SUCCESS";
-
-export const discoverAddressAttempt = (privPass) => (dispatch, getState) => {
-  const { walletLoader: { loader, discoverAccountsComplete, rescanPointResponse } } = getState();
-  const { daemon: { walletName } } = getState();
-  dispatch({ type: DISCOVERADDRESS_ATTEMPT });
-  var startingBlockHash = "";
-  if (rescanPointResponse) {
-    startingBlockHash = rescanPointResponse.getRescanPointHash();
-  }
-  if ((startingBlockHash !== null && startingBlockHash.length !== 0) || !discoverAccountsComplete) {
-    discoverAddresses(loader, !discoverAccountsComplete, privPass, startingBlockHash)
-      .then(() => {
-        dispatch({ response: {}, complete: discoverAccountsComplete, type: DISCOVERADDRESS_SUCCESS });
-        if (!discoverAccountsComplete) {
-          const config = getWalletCfg(isTestNet(getState()), walletName);
-          config.delete("discoveraccounts");
-          config.set("discoveraccounts", true);
-          dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-        } else {
-          dispatch(loadActiveDataFiltersAttempt());
-        }
-      })
-      .catch(error => {
-        if (error.message.includes("invalid passphrase") && error.message.includes("private key")) {
-          dispatch({ error, type: DISCOVERADDRESS_FAILED_INPUT });
-        } else {
-          dispatch({ error, type: DISCOVERADDRESS_FAILED });
-        }
-      });
-  } else {
-    dispatch(loadActiveDataFiltersAttempt());
-  }
-};
-
-export const FETCHMISSINGCFILTERS_ATTEMPT = "FETCHMISSINGCFILTERS_ATTEMPT";
-export const FETCHMISSINGCFILTERS_FAILED = "FETCHMISSINGCFILTERS_FAILED";
-export const FETCHMISSINGCFILTERS_SUCCESS = "FETCHMISSINGCFILTERS_SUCCESS";
-
-const fetchMissingCFiltersAttempt = () => (dispatch, getState) => {
-  const { loader } = getState().walletLoader;
-
-  dispatch({ request: {}, type: FETCHMISSINGCFILTERS_ATTEMPT });
-  return fetchMissingCFilters(loader)
-    .then(() => {
-      dispatch({ response: {}, type: FETCHMISSINGCFILTERS_SUCCESS });
-      dispatch(fetchHeadersAttempt());
-    })
-    .catch(error => dispatch({ error, type: FETCHMISSINGCFILTERS_FAILED }));
-};
-
-export const SUBSCRIBEBLOCKNTFNS_ATTEMPT = "SUBSCRIBEBLOCKNTFNS_ATTEMPT";
-export const SUBSCRIBEBLOCKNTFNS_FAILED = "SUBSCRIBEBLOCKNTFNS_FAILED";
-export const SUBSCRIBEBLOCKNTFNS_SUCCESS = "SUBSCRIBEBLOCKNTFNS_SUCCESS";
-
-const subscribeBlockAttempt = () => (dispatch, getState) => {
-  const { loader } = getState().walletLoader;
-
-  dispatch({ request: {}, type: SUBSCRIBEBLOCKNTFNS_ATTEMPT });
-  return subscribeToBlockNotifications(loader)
-    .then(() => {
-      dispatch({ response: {}, type: SUBSCRIBEBLOCKNTFNS_SUCCESS });
-      dispatch(fetchMissingCFiltersAttempt());
-    })
-    .catch(error => dispatch({ error, type: SUBSCRIBEBLOCKNTFNS_FAILED }));
-};
-
-export const FETCHHEADERS_ATTEMPT = "FETCHHEADER_ATTEMPT";
-export const FETCHHEADERS_FAILED = "FETCHHEADERS_FAILED";
-export const FETCHHEADERS_SUCCESS = "FETCHHEADERS_SUCCESS";
-export const FETCHHEADERS_PROGRESS = "FETCHHEADERS_PROGRESS";
-
-export const fetchHeadersAttempt = () => (dispatch, getState) => {
-  dispatch({ request: {}, type: FETCHHEADERS_ATTEMPT });
-  return fetchHeaders(getState().walletLoader.loader)
-    .then(response => {
-      dispatch({ response, type: FETCHHEADERS_SUCCESS });
-      dispatch(rescanPointAttempt());
-    })
-    .catch(error => dispatch({ error, type: FETCHHEADERS_FAILED }));
-};
 
 export const UPDATEDISCOVERACCOUNTS = "UPDATEDISCOVERACCOUNTS";
 export const CLEARSTAKEPOOLCONFIG = "CLEARSTAKEPOOLCONFIG";
@@ -341,23 +297,6 @@ export function clearStakePoolConfigNewWallet() {
           config.set("stakepools", foundStakePoolConfigs);
           dispatch({ currentStakePoolConfig: foundStakePoolConfigs, type: CLEARSTAKEPOOLCONFIG });
         }
-      });
-  };
-}
-
-export const NEEDED_BLOCKS_DETERMINED = "NEEDED_BLOCKS_DETERMINED";
-export function determineNeededBlocks() {
-  return (dispatch, getState) => {
-    const network = getState().daemon.network;
-    const explorerInfoURL = `https://${network}.picfight.org/api/status`;
-    axios.get(explorerInfoURL, { timeout: 5000 })
-      .then(function (response) {
-        const neededBlocks = response.data.info.blocks;
-        wallet.log("info", `Determined needed block height as ${neededBlocks}`);
-        dispatch({ neededBlocks, type: NEEDED_BLOCKS_DETERMINED });
-      })
-      .catch(function (error) {
-        console.log("Unable to obtain latest block number.", error);
       });
   };
 }
@@ -404,15 +343,38 @@ export const decodeSeed = (mnemonic) => async (dispatch, getState) => {
   }
 };
 
-export const SPVSYNC_ATTEMPT = "SPVSYNC_ATTEMPT";
-export const SPVSYNC_FAILED = "SPVSYNC_FAILED";
-export const SPVSYNC_SUCCESS = "SPVSYNC_SUCCESS";
-export const SPVSYNC_UPDATE = "SPVSYNC_UPDATE";
-export const SPVSYNC_INPUT = "SPVSYNC_INPUT";
-export const SPVSYNC_CANCEL = "SPVSYNC_CANCEL";
+export const SYNC_ATTEMPT = "SYNC_ATTEMPT";
+export const SYNC_FAILED = "SYNC_FAILED";
+export const SYNC_SUCCESS = "SYNC_SUCCESS";
+export const SYNC_UPDATE = "SYNC_UPDATE";
+export const SYNC_INPUT = "SYNC_INPUT";
+export const SYNC_CANCEL = "SYNC_CANCEL";
+
+export const SYNC_SYNCED = "SYNC_SYNCED";
+export const SYNC_UNSYNCED = "SYNC_UNSYNCED";
+export const SYNC_PEER_CONNECTED = "SYNC_PEER_CONNECTED";
+export const SYNC_PEER_DISCONNECTED = "SYNC_PEER_DISCONNECTED";
+export const SYNC_FETCHED_MISSING_CFILTERS_STARTED = "SYNC_FETCHED_MISSING_CFILTERS_STARTED";
+export const SYNC_FETCHED_MISSING_CFILTERS_PROGRESS = "SYNC_FETCHED_MISSING_CFILTERS_PROGRESS";
+export const SYNC_FETCHED_MISSING_CFILTERS_FINISHED = "SYNC_FETCHED_MISSING_CFILTERS_FINISHED";
+export const SYNC_FETCHED_HEADERS_STARTED = "SYNC_FETCHED_HEADERS_STARTED";
+export const SYNC_FETCHED_HEADERS_PROGRESS = "SYNC_FETCHED_HEADERS_PROGRESS";
+export const SYNC_FETCHED_HEADERS_FINISHED = "SYNC_FETCHED_HEADERS_FINISHED";
+export const SYNC_DISCOVER_ADDRESSES_FINISHED = "SYNC_DISCOVER_ADDRESSES_FINISHED";
+export const SYNC_DISCOVER_ADDRESSES_STARTED= "SYNC_DISCOVER_ADDRESSES_STARTED";
+export const SYNC_RESCAN_STARTED = "SYNC_RESCAN_STARTED";
+export const SYNC_RESCAN_PROGRESS = "SYNC_RESCAN_PROGRESS";
+export const SYNC_RESCAN_FINISHED = "SYNC_RESCAN_FINISHED";
 
 export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
-  const { discoverAccountsComplete, spvConnect } = getState().walletLoader;
+  const { syncAttemptRequest } =  getState().walletLoader;
+  if (syncAttemptRequest) {
+    return;
+  }
+  dispatch({ type: SYNC_ATTEMPT });
+  const { discoverAccountsComplete } = getState().walletLoader;
+  const { currentSettings } = getState().settings;
+  const spvConnect = currentSettings.spvConnect;
   var request = new SpvSyncRequest();
   for (var i = 0; spvConnect && i < spvConnect.length; i++) {
     request.addSpvConnect(spvConnect[i]);
@@ -421,64 +383,126 @@ export const spvSyncAttempt = (privPass) => (dispatch, getState) => {
     request.setDiscoverAccounts(true);
     request.setPrivatePassphrase(new Uint8Array(Buffer.from(privPass)));
   } else if (!discoverAccountsComplete && !privPass) {
-    dispatch({ type: SPVSYNC_INPUT });
+    dispatch({ type: SYNC_INPUT });
     return;
   }
   return new Promise(() => {
-    dispatch({ type: SPVSYNC_ATTEMPT });
     const { loader } = getState().walletLoader;
-    var spvSyncCall = loader.spvSync(request);
+    const spvSyncCall = loader.spvSync(request);
+    dispatch({ syncCall: spvSyncCall, type: SYNC_UPDATE });
     spvSyncCall.on("data", function(response) {
-      if (!discoverAccountsComplete) {
-        const { daemon: { walletName } } = getState();
-        const config = getWalletCfg(isTestNet(getState()), walletName);
-        config.delete("discoveraccounts");
-        config.set("discoveraccounts", true);
-        dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
-      }
-      dispatch({ syncCall: spvSyncCall, synced: response.getSynced(), type: SPVSYNC_UPDATE });
-      dispatch(getBestBlockHeightAttempt(startWalletServices));
+      dispatch(syncConsumer(response));
     });
     spvSyncCall.on("end", function() {
-      dispatch({ type: SPVSYNC_SUCCESS });
+      dispatch({ type: SYNC_SUCCESS });
     });
     spvSyncCall.on("error", function(status) {
       status = status + "";
       if (status.indexOf("Cancelled") < 0) {
-        console.log(status);
-        //reject(status);
-        dispatch({ error: status, type: SPVSYNC_FAILED });
+        console.error(status);
+        dispatch({ error: status, type: SYNC_FAILED });
       }
     });
   });
 };
-
-export function spvSyncCancel() {
+export function syncCancel() {
   return (dispatch, getState) => {
     const { syncCall } = getState().walletLoader;
     if (syncCall) {
       syncCall.cancel();
-      dispatch({ type: SPVSYNC_CANCEL });
+      dispatch({ type: SYNC_CANCEL });
     }
   };
 }
+
+const syncConsumer = (response) => (dispatch, getState) => {
+  const { discoverAccountsComplete } = getState().walletLoader;
+  switch (response.getNotificationType()) {
+  case SyncNotificationType.SYNCED: {
+    dispatch({ type: SYNC_SYNCED });
+    dispatch(getBestBlockHeightAttempt(startWalletServices));
+    break;
+  }
+  case SyncNotificationType.UNSYNCED: {
+    dispatch({ type: SYNC_UNSYNCED });
+    break;
+  }
+  case SyncNotificationType.PEER_CONNECTED: {
+    dispatch({ peerCount: response.getPeerInformation().getPeerCount(), type: SYNC_PEER_CONNECTED });
+    break;
+  }
+  case SyncNotificationType.PEER_DISCONNECTED: {
+    dispatch({ peerCount: response.getPeerInformation().getPeerCount(), type: SYNC_PEER_DISCONNECTED });
+    break;
+  }
+  case SyncNotificationType.FETCHED_MISSING_CFILTERS_STARTED: {
+    dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_STARTED });
+    break;
+  }
+  case SyncNotificationType.FETCHED_MISSING_CFILTERS_PROGRESS: {
+    const cFiltersStart = response.getFetchMissingCfilters().getFetchedCfiltersStartHeight();
+    const cFiltersEnd = response.getFetchMissingCfilters().getFetchedCfiltersEndHeight();
+    dispatch({ cFiltersStart, cFiltersEnd, type: SYNC_FETCHED_MISSING_CFILTERS_PROGRESS });
+    break;
+  }
+  case SyncNotificationType.FETCHED_MISSING_CFILTERS_FINISHED: {
+    dispatch({ type: SYNC_FETCHED_MISSING_CFILTERS_FINISHED });
+    break;
+  }
+  case SyncNotificationType.FETCHED_HEADERS_STARTED: {
+    const fetchTimeStart = new Date();
+    dispatch({ fetchTimeStart, type: SYNC_FETCHED_HEADERS_STARTED });
+    break;
+  }
+  case SyncNotificationType.FETCHED_HEADERS_PROGRESS: {
+    const lastFetchedHeaderTime = new Date(response.getFetchHeaders().getLastHeaderTime()*1000);
+    const fetchHeadersCount = response.getFetchHeaders().getFetchedHeadersCount();
+
+    dispatch({ fetchHeadersCount, lastFetchedHeaderTime, type: SYNC_FETCHED_HEADERS_PROGRESS });
+    break;
+  }
+  case SyncNotificationType.FETCHED_HEADERS_FINISHED: {
+    dispatch({ type: SYNC_FETCHED_HEADERS_FINISHED });
+    break;
+  }
+  case SyncNotificationType.DISCOVER_ADDRESSES_STARTED: {
+    dispatch({ type: SYNC_DISCOVER_ADDRESSES_STARTED });
+    break;
+  }
+  case SyncNotificationType.DISCOVER_ADDRESSES_FINISHED: {
+    dispatch({ type: SYNC_DISCOVER_ADDRESSES_FINISHED });
+    if (!discoverAccountsComplete) {
+      const { daemon: { walletName } } = getState();
+      const config = getWalletCfg(isTestNet(getState()), walletName);
+      config.delete("discoveraccounts");
+      config.set("discoveraccounts", true);
+      dispatch({ complete: true, type: UPDATEDISCOVERACCOUNTS });
+    }
+    break;
+  }
+  case SyncNotificationType.RESCAN_STARTED: {
+    dispatch({ type: SYNC_RESCAN_STARTED });
+    break;
+  }
+  case SyncNotificationType.RESCAN_PROGRESS: {
+    dispatch({ rescannedThrough: response.getRescanProgress().getRescannedThrough(), type: SYNC_RESCAN_PROGRESS });
+    break;
+  }
+  case SyncNotificationType.RESCAN_FINISHED: {
+    dispatch({ type: SYNC_RESCAN_FINISHED });
+    break;
+  }}
+};
 
 export const RESCANPOINT_ATTEMPT = "RESCANPOINT_ATTEMPT";
 export const RESCANPOINT_FAILED = "RESCANPOINT_FAILED";
 export const RESCANPOINT_SUCCESS = "RESCANPOINT_SUCCESS";
 
 export const rescanPointAttempt = () => (dispatch, getState) => {
-  const { discoverAccountsComplete } = getState().walletLoader;
   dispatch({ type: RESCANPOINT_ATTEMPT });
   return rescanPoint(getState().walletLoader.loader)
     .then((response) => {
       dispatch({ response, type: RESCANPOINT_SUCCESS });
-      if (discoverAccountsComplete) {
-        dispatch(discoverAddressAttempt());
-      } else {
-        // This is dispatched to indicate we should wait for user input to discover addresses.
-        dispatch({ response: {}, type: DISCOVERADDRESS_INPUT });
-      }
     })
     .catch(async error => {
       dispatch({ error, type: RESCANPOINT_FAILED });

@@ -4,8 +4,8 @@ import { FormattedMessage as T } from "react-intl";
 @autobind
 class LinearProgressFull extends React.Component {
   render() {
-    const { value, min, max, error, disabled, getDaemonSynced } = this.props;
-    const perComplete = value/max-min;
+    const { value, min, max, error, disabled, text, animationType, getDaemonSynced } = this.props;
+    const perComplete = (value-min)/(max-min);
     const leftStartingPoint = perComplete*95 + "%";
     return (
       <div className="linear-progress">
@@ -23,11 +23,12 @@ class LinearProgressFull extends React.Component {
             }
           </div>
         }
-        <div className={(getDaemonSynced || !disabled) ? "linear-progress-text loading" : "linear-progress-text"}>
-          {disabled && !getDaemonSynced ?
-            <T id="loaderBar.Waiting" m="Waiting for daemon connection..." /> :
-            getDaemonSynced ? <T id="loaderBar.Loaded" m="Blockchain loaded" /> :
-              <T id="loaderBar.Loading" m="Blockchain syncing" />}
+        <div className={(getDaemonSynced || !disabled) ? "linear-progress-text loading " + animationType: "linear-progress-text " + animationType}>
+          {text ? text :
+            disabled && !getDaemonSynced ?
+              <T id="loaderBar.Waiting" m="Waiting for daemon connection..." /> :
+              getDaemonSynced ? <T id="loaderBar.Loaded" m="Blockchain loaded" /> :
+                <T id="loaderBar.Loading" m="Blockchain syncing" />}
         </div>
       </div>
     );

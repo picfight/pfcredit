@@ -1,7 +1,6 @@
 [
   "rescan.progressPercent",
   "transaction.timestamp",
-  "proposal.overview.fullTime",
   "ticket.timestamp",
   "txDetails.timestamp",
   "snackbar.defaults.error",
@@ -18,6 +17,5 @@
   "tickets.errors.setStakePoolVoteChoicesFailed",
   "accounts.errors.renameAccountFailed",
   "accounts.errors.getNextAccountFailed",
-  "settings.errors.changePassphraseFailed",
   "decodeRawTx.errors.decodeFailed"
 ]

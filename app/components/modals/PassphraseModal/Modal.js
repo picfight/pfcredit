@@ -12,8 +12,10 @@ const propTypes = {
 
 const StandardPassphraseModal = (props) => {
   const {
+    modalClassName,
     show,
     modalDescription,
+    modalTitle,
     children,
     prependPassphraseRow,
     onCancelModal,
@@ -28,10 +30,12 @@ const StandardPassphraseModal = (props) => {
     />;
 
   return (
-    <Modal className="passphrase-modal" {...{ show, onCancelModal }}>
+    <Modal className={"passphrase-modal " + (modalClassName || "")} {...{ show, onCancelModal }}>
       <div className="passphrase-modal-header">
         <div className="passphrase-modal-header-title">
-          <T id="passphraseModal.confirmationRequired" m="Confirmation Required" />
+          {modalTitle ? modalTitle :
+            <T id="passphraseModal.confirmationRequired" m="Confirmation Required" />
+          }
         </div>
         <div className="passphrase-modal-header-description">
           {modalDescription}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const TutorialsTabHeader = () =>
   <DescriptionHeader
-    description={<T id="help.description.tutorials" m="Learn about the various aspects of the PicFight network." />}
+    description={<T id="help.description.tutorials" m="Learn about the various aspects of the Picfight network." />}
   />;
 
 export const TutorialsTab = () => (
@@ -15,10 +15,10 @@ export const TutorialsTab = () => (
         <T id="home.noTickets.purchase" m="Stake Your Idle PFC and Earn Rewards" /> →
       </Link> */}
       <Link to="/tutorial/staking" className="whatIsStaking">
-        <T id="home.noTickets.staking" m="What is Staking (Proof-of-Stake)?" /> →
+        <T id="tutorials.staking" m="What is Staking (Proof-of-Stake)?" /> →
       </Link>
       <Link to="/tutorial/ticketLifecycle" className="ticketLifeCycle">
-        <T id="home.noTickets.lifecycle" m="Learn About the Ticket Lifecycle" /> →
+        <T id="tutorials.ticketLifecycle" m="Learn About the Ticket Lifecycle" /> →
       </Link>
     </div>
   </Aux>

@@ -1,18 +1,18 @@
-import { LinearProgressFull, PicFightLoading } from "indicators";
-import { FormattedMessage as T, FormattedRelative } from "react-intl";
-import { SlateGrayButton, InvisibleButton } from "buttons";
-import { Tooltip } from "shared";
-import { shell } from "electron";
+import { LinearProgressFull } from "indicators";
+import { FormattedMessage as T, FormattedRelative, injectIntl } from "react-intl";
+import { SlateGrayButton, InvisibleButton, KeyBlueButton } from "buttons";
+import { PasswordInput } from "inputs";
 import "style/GetStarted.less";
-import { AboutModalButtonInvisible } from "buttons";
+import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
+  DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
+  WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 
-export default ({
+const DaemonLoadingBody = ({
   Form,
   text,
-  barText,
-  isInputRequest,
+  animationType,
+  openWalletInputRequest,
   getCurrentBlockCount,
-  getWalletReady,
   getDaemonStarted,
   getDaemonSynced,
   getNeededBlocks,
@@ -24,77 +24,125 @@ export default ({
   startupError,
   updateAvailable,
   appVersion,
-  isDaemonRemote,
   isSPV,
+  syncInput,
+  passPhrase,
+  intl,
+  lastPfcwalletLogLine,
+  onSetPassPhrase,
+  onKeyDown,
+  onRPCSync,
+  hasAttemptedDiscover,
+  syncFetchHeadersLastHeaderTime,
+  syncFetchHeadersAttempt,
+  daemonWarning,
   ...props,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader">
+      <div className="loader-settings-logs">
+        {updateAvailable && <UpdateAvailableLink updateAvailable={updateAvailable} /> }
+        <Aux>
+          <AboutModalButton { ...{ appVersion, updateAvailable } } />
+          <InvisibleButton onClick={onShowSettings}>
+            <SettingsLinkMsg />
+          </InvisibleButton>
+          <InvisibleButton onClick={onShowLogs}>
+            <LogsLinkMsg />
+          </InvisibleButton>
+        </Aux>
+      </div>
       <Aux>
         <div className="content-title">
-          <div className="loader-settings-logs">
-            {updateAvailable &&
-              <Tooltip text={<T id="getStarted.updateAvailableTooltip" m="New version {version} available" values={{ version: (updateAvailable) }}/>}>
-                <InvisibleButton className="update-available-button" onClick={() => shell.openExternal("https://picfight.org/downloads")}>
-                  <T id="getStarted.updateAvailable" m="Update Available" />
-                </InvisibleButton>
-              </Tooltip>
-            }
-            <Aux>
-              <AboutModalButtonInvisible version={appVersion} updateAvailable={updateAvailable} buttonLabel={<T id="help.about" m="About Pfcredit" />}/>
-              {getWalletReady &&
-                  <InvisibleButton onClick={onShowSettings}>
-                    <T id="getStarted.btnSettings" m="Settings" />
-                  </InvisibleButton>
-              }
-              {(getDaemonStarted && !isDaemonRemote) || getWalletReady ?
-                <InvisibleButton onClick={onShowLogs}>
-                  <T id="getStarted.btnLogs" m="Logs" />
-                </InvisibleButton> :
-                <div/>
-              }
-            </Aux>
-          </div>
-          <T id="loader.title" m={"Welcome to Pfcredit Wallet"}/>
+          <LoaderTitleMsg />
         </div>
         <div className="loader-buttons">
           <SlateGrayButton className="tutorial-button" onClick={onShowTutorial}>
-            <T id="getStarted.learnBasics" m="Learn the Basics" />
+            <LearnBasicsMsg />
           </SlateGrayButton>
-          <span onClick={onShowReleaseNotes} className="whatsnew"><T id="getStarted.whatsNew" m="What's New in v{version}" values={{ version: (appVersion) }}/></span>
+          <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
         </div>
         <div className="loader-bar">
-          <LinearProgressFull
-            error={startupError}
-            getDaemonSynced={getDaemonSynced || isSPV}
-            disabled={!getDaemonStarted || getCurrentBlockCount == null}
-            barText={barText}
-            min={0}
-            max={getNeededBlocks}
-            value={getCurrentBlockCount}
-          />
-          {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ? <div></div> :
-            <div className="loader-bar-estimation">
-              <T id="getStarted.chainLoading.syncEstimation" m="Estimated time left"/>
-              <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : "--"} ({getCurrentBlockCount} / {getNeededBlocks})</span>
-            </div>
-          }
+          <Aux>
+            <LinearProgressFull
+              animationType={animationType}
+              text={!text && isSPV ? <T id="getStarted.isSPV.loadingText" m="SPV mode activated, wallet ready to launch"/> : text}
+              error={startupError}
+              getDaemonSynced={getDaemonSynced}
+              disabled={(!getDaemonStarted || getCurrentBlockCount == null) && !isSPV}
+              min={0}
+              max={getNeededBlocks}
+              value={getCurrentBlockCount}
+            />
+            {!getDaemonStarted || getCurrentBlockCount == null || getDaemonSynced ?
+              syncFetchHeadersAttempt &&
+              <div className="loader-bar-estimation">
+                <HeaderTimeMsg />
+                <span className="bold"> {syncFetchHeadersLastHeaderTime ? <FormattedRelative value={syncFetchHeadersLastHeaderTime}/> : "--" }</span>
+              </div>
+              :
+              <div className="loader-bar-estimation">
+                { finishDateEstimation ? <T id="getStarted.chainLoading.syncEstimation" m="Blockchain download estimated complete"/> : null }
+                <span className="bold"> {finishDateEstimation ? <FormattedRelative value={finishDateEstimation}/> : null} ({getCurrentBlockCount} / {getNeededBlocks})</span>
+              </div>
+            }
+          </Aux>
         </div>
         <div className="loader-bar-icon">
-          {text && !startupError &&
-            <div className="loader-bar-icon-text">
-              {text}...
-            </div>
-          }
           {startupError &&
             <div className="loader-bar-icon-text error">
               {startupError}
             </div>
           }
-          <PicFightLoading hidden={startupError || isInputRequest} />
         </div>
-        { Form && <Form {...{ ...props, isInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+        {daemonWarning && getCurrentBlockCount <= 0 ?
+          <Aux>
+            <div className="get-started-last-log-lines">
+              <div className="last-pfcwallet-log-line">{daemonWarning}</div>
+            </div>
+            <div className="advanced-page-form">
+              <div className="advanced-daemon-row">
+                <T id="getStarted.longWaitWarning" m="You are currently upgrading to a new pfcd version.  Typically, this one-time reindexing will take 30-45 minutes on an average machine."/>
+              </div>
+            </div>
+          </Aux>:
+          <div/>
+        }
+        { Form && <Form {...{ ...props, openWalletInputRequest, startupError, getCurrentBlockCount, getDaemonSynced, isSPV }}/> }
+        {syncInput ?
+          <div className="advanced-page-form">
+            <div className="advanced-daemon-row">
+              <DiscoverAccountsInfoMsg />
+            </div>
+            <div className="advanced-daemon-row">
+              <div className="advanced-daemon-label">
+                <DiscoverLabelMsg />
+              </div>
+              <div className="advanced-daemon-input">
+                <PasswordInput
+                  required
+                  autoFocus
+                  className="get-started-input-private-password"
+                  placeholder={intl.formatMessage(messages.passphrasePlaceholder)}
+                  value={passPhrase}
+                  onChange={(e) => onSetPassPhrase(e.target.value)}
+                  onKeyDown={onKeyDown}
+                  showErrors={hasAttemptedDiscover}/>
+              </div>
+            </div>
+            <div className="loader-bar-buttons">
+              <KeyBlueButton onClick={onRPCSync} disabled={!passPhrase}>
+                <ScanBtnMsg />
+              </KeyBlueButton>
+            </div>
+          </div> :
+          <div className="get-started-last-log-lines">
+            <div className="last-pfcwallet-log-line">{lastPfcwalletLogLine}</div>
+          </div>
+        }
       </Aux>
     </div>
   </div>
 );
+
+export default injectIntl(DaemonLoadingBody);

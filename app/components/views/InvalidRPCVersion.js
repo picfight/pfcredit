@@ -10,9 +10,7 @@ const InvalidRPCVersion = ({ requiredWalletRPCVersion, walletRPCVersion }) => (
         id="invalidRPCVersion.info"
         m={`The API of the currently running wallet ({walletRPCVersion}) is not compatible with Pfcredit (required version {requiredWalletRPCVersion}).
 
-        Please update the daemon (pfcd) and wallet (pfcwallet) to the latest version, then try again.
-
-        See the "Help ⮕ About" menu for the current version of the executables.`}
+        Please update the daemon (pfcd) and wallet (pfcwallet) to the latest version, then try again.`}
         values={{ walletRPCVersion, requiredWalletRPCVersion }}
       />
     </div>

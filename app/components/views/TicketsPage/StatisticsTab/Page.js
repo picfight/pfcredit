@@ -3,11 +3,11 @@ import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
 import StakePoolStats from "./charts/StakePoolStats";
-import { PicFightLoading, NoStats } from "indicators";
+import { PicfightLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
-const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allStakePoolStats }) => {
-  if (allTickets.length === 0 && allStakePoolStats.length === 0) return <NoStats />;
+const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allStakePoolStats }) => {
+  if (!hasTickets && allStakePoolStats.length === 0) return <NoStats />;
   return (
     <Aux>
       <div className="tabbed-page-subtitle"><T id="statistics.subtitle" m="Statistics"/>
@@ -19,10 +19,10 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allS
           }
           { hasStats &&
             <Aux>
-              <Tooltip text={<T id="mytickets.statistics.stakerewards.title" m="Stake Rewards" />}>
+              <Tooltip text={<T id="mytickets.statistics.stakerewards.link" m="Stake Rewards" />}>
                 <Link to="/tickets/statistics/stakerewards" activeClassName="my-tickets-active-chart-link stakerewards" className="stakerewards"/>
               </Tooltip>
-              <Tooltip text={<T id="mytickets.statistics.votetime.title" m="Vote Time" />}>
+              <Tooltip text={<T id="mytickets.statistics.votetime.link" m="Vote Time" />}>
                 <Link to="/tickets/statistics/voteTime" activeClassName="my-tickets-active-chart-link vote-time" className="vote-time"/>
               </Tooltip>
             </Aux>
@@ -30,7 +30,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, allTickets, allS
         </div>
       </div>
       <div className="my-tickets-charts">
-        {getMyTicketsStatsRequest ? <PicFightLoading /> :
+        {getMyTicketsStatsRequest ? <PicfightLoading /> :
           <Switch>
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />

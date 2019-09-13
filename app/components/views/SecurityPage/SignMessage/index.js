@@ -21,7 +21,7 @@ class SignMessage extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (!this.props.walletService) {
       this.context.router.push("/error");
     }
@@ -38,15 +38,9 @@ class SignMessage extends React.Component {
     let result = null;
     if (signMessageSignature) {
       result = (
-        <div className="message">
-          <div className="message-nest">
-            <div className="message-content">
-              <div>
-                {signMessageSignature}
-              </div>
-              <CopyToClipboard textToCopy={signMessageSignature} className="message-content-nest-copy-to-clipboard-icon" />
-            </div>
-          </div>
+        <div className="security-center-message-result sign">
+          <div className="message-signature">{signMessageSignature}</div>
+          <CopyToClipboard textToCopy={signMessageSignature} className="message-content-nest-copy-to-clipboard-icon" />
         </div>
       );
     }

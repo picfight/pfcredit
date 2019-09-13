@@ -1,8 +1,8 @@
-import { versionCheckAction, spvSyncCancel } from "./WalletLoaderActions";
+import { versionCheckAction, syncCancel } from "./WalletLoaderActions";
 import { stopNotifcations } from "./NotificationActions";
 import { saveSettings, updateStateSettingsChanged } from "./SettingsActions";
 import { rescanCancel } from "./ControlActions";
-import { hideSidebarMenu, showSidebar } from "./SidebarActions";
+import { cancelPingAttempt } from "./ClientActions";
 import { semverCompatible } from "./VersionActions";
 import * as wallet from "wallet";
 import { push as pushHistory, goBack } from "react-router-redux";
@@ -11,11 +11,14 @@ import { setMustOpenForm, getWalletCfg, getAppdataPath, getRemoteCredentials, ge
 import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
+import { DIFF_CONNECTION_ERROR } from "main_dev/constants";
+import { enableTrezor } from "./TrezorActions";
 
 export const PFCREDIT_VERSION = "PFCREDIT_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
+export const FINISH_SPVCHOICE = "FINISH_SPVCHOICE";
 export const DAEMONSTARTED = "DAEMONSTARTED";
 export const DAEMONSTARTED_APPDATA = "DAEMONSTARTED_APPDATA";
 export const DAEMONSTARTED_REMOTE = "DAEMONSTARTED_REMOTE";
@@ -33,6 +36,8 @@ export const SET_CREDENTIALS_APPDATA_ERROR = "SET_CREDENTIALS_APPDATA_ERROR";
 export const REGISTERFORERRORS = "REGISTERFORERRORS";
 export const FATAL_DAEMON_ERROR = "FATAL_DAEMON_ERROR";
 export const FATAL_WALLET_ERROR = "FATAL_WALLET_ERROR";
+export const DAEMON_WARNING = "DAEMON_WARNING";
+export const WALLET_WARNING = "WALLET_WARNING";
 export const WALLETCREATED = "WALLETCREATED";
 export const WALLET_AUTOBUYER_SETTINGS = "WALLET_AUTOBUYER_SETTINGS";
 export const WALLET_STAKEPOOL_SETTINGS = "WALLET_STAKEPOOL_SETTINGS";
@@ -41,6 +46,8 @@ export const WALLET_LOADER_SETTINGS = "WALLET_LOADER_SETTINGS";
 export const DELETE_PFCD_ATTEMPT = "DELETE_PFCD_ATTEMPT";
 export const DELETE_PFCD_FAILED = "DELETE_PFCD_FAILED";
 export const DELETE_PFCD_SUCCESS = "DELETE_PFCD_SUCCESS";
+export const NOT_SAME_CONNECTION = "NOT_SAME_CONNECTION";
+export const NETWORK_MATCH = "NETWORK_MATCH";
 
 export const checkPfcreditVersion = () => (dispatch, getState) =>{
   const detectedVersion = getState().daemon.appVersion;
@@ -71,8 +78,26 @@ export const showGetStarted = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/initial"));
 };
 
+export const showSpvChoice = () => (dispatch) => {
+  dispatch(pushHistory("/getstarted/spvchoice"));
+};
+
 export const showPrivacy = () => (dispatch) => {
   dispatch(pushHistory("/getstarted/privacy"));
+};
+
+export const enableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: true }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
+};
+
+export const disableSpv = () => (dispatch, getState) => {
+  dispatch(updateStateSettingsChanged({ spvMode: false }, true));
+  const tempSettings = getState().settings.tempSettings;
+  dispatch(saveSettings(tempSettings));
+  dispatch(finishSpvChoice());
 };
 
 export const setupStandardPrivacy = () => (dispatch, getState) => {
@@ -97,10 +122,16 @@ export const selectLanguage = (selectedLanguage) => (dispatch) => {
   dispatch(pushHistory("/getstarted"));
 };
 
+export const finishSpvChoice = () => (dispatch) => {
+  const config = getGlobalCfg();
+  config.set("show_spvchoice", false);
+  dispatch({ type: FINISH_SPVCHOICE });
+  dispatch(goBack());
+};
+
 export const finishTutorial = () => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_tutorial", false);
-  dispatch(showSidebar());
   dispatch({ type: FINISH_TUTORIAL });
   dispatch(pushHistory("/getstarted"));
 };
@@ -108,7 +139,6 @@ export const finishTutorial = () => (dispatch) => {
 export const finishPrivacy = () => (dispatch) => {
   const config = getGlobalCfg();
   config.set("show_privacy", false);
-  dispatch(showSidebar());
   dispatch({ type: FINISH_PRIVACY });
   dispatch(goBack());
 };
@@ -151,6 +181,13 @@ export const registerForErrors = () => (dispatch) => {
     }
     dispatch(pushHistory("/error"));
   });
+  ipcRenderer.on("warning-received", (event, daemon, warning) => {
+    if (daemon) {
+      dispatch({ warning, type: DAEMON_WARNING });
+    } else {
+      dispatch({ warning, type: WALLET_WARNING });
+    }
+  });
 };
 
 export const deleteDaemonData = () => (dispatch, getState) => {
@@ -165,12 +202,7 @@ export const deleteDaemonData = () => (dispatch, getState) => {
 };
 
 export const shutdownApp = () => (dispatch, getState) => {
-  const { daemon: { walletName } } = getState();
   const { currentBlockHeight } = getState().grpc;
-  const cfg = getWalletCfg(isTestNet(getState()), walletName);
-  if (walletName) {
-    cfg.set("lastaccess", Date.now());
-  }
   if(currentBlockHeight) {
     setLastHeight(currentBlockHeight);
   }
@@ -180,15 +212,16 @@ export const shutdownApp = () => (dispatch, getState) => {
   });
   dispatch(stopNotifcations());
   dispatch(rescanCancel());
-  dispatch(spvSyncCancel());
-  dispatch(hideSidebarMenu());
+  dispatch(cancelPingAttempt());
+  dispatch(syncCancel());
   dispatch(pushHistory("/shutdown"));
 };
 
 export const cleanShutdown = () => () => wallet.cleanShutdown();
 
 export const getAvailableWallets = () => async (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   const availableWallets = await wallet.getAvailableWallets(network);
   const previousWallet = await wallet.getPreviousWallet();
   dispatch({ availableWallets, previousWallet, type: AVAILABLE_WALLETS });
@@ -208,10 +241,12 @@ export const removeWallet = (selectedWallet) => (dispatch) => {
 };
 
 export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.createNewWallet(selectedWallet.value.wallet, network == "testnet")
     .then(() => {
-      dispatch({ createNewWallet, type: WALLETCREATED });
+      dispatch({ createNewWallet, isWatchingOnly: selectedWallet.value.watchingOnly,
+        type: WALLETCREATED });
       dispatch(startWallet(selectedWallet));
     })
     .catch((err) => {
@@ -220,8 +255,25 @@ export const createWallet = (createNewWallet, selectedWallet) => (dispatch, getS
     });
 };
 
+export const CLOSEDAEMON_ATTEMPT = "CLOSEDAEMON_ATTEMPT";
+export const CLOSEDAEMON_FAILED = "CLOSEDAEMON_FAILED";
+export const CLOSEDAEMON_SUCCESS = "CLOSEDAEMON_SUCCESS";
+
+export const closeDaemonRequest = () => async(dispatch, getState) => {
+  dispatch({ type: CLOSEDAEMON_ATTEMPT });
+  try {
+    await wallet.stopDaemon();
+    const { currentSettings } = getState().settings;
+    dispatch({ advanced: currentSettings.daemonStartAdvanced, type: CLOSEDAEMON_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: CLOSEDAEMON_FAILED });
+    dispatch(pushHistory("/error"));
+  }
+};
+
 export const startWallet = (selectedWallet) => (dispatch, getState) => {
-  const { network } = getState().daemon;
+  const { currentSettings } = getState().settings;
+  const network = currentSettings.network;
   wallet.startWallet(selectedWallet.value.wallet, network == "testnet")
     .then(({ port }) => {
       const walletCfg = getWalletCfg(network == "testnet", selectedWallet.value.wallet);
@@ -243,18 +295,16 @@ export const startWallet = (selectedWallet) => (dispatch, getState) => {
       var hiddenAccounts = walletCfg.get("hiddenaccounts");
       var currencyDisplay = walletCfg.get("currency_display");
       var balanceToMaintain = walletCfg.get("balancetomaintain");
-      var maxFee = walletCfg.get("maxfee");
-      var maxPriceAbsolute = walletCfg.get("maxpriceabsolute");
-      var maxPriceRelative = walletCfg.get("maxpricerelative");
-      var maxPerBlock = walletCfg.get("maxperblock");
       var discoverAccountsComplete = walletCfg.get("discoveraccounts");
       var activeStakePoolConfig = foundStakePoolConfig;
       var selectedStakePool = firstConfiguredStakePool;
+      walletCfg.set("lastaccess", Date.now());
       dispatch({ type: WALLETREADY, walletName: selectedWallet.value.wallet, network: network, hiddenAccounts, port });
-      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, maxPerBlock });
+      dispatch({ type: WALLET_AUTOBUYER_SETTINGS, balanceToMaintain });
       dispatch({ type: WALLET_SETTINGS, currencyDisplay, gapLimit });
       dispatch({ type: WALLET_STAKEPOOL_SETTINGS, activeStakePoolConfig, selectedStakePool, currentStakePoolConfig });
       dispatch({ type: WALLET_LOADER_SETTINGS, discoverAccountsComplete });
+      selectedWallet.value.isTrezor && dispatch(enableTrezor());
       setTimeout(()=>dispatch(versionCheckAction()), 2000);
     })
     .catch((err) => {
@@ -291,34 +341,44 @@ export const prepStartDaemon = () => (dispatch, getState) => {
 export const STARTUPBLOCK = "STARTUPBLOCK";
 export const syncDaemon = () =>
   (dispatch, getState) => {
-    const updateBlockCount = () => {
-      const { walletLoader: { neededBlocks } } = getState();
-      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError } } = getState();
+    const updateBlockCount = async () => {
+      const { daemon: { daemonSynced, timeStart, blockStart, credentials, daemonError, neededBlocks, networkMatch } } = getState();
       // check to see if user skipped;
       if (daemonSynced || daemonError) return;
+      if (!networkMatch) {
+        const daemonInfo = await wallet.getDaemonInfo(credentials);
+        if (daemonInfo.isTestNet !== null &&
+            daemonInfo.isTestNet !== isTestNet(getState())) {
+          dispatch({ error: DIFF_CONNECTION_ERROR, type: NOT_SAME_CONNECTION });
+          return dispatch(pushHistory("/error"));
+        } else if (daemonInfo.isTestNet !== null && daemonInfo.isTestNet == isTestNet(getState())) {
+          dispatch({ type: NETWORK_MATCH });
+        }
+      }
       return wallet
         .getBlockCount(credentials, isTestNet(getState()))
-        .then(updateCurrentBlockCount => {
-          if ((neededBlocks == 0 && updateCurrentBlockCount > 0) || (neededBlocks != 0 && updateCurrentBlockCount >= neededBlocks)) {
+        .then(( blockChainInfo ) => {
+          const blockCount = blockChainInfo.blockCount;
+          const syncHeight = blockChainInfo.syncHeight;
+          if (neededBlocks != 0 && blockCount >= syncHeight) {
             dispatch({ type: DAEMONSYNCED });
-            dispatch({ currentBlockHeight: updateCurrentBlockCount, type: STARTUPBLOCK });
+            dispatch({ currentBlockHeight: blockCount, type: STARTUPBLOCK });
             setMustOpenForm(false);
             return;
-          } else if (updateCurrentBlockCount !== 0) {
-            const blocksLeft = neededBlocks - updateCurrentBlockCount;
-            const blocksDiff = updateCurrentBlockCount - blockStart;
+          } else if (neededBlocks !== 0 && blockCount !== 0 && syncHeight !== 0) {
+            const blocksLeft = syncHeight - blockCount;
+            const blocksDiff = blockCount - blockStart;
             if (timeStart !== 0 && blockStart !== 0 && blocksDiff !== 0) {
               const currentTime = new Date();
               const timeSyncing = (currentTime - timeStart) / 1000;
               const secondsLeft = Math.round(blocksLeft / blocksDiff * timeSyncing);
               dispatch({
-                currentBlockCount: parseInt(updateCurrentBlockCount),
+                currentBlockCount: blockCount,
                 timeLeftEstimate: secondsLeft,
                 type: DAEMONSYNCING_PROGRESS });
-            } else if (updateCurrentBlockCount !== 0) {
-              const time = new Date();
-              dispatch({ currentBlockCount: parseInt(updateCurrentBlockCount), timeStart: time, blockStart: parseInt(updateCurrentBlockCount), type: DAEMONSYNCING_START });
             }
+          } else if (blockCount && syncHeight && blockCount !== 0 && syncHeight !== 0) {
+            dispatch({ syncHeight: syncHeight, currentBlockCount: blockCount, timeStart: new Date(), blockStart: blockCount, type: DAEMONSYNCING_START });
           }
           setTimeout(updateBlockCount, 1000);
         }).catch(err=>console.log(err));

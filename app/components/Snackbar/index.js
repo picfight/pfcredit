@@ -1,4 +1,5 @@
 // @flow
+import { keyBy } from "fp";
 import { snackbar, theming } from "connectors";
 import ReactTimeout from "react-timeout";
 import EventListener from "react-event-listener";
@@ -7,7 +8,7 @@ import theme from "theme";
 import { eventOutsideComponent } from "helpers";
 import { spring, TransitionMotion } from "react-motion";
 import { TRANSACTION_DIR_SENT, TRANSACTION_DIR_RECEIVED,
-  TRANSACTION_DIR_TRANSFERED
+  TRANSACTION_DIR_TRANSFERRED
 } from "wallet/service";
 import "style/Snackbar.less";
 
@@ -22,7 +23,7 @@ const snackbarClasses = ({ type }) => ({
   "Revocation": "snackbar snackbar-stake",
   [TRANSACTION_DIR_RECEIVED]: "snackbar snackbar-receive",
   [TRANSACTION_DIR_SENT]: "snackbar snackbar-send",
-  [TRANSACTION_DIR_TRANSFERED]: "snackbar snackbar-transfer",
+  [TRANSACTION_DIR_TRANSFERRED]: "snackbar snackbar-transfer",
   "Warning": "snackbar snackbar-warning",
   "Error": "snackbar snackbar-error",
   "Success": "snackbar snackbar-success",
@@ -34,71 +35,40 @@ class Snackbar extends React.Component {
     super(props);
     this.hideTimer = null;
     this.state = {
-      message: props.messages.length > 0
-        ? props.messages[props.messages.length-1]
-        : null,
+      messages: new Array(),
+      progress: 0,
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    const message = nextProps.messages.length > 0
-      ? nextProps.messages[nextProps.messages.length-1]
-      : null;
-    if(!message) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.messages === this.props.messages) {
       return;
     }
-
-    this.enableHideTimer();
-    if(this.checkIfMessageHasShown(message, this.props.messages)) {
-      return;
-    } else {
-      this.setState({ ...this.state, message });
-    }
-  }
-
-  checkIfMessageHasShown(message, messages) {
-    let isSame = false;
-    messages.forEach(m => {
-      if (this.checkIsSameMessage(message, m)) {
-        isSame = true;
-        return;
-      }
-    });
-    return isSame;
-  }
-
-  checkIsSameMessage(messageObj, oldMessageObj) {
-    if (messageObj === oldMessageObj) {
-      return true;
-    }
-    if (!messageObj || !oldMessageObj) {
-      return false;
-    }
-    const { type, message } = messageObj;
-    if (type !== oldMessageObj.type) {
-      return false;
-    }
-    // message can be a FormattedMessage from react-intl or a transaction
-    if (message.defaultMessage !== oldMessageObj.message.defaultMessage) {
-      return false;
-    }
-    const { txHash } = message;
-    const oldTxHash = oldMessageObj.message.txHash;
-    if ( txHash !== oldTxHash) {
-      return false;
+    if (this.props.messages.length > 0) {
+      this.enableHideTimer();
     }
 
-    return true;
+    const messagesByKey = keyBy(this.state.messages, "key");
+    const messages = this.props.messages.map(m => messagesByKey[m.key] ? messagesByKey[m.key] : m);
+    this.setState({ messages });
   }
 
   enableHideTimer() {
     this.clearHideTimer();
-    this.hideTimer = this.props.setTimeout(this.onDismissMessage, 4000);
+    // emulating progress
+    this.hideTimer = this.props.setInterval(() => {
+      this.setState({ progress: this.state.progress + 10 });
+      if (this.state.progress >= 100) {
+        this.onDismissMessage();
+        if (this.props.messages.length === 0)
+          this.clearHideTimer();
+      }
+    }, 500);
   }
 
   clearHideTimer() {
     if (this.hideTimer) {
-      this.props.clearTimeout(this.hideTimer);
+      this.props.clearInterval(this.hideTimer);
       this.hideTimer = null;
     }
   }
@@ -111,52 +81,85 @@ class Snackbar extends React.Component {
   }
 
   onDismissMessage() {
-    const state = this.state;
-    this.setState({ ...state, message: null });
-    this.props.onDismissAllMessages();
-    this.clearHideTimer();
+    const messages = [ ...this.props.messages ];
+    messages.shift();
+    this.setState({ progress: 0 });
+    // dismiss single message of the one popped
+    this.props.onDismissAllMessages(messages);
+    if (messages.length > 0)
+      this.enableHideTimer();
   }
 
   getStaticNotification() {
-    const { message } = this.state;
-    return (
+    const { messages, progress } = this.state;
+    const { onDismissMessage, clearHideTimer, enableHideTimer } = this;
+    var notifications = new Array();
+    for (var i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      const notification =
       <div
+        key={"ntf" + i }
         className={snackbarClasses(message || "")}
-        onMouseEnter={this.clearHideTimer}
-        onMouseLeave={this.enableHideTimer}
-        style={{ bottom: "0px" }}
-      >
-        {message ? <Notification {...message} /> : ""}
-      </div>
-    );
+        onMouseEnter={clearHideTimer}
+        onMouseLeave={enableHideTimer}
+        style={{ bottom: "0px" }}>
+        <Notification  {...{ topNotification: i === 0, progress, onDismissMessage, ...message }} />
+      </div>;
+      notifications.push(notification);
+    }
+    return notifications;
   }
 
   notifWillEnter() {
     return { bottom: -10 };
   }
 
-  getAnimatedNotification() {
-    const { message } = this.state;
+  animatedNotifRef(key, ref) {
+    if (!ref) return;
+    const height = ref.clientHeight;
+    let changedHeight = false;
+    const newMessages = this.state.messages.map(m => {
+      if (m.key !== key) return m;
+      if (m.height === height) return m;
+      changedHeight = true;
+      return { ...m, height };
+    });
+    if (!changedHeight) return;
+    this.setState({ messages: newMessages });
+  }
 
-    const styles = [ {
-      key: "ntf"+Math.random(),
-      data: message,
-      style: { bottom: spring(0, theme("springs.tab")) }
-    } ];
+  getAnimatedNotification() {
+    const { messages, progress } = this.state;
+    const { onDismissMessage, clearHideTimer, enableHideTimer, notifWillEnter,
+      animatedNotifRef } = this;
+
+    const styles = [];
+
+    let totalHeight = 0;
+    for (var i = messages.length-1; i >= 0; i--) {
+      styles.unshift({
+        key: messages[i].key,
+        data: messages[i],
+        style: { bottom: spring(20 + (messages.length-i-1)*20 + totalHeight, theme("springs.tab")) }
+      });
+      totalHeight += messages[i].height || 64;
+    }
 
     return (
-      <TransitionMotion styles={styles} willEnter={this.notifWillEnter}>
-        { is => !is[0].data
-          ? ""
-          : <div
-            className={snackbarClasses(message || "")}
-            onMouseEnter={this.clearHideTimer}
-            onMouseLeave={this.enableHideTimer}
-            style={is[0].style}
+      <TransitionMotion styles={styles} willEnter={notifWillEnter}>
+        { is => (<> {is.map((s, i) => (
+          <div
+            key={s.key}
+            className={snackbarClasses(s.data || "")}
+            onMouseEnter={clearHideTimer}
+            onMouseLeave={enableHideTimer}
+            style={s.style}
+            ref={ref => animatedNotifRef(s.key, ref)}
           >
-            <Notification {...is[0].data} />
+            <Notification {...{ topNotification: i === 0, progress,
+              onDismissMessage, ...s.data }} />
           </div>
-        }
+        )) } </> ) }
       </TransitionMotion>
     );
   }
@@ -167,8 +170,10 @@ class Snackbar extends React.Component {
       : this.getStaticNotification();
 
     return (
-      <EventListener target="document" onMouseUp={this.windowClicked}>
-        {notification}
+      <EventListener target="document" >
+        <div className="snackbar-panel">
+          {notification}
+        </div>
       </EventListener>
     );
   }

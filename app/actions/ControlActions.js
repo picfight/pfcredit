@@ -2,9 +2,10 @@
 import * as wallet from "wallet";
 import * as sel from "selectors";
 import { isValidAddress, isValidMasterPubKey } from "helpers";
-import { getAccountsAttempt, getStakeInfoAttempt, startWalletServices, getStartupWalletInfo } from "./ClientActions";
-import { getWalletCfg } from "../config";
-import { RescanRequest, ConstructTransactionRequest } from "../middleware/walletrpc/api_pb";
+import { getStakeInfoAttempt, startWalletServices,
+  getStartupWalletInfo } from "./ClientActions";
+import { RescanRequest, ConstructTransactionRequest, RunTicketBuyerRequest } from "../middleware/walletrpc/api_pb";
+import { reverseRawHash, rawToHex } from "helpers/byteActions";
 
 export const GETNEXTADDRESS_ATTEMPT = "GETNEXTADDRESS_ATTEMPT";
 export const GETNEXTADDRESS_FAILED = "GETNEXTADDRESS_FAILED";
@@ -31,9 +32,8 @@ export const renameAccountAttempt = (accountNumber, newName) => (dispatch, getSt
   dispatch({ type: RENAMEACCOUNT_ATTEMPT });
   return wallet.renameAccount(sel.walletService(getState()), accountNumber, newName)
     .then(renameAccountResponse => {
-      const renameAccountSuccess = "You have successfully updated the account name.";
       setTimeout(() => dispatch({
-        renameAccountSuccess, renameAccountResponse, type: RENAMEACCOUNT_SUCCESS
+        renameAccountResponse, type: RENAMEACCOUNT_SUCCESS
       }), 1000);
     })
     .catch(error => dispatch({ error, type: RENAMEACCOUNT_FAILED }));
@@ -100,8 +100,7 @@ export const getNextAccountAttempt = (passphrase, accountName) => (dispatch, get
   return wallet.getNextAccount(sel.walletService(getState()), passphrase, accountName)
     .then(getNextAccountResponse => {
       setTimeout( () => dispatch({
-        getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS,
-        successMessage: `Account - ${accountName} - has been successfully created.`
+        getNextAccountResponse, type: GETNEXTACCOUNT_SUCCESS
       }), 1000);
     })
     .catch(error => dispatch({ error, type: GETNEXTACCOUNT_FAILED }));
@@ -122,39 +121,42 @@ export const IMPORTSCRIPT_ATTEMPT = "IMPORTSCRIPT_ATTEMPT";
 export const IMPORTSCRIPT_FAILED = "IMPORTSCRIPT_FAILED";
 export const IMPORTSCRIPT_SUCCESS = "IMPORTSCRIPT_SUCCESS";
 
-const importScriptSuccess = (importScriptResponse, votingAddress, cb, willRescan) => (dispatch) => {
-  const importScriptSuccess = "Script successfully imported, rescanning now";
-  dispatch({ importScriptSuccess, importScriptResponse, willRescan, type: IMPORTSCRIPT_SUCCESS });
-  if (votingAddress) {
-    if (importScriptResponse.getP2shAddress() == votingAddress) {
-      dispatch(() => cb());
-    } else {
-      const error = "The stakepool voting address is not the P2SH address of the voting redeem script. This could be due to trying to use a stakepool that is configured for a different wallet. If this is not the case, please report this to the stakepool administrator and the PicFight devs.";
-      dispatch(() => cb(error));
-    }
-  }
-};
-
-export const importScriptAttempt = (passphrase, script, rescan, scanFrom, votingAddress, cb) =>
-  (dispatch, getState) => {
+// importScriptAttempt tries to import the given script into the wallet. It will
+// throw an exception in case of errors.
+export const importScriptAttempt = (passphrase, script) =>
+  async (dispatch, getState) => {
     dispatch({ type: IMPORTSCRIPT_ATTEMPT });
-    return wallet.importScript(sel.walletService(getState()), passphrase, script, false, 0)
-      .then(importScriptResponse => {
-        if (rescan) dispatch(rescanAttempt(0));
-        dispatch(importScriptSuccess(importScriptResponse, votingAddress, cb));
-        if (!votingAddress && !cb) setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 1000);
-      })
-      .catch(error => {
-        dispatch({ error, type: IMPORTSCRIPT_FAILED });
-        if (votingAddress || cb) {
-          if (String(error).indexOf("master private key") !== -1) {
-            dispatch(() => cb(error));
-          } else {
-            error = error + ". This probably means you are trying to use a stakepool account that is already associated with another wallet.  If you have previously used a voting account, please create a new account and try again.  Otherwise, please set up a new stakepool account for this wallet.";
-            dispatch(() => cb(error));
-          }
-        }
-      });
+    const walletService = sel.walletService(getState());
+    try {
+      const importScriptResponse = await wallet.importScript(walletService, passphrase, script, false, 0);
+      dispatch({ importScriptResponse, type: IMPORTSCRIPT_SUCCESS });
+      return importScriptResponse;
+    } catch (error) {
+      dispatch({ error, type: IMPORTSCRIPT_FAILED });
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  };
+
+export const IMPORTSCRIPT_MANUAL_SUCCESS = "IMPORTSCRIPT_MANUAL_SUCCESS";
+export const IMPORTSCRIPT_MANUAL_FAILED = "IMPORTSCRIPT_MANUAL_FAILED";
+
+// manualImportScriptAttempt imports a script from a "manual" (ie,
+// user-initiated) entry. This is in contrast of importScriptAttempt which is
+// meant as a step during some other operation (eg: linking to a stakepool).
+//
+// This function always initiates a complete wallet rescan in case of success.
+export const manualImportScriptAttempt = (passphrase, script) =>
+  async (dispatch) => {
+    try {
+      await dispatch(importScriptAttempt(passphrase, script));
+      dispatch({ type: IMPORTSCRIPT_MANUAL_SUCCESS });
+      dispatch(rescanAttempt(0));
+    } catch (error) {
+      dispatch({ error, type: IMPORTSCRIPT_MANUAL_FAILED });
+    }
   };
 
 export const CHANGEPASSPHRASE_ATTEMPT = "CHANGEPASSPHRASE_ATTEMPT";
@@ -223,8 +225,7 @@ export const publishTransactionAttempt = (tx) => (dispatch, getState) => {
   dispatch({ type: PUBLISHTX_ATTEMPT });
   return wallet.publishTransaction(sel.walletService(getState()), tx)
     .then(res => {
-      dispatch({ publishTransactionResponse: Buffer.from(res.getTransactionHash()), type: PUBLISHTX_SUCCESS });
-      setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
+      dispatch({ hash: reverseRawHash(res.getTransactionHash()), type: PUBLISHTX_SUCCESS });
     })
     .catch(error => dispatch({ error, type: PUBLISHTX_FAILED }));
 };
@@ -234,28 +235,32 @@ export const PURCHASETICKETS_FAILED = "PURCHASETICKETS_FAILED";
 export const PURCHASETICKETS_SUCCESS = "PURCHASETICKETS_SUCCESS";
 
 export const purchaseTicketsAttempt = (
-  passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry, ticketFee, txFee, stakepool
-) => (dispatch, getState) => {
-  const state = getState();
-  const currentBlockHeight = sel.currentBlockHeight(state);
-  expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
-  txFee = txFee * 1e8;
-  ticketFee = ticketFee * 1e8;
-  dispatch({ type: PURCHASETICKETS_ATTEMPT });
-  dispatch(importScriptAttempt(passphrase, stakepool.Script, false, 0, stakepool.TicketAddress,
-    error => error
-      ? dispatch({ error, type: PURCHASETICKETS_FAILED })
-      : wallet.purchaseTickets(
-        sel.walletService(state), passphrase, accountNum, spendLimit, requiredConf, numTickets,
-        expiry, ticketFee, txFee, stakepool
-      )
-        .then(purchaseTicketsResponse => {
-          dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
-          setTimeout( () => {dispatch(getAccountsAttempt());}, 4000);
-          setTimeout(() => { dispatch(getStakeInfoAttempt()); }, 4000);
-        })
-        .catch(error => dispatch({ error, type: PURCHASETICKETS_FAILED }))
-  ));
+  passphrase, accountNum, spendLimit, requiredConf, numTickets, expiry,
+  ticketFee, txFee, stakepool
+) => async (dispatch, getState) => {
+  try {
+    dispatch({ numTicketsToBuy: numTickets, type: PURCHASETICKETS_ATTEMPT });
+
+    // re-import the script to ensure the wallet will control the ticket.
+    const importScriptResponse = await dispatch(importScriptAttempt(passphrase, stakepool.Script));
+    if (importScriptResponse.getP2shAddress() !== stakepool.TicketAddress) {
+      throw new Error("Trying to use a ticket address not corresponding to script");
+    }
+
+    const state = getState();
+    const currentBlockHeight = sel.currentBlockHeight(state);
+    expiry = expiry === 0 ? expiry : currentBlockHeight + expiry;
+    txFee = txFee * 1e8;
+    ticketFee = ticketFee * 1e8;
+
+    const purchaseTicketsResponse = await wallet.purchaseTickets(
+      sel.walletService(state), passphrase, accountNum, spendLimit, requiredConf, numTickets,
+      expiry, ticketFee, txFee, stakepool
+    );
+    dispatch({ purchaseTicketsResponse, type: PURCHASETICKETS_SUCCESS });
+  } catch (error) {
+    dispatch({ error, type: PURCHASETICKETS_FAILED });
+  }
 };
 
 export const REVOKETICKETS_ATTEMPT = "REVOKETICKETS_ATTEMPT";
@@ -272,134 +277,61 @@ export const revokeTicketsAttempt = (passphrase) => (dispatch, getState) => {
     .catch(error => dispatch({ error, type: REVOKETICKETS_FAILED }));
 };
 
-export const GETTICKETBUYERCONFIG_ATTEMPT = "GETTICKETBUYERCONFIG_ATTEMPT";
-export const GETTICKETBUYERCONFIG_FAILED = "GETTICKETBUYERCONFIG_FAILED";
-export const GETTICKETBUYERCONFIG_SUCCESS = "GETTICKETBUYERCONFIG_SUCCESS";
+export const STARTTICKETBUYERV2_ATTEMPT = "STARTTICKETBUYERV2_ATTEMPT";
+export const STARTTICKETBUYERV2_FAILED = "STARTTICKETBUYERV2_FAILED";
+export const STARTTICKETBUYERV2_SUCCESS = "STARTTICKETBUYERV2_SUCCESS";
+export const STARTTICKETBUYERV2_UPDATE = "STARTTICKETBUYERV2_UPDATE";
 
-export const getTicketBuyerConfigAttempt = () => (dispatch, getState) => {
-  dispatch({ type: GETTICKETBUYERCONFIG_ATTEMPT });
-  return wallet.getTicketBuyerConfig(sel.ticketBuyerService(getState()))
-    .then(res => dispatch({ ticketBuyerConfig: res, type: GETTICKETBUYERCONFIG_SUCCESS }))
-    .catch(error => dispatch({ error, type: GETTICKETBUYERCONFIG_FAILED }));
+export const STOPTICKETBUYERV2_ATTEMPT = "STOPTICKETBUYERV2_ATTEMPT";
+export const STOPTICKETBUYERV2_FAILED = "STOPTICKETBUYERV2_FAILED";
+export const STOPTICKETBUYERV2_SUCCESS = "STOPTICKETBUYERV2_SUCCESS";
+
+export const startTicketBuyerV2Attempt = ( passphrase, account, balanceToMaintain, stakepool ) => (dispatch, getState) => {
+  var request = new RunTicketBuyerRequest();
+  request.setBalanceToMaintain(balanceToMaintain);
+  request.setAccount(account.value);
+  request.setVotingAccount(account.value);
+  request.setPassphrase(new Uint8Array(Buffer.from(passphrase)));
+  request.setVotingAddress(stakepool.TicketAddress);
+  request.setPoolAddress(stakepool.PoolAddress);
+  request.setPoolFees(stakepool.PoolFees);
+  const ticketBuyerConfig = { stakepool, balanceToMaintain, account };
+  return new Promise(() => {
+    const { ticketBuyerService } = getState().grpc;
+    dispatch({ ticketBuyerConfig, type: STARTTICKETBUYERV2_ATTEMPT });
+    var ticketBuyer = ticketBuyerService.runTicketBuyer(request);
+    ticketBuyer.on("data", function(response) {
+      // No expected responses but log in case.
+      console.log(response);
+    });
+    ticketBuyer.on("end", function() {
+      dispatch({ type: STARTTICKETBUYERV2_SUCCESS });
+    });
+    ticketBuyer.on("error", function(status) {
+      status = status + "";
+      if (status.indexOf("Cancelled") < 0) {
+        if (status.indexOf("invalid passphrase") > 0 || status.indexOf("Stream removed") > 0) {
+          dispatch({ error: status, type: STARTTICKETBUYERV2_FAILED });
+        }
+      } else {
+        dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+      }
+    });
+    dispatch({ ticketBuyerCall: ticketBuyer , type: STARTTICKETBUYERV2_UPDATE });
+  });
 };
 
-export const SETTICKETBUYERCONFIG_ATTEMPT = "SETTICKETBUYERCONFIG_ATTEMPT";
-export const SETTICKETBUYERCONFIG_FAILED = "SETTICKETBUYERCONFIG_FAILED";
-export const SETTICKETBUYERCONFIG_SUCCESS = "SETTICKETBUYERCONFIG_SUCCESS";
-export const SETBALANCETOMAINTAIN = "SETBALANCETOMAINTAIN";
-export const SETMAXFEE = "SETMAXFEE";
-export const SETMAXPRICEABSOLUTE = "SETMAXPRICEABSOLUTE";
-export const SETMAXPRICERELATIVE = "SETMAXPRICERELATIVE";
-export const SETMAXPERBLOCK = "SETMAXPERBLOCK";
-
-export const setTicketBuyerConfigAttempt = (
-  account, balanceToMaintain, maxFee, maxPriceAbsolute, maxPriceRelative, stakePool, maxPerBlock
-) => (dispatch, getState) => {
-  const { daemon: { walletName } } = getState();
-  const cfg = getWalletCfg(sel.isTestNet(getState()), walletName);
-  const ticketBuyerService = sel.ticketBuyerService(getState());
-  const getTicketBuyerConfigResponse = sel.getTicketBuyerConfigResponse(getState());
-  const promises = [];
-  dispatch({ type: SETTICKETBUYERCONFIG_ATTEMPT });
-
-  if (account !== getTicketBuyerConfigResponse.getAccount())
-    promises.push(wallet.setTicketBuyerAccount(ticketBuyerService, account));
-  if (balanceToMaintain*1e8 !== getTicketBuyerConfigResponse.getBalanceToMaintain())
-    promises.push(wallet
-      .setTicketBuyerBalanceToMaintain(ticketBuyerService, balanceToMaintain*1e8)
-      .then(() => {
-        cfg.set("balancetomaintain", balanceToMaintain);
-        dispatch({ balanceToMaintain, type: SETBALANCETOMAINTAIN });
-      }));
-  if (maxFee*1e8 !== getTicketBuyerConfigResponse.getMaxFee())
-    promises.push(wallet
-      .setTicketBuyerMaxFee(ticketBuyerService, maxFee*1e8)
-      .then(() => {
-        cfg.set("maxfee", maxFee);
-        dispatch({ maxFee, type: SETMAXFEE });
-      }));
-  if (maxPriceAbsolute*1e8 !== getTicketBuyerConfigResponse.getMaxPriceAbsolute())
-    promises.push(wallet
-      .setTicketBuyerMaxPriceAbsolute(ticketBuyerService, maxPriceAbsolute*1e8)
-      .then(() => {
-        cfg.set("maxpriceabsolute",maxPriceAbsolute);
-        dispatch({ maxPriceAbsolute, type: SETMAXPRICEABSOLUTE });
-      }));
-  if (parseFloat(maxPriceRelative) !== getTicketBuyerConfigResponse.getMaxPriceRelative()) {
-    promises.push(wallet
-      .setTicketBuyerMaxPriceRelative(ticketBuyerService, maxPriceRelative)
-      .then(() => {
-        cfg.set("maxpricerelative",maxPriceRelative);
-        dispatch({ maxPriceRelative, type: SETMAXPRICERELATIVE });
-      }));
-  }
-  if (parseInt(maxPerBlock) !== getTicketBuyerConfigResponse.getMaxPerBlock()) {
-    promises.push(wallet
-      .setTicketBuyerMaxPerBlock(ticketBuyerService, maxPerBlock)
-      .then(() => {
-        cfg.set("maxperblock", maxPerBlock);
-        dispatch({ maxPerBlock, type: SETMAXPERBLOCK });
-      }));
-  }
-  if (stakePool.TicketAddress !== getTicketBuyerConfigResponse.getVotingAddress())
-    promises.push(wallet.setTicketBuyerVotingAddress(ticketBuyerService, stakePool.TicketAddress));
-  if (stakePool.PoolAddress !== getTicketBuyerConfigResponse.getPoolAddress())
-    promises.push(wallet.setPoolAddress(ticketBuyerService, stakePool.PoolAddress));
-  if (stakePool.PoolFees !== getTicketBuyerConfigResponse.getPoolFees())
-    promises.push(wallet.setPoolFees(ticketBuyerService, stakePool.PoolFees));
-  return Promise.all(promises)
-    .then(() => {
-      dispatch({
-        type: SETTICKETBUYERCONFIG_SUCCESS
-      });
-      dispatch(getTicketBuyerConfigAttempt());
-    })
-    .catch(error => dispatch({ error, type: SETTICKETBUYERCONFIG_FAILED }));
-};
-
-export const STARTAUTOBUYER_ATTEMPT = "STARTAUTOBUYER_ATTEMPT";
-export const STARTAUTOBUYER_FAILED = "STARTAUTOBUYER_FAILED";
-export const STARTAUTOBUYER_SUCCESS = "STARTAUTOBUYER_SUCCESS";
-
-export const startAutoBuyerAttempt = (
-  passphrase, accountNum, balanceToMaintain, maxFeePerKb, maxPriceRelative, maxPriceAbsolute,
-  maxPerBlock, stakepool
-) => (dispatch, getState) => {
-  dispatch({ type: STARTAUTOBUYER_ATTEMPT, });
-  return wallet.startAutoBuyer(
-    sel.ticketBuyerService(getState()), passphrase, accountNum, balanceToMaintain*1e8, maxFeePerKb*1e8,
-    maxPriceRelative, maxPriceAbsolute*1e8, maxPerBlock, stakepool
-  )
-    .then(startAutoBuyerResponse => {
-      dispatch({
-        startAutoBuyerResponse,
-        type: STARTAUTOBUYER_SUCCESS,
-        balanceToMaintain: balanceToMaintain,
-        maxFeePerKb: maxFeePerKb*1e8,
-        maxPriceRelative: maxPriceRelative,
-        maxPriceAbsolute: maxPriceAbsolute,
-        maxPerBlock: maxPerBlock,
-      });
-      setTimeout(()=>dispatch(getTicketBuyerConfigAttempt(), 1000));
-    })
-    .catch(error => dispatch({ error, type: STARTAUTOBUYER_FAILED }));
-};
-
-export const STOPAUTOBUYER_ATTEMPT = "STOPAUTOBUYER_ATTEMPT";
-export const STOPAUTOBUYER_FAILED = "STOPAUTOBUYER_FAILED";
-export const STOPAUTOBUYER_SUCCESS = "STOPAUTOBUYER_SUCCESS";
-
-export const stopAutoBuyerAttempt = () => (dispatch, getState) => {
-  dispatch({ type: STOPAUTOBUYER_ATTEMPT });
-  return wallet.stopAutoBuyer(sel.ticketBuyerService(getState()))
-    .then(stopAutoBuyerResponse => dispatch({
-      stopAutoBuyerResponse, type: STOPAUTOBUYER_SUCCESS
-    }))
-    .catch(() => dispatch({ type: STOPAUTOBUYER_FAILED }));
-  // The only error that can be returned here is if the autobuyer is not running when requested to stop.
-  // We're currently issuing a stop auto buyer request on startup, so to avoid that error being shown,
-  // it makes sense to just remove the error consumption altogether.
-};
+export function ticketBuyerCancel() {
+  return (dispatch, getState) => {
+    const { ticketBuyerCall } = getState().control;
+    if (ticketBuyerCall) {
+      dispatch({ type: STOPTICKETBUYERV2_ATTEMPT });
+      ticketBuyerCall.cancel();
+    } else {
+      dispatch({ type: STOPTICKETBUYERV2_SUCCESS });
+    }
+  };
+}
 
 export const CONSTRUCTTX_ATTEMPT = "CONSTRUCTTX_ATTEMPT";
 export const CONSTRUCTTX_FAILED = "CONSTRUCTTX_FAILED";
@@ -451,14 +383,16 @@ export function constructTransactionAttempt(account, confirmations, outputs, all
           } else {
             dispatch({ error, type: CONSTRUCTTX_FAILED });
           }
-        } else {
-          if (!all) {
-            constructTxResponse.totalAmount = totalAmount;
-          } else {
-            constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
-          }
-          dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
+          return;
         }
+
+        if (!all) {
+          constructTxResponse.totalAmount = totalAmount;
+        } else {
+          constructTxResponse.totalAmount = constructTxResponse.getTotalOutputAmount();
+        }
+        constructTxResponse.rawTx = rawToHex(constructTxResponse.getUnsignedTransaction());
+        dispatch({ constructTxResponse: constructTxResponse, type: CONSTRUCTTX_SUCCESS });
       });
   };
 }
@@ -470,7 +404,8 @@ export const VALIDATEADDRESS_CLEANSTORE ="VALIDATEADDRESS_CLEANSTORE";
 
 export const validateAddress = address => async (dispatch, getState) => {
   try {
-    const { network } = getState().daemon;
+    const { currentSettings } = getState().settings;
+    const network = currentSettings.network;
     const validationErr = isValidAddress(address, network);
     if (validationErr) {
       dispatch({ type: VALIDATEADDRESS_FAILED });
@@ -496,7 +431,7 @@ export const validateMasterPubKey = masterPubKey => async (dispatch) => {
       dispatch({ type: VALIDATEMASTERPUBKEY_FAILED });
       return { isValid: false, error: validationErr };
     }
-    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchOnly: true, masterPubKey });
+    dispatch({ type: VALIDATEMASTERPUBKEY_SUCCESS, isWatchingOnly: true, masterPubKey });
     return { isValid: true, error: null };
   } catch (error) {
     dispatch({ error, type: VALIDATEMASTERPUBKEY_FAILED });
@@ -562,6 +497,12 @@ export const MODAL_HIDDEN = "MODAL_HIDDEN";
 export const modalShown = () => (dispatch) => dispatch({ type: MODAL_SHOWN });
 export const modalHidden = () => (dispatch) => dispatch({ type: MODAL_HIDDEN });
 
+export const SHOW_ABOUT_MODAL_MACOS = "SHOW_ABOUT_MODAL_MACOS";
+export const showAboutModalMacOS = () => (dispatch) => dispatch({ type: SHOW_ABOUT_MODAL_MACOS });
+
+export const HIDE_ABOUT_MODAL_MACOS = "HIDE_ABOUT_MODAL_MACOS";
+export const hideAboutModalMacOS = () => (dispatch) => dispatch({ type: HIDE_ABOUT_MODAL_MACOS });
+
 export const GETACCOUNTEXTENDEDKEY_ATTEMPT = "GETACCOUNTEXTENDEDKEY_ATTEMPT";
 export const GETACCOUNTEXTENDEDKEY_FAILED = "GETACCOUNTEXTENDEDKEY_FAILED";
 export const GETACCOUNTEXTENDEDKEY_SUCCESS = "GETACCOUNTEXTENDEDKEY_SUCCESS";
@@ -578,3 +519,4 @@ export const getAccountExtendedKeyAttempt = (accountNumber) => (dispatch, getSta
     })
     .catch(error => dispatch({ error, type: GETACCOUNTEXTENDEDKEY_FAILED }));
 };
+
