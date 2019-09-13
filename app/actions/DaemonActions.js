@@ -12,7 +12,7 @@ import { isTestNet } from "selectors";
 import axios from "axios";
 import { STANDARD_EXTERNAL_REQUESTS } from "main_dev/externalRequests";
 
-export const DECREDITON_VERSION = "DECREDITON_VERSION";
+export const PFCREDIT_VERSION = "PFCREDIT_VERSION";
 export const SELECT_LANGUAGE = "SELECT_LANGUAGE";
 export const FINISH_TUTORIAL = "FINISH_TUTORIAL";
 export const FINISH_PRIVACY = "FINISH_PRIVACY";
@@ -51,7 +51,7 @@ export const checkPfcreditVersion = () => (dispatch, getState) =>{
       if (semverCompatible(currentVersion, detectedVersion)) {
         wallet.log("info", "Pfcredit version up to date.");
       } else {
-        dispatch({ type: DECREDITON_VERSION, msg:  response.data[0].tag_name });
+        dispatch({ type: PFCREDIT_VERSION, msg:  response.data[0].tag_name });
       }
     })
     .catch(function (error) {

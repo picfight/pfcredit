@@ -13,17 +13,17 @@ const debug = argv.debug || process.env.NODE_ENV === "development";
 const logger = createLogger(debug);
 
 let pfcdPID;
-let dcrwPID;
+let pfcwPID;
 
-let dcrwPort;
+let pfcwPort;
 
 function closeClis() {
   // shutdown daemon and wallet.
   // Don't try to close if not running.
   if(pfcdPID && pfcdPID !== -1)
     closePFCD(pfcdPID);
-  if(dcrwPID && dcrwPID !== -1)
-    closePFCW(dcrwPID);
+  if(pfcwPID && pfcwPID !== -1)
+    closePFCW(pfcwPID);
 }
 
 function closePFCD() {
@@ -35,11 +35,11 @@ function closePFCD() {
 
 export const closePFCW = () => {
   try {
-    if (require("is-running")(dcrwPID) && os.platform() != "win32") {
-      logger.log("info", "Sending SIGINT to pfcwallet at pid:" + dcrwPID);
-      process.kill(dcrwPID, "SIGINT");
+    if (require("is-running")(pfcwPID) && os.platform() != "win32") {
+      logger.log("info", "Sending SIGINT to pfcwallet at pid:" + pfcwPID);
+      process.kill(pfcwPID, "SIGINT");
     }
-    dcrwPID = null;
+    pfcwPID = null;
     return true;
   } catch (e) {
     logger.log("error", "error closing wallet: " + e);
@@ -181,8 +181,8 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
   args.push("--ticketbuyer.maxperblock=" + cfg.get("maxperblock"));
   args.push("--addridxscanlen=" + cfg.get("gaplimit"));
 
-  const dcrwExe = getExecutablePath("pfcwallet", argv.customBinPath);
-  if (!fs.existsSync(dcrwExe)) {
+  const pfcwExe = getExecutablePath("pfcwallet", argv.customBinPath);
+  if (!fs.existsSync(pfcwExe)) {
     logger.log("error", "The pfcwallet file does not exists");
     return;
   }
@@ -206,15 +206,15 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     args = concat(args, stringArgv(argv.extrawalletargs));
   }
 
-  logger.log("info", `Starting ${dcrwExe} with ${args}`);
+  logger.log("info", `Starting ${pfcwExe} with ${args}`);
 
-  const pfcwallet = spawn(dcrwExe, args, {
+  const pfcwallet = spawn(pfcwExe, args, {
     detached: os.platform() == "win32",
     stdio: [ "ignore", "pipe", "pipe", "ignore", "pipe" ]
   });
 
   const notifyGrpcPort = (port) => {
-    dcrwPort = port;
+    pfcwPort = port;
     logger.log("info", "wallet grpc running on port", port);
     mainWindow.webContents.send("pfcwallet-port", port);
   };
@@ -272,18 +272,18 @@ export const launchPFCWallet = (mainWindow, daemonIsAdvanced, walletPath, testne
     AddToPfcwalletLog(process.stderr, data, debug);
   });
 
-  dcrwPID = pfcwallet.pid;
-  logger.log("info", "pfcwallet started with pid:" + dcrwPID);
+  pfcwPID = pfcwallet.pid;
+  logger.log("info", "pfcwallet started with pid:" + pfcwPID);
 
   pfcwallet.unref();
-  return dcrwPID;
+  return pfcwPID;
 };
 
-export const GetPfcwPort = () => dcrwPort;
+export const GetPfcwPort = () => pfcwPort;
 
 export const GetPfcdPID = () => pfcdPID;
 
-export const GetPfcwPID = () => dcrwPID;
+export const GetPfcwPID = () => pfcwPID;
 
 export const readExesVersion = (app, grpcVersions) => {
   let spawn = require("child_process").spawnSync;

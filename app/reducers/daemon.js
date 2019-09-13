@@ -14,7 +14,7 @@ import {
   SHUTDOWN_REQUESTED,
   SET_CREDENTIALS_APPDATA_ERROR,
   AVAILABLE_WALLETS,
-  DECREDITON_VERSION,
+  PFCREDIT_VERSION,
   FATAL_DAEMON_ERROR,
   FATAL_WALLET_ERROR,
 } from "../actions/DaemonActions";
@@ -27,7 +27,7 @@ import {
 
 export default function version(state = {}, action) {
   switch (action.type) {
-  case DECREDITON_VERSION:
+  case PFCREDIT_VERSION:
     return { ...state,
       updateAvailable: action.msg,
     };
