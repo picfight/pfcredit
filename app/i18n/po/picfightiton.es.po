@@ -1563,7 +1563,7 @@ msgid ""
 " advanced users."
 msgstr ""
 "Se deshabilitan todas las conexiones a servicios de terceros (que no sean "
-"pfcd ni cartera depfc). Esto podría impedirle utilizar determinadas "
+"pfcd ni cartera de pfc). Esto podría impedirle utilizar determinadas "
 "funcionalidades de la aplicación. Recomendado para usuarios avanzados."
 
 #. [getStarted.header.discoveringAddresses.meta]

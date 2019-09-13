@@ -88,7 +88,7 @@ git clone https://github.com/picfight/pfcredit.git
 cd pfcredit
 yarn
 mkdir bin/
-cp $GOPATH/bin/dcr* bin/
+cp $GOPATH/bin/pfc* bin/
 yarn dev
 ```
 
