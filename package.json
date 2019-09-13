@@ -1,5 +1,5 @@
 {
-  "name": "decrediton",
+  "name": "pfcredit",
   "productName": "Pfcredit",
   "version": "1.3.0",
   "description": "Pfcredit based on React, React Router, Webpack, React Hot Loader for rapid application development",
@@ -26,7 +26,7 @@
     "package-dev-linux": "npm run build && build --linux tar.gz",
     "cleanup": "mop -v",
     "flow": "flow",
-    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/decrediton.pot",
+    "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js && ./node_modules/.bin/rip json2pot 'app/i18n/extracted/**/*.json' -c id -o app/i18n/pot/pfcredit.pot",
     "i18n-assemble-translated": "node ./scripts/assembleTranslated.js && ./node_modules/.bin/rip po2json 'app/i18n/po/*.po' -m 'app/i18n/extracted/**/*.json' -c id -o app/i18n/translations --indentation 2 --sort-by-id",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js"
   },
@@ -90,7 +90,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/picfight/pfcredit.git"
+    "url": "git+https://github.com/decred/pfcredit.git"
   },
   "author": {
     "name": "The Decred developers",
@@ -99,11 +99,11 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/picfight/pfcredit/issues"
+    "url": "https://github.com/decred/pfcredit/issues"
   },
   "keywords": [
     "picfight",
-    "decrediton",
+    "pfcredit",
     "electron",
     "react",
     "react-router",
@@ -111,7 +111,7 @@
     "webpack",
     "react-hot"
   ],
-  "homepage": "https://github.com/picfight/pfcredit#readme",
+  "homepage": "https://github.com/decred/pfcredit#readme",
   "devDependencies": {
     "asar": "^0.12.3",
     "babel-cli": "^6.24.1",

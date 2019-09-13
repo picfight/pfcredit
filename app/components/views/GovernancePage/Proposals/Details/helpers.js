@@ -104,7 +104,7 @@ export const TimeValue = ({ timestamp, tsDate }) => (
 );
 
 // This changes links to never open. Debatable whether we want to
-// allow proposals to link somewhere directly from picfightiton.
+// allow proposals to link somewhere directly from pfcredit.
 const renderInternalProposalLink = ({ href, children }) => {
   console.log("rendering internal link", href);
   return <a onClick={() => {} } href="#">{children}</a>;
@@ -127,7 +127,7 @@ export const ProposalText = ({ text }) => (
       linkReference: renderInternalProposalLink,
 
       // debatable whether we wanna allow inline image references in proposals
-      // in picfightiton.
+      // in pfcredit.
       imageReference: () => {},
     }}
   />

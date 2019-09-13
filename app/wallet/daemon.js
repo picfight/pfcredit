@@ -105,10 +105,10 @@ export const getPfcwalletLogs = log(() => Promise
   }), "Get Pfcwallet Logs", logOptionNoResponseData());
 
 export const getPfcreditLogs = log(() => Promise
-  .resolve(ipcRenderer.sendSync("get-picfightiton-logs"))
+  .resolve(ipcRenderer.sendSync("get-pfcredit-logs"))
   .then(logs => {
     if (logs) return logs;
-    throw "Error getting picfightiton logs";
+    throw "Error getting pfcredit logs";
   }), "Get Pfcredit Logs", logOptionNoResponseData());
 
 export const getAvailableWallets = log((network) => Promise

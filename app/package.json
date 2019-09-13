@@ -1,6 +1,6 @@
 {
-  "name": "decrediton",
-  "productName": "decrediton",
+  "name": "pfcredit",
+  "productName": "pfcredit",
   "version": "1.3.0",
   "description": "Cross-platform picfight gui based on Electron and React",
   "main": "./main.js",

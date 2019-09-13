@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=Pfcredit
 Comment=Pfcredit the PicFight wallet
-Exec=decrediton %U
+Exec=pfcredit %U
 Terminal=false
 Type=Application
 Icon=decred

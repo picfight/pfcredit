@@ -13,7 +13,7 @@ import { cleanShutdown, GetPfcdPID, GetPfcwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 
-// setPath as picfightiton
+// setPath as pfcredit
 app.setPath("userData", appDataDirectory());
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
@@ -182,8 +182,8 @@ ipcMain.on("get-pfcwallet-logs", (event) => {
   event.returnValue = GetPfcwalletLogs();
 });
 
-ipcMain.on("get-picfightiton-logs", (event) => {
-  event.returnValue = "decrediton logs!";
+ipcMain.on("get-pfcredit-logs", (event) => {
+  event.returnValue = "pfcredit logs!";
 });
 
 ipcMain.on("get-last-log-line-pfcd", event => {
@@ -220,7 +220,7 @@ if (stopSecondInstance) {
 
 app.on("ready", async () => {
   // when installing (on first run) locale will be empty. Determine the user's
-  // OS locale and set that as picfightiton's locale.
+  // OS locale and set that as pfcredit's locale.
   const cfgLocale = globalCfg.get("locale", "");
   let locale = locales.find(value => value.key === cfgLocale);
   if (!locale) {

@@ -56,7 +56,7 @@ const logFormatterColorized = (opts) => {
 };
 
 // createLogger creates the main app logger. This stores all logs into the
-// picfightiton app data dir and sends to the console when debug == true.
+// pfcredit app data dir and sends to the console when debug == true.
 // This is meant to be called from the ipcMain thread.
 export function createLogger(debug) {
   if (logger)
@@ -65,7 +65,7 @@ export function createLogger(debug) {
     transports: [
       new (winston.transports.File)({
         json: false,
-        filename: path.join(app.getPath("userData"), "decrediton.log"),
+        filename: path.join(app.getPath("userData"), "pfcredit.log"),
         timestamp: logTimestamp,
         formatter: logFormatter,
       })

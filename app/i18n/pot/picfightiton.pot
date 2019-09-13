@@ -1173,18 +1173,18 @@ msgid "PicFight contributors"
 msgstr ""
 
 #: app/i18n/extracted/app/components/modals/AboutModal/Modal.json
-#. [aboutModal.decrediton]
+#. [aboutModal.pfcredit]
 #. defaultMessage is:
 #. Pfcredit
-msgctxt "aboutModal.decrediton"
+msgctxt "aboutModal.pfcredit"
 msgid "Pfcredit"
 msgstr ""
 
 #: app/i18n/extracted/static/menus.json
-#. [appMenu.decrediton]
+#. [appMenu.pfcredit]
 #. defaultMessage is:
 #. Pfcredit
-msgctxt "appMenu.decrediton"
+msgctxt "appMenu.pfcredit"
 msgid "Pfcredit"
 msgstr ""
 
@@ -2047,9 +2047,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 #. [help.description.links]
 #. defaultMessage is:
-#. If you have any difficulty with picfightiton, please use the following links to help find a solution.
+#. If you have any difficulty with pfcredit, please use the following links to help find a solution.
 msgctxt "help.description.links"
-msgid "If you have any difficulty with picfightiton, please use the following links to help find a solution."
+msgid "If you have any difficulty with pfcredit, please use the following links to help find a solution."
 msgstr ""
 
 #: app/i18n/extracted/app/components/charts/messages.json

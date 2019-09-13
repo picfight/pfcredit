@@ -1,19 +1,19 @@
-# picfightiton
+# pfcredit
 
-[![Build Status](https://travis-ci.org/picfight/pfcredit.png?branch=master)](https://travis-ci.org/picfight/pfcredit)
+[![Build Status](https://travis-ci.org/decred/pfcredit.png?branch=master)](https://travis-ci.org/decred/pfcredit)
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
-decrediton is a cross-platform GUI for picfight written in node.js using
+pfcredit is a cross-platform GUI for picfight written in node.js using
 Electron.
 
 ## Installation
 
-Currently picfightiton is available on Windows, Linux, and macOS.
+Currently pfcredit is available on Windows, Linux, and macOS.
 
 Pfcredit will NOT use or in any way disrupt the wallet file you may
 already be using at this time.
 
-Download the picfightiton release for your operating system on [decred/picfight-binaries](https://github.com/decred/picfight-binaries/releases).
+Download the pfcredit release for your operating system on [decred/picfight-binaries](https://github.com/decred/picfight-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed.
@@ -32,11 +32,11 @@ sudo dnf -y install libXScrnSaver
 
 On linux you will need to decompress the package:
 ```bash
-tar -xvzf picfightiton-X.X.X.tar.gz
+tar -xvzf pfcredit-X.X.X.tar.gz
 ```
 and then run the file:
 ```bash
-./decrediton
+./pfcredit
 ```
 
 This will start pfcd and pfcwallet for you.
@@ -46,7 +46,7 @@ Applications folder.  Double click on Pfcredit.app to start.
 
 You can also install via [brew cask](https://caskroom.github.io): 
 ```bash
-brew cask install picfightiton
+brew cask install pfcredit
 ```
 
 From there follow the on screen instructions to setup your wallet.
@@ -58,13 +58,13 @@ When running a release version, there are a few options available.
 To see additional debug information (including the output of pfcd and pfcwallet) run:
 
 ```
-decrediton --debug
+pfcredit --debug
 ```
 
 To pass additional arguements to pfcwallet (such as to increase the logging level run:
 
 ```
-decrediton --extrawalletargs='-d=debug'
+pfcredit --extrawalletargs='-d=debug'
 ```
 
 ## Developing
@@ -84,8 +84,8 @@ Adjust the following steps for the paths you want to use.
 ``` bash
 mkdir code
 cd code
-git clone https://github.com/picfight/pfcredit.git
-cd picfightiton
+git clone https://github.com/decred/pfcredit.git
+cd pfcredit
 yarn
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
@@ -93,13 +93,13 @@ yarn dev
 ```
 
 ## Setting up your development environment
-The following steps will help you configure your picfightiton development environment and reduce future startup times.
+The following steps will help you configure your pfcredit development environment and reduce future startup times.
 
 ### Wallet
-When you launch picfightiton, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+When you launch pfcredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
 
 ### PicFight Node
-It will be helpful to you to run the PicFight node in a separate process and simply attach to it between picfightiton restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+It will be helpful to you to run the PicFight node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -109,7 +109,7 @@ Windows - ```C:\Users\<your-username>\AppData\Local\Pfcredit\config.json```
 
 OSX - ```$HOME/Library/Application\ Support/Pfcredit/config.json```
 
-Linux - ```~/.config/decrediton/config.json```
+Linux - ```~/.config/pfcredit/config.json```
 
 Run the following to start the PicFight daemon in a standalone terminal window:
 
@@ -148,12 +148,12 @@ You need to install pfcd, pfcwallet and pfcctl.
 - [pfcd/pfcctl installation instructions](https://github.com/picfight/pfcd#updating)
 - [pfcwallet installation instructions](https://github.com/picfight/pfcwallet#installation-and-updating)
 
-To build a packaged version of picfightiton (including a dmg on OSX and
+To build a packaged version of pfcredit (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
 dcr command line tools:
 
 ```bash
-cd code/decrediton
+cd code/pfcredit
 mkdir bin
 cp `which pfcd` bin/
 cp `which pfcctl` bin/
@@ -189,9 +189,9 @@ If you have any further questions you can find us at:
 ## Issue Tracker
 
 The
-[integrated github issue tracker](https://github.com/picfight/pfcredit/issues)
+[integrated github issue tracker](https://github.com/decred/pfcredit/issues)
 is used for this project.
 
 ## License
 
-decrediton is licensed under the [copyfree](http://copyfree.org) ISC License.
+pfcredit is licensed under the [copyfree](http://copyfree.org) ISC License.

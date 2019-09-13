@@ -41,7 +41,7 @@ class LogsTabBody extends React.Component {
       interval: null,
       pfcdLogs: "",
       pfcwalletLogs: "",
-      picfightitonLogs: null,
+      pfcreditLogs: null,
       showPfcdLogs: false,
       showPfcwalletLogs: false,
       showPfcreditLogs: false
@@ -54,7 +54,7 @@ class LogsTabBody extends React.Component {
     } = this;
     const { isDaemonRemote, isDaemonStarted } = this.props;
     const {
-      pfcdLogs, pfcwalletLogs, picfightitonLogs, showPfcdLogs, showPfcwalletLogs, showPfcreditLogs
+      pfcdLogs, pfcwalletLogs, pfcreditLogs, showPfcdLogs, showPfcwalletLogs, showPfcreditLogs
     } = this.state;
     return (
       <Logs
@@ -72,7 +72,7 @@ class LogsTabBody extends React.Component {
           onHidePfcwalletLogs,
           pfcdLogs,
           pfcwalletLogs,
-          picfightitonLogs,
+          pfcreditLogs,
           isDaemonRemote,
           isDaemonStarted
         }}

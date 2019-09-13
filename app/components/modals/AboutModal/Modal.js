@@ -7,7 +7,7 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => (
     <div className="about-modal-icon"/>
     <div className="about-modal-content">
       <div className="about-modal-title">
-        <T id="aboutModal.decrediton" m="Pfcredit" />
+        <T id="aboutModal.pfcredit" m="Pfcredit" />
       </div>
       <div className="info-modal-close-button-top" onClick={onCancelModal}/>
       <div className="about-modal-text-paragraph">
@@ -17,7 +17,7 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => (
         <T id="aboutModal.paragraph2a" m="Pfcredit is free and open source software, developed and designed by the global team of"/> <a onClick={() => shell.openExternal("http://picfight.org/contributors/")}><T id="aboutModal.paragraph2b" m="PicFight contributors"/></a>
       </div>
       <div className="about-modal-text-paragraph">
-        <T id="aboutModal.paragraph3" m="Want to help or get involved, check out"/> <a onClick={() => shell.openExternal("https://github.com/picfight/pfcredit")}>github.com/picfight/pfcredit</a>
+        <T id="aboutModal.paragraph3" m="Want to help or get involved, check out"/> <a onClick={() => shell.openExternal("https://github.com/decred/pfcredit")}>github.com/decred/pfcredit</a>
       </div>
     </div>
     <div className="about-modal-bottom-area">
@@ -31,7 +31,7 @@ const AboutModal = ({ show, onCancelModal, version, updateAvailable }) => (
         Copyright &copy; 2018 <a onClick={() => shell.openExternal("https://picfight.org")}>PicFight</a>
       </div>
       <div className="about-modal-bottom-area-right">
-        <a onClick={() => shell.openExternal("https://github.com/picfight/pfcredit/blob/master/LICENSE")}><T id="aboutModal.licensing" m="Licensing information"/></a>
+        <a onClick={() => shell.openExternal("https://github.com/decred/pfcredit/blob/master/LICENSE")}><T id="aboutModal.licensing" m="Licensing information"/></a>
       </div>
     </div>
   </Modal>

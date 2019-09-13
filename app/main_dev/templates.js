@@ -7,7 +7,7 @@ let grpcVersions = { requiredVersion: null, walletVersion: null };
 
 const darwinTemplate = (mainWindow, locale) => [
   {
-    label: locale.messages["appMenu.decrediton"],
+    label: locale.messages["appMenu.pfcredit"],
     submenu: [ {
       label: locale.messages["appMenu.aboutPfcredit"],
       selector: "orderFrontStandardAboutPanel:"
