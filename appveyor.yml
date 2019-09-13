@@ -23,7 +23,7 @@ install:
   - go get -u -v github.com/picfight/pfcwallet
   - go get -u -v github.com/Masterminds/glide
   - go get -u github.com/golang/dep/cmd/dep
-  - cd %GOPATH%\\src\\github.com\\decred\\pfcd
+  - cd %GOPATH%\\src\\github.com\\picfight\\pfcd
   - glide i
   - go install . ./cmd/pfcctl/
   - cd ../pfcwallet

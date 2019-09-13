@@ -92,7 +92,7 @@ export const allowExternalRequest = (externalReqType) => {
     addAllowedURL("https://mainnet.picfight.org/api/status");
     break;
   case EXTERNALREQUEST_STAKEPOOL_LISTING:
-    addAllowedURL(/^https:\/\/api\.decred\.org\/\?c=gsd$/);
+    addAllowedURL(/^https:\/\/api\.picfight\.org\/\?c=gsd$/);
     break;
   case EXTERNALREQUEST_UPDATE_CHECK:
     addAllowedURL("https://api.github.com/repos/picfight/pfcredit/releases");

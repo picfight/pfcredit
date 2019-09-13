@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
 "Last-Translator: tx_e2f_es t25 <tx_e2f_es_t25@e2f.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/decred/teams/79156/es/)\n"
+"Language-Team: Spanish (https://www.transifex.com/picfight/teams/79156/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1563,7 +1563,7 @@ msgid ""
 " advanced users."
 msgstr ""
 "Se deshabilitan todas las conexiones a servicios de terceros (que no sean "
-"pfcd ni cartera de dcr). Esto podría impedirle utilizar determinadas "
+"pfcd ni cartera depfc). Esto podría impedirle utilizar determinadas "
 "funcionalidades de la aplicación. Recomendado para usuarios avanzados."
 
 #. [getStarted.header.discoveringAddresses.meta]
@@ -6909,7 +6909,7 @@ msgstr "forum.picfight.org"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.github.subtitle"
 msgid "github.com/picfight/pfcredit"
-msgstr "github.com/decred/decredition"
+msgstr "github.com/picfight/picfightition"
 
 #. [ticket.status.immature]
 #. defaultMessage is:
@@ -7009,11 +7009,11 @@ msgstr "slack.picfight.org"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
-#. t.me/decred
+#. t.me/picfight
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.telegram.subtitle"
-msgid "t.me/decred"
-msgstr "t.me/decred"
+msgid "t.me/picfight"
+msgstr "t.me/picfight"
 
 #. [stake.discoverStakeOoolsAPILink]
 #. defaultMessage is:

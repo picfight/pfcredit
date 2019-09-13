@@ -6,7 +6,7 @@ import fs from "fs";
 import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
-import { model1_decred_homescreen } from "helpers/trezor";
+import { model1_picfight_homescreen } from "helpers/trezor";
 import { getWalletCfg } from "../config";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
@@ -597,7 +597,7 @@ export const changeToPicfightHomeScreen = () => async (dispatch, getState) => {
 
   try {
     await deviceRun(dispatch, getState, device, async session => {
-      await session.changeHomescreen(model1_decred_homescreen);
+      await session.changeHomescreen(model1_picfight_homescreen);
     });
     dispatch({ type: TRZ_CHANGEHOMESCREEN_SUCCESS });
   } catch (error) {

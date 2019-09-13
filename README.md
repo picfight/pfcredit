@@ -13,7 +13,7 @@ Currently pfcredit is available on Windows, Linux, and macOS.
 Pfcredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
-Download the pfcredit release for your operating system on [decred/picfight-binaries](https://github.com/decred/picfight-binaries/releases).
+Download the pfcredit release for your operating system on [picfight/picfight-binaries](https://github.com/picfight/picfight-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/picfight/pfcredit/issues/1404)).
@@ -150,7 +150,7 @@ You need to install pfcd, pfcwallet and pfcctl.
 
 To build a packaged version of pfcredit (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
-dcr command line tools:
+pfc command line tools:
 
 ```bash
 cd code/pfcredit
@@ -187,8 +187,8 @@ yarn package-dev-linux
 
 If you have any further questions you can find us at:
 
-- irc.freenode.net (channel #decred)
-- [webchat](https://webchat.freenode.net/?channels=decred)
+- irc.freenode.net (channel #picfight)
+- [webchat](https://webchat.freenode.net/?channels=picfight)
 - forum.picfight.org
 - picfight.slack.com
 

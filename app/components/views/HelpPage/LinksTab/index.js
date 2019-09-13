@@ -34,7 +34,7 @@ export const LinksTab = () => (
       <HelpLink className={"help-slack-icon"} href="https://slack.picfight.org" title={<T id="help.slack" m="Slack" />} subtitle={<T id="help.slack.subtitle" m="slack.picfight.org"/>}/>
       <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.picfight.org" title={<T id="help.rocketchat" m="RocketChat" />} subtitle={<T id="help.rocketchat.subtitle" m="rocketchat.picfight.org"/>}/>
       <HelpLink className={"help-matrix-icon"} href="https://riot.im/app/#/login" title={<T id="help.matrix" m="Matrix Chat" />} subtitle={<T id="help.matrix.subtitle" m="riot.im"/>}/>
-      <HelpLink className={"help-forum-icon"} href="https://t.me/decred" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/decred"/>}/>
+      <HelpLink className={"help-forum-icon"} href="https://t.me/picfight" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/picfight"/>}/>
       <HelpLink className={"help-forum-icon"} href="https://forum.picfight.org" title={<T id="help.forum" m="Forum" />} subtitle={<T id="help.forum.subtitle" m="forum.picfight.org"/>}/>
     </div>
   </Aux>

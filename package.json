@@ -111,7 +111,7 @@
   "author": {
     "name": "The Decred developers",
     "email": "info@picfight.org",
-    "url": "https://github.com/decred"
+    "url": "https://github.com/picfight"
   },
   "license": "ISC",
   "bugs": {
@@ -206,7 +206,7 @@
     "is-running": "^2.1.0",
     "lodash": "^4.17.4",
     "mv": "^2.1.1",
-    "node-addon-loader": "decred/node-addon-loader#master",
+    "node-addon-loader": "picfight/node-addon-loader#master",
     "nouislider": "^12.0.0",
     "prop-types": "^15.5.10",
     "qr-image": "^3.2.0",
