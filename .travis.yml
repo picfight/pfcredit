@@ -16,6 +16,7 @@ cache:
 
 install:
   - yarn
+  - yarn upgrade caniuse-lite browserslist
 
 script:
   - yarn lint || travis_terminate 1
