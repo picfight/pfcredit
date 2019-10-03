@@ -1,6 +1,6 @@
 import { AutoBuyerSwitch, PassphraseModalSwitch } from "buttons";
 import { FormattedMessage as T } from "react-intl";
-import { PfcInput, AccountsSelect, StakePoolSelect } from "inputs";
+import { DcrInput, AccountsSelect, StakePoolSelect } from "inputs";
 import { Balance } from "shared";
 
 const TicketAutoBuyerForm = ({
@@ -61,7 +61,7 @@ const TicketAutoBuyerForm = ({
         <div className="stakepool-auto-buyer-row-portion-full">
           <div className="stakepool-autobuyer-label"><T id="autobuyer.balanceToMaintain" m="Balance to Maintain" />:</div>
           <div className="stakepool-autobuyer-input">
-            <PfcInput
+            <DcrInput
               disabled={isTicketAutoBuyerEnabled}
               amount={balanceToMaintain}
               onChangeAmount={onChangeBalanceToMaintain}

@@ -1,6 +1,6 @@
 import { compose } from "fp";
 import { FormattedMessage as T, injectIntl, defineMessages } from "react-intl";
-import { AddressInput, PfcInput } from "inputs";
+import { AddressInput, DcrInput } from "inputs";
 import "style/SendPage.less";
 
 const messages = defineMessages({
@@ -60,7 +60,7 @@ const SendOutputRow = ({
           {index === 0 ? <span><T id="send.amount" m="Amount" />:</span> : null}
         </div>
         <div className="send-address-amount-sum-and-currency">
-          <PfcInput
+          <DcrInput
             showErrors={true}
             hidden={!isSendAll}
             className="send-address-input-amount"
@@ -68,7 +68,7 @@ const SendOutputRow = ({
             amount={sendAllAmount}
             onKeyDown={onKeyDown}
           />
-          <PfcInput
+          <DcrInput
             showErrors={true}
             invalid={!!amountError}
             invalidMessage={amountError}

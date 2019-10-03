@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { shutdownPage } from "connectors";
-import { PicfightLoading } from "indicators";
+import { PicFight CoinLoading } from "indicators";
 import "style/Layout.less";
 
 class ShutdownAppPage extends React.Component{
@@ -11,7 +11,7 @@ class ShutdownAppPage extends React.Component{
   render() {
     return (
       <div className="page-body getstarted">
-        <PicfightLoading  className="get-started-loading" />
+        <PicFightCoinLoading  className="get-started-loading" />
         <div className="shutdown-text"><T id="shutdown.header.title" m="Shutting down Pfcredit" /></div>
       </div>
     );

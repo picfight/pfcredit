@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "POT-Creation-Date: 2018-12-11T19:51:18.184Z\n"
 "Last-Translator: e2f_ja r5 <tx_e2f_ja_r5@e2f.com>, 2018\n"
-"Language-Team: Japanese (https://www.transifex.com/picfight/teams/79156/ja/)\n"
+"Language-Team: Japanese (https://www.transifex.com/decred/teams/79156/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -99,12 +99,12 @@ msgstr "< 1分以内"
 
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
-#. A cross platform GUI Wallet for Picfight written in node.js using Electron
+#. A cross platform GUI Wallet for PicFight Coin written in node.js using Electron
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph1"
 msgid ""
-"A cross platform GUI Wallet for Picfight written in node.js using Electron"
-msgstr "Electronを使用してnode.jsで書かれたPicfight用のクロスプラットフォームGUIウォレット"
+"A cross platform GUI Wallet for PicFight Coin written in node.js using Electron"
+msgstr "Electronを使用してnode.jsで書かれたDecred用のクロスプラットフォームGUIウォレット"
 
 #. [getStarted.stakepool.apikey]
 #. defaultMessage is:
@@ -668,11 +668,11 @@ msgstr "全て前面に移動"
 
 #. [home.noTransactions.buyFromExchanges]
 #. defaultMessage is:
-#. Buy Picfight from Exchanges
+#. Buy PicFight Coin from Exchanges
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTransactionsLinks.json
 msgctxt "home.noTransactions.buyFromExchanges"
-msgid "Buy Picfight from Exchanges"
-msgstr "取引所でPicfightを購入"
+msgid "Buy PicFight Coin from Exchanges"
+msgstr "取引所でDecredを購入"
 
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
@@ -1052,17 +1052,17 @@ msgstr "コンセンサスの変更"
 
 #. [votingPreferences.description]
 #. defaultMessage is:
-#. Consensus changes refer to the on-chain governance aspect of Picfight. This
+#. Consensus changes refer to the on-chain governance aspect of PicFight Coin. This
 #. means deciding whether to adopt changes to the consensus rules of the
 #. network. Participation in voting requires (PoS) tickets.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.description"
 msgid ""
-"Consensus changes refer to the on-chain governance aspect of Picfight. This "
+"Consensus changes refer to the on-chain governance aspect of PicFight Coin. This "
 "means deciding whether to adopt changes to the consensus rules of the "
 "network. Participation in voting requires (PoS) tickets."
 msgstr ""
-"コンセンサスの変更とは、Picfightのチェーン上のガバナンスを指します。つまり、ネットワークのコンセンサスルールへの変更を適用するかどうかを決定します。投票に参加するには"
+"コンセンサスの変更とは、Decredのチェーン上のガバナンスを指します。つまり、ネットワークのコンセンサスルールへの変更を適用するかどうかを決定します。投票に参加するには"
 " (PoS) チケットが必要です。"
 
 #. [help.constitution]
@@ -1340,35 +1340,35 @@ msgstr "日"
 
 #. [settings.privacy.pfcdata.label]
 #. defaultMessage is:
-#. Picfight Block Explorer
+#. PicFight Coin Block Explorer
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.label"
-msgid "Picfight Block Explorer"
-msgstr "Picfightブロックエクスプローラー"
+msgid "PicFight Coin Block Explorer"
+msgstr "Decredブロックエクスプローラー"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
-#. Picfight Constitution
+#. PicFight Coin Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.modal.title"
-msgid "Picfight Constitution"
-msgstr "Picfight規約"
+msgid "PicFight Coin Constitution"
+msgstr "Decred規約"
 
 #. [help.constitution.subtitle]
 #. defaultMessage is:
-#. Picfight Project Constitution
+#. PicFight Coin Project Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.subtitle"
-msgid "Picfight Project Constitution"
-msgstr "Picfightプロジェクト規約"
+msgid "PicFight Coin Project Constitution"
+msgstr "Decredプロジェクト規約"
 
 #. [aboutModal.paragraph2b]
 #. defaultMessage is:
-#. Picfight contributors
+#. PicFight Coin contributors
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2b"
-msgid "Picfight contributors"
-msgstr "Picfightコントリビューター"
+msgid "PicFight Coin contributors"
+msgstr "Decredコントリビューター"
 
 #. [aboutModal.pfcredit]
 #. defaultMessage is:
@@ -1376,7 +1376,7 @@ msgstr "Picfightコントリビューター"
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.pfcredit"
 msgid "Pfcredit"
-msgstr "Picfightition"
+msgstr "Pfcredit"
 
 #. [appMenu.pfcredit]
 #. defaultMessage is:
@@ -1395,7 +1395,7 @@ msgctxt "aboutModal.paragraph2a"
 msgid ""
 "Pfcredit is free and open source software, developed and designed by the "
 "global team of"
-msgstr "Picfightitionは無料のオープンソースソフトウェアで、次のグローバルチームにより開発、デザインされました。"
+msgstr "Pfcreditは無料のオープンソースソフトウェアで、次のグローバルチームにより開発、デザインされました。"
 
 #. [tickets.startAutoBuyerConfirmation.description]
 #. defaultMessage is:
@@ -1746,7 +1746,7 @@ msgid ""
 msgstr ""
 "作成したパスフレーズを入力して、以前にウォレットで作成した追加アカウントのブロックチェーンをスキャンします。\n"
 "\n"
-"アカウント名はブロックチェーンに保管されないため、Picfightitionを設定した後で名前を変更する必要があります。"
+"アカウント名はブロックチェーンに保管されないため、Pfcreditを設定した後で名前を変更する必要があります。"
 
 #. [securitycenter.signMessage.field.message.placeholder]
 #. defaultMessage is:
@@ -2262,11 +2262,11 @@ msgstr "ガバナンス"
 
 #. [governance.description]
 #. defaultMessage is:
-#. Governance aspects of Picfight.
+#. Governance aspects of PicFight Coin.
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.description"
-msgid "Governance aspects of Picfight."
-msgstr "Picfightのガバナンス面。"
+msgid "Governance aspects of PicFight Coin."
+msgstr "Decredのガバナンス面。"
 
 #. [accounts.hdPath]
 #. defaultMessage is:
@@ -2650,11 +2650,11 @@ msgstr "詳細"
 
 #. [help.description.tutorials]
 #. defaultMessage is:
-#. Learn about the various aspects of the Picfight network.
+#. Learn about the various aspects of the PicFight Coin network.
 #: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
 msgctxt "help.description.tutorials"
-msgid "Learn about the various aspects of the Picfight network."
-msgstr "Picfightネットワークの様々な面について学びます。"
+msgid "Learn about the various aspects of the PicFight Coin network."
+msgstr "Decredネットワークの様々な面について学びます。"
 
 #. [getStarted.learnBasics]
 #. defaultMessage is:
@@ -2706,11 +2706,11 @@ msgstr "ライブチケット"
 
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
-#. Loading Picfight blockchain, estimated time left
+#. Loading PicFight Coin blockchain, estimated time left
 #: app/i18n/extracted/app/components/indicators/LoaderBarBottom.json
 msgctxt "getStarted.chainLoading.syncEstimation.small"
-msgid "Loading Picfight blockchain, estimated time left"
-msgstr "Picfightブロックチェーンを読み込み中。残り時間およそ:"
+msgid "Loading PicFight Coin blockchain, estimated time left"
+msgstr "Decredブロックチェーンを読み込み中。残り時間およそ:"
 
 #. [myTickets.loadingMoreTickets]
 #. defaultMessage is:
@@ -2794,16 +2794,16 @@ msgstr "メインネット"
 
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
-#. Mainnet Picfight addresses always begin with letter D and contain 26-35
+#. Mainnet PicFight Coin addresses always begin with letter D and contain 26-35
 #. alphanumeric characters
 #. (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.mainnet"
 msgid ""
-"Mainnet Picfight addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
+"Mainnet PicFight Coin addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
 "(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
-"Mainnet Picfightのアドレスは常に文字Dから始まり、26～35個の英数字を含みます。\n"
+"Mainnet PicFight Coinのアドレスは常に文字Dから始まり、26～35個の英数字を含みます。\n"
 "（例: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）"
 
 #. [purchaseTickets.import]
@@ -4036,7 +4036,7 @@ msgstr "プライベートパスフレーズを繰り返す"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "send.publishUnminedTransactions.success"
 msgid "Republished unmined transactions to the picfight network."
-msgstr "マイニングされていない取引をpicfightネットワークへ再発行しました。"
+msgstr "マイニングされていない取引をdecredネットワークへ再発行しました。"
 
 #. [getStarted.walletRescan.progress]
 #. defaultMessage is:
@@ -5075,16 +5075,16 @@ msgstr "テストネット"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
-#. Testnet Picfight addresses always begin with letter T and contain 26-35
+#. Testnet PicFight Coin addresses always begin with letter T and contain 26-35
 #. alphanumeric characters
 #. (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.testnet"
 msgid ""
-"Testnet Picfight addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
+"Testnet PicFight Coin addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
 "(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
-"Testnet Picfightアドレスは常に文字Tから始まり、26～35個の英数字を含みます。\n"
+"Testnet PicFight Coinアドレスは常に文字Tから始まり、26～35個の英数字を含みます。\n"
 "（例: TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0）"
 
 #. [invalidRPCVersion.info]
@@ -5113,7 +5113,7 @@ msgctxt "settings.resetNetworkContent"
 msgid ""
 "The setting you have chosen to change requires Pfcredit to be restarted.  "
 "Please confirm this action before proceeding."
-msgstr "選択した設定に変更するには、Picfightitionを再起動する必要があります。続行する前にこのアクションを確認してください。"
+msgstr "選択した設定に変更するには、Pfcreditを再起動する必要があります。続行する前にこのアクションを確認してください。"
 
 #. [votingPreferences.noAgenda]
 #. defaultMessage is:
@@ -5164,7 +5164,7 @@ msgid ""
 "blockchain download. Please come to our support channel on "
 "slack/matrix/discord/rocketchat to get advice about running disk utilities."
 msgstr ""
-"このエラーは、ブロックチェーンデータが壊れていることを意味します。これは通常、HDD/SDDのセクターに不具合が発生し、内蔵SMARTが修復しなかったことが原因です。または、メモリーの問題によりデータが破損していることもよくあります。解決するには、ブロックチェーンデータを削除して再ダウンロードする必要があります。下のボタンを押して作業を完了してください。Picfightitionを再起動する時に、自動的にブロックチェーンのダウンロードが開始します。ディスクユーティリティの実行に関するアドバイスは、弊社のサポートチャンネルをご覧ください。slack/matrix/discord/rocketchat"
+"このエラーは、ブロックチェーンデータが壊れていることを意味します。これは通常、HDD/SDDのセクターに不具合が発生し、内蔵SMARTが修復しなかったことが原因です。または、メモリーの問題によりデータが破損していることもよくあります。解決するには、ブロックチェーンデータを削除して再ダウンロードする必要があります。下のボタンを押して作業を完了してください。Pfcreditを再起動する時に、自動的にブロックチェーンのダウンロードが開始します。ディスクユーティリティの実行に関するアドバイスは、弊社のサポートチャンネルをご覧ください。slack/matrix/discord/rocketchat"
 
 #. [fatal.suggestion.resources]
 #. defaultMessage is:
@@ -5243,17 +5243,17 @@ msgstr "このウォレットは暗号化されているため、複合化する
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular Picfight Daemon and fully verify blocks.  This will
+#. This will use the regular PicFight Coin Daemon and fully verify blocks.  This will
 #. take longer, but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular Picfight Daemon and fully verify blocks.  This will "
+"This will use the regular PicFight Coin Daemon and fully verify blocks.  This will "
 "take longer, but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr ""
-"これは通常のPicfightデーモンを使用し、ブロックを完全に確認します。時間はかかりますが、確実に安全です。すべてのブロックおよび採掘した取引を完全に信頼できます。"
+"これは通常のDecredデーモンを使用し、ブロックを完全に確認します。時間はかかりますが、確実に安全です。すべてのブロックおよび採掘した取引を完全に信頼できます。"
 
 #. [notifications.type.ticket]
 #. defaultMessage is:
@@ -6485,7 +6485,7 @@ msgid ""
 "after deleting the folder. Please manually restart it afterwards."
 msgstr ""
 "警告: "
-"この操作は元に戻せません！続行する前に、ブロックチェーンの日付を削除することを必ず確認してください。Picfightitionは、フォルダを削除した後に自動的にシャットダウンします。その後、手動で再起動してください。"
+"この操作は元に戻せません！続行する前に、ブロックチェーンの日付を削除することを必ず確認してください。Pfcreditは、フォルダを削除した後に自動的にシャットダウンします。その後、手動で再起動してください。"
 
 #. [watchOnly.enabled]
 #. defaultMessage is:
@@ -6869,11 +6869,11 @@ msgstr "slack.picfight.org"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
-#. t.me/picfight
+#. t.me/decred
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.telegram.subtitle"
-msgid "t.me/picfight"
-msgstr "t.me/picfight"
+msgid "t.me/decred"
+msgstr "t.me/decred"
 
 #. [stake.discoverStakeOoolsAPILink]
 #. defaultMessage is:

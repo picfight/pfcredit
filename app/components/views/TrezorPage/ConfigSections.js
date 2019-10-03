@@ -19,7 +19,7 @@ class TrezorConfigSections extends React.Component {
   }
 
   onChangeHomeScreen() {
-    this.props.changeToPicfightHomeScreen();
+    this.props.changeToDecredHomeScreen();
   }
 
   onChangeLabel(newLabel) {

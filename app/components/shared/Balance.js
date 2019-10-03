@@ -7,11 +7,11 @@ export const Balance = ({ currencyDisplay, amount, onClick, bold, large,
 }) => {
   const secondary = large ? "balance-tiny" : flat ? "balance-base" : title ? "balance-title" : "balance-small";
   if (currencyDisplay === "PFC") {
-    var totalPfc = 0;
+    var totalDcr = 0;
     if (typeof amount !== "undefined" && amount !== 0 && !isNaN(amount)) {
-      totalPfc = preScaled ? parseFloat(amount) : parseInt(amount) / 100000000;
+      totalDcr = preScaled ? parseFloat(amount) : parseInt(amount) / 100000000;
     }
-    const split = totalPfc.toFixed(8).toString().split(".");
+    const split = totalDcr.toFixed(8).toString().split(".");
     const head = [ split[0], split[1].slice(0,2) ].join(".");
     const tail = split[1].slice(2).replace(/0{1,3}$/, "");
     const negativeZero = (parseFloat(head) === 0) && (amount < 0);

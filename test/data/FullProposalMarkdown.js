@@ -231,7 +231,7 @@ and the reference is right below this
 
 [piguirefimg]: static/media/spritesheet.23cd19a2.png  "sprite sheet"
 
-<img class="pfc-icon" src="/img/pfc-icons/Code.svg" /> Schnorr Signatures
+<img class="dcr-icon" src="/img/dcr-icons/Code.svg" /> Schnorr Signatures
 
 <IMG SRC=" &#14;  javascript:alert('XSS');">
 

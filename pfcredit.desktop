@@ -1,10 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Pfcredit
-Comment=Pfcredit the Picfight wallet
+Comment=Pfcredit the PicFight Coin wallet
 Exec=pfcredit %U
 Terminal=false
 Type=Application
-Icon=picfight
-MimeType=x-scheme-handler/picfight;
+Icon=decred
+MimeType=x-scheme-handler/decred;
 Categories=Office;Finance;

@@ -14,7 +14,7 @@
 
 **Taxa de Tx (PFC/kB)** Pfcredit usa uma transação "split" para evitar bloquear o seu saldo, dividindo o valor exato necessário para a compra do ticket do saldo da sua carteira. Essa transação "split" precisa ser confirmada pelo menos uma vez para que você possa reutilizar o seu saldo. Isso pode bloquear o seu saldo por vários minutos, enquanto a confirmação ocorre. Sem a divisão, você pode ter que esperar a confirmação da transação do ticket, o que pode levar várias horas. Ela pode ser deixada em 0.01. Isso não afeta as suas chances de comprar tickets ou votar com eles.
 
-**Endereço de Votação** O endereço Picfight que irá realizar a votação.
+**Endereço de Votação** O endereço PicFight Coin que irá realizar a votação.
 
 **Endereço da Taxa de Pool** O endereço para onde a taxa da stakepool será paga.
 

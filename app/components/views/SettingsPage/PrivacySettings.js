@@ -69,7 +69,7 @@ const PrivacySettings = ({
           onChange={toggle(EXTERNALREQUEST_POLITEIA)}
         />
         <AllowableRequestType
-          label={<T id="settings.privacy.pfcdata.label" m="Picfight Block Explorer" />}
+          label={<T id="settings.privacy.pfcdata.label" m="PicFight Coin Block Explorer" />}
           id="pfcdata"
           description={<T id="settings.privacy.pfcdata.description" m="Access chain information from explorer.pfcdata.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1}

@@ -33,7 +33,7 @@ export default ({ enableSpv, disableSpv }) => (
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
         icon="disable-spv"
-        description={<T id="spv.options.disable.description" m="This will use the regular Picfight Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted." />}
+        description={<T id="spv.options.disable.description" m="This will use the regular PicFight Coin Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted." />}
         onClick={disableSpv}
       />
 

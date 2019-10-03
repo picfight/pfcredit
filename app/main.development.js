@@ -9,7 +9,7 @@ import { getWalletsDirectoryPath, getWalletsDirectoryPathNetwork, appDataDirecto
 import { getGlobalCfgPath, checkAndInitWalletCfg } from "./main_dev/paths";
 import { installSessionHandlers, reloadAllowedExternalRequests, allowStakepoolRequests, allowExternalRequest } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
-import { cleanShutdown, GetPfcdPID, GetPfcwPID } from "./main_dev/launch";
+import { cleanShutdown, GetPfcdPID, GetDcrwPID } from "./main_dev/launch";
 import { getAvailableWallets, startDaemon, createWallet, removeWallet, stopDaemon, stopWallet, startWallet, checkDaemon, deleteDaemon, setWatchingOnlyWallet, getWatchingOnlyWallet, getDaemonInfo } from "./main_dev/ipc";
 import { initTemplate, getVersionWin, setGrpcVersions, getGrpcVersions, inputMenu, selectionMenu } from "./main_dev/templates";
 import { readFileBackward } from "./helpers/byteActions";
@@ -171,7 +171,7 @@ ipcMain.on("get-info", (event, rpcCreds) => {
 });
 
 ipcMain.on("clean-shutdown", async function(event){
-  const stopped = await cleanShutdown(mainWindow, app, GetPfcdPID(), GetPfcwPID());
+  const stopped = await cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
   event.sender.send("clean-shutdown-finished", stopped);
 });
 
@@ -327,9 +327,9 @@ app.on("ready", async () => {
 });
 
 app.on("before-quit", (event) => {
-  logger.log("info","Caught before-quit. Set picfightition as was closed");
+  logger.log("info","Caught before-quit. Set decredition as was closed");
   event.preventDefault();
-  cleanShutdown(mainWindow, app, GetPfcdPID(), GetPfcwPID());
+  cleanShutdown(mainWindow, app, GetPfcdPID(), GetDcrwPID());
   setMustOpenForm(true);
   app.exit(0);
 });

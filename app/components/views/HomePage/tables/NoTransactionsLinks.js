@@ -8,7 +8,7 @@ export default () => (
       <T id="home.noTransactions.receiveLink" m="Generate a PFC Address for receiving funds" /> →
     </Link>
     <ExternalLink href="https://picfight.org/exchanges" className="buy">
-      <T id="home.noTransactions.buyFromExchanges" m="Buy Picfight from Exchanges" /> →
+      <T id="home.noTransactions.buyFromExchanges" m="Buy PicFight Coin from Exchanges" /> →
     </ExternalLink>
   </div>
 );

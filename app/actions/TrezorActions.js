@@ -455,8 +455,8 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       picfight_tree: inp.getTree()
 
       // FIXME: this needs to be supported on trezor.js.
-      // picfightTree: inp.getTree(),
-      // picfightScriptVersion: 0,
+      // decredTree: inp.getTree(),
+      // decredScriptVersion: 0,
     });
   }
 
@@ -510,8 +510,8 @@ export function walletTxToRefTx(tx) {
     picfight_tree: inp.getTree()
 
     // TODO: this needs to be supported on trezor.js
-    // picfightTree: inp.getTree(),
-    // picfightScriptVersion: 0,
+    // decredTree: inp.getTree(),
+    // decredScriptVersion: 0,
   }));
 
   const bin_outputs = tx.getOutputsList().map(outp => ({
@@ -586,7 +586,7 @@ export const TRZ_CHANGEHOMESCREEN_ATTEMPT = "TRZ_CHANGEHOMESCREEN_ATTEMPT";
 export const TRZ_CHANGEHOMESCREEN_FAILED =  "TRZ_CHANGEHOMESCREEN_FAILED";
 export const TRZ_CHANGEHOMESCREEN_SUCCESS = "TRZ_CHANGEHOMESCREEN_SUCCESS";
 
-export const changeToPicfightHomeScreen = () => async (dispatch, getState) => {
+export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
   const device = selectors.trezorDevice(getState());
   if (!device) {
     dispatch({ error: "Device not connected", type:  TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED });

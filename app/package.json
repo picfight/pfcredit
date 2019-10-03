@@ -5,9 +5,9 @@
   "description": "Cross-platform picfight gui based on Electron and React",
   "main": "./main.js",
   "author": {
-    "name": "Picfight Team",
+    "name": "PicFight Coin Team",
     "email": "info@picfight.org",
-    "url": "https://github.com/picfight"
+    "url": "https://github.com/decred"
   },
   "license": "ISC",
   "dependencies": {

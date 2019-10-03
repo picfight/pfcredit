@@ -5,7 +5,7 @@ import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
 import { getWalletPath, getWalletDBPathFromWallets, getPfcdPath, pfcdCfg, pfcctlCfg, appDataDirectory, getExecutablePath, getPfcdRpcCert } from "./paths";
 import { createTempPfcdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readPfcdConfig } from "../config";
-import { launchPFCD, launchPFCWallet, GetPfcdPID, GetPfcwPID, closePFCD, closePFCW, GetPfcwPort } from "./launch";
+import { launchPFCD, launchPFCWallet, GetPfcdPID, GetDcrwPID, closePFCD, closePFCW, GetDcrwPort } from "./launch";
 
 const argv = parseArgs(process.argv.slice(1), OPTIONS);
 const logger = createLogger();
@@ -117,10 +117,10 @@ export const removeWallet = (testnet, walletPath) => {
 };
 
 export const startWallet = (mainWindow, daemonIsAdvanced, testnet, walletPath, reactIPC) => {
-  if (GetPfcwPID()) {
-    logger.log("info", "pfcwallet already started " + GetPfcwPID());
-    mainWindow.webContents.send("pfcwallet-port", GetPfcwPort());
-    return GetPfcwPID();
+  if (GetDcrwPID()) {
+    logger.log("info", "pfcwallet already started " + GetDcrwPID());
+    mainWindow.webContents.send("pfcwallet-port", GetDcrwPort());
+    return GetDcrwPID();
   }
   initWalletCfg(testnet, walletPath);
   try {
@@ -135,7 +135,7 @@ export const stopDaemon = () => {
 };
 
 export const stopWallet = () => {
-  return closePFCW(GetPfcwPID());
+  return closePFCW(GetDcrwPID());
 };
 
 export const getDaemonInfo = (mainWindow, rpcCreds, isRetry) => {

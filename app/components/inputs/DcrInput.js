@@ -1,24 +1,24 @@
 import FloatInput from "./FloatInput";
 import IntegerInput from "./IntegerInput";
-import { strToPfcAtoms } from "helpers/strings";
+import { strToDcrAtoms } from "helpers/strings";
 import balanceConnector from "connectors/balance";
 
 /**
- * FixedPfcInput is a simple numeric input that is assumed to **always** hold
+ * FixedDcrInput is a simple numeric input that is assumed to **always** hold
  * a floating point number representing a PFC amount (ie, an amount that
  * will be mutiplied by 1e8 to get to the actual atoms value).
  *
  * This is **not** affected by the global currencyDisplay state.
  *
- * Whenever possible, use the PfcInput component, as it is more flexible and
+ * Whenever possible, use the DcrInput component, as it is more flexible and
  * already manages the underlying input value in atoms.
  */
-export const FixedPfcInput = ({ currencyDisplay, ...props }) =>
+export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
   <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />;
 
 /**
- * PfcInput provides a way to receive picfight amount inputs. Instead of the usual
- * value/onChange pair, it uses amount/onChangeAmount to track values in picfight
+ * DcrInput provides a way to receive picfight amount inputs. Instead of the usual
+ * value/onChange pair, it uses amount/onChangeAmount to track values in decred
  * atoms, correctly accounting for the currently used currencyDisplay, floating
  * convertions, etc.
  *
@@ -27,7 +27,7 @@ export const FixedPfcInput = ({ currencyDisplay, ...props }) =>
  * amount in **ATOMS** (as required by various wallet operations).
  */
 @autobind
-class PfcInput extends React.Component {
+class DcrInput extends React.Component {
 
   constructor(props) {
     super(props);
@@ -53,7 +53,7 @@ class PfcInput extends React.Component {
 
   changeAmount(value) {
     const { unitDivisor } = this.props;
-    const amount = !value ? 0 : strToPfcAtoms(value, unitDivisor);
+    const amount = !value ? 0 : strToDcrAtoms(value, unitDivisor);
     if (amount !== this.props.amount) {
       this.props.onChangeAmount && this.props.onChangeAmount(amount);
     }
@@ -64,7 +64,7 @@ class PfcInput extends React.Component {
     if (value) {
       // pre-validate if <= max supply
       const { unitDivisor } = this.props;
-      const amount = strToPfcAtoms(value, unitDivisor);
+      const amount = strToDcrAtoms(value, unitDivisor);
       // TODO: move to a global constant
       if (amount > 21e14) return;
     }
@@ -91,4 +91,4 @@ class PfcInput extends React.Component {
   }
 }
 
-export default balanceConnector(PfcInput);
+export default balanceConnector(DcrInput);

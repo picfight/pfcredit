@@ -13,7 +13,7 @@ Currently pfcredit is available on Windows, Linux, and macOS.
 Pfcredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
-Download the pfcredit release for your operating system on [picfight/picfight-binaries](https://github.com/picfight/picfight-binaries/releases).
+Download the pfcredit release for your operating system on [decred/decred-binaries](https://github.com/decred/decred-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/picfight/pfcredit/issues/1404)).
@@ -88,7 +88,7 @@ git clone https://github.com/picfight/pfcredit.git
 cd pfcredit
 yarn
 mkdir bin/
-cp $GOPATH/bin/pfc* bin/
+cp $GOPATH/bin/dcr* bin/
 yarn dev
 ```
 
@@ -98,8 +98,8 @@ The following steps will help you configure your pfcredit development environmen
 ### Wallet
 When you launch pfcredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
 
-### Picfight Node
-It will be helpful to you to run the Picfight node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+### PicFight Coin Node
+It will be helpful to you to run the PicFight Coin node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -111,7 +111,7 @@ OSX - ```$HOME/Library/Application\ Support/Pfcredit/config.json```
 
 Linux - ```~/.config/pfcredit/config.json```
 
-Run the following to start the Picfight daemon in a standalone terminal window:
+Run the following to start the PicFight Coin daemon in a standalone terminal window:
 
 Windows - ```pfcd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Pfcd\rpc.cert```
 
@@ -150,7 +150,7 @@ You need to install pfcd, pfcwallet and pfcctl.
 
 To build a packaged version of pfcredit (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
-pfc command line tools:
+dcr command line tools:
 
 ```bash
 cd code/pfcredit
@@ -187,10 +187,10 @@ yarn package-dev-linux
 
 If you have any further questions you can find us at:
 
-- irc.freenode.net (channel #picfight)
-- [webchat](https://webchat.freenode.net/?channels=picfight)
+- irc.freenode.net (channel #decred)
+- [webchat](https://webchat.freenode.net/?channels=decred)
 - forum.picfight.org
-- picfight.slack.com
+- decred.slack.com
 
 ## Issue Tracker
 

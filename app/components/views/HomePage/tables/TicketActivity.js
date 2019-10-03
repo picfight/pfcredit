@@ -1,6 +1,6 @@
 // @flow
 import { home } from "connectors";
-import { PicfightLoading } from "indicators";
+import { PicFight CoinLoading } from "indicators";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import NoTicketsLinks from "./NoTicketsLinks";
@@ -17,7 +17,7 @@ const RecentTickets = ({
 }) => {
   const hasTickets = tickets.length > 0;
   return (
-    getTransactionsRequestAttempt ? <PicfightLoading /> :
+    getTransactionsRequestAttempt ? <PicFightCoinLoading /> :
       <Aux>
         <div className="home-content-title">
           {hasTickets

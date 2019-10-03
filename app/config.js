@@ -373,7 +373,7 @@ export function createTempPfcdConf() {
 
 export function newWalletConfigCreation(testnet, walletPath) {
   // TODO: set random user/password
-  var pfcwConf = {
+  var dcrwConf = {
     "Application Options":
     {
       tlscurve: "P-256",
@@ -385,5 +385,5 @@ export function newWalletConfigCreation(testnet, walletPath) {
       nolegacyrpc: "1",
     },
   };
-  fs.writeFileSync(pfcwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(pfcwConf));
+  fs.writeFileSync(pfcwalletCfg(getWalletPath(testnet, walletPath)), ini.stringify(dcrwConf));
 }

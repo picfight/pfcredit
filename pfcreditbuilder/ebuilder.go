@@ -11,7 +11,7 @@ import (
 
 func main() {
 	set := &coinknife.Settings{
-		PathToInputRepo:        `D:\PICFIGHT\src\github.com\decred\decredition`,
+		PathToInputRepo:        `D:\PICFIGHT\src\github.com\decred\decrediton`,
 		PathToOutputRepo:       `D:\PICFIGHT\src\github.com\picfight\pfcredit`,
 		DoNotProcessAnyFiles:   false,
 		DoNotProcessSubfolders: false,
@@ -21,6 +21,7 @@ func main() {
 		IgnoredFiles:           ignoredFiles(),
 		InjectorsPath:          filepath.Join("", "code_injections"),
 		GoFmt:                  coinknife.GoFmt,
+		AppendGitIgnore:        coinknife.AppendGitIgnore,
 	}
 
 	coinknife.Build(set)
@@ -28,26 +29,52 @@ func main() {
 
 func nameGenerator(data string) string {
 	//data = coinknife.Replace(data, "decred/dcrd", "picfight/pfcd")
-	return data
+	return fileGenerator(data)
 }
 
 func fileGenerator(data string) string {
 
-  data = coinknife.Replace(data, "decred/decredition", "picfight/pfcredit")
-  data = coinknife.Replace(data, "decredition", "pfcredit")
+	data = coinknife.Replace(data, "decred/decrediton", "picfight/pfcredit")
+	data = coinknife.Replace(data, "decrediton", "pfcredit")
+	data = coinknife.Replace(data, "Decrediton", "Pfcredit")
+	data = coinknife.Replace(data, "Decredition", "Pfcredit")
+	data = coinknife.Replace(data, "DECREDITON", "PFCREDIT")
 
 	data = coinknife.Replace(data, "decred/dcrdata", "picfight/pfcdata")
 	data = coinknife.Replace(data, "dcrdata", "pfcdata")
+	data = coinknife.Replace(data, "Dcrdata", "Pfcdata")
+	data = coinknife.Replace(data, "DCRDATA", "PFCDATA")
 
 	data = coinknife.Replace(data, "decred/dcrwallet", "picfight/pfcwallet")
 	data = coinknife.Replace(data, "dcrwallet", "pfcwallet")
+	data = coinknife.Replace(data, "Dcrwallet", "Pfcwallet")
+	data = coinknife.Replace(data, "DCRWALLET", "PFCWALLET")
 
 	data = coinknife.Replace(data, "decred/dcrd", "picfight/pfcd")
 	data = coinknife.Replace(data, "dcrd", "pfcd")
+	data = coinknife.Replace(data, "Dcrd", "Pfcd")
+	data = coinknife.Replace(data, "DCRD", "PFCD")
 
 	//data = coinknife.Replace(data, "DcrdataVersion", "PfcdataVersion")
 	data = coinknife.Replace(data, "DCR", "PFC")
-	data = coinknife.Replace(data, "unit of Decred", "unit of Picfight coin")
+
+	data = coinknife.Replace(data, "dcrctl", "pfcctl")
+	data = coinknife.Replace(data, "dcrutil", "pfcutil")
+
+	data = coinknife.Replace(data, "unit of Decred", "unit of PicFight Coin")
+	data = coinknife.Replace(data, " Decred ", " PicFight Coin ")
+	data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
+	data = coinknife.Replace(data, " Decred", " PicFight Coin")
+	data = coinknife.Replace(data, "DecredLoading", "PicFightCoinLoading")
+	data = coinknife.Replace(data, "_decred_", "_picfight_")
+
+	data = coinknife.Replace(data, "_decred", "_picfight")
+	data = coinknife.Replace(data, "decred_", "picfight_")
+
+	data = coinknife.Replace(data, "a decred address", "a picfight wallet address")
+	data = coinknife.Replace(data, " decred ", " picfight ")
+	data = coinknife.Replace(data, "decred.org", "picfight.org")
+
 	return data
 }
 
@@ -123,6 +150,9 @@ func processableFiles(file string) bool {
 	if strings.HasSuffix(file, ".sum") {
 		return false
 	}
+	if strings.HasSuffix(file, ".lock") {
+		return false
+	}
 
 	//------------------------------
 	if strings.HasSuffix(file, ".mod") {
@@ -182,9 +212,6 @@ func processableFiles(file string) bool {
 		return true
 	}
 	if strings.HasSuffix(file, ".css") {
-		return true
-	}
-	if strings.HasSuffix(file, ".lock") {
 		return true
 	}
 	if strings.HasSuffix(file, "LICENSE") {
