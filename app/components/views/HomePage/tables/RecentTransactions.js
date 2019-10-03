@@ -1,6 +1,6 @@
 // @flow
 import { home } from "connectors";
-import { PicFight CoinLoading } from "indicators";
+import { PicFightCoinLoading } from "indicators";
 import TxHistory from "TxHistory";
 import { FormattedMessage as T } from "react-intl";
 import "style/Fonts.less";

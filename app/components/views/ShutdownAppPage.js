@@ -1,6 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import { shutdownPage } from "connectors";
-import { PicFight CoinLoading } from "indicators";
+import { PicFightCoinLoading } from "indicators";
 import "style/Layout.less";
 
 class ShutdownAppPage extends React.Component{

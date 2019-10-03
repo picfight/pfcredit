@@ -1,7 +1,7 @@
 import { FormattedMessage as T } from "react-intl";
 import { StandalonePage, StandaloneHeader } from "layout";
 import AccountRow from "./AccountRow";
-import { PicFight CoinLoading } from "indicators";
+import { PicFightCoinLoading } from "indicators";
 import { InfoDocModalButton, PassphraseModalButton } from "buttons";
 import { AddAccountModal } from "modals";
 import { WatchOnlyWarnNotification } from "shared";

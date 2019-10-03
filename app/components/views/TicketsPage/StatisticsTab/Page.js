@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
 import StakePoolStats from "./charts/StakePoolStats";
-import { PicFight CoinLoading, NoStats } from "indicators";
+import { PicFightCoinLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allStakePoolStats }) => {

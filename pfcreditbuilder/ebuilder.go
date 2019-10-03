@@ -60,12 +60,11 @@ func fileGenerator(data string) string {
 
 	data = coinknife.Replace(data, "dcrctl", "pfcctl")
 	data = coinknife.Replace(data, "dcrutil", "pfcutil")
+	data = coinknife.Replace(data, "DecredLoading", "PicFightCoinLoading")
 
 	data = coinknife.Replace(data, "unit of Decred", "unit of PicFight Coin")
 	data = coinknife.Replace(data, " Decred ", " PicFight Coin ")
-	data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
-	data = coinknife.Replace(data, " Decred", " PicFight Coin")
-	data = coinknife.Replace(data, "DecredLoading", "PicFightCoinLoading")
+
 	data = coinknife.Replace(data, "_decred_", "_picfight_")
 
 	data = coinknife.Replace(data, "_decred", "_picfight")
@@ -74,6 +73,9 @@ func fileGenerator(data string) string {
 	data = coinknife.Replace(data, "a decred address", "a picfight wallet address")
 	data = coinknife.Replace(data, " decred ", " picfight ")
 	data = coinknife.Replace(data, "decred.org", "picfight.org")
+
+	data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
+	data = coinknife.Replace(data, " Decred", " PicFight Coin")
 
 	return data
 }
