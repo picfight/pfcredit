@@ -11,8 +11,8 @@ import (
 
 func main() {
 	set := &coinknife.Settings{
-		PathToInputRepo:        `D:\PICFIGHT\src\github.com\decred\dcrdata`,
-		PathToOutputRepo:       `D:\PICFIGHT\src\github.com\picfight\pfcdata`,
+		PathToInputRepo:        `D:\PICFIGHT\src\github.com\decred\decredition`,
+		PathToOutputRepo:       `D:\PICFIGHT\src\github.com\picfight\pfcredit`,
 		DoNotProcessAnyFiles:   false,
 		DoNotProcessSubfolders: false,
 		FileNameProcessor:      nameGenerator,
@@ -32,6 +32,9 @@ func nameGenerator(data string) string {
 }
 
 func fileGenerator(data string) string {
+
+  data = coinknife.Replace(data, "decred/decredition", "picfight/pfcredit")
+  data = coinknife.Replace(data, "decredition", "pfcredit")
 
 	data = coinknife.Replace(data, "decred/dcrdata", "picfight/pfcdata")
 	data = coinknife.Replace(data, "dcrdata", "pfcdata")
@@ -54,7 +57,7 @@ func ignoredFiles() map[string]bool {
 	ignore[".git"] = true
 	ignore[".github"] = true
 	ignore[".idea"] = true
-	ignore["pfcdatabuilder"] = true
+	ignore["pfcreditbuilder"] = true
 	return ignore
 }
 
