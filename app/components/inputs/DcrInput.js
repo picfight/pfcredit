@@ -17,7 +17,7 @@ export const FixedDcrInput = ({ currencyDisplay, ...props }) =>
   <FloatInput {...{ ...props, unit: currencyDisplay, maxFracDigits: 8 }} />;
 
 /**
- * DcrInput provides a way to receive picfight amount inputs. Instead of the usual
+ * DcrInput provides a way to receive decred amount inputs. Instead of the usual
  * value/onChange pair, it uses amount/onChangeAmount to track values in decred
  * atoms, correctly accounting for the currently used currencyDisplay, floating
  * convertions, etc.

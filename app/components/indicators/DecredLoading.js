@@ -1,9 +1,9 @@
 import "style/Loading.less";
 
-const PicFightCoinLoading = ({ hidden }) => (
+const DecredLoading = ({ hidden }) => (
   <div
     className={"new-logo-animation"}
     style={{ display: hidden ? "none" : "block" }}/>
 );
 
-export default PicFightCoinLoading;
+export default DecredLoading;

@@ -3,7 +3,7 @@ import { FormattedMessage as T } from "react-intl";
 import VoteTimeChartPage from "./charts/VoteTime";
 import StakeRewardsChartPage from "./charts/StakeRewards";
 import StakePoolStats from "./charts/StakePoolStats";
-import { PicFightCoinLoading, NoStats } from "indicators";
+import { DecredLoading, NoStats } from "indicators";
 import { Tooltip } from "shared";
 
 const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allStakePoolStats }) => {
@@ -30,7 +30,7 @@ const TicketsStatsPage = ({ getMyTicketsStatsRequest, hasStats, hasTickets, allS
         </div>
       </div>
       <div className="my-tickets-charts">
-        {getMyTicketsStatsRequest ? <PicFightCoinLoading /> :
+        {getMyTicketsStatsRequest ? <DecredLoading /> :
           <Switch>
             <Route path="/tickets/statistics/voteTime" component={VoteTimeChartPage} />
             <Route path="/tickets/statistics/stakerewards" component={StakeRewardsChartPage} />

@@ -20,7 +20,7 @@ export default ({ enableSpv, disableSpv }) => (
     </div>
     <div className="language-select-title-sub">
       <T id="spv.titleSub" m={"Select how Pfcredit wallet's should connect to the network. You can change this in the application settings later. For more in-depth information about SPV and how it works, you can go "}/>
-      <ExternalLink href={"https://docs.picfight.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink>.
+      <ExternalLink href={"https://docs.decred.org/wallets/spv/"}><T id="spv.titleSub.here" m="here"/></ExternalLink>.
     </div>
     <div className="privacy-options">
       <PrivacyOption
@@ -33,7 +33,7 @@ export default ({ enableSpv, disableSpv }) => (
       <PrivacyOption
         title={<T id="spv.options.disable.title" m="Disable SPV" />}
         icon="disable-spv"
-        description={<T id="spv.options.disable.description" m="This will use the regular PicFight Coin Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted." />}
+        description={<T id="spv.options.disable.description" m="This will use the regular Decred Daemon and fully verify blocks.  This will take longer, but is fully secure.  Any block or mined transaction can be fully trusted." />}
         onClick={disableSpv}
       />
 

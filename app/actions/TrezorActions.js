@@ -6,7 +6,7 @@ import fs from "fs";
 import { sprintf } from "sprintf-js";
 import { rawHashToHex, rawToHex, hexToRaw, str2utf8hex, hex2b64 } from "helpers";
 import { publishTransactionAttempt } from "./ControlActions";
-import { model1_picfight_homescreen } from "helpers/trezor";
+import { model1_decred_homescreen } from "helpers/trezor";
 import { getWalletCfg } from "../config";
 
 import { EXTERNALREQUEST_TREZOR_BRIDGE } from "main_dev/externalRequests";
@@ -405,7 +405,7 @@ export const signMessageAttemptTrezor = (address, message) => async (dispatch, g
 
 };
 
-// walletTxToBtcjsTx converts a tx decoded by the picfight wallet (ie,
+// walletTxToBtcjsTx converts a tx decoded by the decred wallet (ie,
 // returned from the decodeRawTransaction call) into a bitcoinjs-compatible
 // transaction (to be used in trezor)
 export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch, getState) => {
@@ -452,7 +452,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       sequence: inp.getSequence(),
       address_n: addressPath(addrIndex, addrBranch, WALLET_ACCOUNT,
         chainParams.HDCoinType),
-      picfight_tree: inp.getTree()
+      decred_tree: inp.getTree()
 
       // FIXME: this needs to be supported on trezor.js.
       // decredTree: inp.getTree(),
@@ -485,7 +485,7 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
       script_type: "PAYTOADDRESS", // needs to change on OP_RETURNs
       address: addr,
       address_n: address_n,
-      picfight_script_version: outp.getVersion(),
+      decred_script_version: outp.getVersion(),
     });
   }
 
@@ -500,14 +500,14 @@ export const walletTxToBtcjsTx = (tx, changeIndex, inputTxs) => async (dispatch,
   return txInfo;
 };
 
-// walletTxToRefTx converts a tx decoded by the picfight wallet into a trezor
+// walletTxToRefTx converts a tx decoded by the decred wallet into a trezor
 // RefTransaction object to be used with SignTx.
 export function walletTxToRefTx(tx) {
   const inputs = tx.getInputsList().map(inp => ({
     amount: inp.getAmountIn(),
     prev_hash: rawHashToHex(inp.getPreviousTransactionHash()),
     prev_index: inp.getPreviousTransactionIndex(),
-    picfight_tree: inp.getTree()
+    decred_tree: inp.getTree()
 
     // TODO: this needs to be supported on trezor.js
     // decredTree: inp.getTree(),
@@ -517,7 +517,7 @@ export function walletTxToRefTx(tx) {
   const bin_outputs = tx.getOutputsList().map(outp => ({
     amount: outp.getValue(),
     script_pubkey: rawToHex(outp.getScript()),
-    picfight_script_version: outp.getVersion(),
+    decred_script_version: outp.getVersion(),
   }));
 
   const txInfo = {
@@ -597,7 +597,7 @@ export const changeToDecredHomeScreen = () => async (dispatch, getState) => {
 
   try {
     await deviceRun(dispatch, getState, device, async session => {
-      await session.changeHomescreen(model1_picfight_homescreen);
+      await session.changeHomescreen(model1_decred_homescreen);
     });
     dispatch({ type: TRZ_CHANGEHOMESCREEN_SUCCESS });
   } catch (error) {

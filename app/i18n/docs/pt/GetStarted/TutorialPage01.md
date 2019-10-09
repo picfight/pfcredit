@@ -1,6 +1,6 @@
-# O que é a Blockchain PicFight Coin?
+# O que é a Blockchain Decred?
 
-No coração da PicFight Coin está uma lista crescente de registros, compartilhada globalmente através de uma estrutura de dados decentralizada; essa é a blockchain da PicFight Coin.
+No coração da Decred está uma lista crescente de registros, compartilhada globalmente através de uma estrutura de dados decentralizada; essa é a blockchain da Decred.
 
 A blockchain armazena todos os dados transacionais e usa um sistema inovador **Proof-of-Stake (PoS)/Proof-of-Work (PoW)** para validar transações e manter a rede segura.
 

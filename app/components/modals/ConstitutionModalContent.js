@@ -93,11 +93,11 @@ export default () => (
     <ul>
       <li>Off-chain decision-making shall be used to resolve disputes related to
   development and voted on by the
-      {" "}<em>PicFight Coin Assembly</em> as they arise, as an effective proof-of-assembly
+      {" "}<em>Decred Assembly</em> as they arise, as an effective proof-of-assembly
     (&ldquo;PoA&rdquo;), until such time PoA is integrated into the
     blockchain.</li>
       <li>The
-        {" "}<em>PicFight Coin Assembly</em> shall be composed of diverse Assembly members who
+        {" "}<em>Decred Assembly</em> shall be composed of diverse Assembly members who
     are selected for membership by the
         {" "}<em>Admission Council</em> from the project ecosystem for
     representation.</li>
@@ -114,7 +114,7 @@ export default () => (
         {" "}<em>Attrition Council</em> shall be responsible for deactivating both
     Councils and Assembly members as necessary.</li>
       <li>Membership of the
-        {" "}<em>PicFight Coin Assembly</em> shall consist of Assembly members who have been
+        {" "}<em>Decred Assembly</em> shall consist of Assembly members who have been
     confirmed by a 60% or greater affirmative vote by the
         {" "}<em>Admission Council</em>. There is no restriction on the age or
     nationality of Assembly members, the only requirement is that of merit as
@@ -140,7 +140,7 @@ export default () => (
       <li>Sustainability and longevity require that a subsidy of 10% of all block
   rewards be given to a development organization on an ongoing basis. The
   initial development organization shall be
-      {" "}<em>PicFight Coin Holdings Group</em> LLC (&ldquo;DHG&rdquo;), a Nevis LLC that is
+      {" "}<em>Decred Holdings Group</em> LLC (&ldquo;DHG&rdquo;), a Nevis LLC that is
     responsible for funding work related to the development of the project, such
     as software development, infrastructure, and awareness.</li>
       <li>DHG shall only fund work that adheres to the guiding principles.</li>

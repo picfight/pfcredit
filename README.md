@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/picfight/pfcredit.png?branch=master)](https://travis-ci.org/picfight/pfcredit)
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
-pfcredit is a cross-platform GUI for picfight written in node.js using
+pfcredit is a cross-platform GUI for decred written in node.js using
 Electron.
 
 ## Installation
@@ -98,8 +98,8 @@ The following steps will help you configure your pfcredit development environmen
 ### Wallet
 When you launch pfcredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
 
-### PicFight Coin Node
-It will be helpful to you to run the PicFight Coin node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+### Decred Node
+It will be helpful to you to run the Decred node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -111,7 +111,7 @@ OSX - ```$HOME/Library/Application\ Support/Pfcredit/config.json```
 
 Linux - ```~/.config/pfcredit/config.json```
 
-Run the following to start the PicFight Coin daemon in a standalone terminal window:
+Run the following to start the Decred daemon in a standalone terminal window:
 
 Windows - ```pfcd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=C:\Users\<username>\AppData\Local\Pfcd\rpc.cert```
 
@@ -189,7 +189,7 @@ If you have any further questions you can find us at:
 
 - irc.freenode.net (channel #decred)
 - [webchat](https://webchat.freenode.net/?channels=decred)
-- forum.picfight.org
+- forum.decred.org
 - decred.slack.com
 
 ## Issue Tracker

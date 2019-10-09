@@ -200,7 +200,7 @@ const messages = defineMessages({
   },
   PUBLISHUNMINEDTRANSACTIONS_SUCCESS: {
     id: "send.publishUnminedTransactions.success",
-    defaultMessage: "Republished unmined transactions to the picfight network."
+    defaultMessage: "Republished unmined transactions to the decred network."
   },
   EXPORT_COMPLETED: {
     id: "export.completed",

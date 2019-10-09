@@ -16,7 +16,7 @@ const PageHeader = () =>
 const TabHeader = treasuryInfo(({ treasuryBalance }) =>
   <Aux>
     <DescriptionHeader
-      description={<T id="governance.description" m="Governance aspects of PicFight Coin." />}
+      description={<T id="governance.description" m="Governance aspects of Decred." />}
     />
     { treasuryBalance && <DescriptionHeader
       description={

@@ -15,7 +15,7 @@ export const TestNetParams = {
   HDCoinType: 1,
 
   TreasuryAddress: "TcrypGAcGCRVXrES7hWqVZb5oLJKCZEtoL1",
-  trezorCoinName: "PicFight Coin Testnet",
+  trezorCoinName: "Decred Testnet",
 };
 
 export const MainNetParams = {

@@ -22,7 +22,7 @@ export function restrictToStdDecimalNumber(s) {
 }
 
 // Converts a string encoded as stdDecimalString (ie, a string protected by
-// restrictToStdDecimalNumber) into a picfight atom amount. This performs a
+// restrictToStdDecimalNumber) into a decred atom amount. This performs a
 // conversion from a string into a JS number and then scales the number
 // according to unitDivisor so the value represents an atom amount.
 //

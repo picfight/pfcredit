@@ -14,7 +14,7 @@
 
 **Tx fee (PFC/kB)** Pfcredit uses a "split" transaction to avoid blocking your balance, spliting the exact amount needed for the ticket from the balance in your wallet. The "split" transaction needs to be confirmed at least once before you can reuse your balance. This can block your whole balance for several minutes while this confirmation occurs. Without the split, you would have to wait for the confirmation of the ticket transaction, which could take several hours. This can be left at 0.01. It does not affect your chances of buying tickets or voting with them.
 
-**Voting address** The PicFight Coin address that will do the voting.
+**Voting address** The Decred address that will do the voting.
 
 **Pool fee address** The address that your stakepool fee will end up getting paid.
 

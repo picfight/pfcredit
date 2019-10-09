@@ -87,4 +87,4 @@ const Overview = ({
 // needs to go below div.agenda-indicator-pending
 export default Overview;
 
-//<a target="_blank" href="http://picfight.org" className="agenda-overview-read-more">Read more »</a>
+//<a target="_blank" href="http://decred.org" className="agenda-overview-read-more">Read more »</a>

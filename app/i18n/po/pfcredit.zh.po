@@ -98,11 +98,11 @@ msgstr "< 1 分钟前"
 
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
-#. A cross platform GUI Wallet for PicFight Coin written in node.js using Electron
+#. A cross platform GUI Wallet for Decred written in node.js using Electron
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph1"
 msgid ""
-"A cross platform GUI Wallet for PicFight Coin written in node.js using Electron"
+"A cross platform GUI Wallet for Decred written in node.js using Electron"
 msgstr "使用 Electron 在 node.js 上编写的跨平台 GUI 钱包"
 
 #. [getStarted.stakepool.apikey]
@@ -668,11 +668,11 @@ msgstr "移到最上层"
 
 #. [home.noTransactions.buyFromExchanges]
 #. defaultMessage is:
-#. Buy PicFight Coin from Exchanges
+#. Buy Decred from Exchanges
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTransactionsLinks.json
 msgctxt "home.noTransactions.buyFromExchanges"
-msgid "Buy PicFight Coin from Exchanges"
-msgstr "从交易所购买 PicFight Coin"
+msgid "Buy Decred from Exchanges"
+msgstr "从交易所购买 Decred"
 
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
@@ -1052,13 +1052,13 @@ msgstr "共识更改"
 
 #. [votingPreferences.description]
 #. defaultMessage is:
-#. Consensus changes refer to the on-chain governance aspect of PicFight Coin. This
+#. Consensus changes refer to the on-chain governance aspect of Decred. This
 #. means deciding whether to adopt changes to the consensus rules of the
 #. network. Participation in voting requires (PoS) tickets.
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.description"
 msgid ""
-"Consensus changes refer to the on-chain governance aspect of PicFight Coin. This "
+"Consensus changes refer to the on-chain governance aspect of Decred. This "
 "means deciding whether to adopt changes to the consensus rules of the "
 "network. Participation in voting requires (PoS) tickets."
 msgstr "共识更改指的是Decred的链上治理方面。这表示决定是否采用对于网络共识规则的更改。参与投票需要(PoS)选票。"
@@ -1337,35 +1337,35 @@ msgstr "天数"
 
 #. [settings.privacy.pfcdata.label]
 #. defaultMessage is:
-#. PicFight Coin Block Explorer
+#. Decred Block Explorer
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.label"
-msgid "PicFight Coin Block Explorer"
+msgid "Decred Block Explorer"
 msgstr "Decred区块浏览器"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
-#. PicFight Coin Constitution
+#. Decred Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.modal.title"
-msgid "PicFight Coin Constitution"
-msgstr "PicFight Coin 宪法"
+msgid "Decred Constitution"
+msgstr "Decred 宪法"
 
 #. [help.constitution.subtitle]
 #. defaultMessage is:
-#. PicFight Coin Project Constitution
+#. Decred Project Constitution
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.constitution.subtitle"
-msgid "PicFight Coin Project Constitution"
-msgstr "PicFight Coin 项目宪法"
+msgid "Decred Project Constitution"
+msgstr "Decred 项目宪法"
 
 #. [aboutModal.paragraph2b]
 #. defaultMessage is:
-#. PicFight Coin contributors
+#. Decred contributors
 #: app/i18n/extracted/app/components/modals/AboutModal/AboutModal.json
 msgctxt "aboutModal.paragraph2b"
-msgid "PicFight Coin contributors"
-msgstr "PicFight Coin 贡献者"
+msgid "Decred contributors"
+msgstr "Decred 贡献者"
 
 #. [aboutModal.pfcredit]
 #. defaultMessage is:
@@ -2169,11 +2169,11 @@ msgstr "通用"
 
 #. [settings.privacy.networkStatus.description]
 #. defaultMessage is:
-#. General network information (block height, etc) from picfight.org
+#. General network information (block height, etc) from decred.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.networkStatus.description"
-msgid "General network information (block height, etc) from picfight.org"
-msgstr "来自picfight.org的一般网络信息（区块高度等）"
+msgid "General network information (block height, etc) from decred.org"
+msgstr "来自decred.org的一般网络信息（区块高度等）"
 
 #. [home.noTransactions.receiveLink]
 #. defaultMessage is:
@@ -2257,10 +2257,10 @@ msgstr "治理"
 
 #. [governance.description]
 #. defaultMessage is:
-#. Governance aspects of PicFight Coin.
+#. Governance aspects of Decred.
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.description"
-msgid "Governance aspects of PicFight Coin."
+msgid "Governance aspects of Decred."
 msgstr "Decred治理方面。"
 
 #. [accounts.hdPath]
@@ -2646,10 +2646,10 @@ msgstr "了解更多"
 
 #. [help.description.tutorials]
 #. defaultMessage is:
-#. Learn about the various aspects of the PicFight Coin network.
+#. Learn about the various aspects of the Decred network.
 #: app/i18n/extracted/app/components/views/HelpPage/TutorialsTab/index.json
 msgctxt "help.description.tutorials"
-msgid "Learn about the various aspects of the PicFight Coin network."
+msgid "Learn about the various aspects of the Decred network."
 msgstr "了解Decred网络的各个方面。"
 
 #. [getStarted.learnBasics]
@@ -2670,19 +2670,19 @@ msgstr "许可信息"
 
 #. [settings.privacy.politeia.description]
 #. defaultMessage is:
-#. List and vote on proposals on proposals.picfight.org
+#. List and vote on proposals on proposals.decred.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.politeia.description"
-msgid "List and vote on proposals on proposals.picfight.org"
-msgstr "列出proposals.picfight.org里的提案并且对提案投票"
+msgid "List and vote on proposals on proposals.decred.org"
+msgstr "列出proposals.decred.org里的提案并且对提案投票"
 
 #. [settings.privacy.stakepoolListing.description]
 #. defaultMessage is:
-#. List of currently available stakepools from picfight.org
+#. List of currently available stakepools from decred.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.stakepoolListing.description"
-msgid "List of currently available stakepools from picfight.org"
-msgstr "来自picfight.org的当前可用选票矿池列表"
+msgid "List of currently available stakepools from decred.org"
+msgstr "来自decred.org的当前可用选票矿池列表"
 
 #. [transaction.type.live]
 #. defaultMessage is:
@@ -2702,10 +2702,10 @@ msgstr "成熟票"
 
 #. [getStarted.chainLoading.syncEstimation.small]
 #. defaultMessage is:
-#. Loading PicFight Coin blockchain, estimated time left
+#. Loading Decred blockchain, estimated time left
 #: app/i18n/extracted/app/components/indicators/LoaderBarBottom.json
 msgctxt "getStarted.chainLoading.syncEstimation.small"
-msgid "Loading PicFight Coin blockchain, estimated time left"
+msgid "Loading Decred blockchain, estimated time left"
 msgstr "正在加载Decred区块链，预计剩余时间"
 
 #. [myTickets.loadingMoreTickets]
@@ -2790,13 +2790,13 @@ msgstr "主网"
 
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
-#. Mainnet PicFight Coin addresses always begin with letter D and contain 26-35
+#. Mainnet Decred addresses always begin with letter D and contain 26-35
 #. alphanumeric characters
 #. (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.mainnet"
 msgid ""
-"Mainnet PicFight Coin addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
+"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
 "(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Decred主网地址始终以字母D开头，包含26-35个字母数字字符\n"
@@ -4029,10 +4029,10 @@ msgstr "再次输入私人密码"
 
 #. [send.publishUnminedTransactions.success]
 #. defaultMessage is:
-#. Republished unmined transactions to the picfight network.
+#. Republished unmined transactions to the decred network.
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "send.publishUnminedTransactions.success"
-msgid "Republished unmined transactions to the picfight network."
+msgid "Republished unmined transactions to the decred network."
 msgstr "将未打包的交易重新发布到decred网络。"
 
 #. [getStarted.walletRescan.progress]
@@ -5070,13 +5070,13 @@ msgstr "测试网"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
-#. Testnet PicFight Coin addresses always begin with letter T and contain 26-35
+#. Testnet Decred addresses always begin with letter T and contain 26-35
 #. alphanumeric characters
 #. (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.testnet"
 msgid ""
-"Testnet PicFight Coin addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
+"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
 "(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
 "Decred测试网地址总是以字母T开头，包含26-35个字母数字字符。\n"
@@ -5237,13 +5237,13 @@ msgstr "这个钱包已加密，请输入公共密码来解密它。"
 
 #. [spv.options.disable.description]
 #. defaultMessage is:
-#. This will use the regular PicFight Coin Daemon and fully verify blocks.  This will
+#. This will use the regular Decred Daemon and fully verify blocks.  This will
 #. take longer, but is fully secure.  Any block or mined transaction can be
 #. fully trusted.
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.description"
 msgid ""
-"This will use the regular PicFight Coin Daemon and fully verify blocks.  This will "
+"This will use the regular Decred Daemon and fully verify blocks.  This will "
 "take longer, but is fully secure.  Any block or mined transaction can be "
 "fully trusted."
 msgstr "这选项会使用正规的Decred守护进程及完全验证区块。这会需要稍长时间，但是将会完全安全。任何区块或被打包交易都可以完全信任。"
@@ -6700,11 +6700,11 @@ msgstr "pfcwallet"
 
 #. [help.stakepools.subtitle]
 #. defaultMessage is:
-#. picfight.org/stakepools
+#. decred.org/stakepools
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.stakepools.subtitle"
-msgid "picfight.org/stakepools"
-msgstr "picfight.org/stakepools"
+msgid "decred.org/stakepools"
+msgstr "decred.org/stakepools"
 
 #. [help.logs.pfcredit]
 #. defaultMessage is:
@@ -6716,11 +6716,11 @@ msgstr "pfcredit"
 
 #. [help.documentation.subtitle]
 #. defaultMessage is:
-#. docs.picfight.org
+#. docs.decred.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.documentation.subtitle"
-msgid "docs.picfight.org"
-msgstr "docs.picfight.org"
+msgid "docs.decred.org"
+msgstr "docs.decred.org"
 
 #. [ticket.status.expired]
 #. defaultMessage is:
@@ -6748,11 +6748,11 @@ msgstr "explorer.pfcdata.org"
 
 #. [help.forum.subtitle]
 #. defaultMessage is:
-#. forum.picfight.org
+#. forum.decred.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.forum.subtitle"
-msgid "forum.picfight.org"
-msgstr "forum.picfight.org"
+msgid "forum.decred.org"
+msgstr "forum.decred.org"
 
 #. [help.github.subtitle]
 #. defaultMessage is:
@@ -6844,19 +6844,19 @@ msgstr "riot.im"
 
 #. [help.rocketchat.subtitle]
 #. defaultMessage is:
-#. rocketchat.picfight.org
+#. rocketchat.decred.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.rocketchat.subtitle"
-msgid "rocketchat.picfight.org"
-msgstr "rocketchat.picfight.org"
+msgid "rocketchat.decred.org"
+msgstr "rocketchat.decred.org"
 
 #. [help.slack.subtitle]
 #. defaultMessage is:
-#. slack.picfight.org
+#. slack.decred.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.slack.subtitle"
-msgid "slack.picfight.org"
-msgstr "slack.picfight.org"
+msgid "slack.decred.org"
+msgstr "slack.decred.org"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:

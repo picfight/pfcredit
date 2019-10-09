@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export const TutorialsTabHeader = () =>
   <DescriptionHeader
-    description={<T id="help.description.tutorials" m="Learn about the various aspects of the PicFight Coin network." />}
+    description={<T id="help.description.tutorials" m="Learn about the various aspects of the Decred network." />}
   />;
 
 export const TutorialsTab = () => (
