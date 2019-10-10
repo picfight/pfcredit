@@ -79,36 +79,36 @@ export function appLocaleFromElectronLocale(electronLocale) {
   case "de-AT":
   case "de-CH":
   case "de-DE":
-      return "de";
+    return "de";
 
   case "en-GB":
-      return "en-GB";
+    return "en-GB";
   case "en-AU":
-      return "en-AU";
+    return "en-AU";
 
   case "es":
-      return "es";
+    return "es";
 
   case "fr":
   case "fr-CA":
   case "fr-CH":
   case "fr-FR":
-      return "fr";
+    return "fr";
 
   case "ja":
-      return "ja";
+    return "ja";
 
   case "pt":
   case "pt-BR":
   case "pt-PT":
-      return "pt-BR";
+    return "pt-BR";
 
   case "zh":
   case "zh-CN":
   case "zh-TW":
-      return "zh";
+    return "zh";
 
-    default:
-      return "en";
+  default:
+    return "en";
   }
 }
