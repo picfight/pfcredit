@@ -7,7 +7,7 @@ import {
   ERR_INVALID_ADDR_CHECKSUM
 } from "../../../app/helpers/addresses";
 
-const MAINNET_ADDR = "DsdyVKiVuS6hpaaTtV2tBq1CqUK9ya38kwK";
+const MAINNET_ADDR = "JsKFRL5ivSH7CnYaTtaBT4M9fZG878g49Fg";
 const TESTNET_ADDR = "TsWoR2B5QhqBas1pR4YmptEKcKBJoxpTBmB";
 const MAINNET = "mainnet";
 const TESTNET = "testnet";
