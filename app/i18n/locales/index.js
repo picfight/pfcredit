@@ -1,5 +1,5 @@
 import staticDefaults from "../extracted/static";
-import {addLocaleData} from "react-intl";
+import { addLocaleData } from "react-intl";
 
 import en_data from "react-intl/locale-data/en";
 
@@ -75,37 +75,37 @@ export default locales;
 export function appLocaleFromElectronLocale(electronLocale) {
   switch (electronLocale) {
 
-    case "de":
-    case "de-AT":
-    case "de-CH":
-    case "de-DE":
+  case "de":
+  case "de-AT":
+  case "de-CH":
+  case "de-DE":
       return "de";
 
-    case "en-GB":
+  case "en-GB":
       return "en-GB";
-    case "en-AU":
+  case "en-AU":
       return "en-AU";
 
-    case "es":
+  case "es":
       return "es";
 
-    case "fr":
-    case "fr-CA":
-    case "fr-CH":
-    case "fr-FR":
+  case "fr":
+  case "fr-CA":
+  case "fr-CH":
+  case "fr-FR":
       return "fr";
 
-    case "ja":
+  case "ja":
       return "ja";
 
-    case "pt":
-    case "pt-BR":
-    case "pt-PT":
+  case "pt":
+  case "pt-BR":
+  case "pt-PT":
       return "pt-BR";
 
-    case "zh":
-    case "zh-CN":
-    case "zh-TW":
+  case "zh":
+  case "zh-CN":
+  case "zh-TW":
       return "zh";
 
     default:
