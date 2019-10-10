@@ -175,11 +175,11 @@ msgstr "Accepter"
 
 #. [settings.privacy.pfcdata.description]
 #. defaultMessage is:
-#. Access chain information from explorer.pfcdata.org
+#. Access chain information from explorer.picfight.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.description"
-msgid "Access chain information from explorer.pfcdata.org"
-msgstr "Accéder aux informations de chaînes d’explorer.pfcdata.org"
+msgid "Access chain information from explorer.picfight.org"
+msgstr "Accéder aux informations de chaînes d’explorer.picfight.org"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -6906,11 +6906,11 @@ msgstr "expiré"
 
 #. [help.blockchain.subtitle]
 #. defaultMessage is:
-#. explorer.pfcdata.org
+#. explorer.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.blockchain.subtitle"
-msgid "explorer.pfcdata.org"
-msgstr "explorer.pfcdata.org"
+msgid "explorer.picfight.org"
+msgstr "explorer.picfight.org"
 
 #. [help.forum.subtitle]
 #. defaultMessage is:

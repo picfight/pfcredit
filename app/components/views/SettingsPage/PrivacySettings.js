@@ -71,7 +71,7 @@ const PrivacySettings = ({
         <AllowableRequestType
           label={<T id="settings.privacy.pfcdata.label" m="Decred Block Explorer" />}
           id="pfcdata"
-          description={<T id="settings.privacy.pfcdata.description" m="Access chain information from explorer.pfcdata.org" />}
+          description={<T id="settings.privacy.pfcdata.description" m="Access chain information from explorer.picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1}
           onChange={toggle(EXTERNALREQUEST_PFCDATA)}
         />

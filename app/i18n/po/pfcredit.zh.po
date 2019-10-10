@@ -171,11 +171,11 @@ msgstr "接受"
 
 #. [settings.privacy.pfcdata.description]
 #. defaultMessage is:
-#. Access chain information from explorer.pfcdata.org
+#. Access chain information from explorer.picfight.org
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.description"
-msgid "Access chain information from explorer.pfcdata.org"
-msgstr "从explorer.pfcdata.org获取区块链信息"
+msgid "Access chain information from explorer.picfight.org"
+msgstr "从explorer.picfight.org获取区块链信息"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -6740,11 +6740,11 @@ msgstr "过期"
 
 #. [help.blockchain.subtitle]
 #. defaultMessage is:
-#. explorer.pfcdata.org
+#. explorer.picfight.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.blockchain.subtitle"
-msgid "explorer.pfcdata.org"
-msgstr "explorer.pfcdata.org"
+msgid "explorer.picfight.org"
+msgstr "explorer.picfight.org"
 
 #. [help.forum.subtitle]
 #. defaultMessage is:

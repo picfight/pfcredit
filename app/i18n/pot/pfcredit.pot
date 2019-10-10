@@ -162,9 +162,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 #. [settings.privacy.pfcdata.description]
 #. defaultMessage is:
-#. Access chain information from explorer.pfcdata.org
+#. Access chain information from explorer.picfight.org
 msgctxt "settings.privacy.pfcdata.description"
-msgid "Access chain information from explorer.pfcdata.org"
+msgid "Access chain information from explorer.picfight.org"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
@@ -6492,9 +6492,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 #. [help.blockchain.subtitle]
 #. defaultMessage is:
-#. explorer.pfcdata.org
+#. explorer.picfight.org
 msgctxt "help.blockchain.subtitle"
-msgid "explorer.pfcdata.org"
+msgid "explorer.picfight.org"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json

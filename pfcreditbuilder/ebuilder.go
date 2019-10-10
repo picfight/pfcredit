@@ -73,7 +73,10 @@ func fileGenerator(data string) string {
 	//
 	//data = coinknife.Replace(data, "a decred address", "a picfight wallet address")
 	//data = coinknife.Replace(data, " decred ", " picfight ")
-	//data = coinknife.Replace(data, "decred.org", "picfight.org")
+
+	data = coinknife.Replace(data, "explorer.pfcdata.org", "explorer.picfight.org")
+	data = coinknife.Replace(data, "test.pfcdata.org", "test.picfight.org")
+
 	//
 	//data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
 	//data = coinknife.Replace(data, " Decred", " PicFight Coin")

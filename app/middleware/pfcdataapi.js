@@ -2,7 +2,7 @@
 import axios from "axios";
 
 export const PFCDATA_URL_TESTNET = "https://testnet.pfcdata.org/api";
-export const PFCDATA_URL_MAINNET = "https://explorer.pfcdata.org/api";
+export const PFCDATA_URL_MAINNET = "https://explorer.picfight.org/api";
 
 const GET = (path) => {
   return axios.get(path);
