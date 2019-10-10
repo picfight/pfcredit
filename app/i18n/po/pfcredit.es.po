@@ -2856,12 +2856,12 @@ msgstr "Mainnet"
 #. defaultMessage is:
 #. Mainnet Decred addresses always begin with letter D and contain 26-35
 #. alphanumeric characters
-#. (e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
+#. (e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.mainnet"
 msgid ""
 "Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
-"(e.g. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
+"(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Las direcciones de Decred de la red principal (Mainnet) siempre comienzan con la letra D y contienen entre 26 y 35 caracteres alfanuméricos\n"
 "(por ej.: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."

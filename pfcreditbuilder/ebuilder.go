@@ -80,6 +80,12 @@ func fileGenerator(data string) string {
 	data = coinknife.Replace(data, "explorer.pfcdata.org", "explorer.picfight.org")
 	data = coinknife.Replace(data, "testnet.pfcdata.org", "testnet.picfight.org")
 
+	data = coinknife.Replace(data, "e.g. Dxx", "e.g. Jxx")
+
+  data = coinknife.Replace(data, `if (network === "mainnet" && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;`, `if (network === "mainnet" && addr[0] !== "J") return ERR_INVALID_ADDR_NETWORKPREFIX;`)
+
+
+
 	//
 	//data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
 	//data = coinknife.Replace(data, " Decred", " PicFight Coin")
