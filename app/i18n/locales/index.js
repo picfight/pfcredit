@@ -3,7 +3,7 @@ import {addLocaleData} from "react-intl";
 
 import en_data from "react-intl/locale-data/en";
 
-addLocaleData([...en_data]);
+addLocaleData([ ...en_data ]);
 
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
@@ -59,7 +59,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [en, en_GB, en_AU];
+const locales = [ en, en_GB, en_AU ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
