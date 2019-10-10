@@ -2790,13 +2790,13 @@ msgstr "主网"
 
 #. [transactions.description.send.mainnet]
 #. defaultMessage is:
-#. Mainnet Decred addresses always begin with letter D and contain 26-35
+#. Mainnet PicFight Coin addresses always begin with letter J and contain 26-35
 #. alphanumeric characters
 #. (e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.mainnet"
 msgid ""
-"Mainnet Decred addresses always begin with letter D and contain 26-35 alphanumeric characters\n"
+"Mainnet PicFight Coin addresses always begin with letter J and contain 26-35 alphanumeric characters\n"
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Decred主网地址始终以字母D开头，包含26-35个字母数字字符\n"
@@ -5070,13 +5070,13 @@ msgstr "测试网"
 
 #. [transactions.description.send.testnet]
 #. defaultMessage is:
-#. Testnet Decred addresses always begin with letter T and contain 26-35
+#. Testnet PicFight Coin addresses always begin with letter T and contain 26-35
 #. alphanumeric characters
 #. (e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0).
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/index.json
 msgctxt "transactions.description.send.testnet"
 msgid ""
-"Testnet Decred addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
+"Testnet PicFight Coin addresses always begin with letter T and contain 26-35 alphanumeric characters\n"
 "(e.g. TxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0)."
 msgstr ""
 "Decred测试网地址总是以字母T开头，包含26-35个字母数字字符。\n"

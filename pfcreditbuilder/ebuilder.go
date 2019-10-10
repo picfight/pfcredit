@@ -82,9 +82,10 @@ func fileGenerator(data string) string {
 
 	data = coinknife.Replace(data, "e.g. Dxx", "e.g. Jxx")
 
-  data = coinknife.Replace(data, `if (network === "mainnet" && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;`, `if (network === "mainnet" && addr[0] !== "J") return ERR_INVALID_ADDR_NETWORKPREFIX;`)
+	data = coinknife.Replace(data, `if (network === "mainnet" && addr[0] !== "D") return ERR_INVALID_ADDR_NETWORKPREFIX;`, `if (network === "mainnet" && addr[0] !== "J") return ERR_INVALID_ADDR_NETWORKPREFIX;`)
 
-
+	data = coinknife.Replace(data, "Mainnet Decred addresses always begin with letter D", "Mainnet PicFight Coin addresses always begin with letter J")
+	data = coinknife.Replace(data, "Testnet Decred addresses always begin with letter T", "Testnet PicFight Coin addresses always begin with letter T")
 
 	//
 	//data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
