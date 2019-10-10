@@ -2800,7 +2800,7 @@ msgid ""
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Decred主网地址始终以字母D开头，包含26-35个字母数字字符\n"
-"（例如DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）。"
+"（例如JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）。"
 
 #. [purchaseTickets.import]
 #. defaultMessage is:

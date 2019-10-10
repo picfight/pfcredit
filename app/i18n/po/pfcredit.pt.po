@@ -2845,7 +2845,7 @@ msgid ""
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Endereços da mainnet sempre começam com a letra D e contém 26-35 caracteres alfanuméricos\n"
-"(ex: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)"
+"(ex: JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)"
 
 #. [purchaseTickets.import]
 #. defaultMessage is:

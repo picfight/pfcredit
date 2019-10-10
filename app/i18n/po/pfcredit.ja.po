@@ -2804,7 +2804,7 @@ msgid ""
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Mainnet Decredのアドレスは常に文字Dから始まり、26～35個の英数字を含みます。\n"
-"（例: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）"
+"（例: JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X）"
 
 #. [purchaseTickets.import]
 #. defaultMessage is:

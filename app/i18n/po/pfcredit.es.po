@@ -2864,7 +2864,7 @@ msgid ""
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Las direcciones de Decred de la red principal (Mainnet) siempre comienzan con la letra D y contienen entre 26 y 35 caracteres alfanuméricos\n"
-"(por ej.: DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
+"(por ej.: JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 
 #. [purchaseTickets.import]
 #. defaultMessage is:

@@ -2858,7 +2858,7 @@ msgid ""
 "(e.g. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 msgstr ""
 "Mainnet-Decred-Adressen beginnen immer mit dem Buchstaben D und umfassen 26-35 alphanumerische Zeichen\n"
-"(z. B. DxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
+"(z. B. JxxXXXXXxXXXxXXXXxxx0XxXXXxxXxXxX0X)."
 
 #. [purchaseTickets.import]
 #. defaultMessage is:
