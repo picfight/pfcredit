@@ -43,33 +43,12 @@ const PrivacySettings = ({
         <AllowableRequestType
           label={<T id="settings.privacy.networkStatus.label" m="Network Information" />}
           id="networking"
-          description={<T id="settings.privacy.networkStatus.description" m="General network information (block height, etc) from decred.org" />}
+          description={<T id="settings.privacy.networkStatus.description" m="General network information (block height, etc) from picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_NETWORK_STATUS) > -1}
           onChange={toggle(EXTERNALREQUEST_NETWORK_STATUS)}
         />
         <AllowableRequestType
-          label={<T id="settings.privacy.stakepoolListing.label" m="Stakepool Listing" />}
-          id="stakepool"
-          description={<T id="settings.privacy.stakepoolListing.description" m="List of currently available stakepools from decred.org" />}
-          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_STAKEPOOL_LISTING) > -1}
-          onChange={toggle(EXTERNALREQUEST_STAKEPOOL_LISTING)}
-        />
-        <AllowableRequestType
-          label={<T id="settings.privacy.updateCheck.label" m="Update Check" />}
-          id="update"
-          description={<T id="settings.privacy.updateCheck.description" m="Get latest released version from github.org" />}
-          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_UPDATE_CHECK) > -1}
-          onChange={toggle(EXTERNALREQUEST_UPDATE_CHECK)}
-        />
-        <AllowableRequestType
-          label={<T id="settings.privacy.politeia.label" m="Politeia" />}
-          id="politeia"
-          description={<T id="settings.privacy.politeia.description" m="List and vote on proposals on proposals.decred.org" />}
-          checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_POLITEIA) > -1}
-          onChange={toggle(EXTERNALREQUEST_POLITEIA)}
-        />
-        <AllowableRequestType
-          label={<T id="settings.privacy.pfcdata.label" m="Decred Block Explorer" />}
+          label={<T id="settings.privacy.pfcdata.label" m="PicFight Coin Block Explorer" />}
           id="pfcdata"
           description={<T id="settings.privacy.pfcdata.description" m="Access chain information from explorer.picfight.org" />}
           checked={tempSettings.allowedExternalRequests.indexOf(EXTERNALREQUEST_PFCDATA) > -1}
