@@ -13,17 +13,8 @@ export const LinksTab = () => (
   <Aux>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.project" m="Project Related"/></div>
     <div className="help-icons-list">
-      <HelpLink className={"help-github-icon"} href="https://github.com/picfight/pfcredit" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/picfight/pfcredit"/>} />
-      <HelpLink className={"help-docs-icon"} href="https://docs.decred.org/" title={<T id="help.documentation" m="Documentation" />} subtitle={<T id="help.documentation.subtitle" m="docs.decred.org"/>}/>
-      <HelpLink className={"help-stakepools-icon"} href="https://decred.org/stakepools" title={<T id="help.stakepools" m=" Stakepools" />} subtitle={<T id="help.stakepools.subtitle" m="decred.org/stakepools"/>}/>
+      <HelpLink className={"help-github-icon"} href="https://github.com/picfight/" title={<T id="help.github.title" m="Github"/>} subtitle={<T id="help.github.subtitle" m="github.com/picfight/"/>} />
       <HelpLink className={"help-blockchain-explorer-icon"} href="http://explorer.picfight.org" title={<T id="help.blockchain" m=" Blockchain Explorer" />} subtitle={<T id="help.blockchain.subtitle" m="explorer.picfight.org"/>}/>
-      <HelpLinkInfoModal className={"help-constitution-icon"}
-        title={<T id="help.constitution" m="Constitution"/>}
-        subtitle={<T id="help.constitution.subtitle" m="Decred Project Constitution"/>}
-        modalTitle={<h1><T id="help.constitution.modal.title" m="Decred Constitution" /></h1>}
-        modalContent={<ConstitutionModalContent />}
-        double
-      />
       <HelpLinkAboutModal className={"help-star-icon"}
         title={<T id="help.about.pfcredit" m="About Pfcredit"/>}
         subtitle={<T id="help.about.pfcredit.subtitle" m="Software Summary"/>}
@@ -31,11 +22,9 @@ export const LinksTab = () => (
     </div>
     <div className="tabbed-page-subtitle"><T id="help.subtitle.communications" m="Communications"/></div>
     <div className="help-icons-list">
-      <HelpLink className={"help-slack-icon"} href="https://slack.decred.org" title={<T id="help.slack" m="Slack" />} subtitle={<T id="help.slack.subtitle" m="slack.decred.org"/>}/>
-      <HelpLink className={"help-rocketchat-icon"} href="https://rocketchat.decred.org" title={<T id="help.rocketchat" m="RocketChat" />} subtitle={<T id="help.rocketchat.subtitle" m="rocketchat.decred.org"/>}/>
-      <HelpLink className={"help-matrix-icon"} href="https://riot.im/app/#/login" title={<T id="help.matrix" m="Matrix Chat" />} subtitle={<T id="help.matrix.subtitle" m="riot.im"/>}/>
-      <HelpLink className={"help-forum-icon"} href="https://t.me/decred" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/decred"/>}/>
-      <HelpLink className={"help-forum-icon"} href="https://forum.decred.org" title={<T id="help.forum" m="Forum" />} subtitle={<T id="help.forum.subtitle" m="forum.decred.org"/>}/>
+
+      <HelpLink className={"help-forum-icon"} href="https://t.me/PicFightChat" title={<T id="help.telegram" m="Telegram" />} subtitle={<T id="help.telegram.subtitle" m="t.me/PicFightChat"/>}/>
+      <HelpLink className={"help-forum-icon"} href="https://vk.com/picfight" title={<T id="help.forum" m="VK" />} subtitle={<T id="help.forum.subtitle" m="vk.com/picfight"/>}/>
     </div>
   </Aux>
 );
