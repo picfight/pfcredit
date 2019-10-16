@@ -262,7 +262,10 @@ app.on("ready", async () => {
     width: 1178,
     minHeight: 299,
     height: 790,
-    page: "app.html"
+    page: "app.html",
+    webPreferences: {
+      devTools: false
+    }
   };
   if (stopSecondInstance) {
     windowOpts = {
