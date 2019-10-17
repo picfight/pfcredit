@@ -1,9 +1,6 @@
 import { FormattedMessage as T } from "react-intl";
 import {
-  EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_STAKEPOOL_LISTING,
-  EXTERNALREQUEST_UPDATE_CHECK,
-  EXTERNALREQUEST_POLITEIA,
-  EXTERNALREQUEST_PFCDATA,
+  EXTERNALREQUEST_NETWORK_STATUS, EXTERNALREQUEST_PFCDATA,
 } from "main_dev/externalRequests";
 
 const AllowableRequestType = ({ id, label, description, checked, onChange }) => (
