@@ -286,7 +286,7 @@ function getNetworkSuccess(getNetworkResponse) {
       getNetworkResponse.networkStr = networkStr;
       dispatch({ getNetworkResponse: getNetworkResponse, type: GETNETWORK_SUCCESS });
     } else {
-      dispatch({ error: "Invalid network detected", type: GETNETWORK_FAILED });
+      dispatch({ error: "Loading...", type: GETNETWORK_FAILED });
       setTimeout(() => { dispatch(pushHistory("/walletError")); }, 1000);
     }
   };
