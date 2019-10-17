@@ -1,9 +1,12 @@
-# What is Decred Blockchain?
+# Safety Tips
 
-At Decred’s heart is an ever growing list of records shared globally across a decentralised ledger; this is Decred’s blockchain.
+**Only You are responsible for your security**. Always keep your seed key and password safe. If you lose them, nobody else can recover it.
 
-The blockchain holds all of Decred’s transactional data and uses an innovative **Proof-of-Stake (PoS)/Proof-of-Work (PoW) system** to validate transactions and keep the network secure.
+Make a backup of your seed key and password. Don’t store it on your computer, instead write it down or print it out on a piece of paper or save it to a USB drive.
 
-This hybrid system mitigates weaknesses that PoS and PoW have individually. Furthermore it forms the cornerstone for **smart governance** of the project.
+Do not store your seed key in a cloud storage or a password service. If your account gets compromised, so may your funds.
 
-Widespread participation in **staking (PoS)** and **mining (PoW)** helps to protect the neutrality of the network and rewards the participants with newly generated PFC from the blockreward.
+Do not enter your seed key to any website. Nobody can reverse, cancel or refund transactions if your wallet has been compromised.
+
+**When something doesn’t seem right or you don’t understand it, ask questions
+and do your own research. Avoid making a decision based on fear.**

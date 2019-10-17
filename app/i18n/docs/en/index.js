@@ -15,9 +15,6 @@ export { default as TrezorFirmwareUpdateWarning } from "./Warnings/TrezorFirmwar
 export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/TrezorWalletCreationPassPhrase.md";
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
-export { default as GetStartedTutorialPage02 } from "./GetStarted/TutorialPage02.md";
-export { default as GetStartedTutorialPage03 } from "./GetStarted/TutorialPage03.md";
-export { default as GetStartedTutorialPage04 } from "./GetStarted/TutorialPage04.md";
 
 export { default as ReleaseNote1_3_0 } from "./ReleaseNotes/v1.3.0.md";
 export { default as ReleaseNote1_3_1 } from "./ReleaseNotes/v1.3.1.md";
