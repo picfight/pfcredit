@@ -16,7 +16,7 @@ msgstr ""
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.close"
 msgid "&Close"
-msgstr "&Schließen"
+msgstr "&Закрыть"
 
 #. [appMenu.file]
 #. defaultMessage is:
@@ -24,7 +24,7 @@ msgstr "&Schließen"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.file"
 msgid "&File"
-msgstr "&Datei"
+msgstr "&Файл"
 
 #. [appMenu.view]
 #. defaultMessage is:
@@ -32,7 +32,7 @@ msgstr "&Datei"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.view"
 msgid "&View"
-msgstr "&Anzeigen"
+msgstr "&Вид"
 
 #. [createWallet.isTrezor.setupLink]
 #. defaultMessage is:
@@ -40,7 +40,7 @@ msgstr "&Anzeigen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createWallet.isTrezor.setupLink"
 msgid "(setup device)"
-msgstr "(Gerät einrichten)"
+msgstr "(настроить устройство)"
 
 #. [confirmSeed.warnings.pasteExistingError]
 #. defaultMessage is:
@@ -48,7 +48,7 @@ msgstr "(Gerät einrichten)"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/Form.json
 msgctxt "confirmSeed.warnings.pasteExistingError"
 msgid "* Please paste a valid 33 word seed."
-msgstr "* Bitte fügen Sie einen gültigen 33-Wörter-Seed ein."
+msgstr "* Проверь, что сид из 33х слов не содержит без ошибок."
 
 #. [createWallet.passphraseInput.errors.noMatch]
 #. defaultMessage is:
@@ -56,7 +56,7 @@ msgstr "* Bitte fügen Sie einen gültigen 33-Wörter-Seed ein."
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noMatch"
 msgid "*Passphrases do not match"
-msgstr "* Passphrases stimmen nicht überein"
+msgstr "* Пароль не совпадает"
 
 #. [createWallet.passphraseInput.errors.noPassPhrase]
 #. defaultMessage is:
@@ -64,7 +64,7 @@ msgstr "* Passphrases stimmen nicht überein"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.passphraseInput.errors.noPassPhrase"
 msgid "*Please enter your private passphrase"
-msgstr "*Bitte geben Sie Ihre private Passphrase ein"
+msgstr "*Введи пароль для кошелька"
 
 #. [confirmSeed.warnings.pasteExistingSeed]
 #. defaultMessage is:
@@ -74,7 +74,7 @@ msgctxt "confirmSeed.warnings.pasteExistingSeed"
 msgid ""
 "*Please make sure you also have a physical, written down copy of your seed."
 msgstr ""
-"*Bitte stellen Sie sicher, dass Sie dazu eine physische, niedergeschriebene "
+"*Совет: запиши сид на бумагу и на usb-ключ и храни их в надёжном месте."
 "Kopie Ihres Seeds besitzen."
 
 #. [mytickets.statistics.votetime.ninetyfifthpercentile.label]
@@ -83,7 +83,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.ninetyfifthpercentile.label"
 msgid "95% of tickets voted:"
-msgstr "95 % der abgestimmten Tickets:"
+msgstr "95 % тикетов проголосовали:"
 
 #. [sidebar.lastBlockIsRecent]
 #. defaultMessage is:
@@ -91,7 +91,7 @@ msgstr "95 % der abgestimmten Tickets:"
 #: app/i18n/extracted/app/components/SideBar/LastBlockTime.json
 msgctxt "sidebar.lastBlockIsRecent"
 msgid "< 1 minute ago"
-msgstr "vor < 1 Minute"
+msgstr "менее минуты назад"
 
 #. [aboutModal.paragraph1]
 #. defaultMessage is:
@@ -101,8 +101,8 @@ msgctxt "aboutModal.paragraph1"
 msgid ""
 "A cross platform GUI Wallet for Decred written in node.js using Electron"
 msgstr ""
-"Ein plattformübergreifendes GUI Wallet für Decred, geschrieben in node.js "
-"unter Benutzung von Electron"
+"Это кошелёк для ПикФайт коина написанный на JavaScript под Electron"
+""
 
 #. [getStarted.stakepool.apikey]
 #. defaultMessage is:
@@ -110,7 +110,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStarted.stakepool.apikey"
 msgid "API Key"
-msgstr "API-Schlüssel"
+msgstr "API-Ключ"
 
 #. [stakepool.apikey]
 #. defaultMessage is:
@@ -118,7 +118,7 @@ msgstr "API-Schlüssel"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stakepool.apikey"
 msgid "API Key"
-msgstr "API-Schlüssel"
+msgstr "API-Ключ"
 
 #. [proposals.statusLinks.abandoned]
 #. defaultMessage is:
@@ -126,7 +126,7 @@ msgstr "API-Schlüssel"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Page.json
 msgctxt "proposals.statusLinks.abandoned"
 msgid "Abandoned"
-msgstr ""
+msgstr "Заброшен"
 
 #. [appMenu.about]
 #. defaultMessage is:
@@ -134,7 +134,7 @@ msgstr ""
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.about"
 msgid "About"
-msgstr "Über"
+msgstr "О программе"
 
 #. [help.about]
 #. defaultMessage is:
@@ -142,7 +142,7 @@ msgstr "Über"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "help.about"
 msgid "About Pfcredit"
-msgstr "Über Pfcredit"
+msgstr "О программе"
 
 #. [help.about.pfcredit]
 #. defaultMessage is:
@@ -150,7 +150,7 @@ msgstr "Über Pfcredit"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.about.pfcredit"
 msgid "About Pfcredit"
-msgstr "Über Pfcredit"
+msgstr "О программе"
 
 #. [appMenu.aboutPfcredit]
 #. defaultMessage is:
@@ -158,7 +158,7 @@ msgstr "Über Pfcredit"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.aboutPfcredit"
 msgid "About Pfcredit"
-msgstr "Über Pfcredit"
+msgstr "О программе"
 
 #. [privacy.custom.accept]
 #. defaultMessage is:
@@ -166,7 +166,7 @@ msgstr "Über Pfcredit"
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.json
 msgctxt "privacy.custom.accept"
 msgid "Accept"
-msgstr "Akzeptieren"
+msgstr "Согласиться"
 
 #. [settings.privacy.pfcdata.description]
 #. defaultMessage is:
@@ -174,7 +174,7 @@ msgstr "Akzeptieren"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.description"
 msgid "Access chain information from explorer.picfight.org"
-msgstr "Aus explorer.picfight.org auf Chain-Informationen zugreifen"
+msgstr "Запрашивать данные у explorer.picfight.org"
 
 #. [accounts.number]
 #. defaultMessage is:
@@ -182,7 +182,7 @@ msgstr "Aus explorer.picfight.org auf Chain-Informationen zugreifen"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.number"
 msgid "Account number"
-msgstr "Account-Nummer"
+msgstr "Номер аккаунта"
 
 #. [accountsButton.tip]
 #. defaultMessage is:
@@ -190,7 +190,7 @@ msgstr "Account-Nummer"
 #: app/i18n/extracted/app/components/shared/LinkToAccounts.json
 msgctxt "accountsButton.tip"
 msgid "Accounts"
-msgstr "Accounts"
+msgstr "Аккаунты"
 
 #. [sidebar.link.accounts]
 #. defaultMessage is:
@@ -198,7 +198,7 @@ msgstr "Accounts"
 #: app/i18n/extracted/app/components/SideBar/MenuLinks/index.json
 msgctxt "sidebar.link.accounts"
 msgid "Accounts"
-msgstr "Accounts"
+msgstr "Аккаунты"
 
 #. [accounts.title]
 #. defaultMessage is:
@@ -206,7 +206,7 @@ msgstr "Accounts"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.title"
 msgid "Accounts"
-msgstr "Accounts"
+msgstr "Аккаунты"
 
 #. [accounts.description]
 #. defaultMessage is:
@@ -219,8 +219,8 @@ msgid ""
 "Accounts allow you to keep separate records of your PFC funds.\n"
 "Transferring PFC across accounts will create a transaction on the blockchain."
 msgstr ""
-"Mit Accounts können Sie getrennte Aufzeichnungen Ihrer PFC-Guthaben aufbewahren.\n"
-"Das Übertragen von PFC zwischen Accounts erstellt eine Transaktion in der Blockchain."
+"Можно иметь несколько аккаунтов.\n"
+"Перевод монет между аккаунтами будет проходить через блокчейн."
 
 #. [getStarted.stakePools.addBtn]
 #. defaultMessage is:
@@ -228,7 +228,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStarted.stakePools.addBtn"
 msgid "Add"
-msgstr "Hinzufügen"
+msgstr "Добавить"
 
 #. [accounts.addNewButton]
 #. defaultMessage is:
@@ -236,7 +236,7 @@ msgstr "Hinzufügen"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.addNewButton"
 msgid "Add New"
-msgstr "Neue hinzufügen"
+msgstr "Создать ещё один аккаунт"
 
 #. [stakePoolSelect.addNewPrompt]
 #. defaultMessage is:
@@ -282,7 +282,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
 msgctxt "securitycenter.signMessage.field.address.label"
 msgid "Address"
-msgstr "Adresse"
+msgstr "Адреса"
 
 #. [securitycenter.validate.field.address.label]
 #. defaultMessage is:
@@ -290,7 +290,7 @@ msgstr "Adresse"
 #: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
 msgctxt "securitycenter.validate.field.address.label"
 msgid "Address"
-msgstr "Adresse"
+msgstr "Адреса"
 
 #. [securitycenter.verify.field.address.label]
 #. defaultMessage is:
@@ -298,7 +298,7 @@ msgstr "Adresse"
 #: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
 msgctxt "securitycenter.verify.field.address.label"
 msgid "Address"
-msgstr "Adresse"
+msgstr "Адреса"
 
 #. [send.destinationAddrPlaceholder]
 #. defaultMessage is:
@@ -306,7 +306,7 @@ msgstr "Adresse"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.destinationAddrPlaceholder"
 msgid "Address"
-msgstr "Adresse"
+msgstr "Адреса"
 
 #. [securitycenter.validate.result.notOwned]
 #. defaultMessage is:
@@ -314,7 +314,7 @@ msgstr "Adresse"
 #: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/index.json
 msgctxt "securitycenter.validate.result.notOwned"
 msgid "Address Valid, Not Owned"
-msgstr "Gültige Adresse, frei"
+msgstr "Адрес корректный, но не приналдежит этому кошельку"
 
 #. [appMenu.advanced]
 #. defaultMessage is:
@@ -322,7 +322,7 @@ msgstr "Gültige Adresse, frei"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.advanced"
 msgid "Advanced"
-msgstr "Erweitert"
+msgstr "Подробнее"
 
 #. [settings.advancedDaemon.label]
 #. defaultMessage is:
@@ -330,7 +330,7 @@ msgstr "Erweitert"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.advancedDaemon.label"
 msgid "Advanced Daemon Startup"
-msgstr "Erweitertes Daemon-Startup"
+msgstr "Продвинутый запуск демона"
 
 #. [agenda.overview.idLabel]
 #. defaultMessage is:
@@ -354,7 +354,7 @@ msgstr "Agenda-ID"
 #: app/i18n/extracted/app/components/views/TicketsPage/MyTicketsTab/index.json
 msgctxt "tickets.type.all"
 msgid "All"
-msgstr "Alle"
+msgstr "Все"
 
 #. [txFilter.type.all]
 #. defaultMessage is:
@@ -362,7 +362,7 @@ msgstr "Alle"
 #: app/i18n/extracted/app/components/views/TransactionsPage/HistoryTab/index.json
 msgctxt "txFilter.type.all"
 msgid "All"
-msgstr "Alle"
+msgstr "Все"
 
 #. [fileBrowserTypes.all.name]
 #. defaultMessage is:
@@ -370,7 +370,7 @@ msgstr "Alle"
 #: app/i18n/extracted/app/components/inputs/PathBrowseInput.json
 msgctxt "fileBrowserTypes.all.name"
 msgid "All Files"
-msgstr "Alle Dateien"
+msgstr "Все файлы"
 
 #. [stake.mempoolTickets]
 #. defaultMessage is:
@@ -378,7 +378,7 @@ msgstr "Alle Dateien"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfoDetails.json
 msgctxt "stake.mempoolTickets"
 msgid "All Mempool Tickets"
-msgstr "Alle Mempool-Tickets"
+msgstr "Все тикеты в мемпуле"
 
 #. [mytickets.statistics.stakepool.networkTickets]
 #. defaultMessage is:
@@ -386,7 +386,7 @@ msgstr "Alle Mempool-Tickets"
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/StakePoolStats.json
 msgctxt "mytickets.statistics.stakepool.networkTickets"
 msgid "All Network Tickets"
-msgstr "Alle Netzwerk-Tickets"
+msgstr "Все тикеты в сети"
 
 #. [privacy.options.custom.description]
 #. defaultMessage is:
@@ -398,8 +398,8 @@ msgid ""
 "Allows you to choose exactly which third party services can be accessed by "
 "the app."
 msgstr ""
-"Ermöglicht Ihnen, genau festzulegen, auf welche Drittleistungen durch die "
-"App zugegriffen werden kann."
+"Allows you to choose exactly which third party services can be accessed by "
+ "the app. "
 
 #. [purchaseTickets.ticketAmount]
 #. defaultMessage is:
@@ -407,7 +407,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/PurchaseTickets/Form.json
 msgctxt "purchaseTickets.ticketAmount"
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Количество"
 
 #. [sendToAccount.amountPlaceholder]
 #. defaultMessage is:
@@ -415,7 +415,7 @@ msgstr "Betrag"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
 msgctxt "sendToAccount.amountPlaceholder"
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Количество"
 
 #. [sendToAccount.amount]
 #. defaultMessage is:
@@ -423,7 +423,7 @@ msgstr "Betrag"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputAccountRow.json
 msgctxt "sendToAccount.amount"
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Количество"
 
 #. [send.amountPlaceholder]
 #. defaultMessage is:
@@ -431,7 +431,7 @@ msgstr "Betrag"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.amountPlaceholder"
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Количество"
 
 #. [send.amount]
 #. defaultMessage is:
@@ -439,7 +439,7 @@ msgstr "Betrag"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/OutputRow.json
 msgctxt "send.amount"
 msgid "Amount"
-msgstr "Betrag"
+msgstr "Количество"
 
 #. [history.amount.range]
 #. defaultMessage is:
@@ -447,7 +447,7 @@ msgstr "Betrag"
 #: app/i18n/extracted/app/components/buttons/EyeFilterMenuWithSlider/index.json
 msgctxt "history.amount.range"
 msgid "Amount Range"
-msgstr "Betragsbereich"
+msgstr "Диапазон"
 
 #. [export.tickets.fields.returnedAmount]
 #. defaultMessage is:
@@ -476,7 +476,7 @@ msgctxt "settings.closeWalletModalContent"
 msgid ""
 "Are you sure you want to close {walletName} and return to the launcher?"
 msgstr ""
-"Möchten Sie {walletName} wirklich schließen und zum Startmodul zurückkehren?"
+"Закрыть кошелёк {walletName} и венуться в главное меню?"
 
 #. [tickets.startAutoBuyerConfirmation.attention]
 #. defaultMessage is:
@@ -484,7 +484,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "tickets.startAutoBuyerConfirmation.attention"
 msgid "Attention!"
-msgstr "Achtung!"
+msgstr "Важно!"
 
 #. [automatictickets.subtitle]
 #. defaultMessage is:
@@ -500,7 +500,7 @@ msgstr "Automatische Ticketkäufe"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.available"
 msgid "Available"
-msgstr "Verfügbar"
+msgstr "Доступен"
 
 #. [home.currentTotalSpendableBalanceLabel]
 #. defaultMessage is:
@@ -508,7 +508,7 @@ msgstr "Verfügbar"
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Balance.json
 msgctxt "home.currentTotalSpendableBalanceLabel"
 msgid "Available"
-msgstr "Verfügbar"
+msgstr "Доступен"
 
 #. [governance.treasury_balance]
 #. defaultMessage is:
@@ -516,7 +516,7 @@ msgstr "Verfügbar"
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.treasury_balance"
 msgid "Available Treasury Balance: {treasuryBalance}"
-msgstr " Verfügbares Mittelguthaben: {treasuryBalance}"
+msgstr "Фонд ПикФайта: {treasuryBalance}"
 
 #. [export.dailyBalances.fields.spendable]
 #. defaultMessage is:
@@ -524,7 +524,7 @@ msgstr " Verfügbares Mittelguthaben: {treasuryBalance}"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
-msgstr "Verfügbares Guthaben für regelmäßige Transaktionen."
+msgstr "Доступные монеты."
 
 #. [export.balances.fields.spendable]
 #. defaultMessage is:
@@ -532,7 +532,7 @@ msgstr "Verfügbares Guthaben für regelmäßige Transaktionen."
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.spendable"
 msgid "Available balance for spending in regular transactions."
-msgstr "Verfügbares Guthaben für Ausgaben in regelmäßigen Transaktionen."
+msgstr "Доступные монеты."
 
 #. [mytickets.statistics.votetime.average.label]
 #. defaultMessage is:
@@ -540,7 +540,7 @@ msgstr "Verfügbares Guthaben für Ausgaben in regelmäßigen Transaktionen."
 #: app/i18n/extracted/app/components/views/TicketsPage/StatisticsTab/charts/VoteTime.json
 msgctxt "mytickets.statistics.votetime.average.label"
 msgid "Average vote time:"
-msgstr "Durchschnittliche Abstimmdauer:"
+msgstr "Среднее время голосования:"
 
 #. [txDetails.backBtn]
 #. defaultMessage is:
@@ -548,7 +548,7 @@ msgstr "Durchschnittliche Abstimmdauer:"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.backBtn"
 msgid "Back"
-msgstr "Zurück"
+msgstr "Назад"
 
 #. [errors.goHome]
 #. defaultMessage is:
@@ -556,7 +556,7 @@ msgstr "Zurück"
 #: app/i18n/extracted/app/components/ErrorScreen/index.json
 msgctxt "errors.goHome"
 msgid "Back to Home"
-msgstr "Zurück zur Startseite"
+msgstr "Назад в главное меню"
 
 #. [home.tab.balance]
 #. defaultMessage is:
@@ -564,7 +564,7 @@ msgstr "Zurück zur Startseite"
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.tab.balance"
 msgid "Balance"
-msgstr "Guthaben"
+msgstr "Баланс"
 
 #. [autobuyer.modal.balanceToMaintain]
 #. defaultMessage is:
@@ -572,7 +572,7 @@ msgstr "Guthaben"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/TicketAutoBuyer/Form.json
 msgctxt "autobuyer.modal.balanceToMaintain"
 msgid "Balance To Maintain"
-msgstr "Beizubehaltendes Guthaben"
+msgstr "Balance To Maintain"
 
 #. [export.dailyBalances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -582,8 +582,8 @@ msgctxt "export.dailyBalances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
 msgstr ""
-"Guthaben in unfertigen und Live-Tickets, die nicht vom Wallet kontrolliert "
-"werden, gesperrt."
+"Монеты заблокированные тикетами или находящиеся в процессе перевода."
+""
 
 #. [export.balances.fields.lockedNonWallet]
 #. defaultMessage is:
@@ -593,8 +593,8 @@ msgctxt "export.balances.fields.lockedNonWallet"
 msgid ""
 "Balance locked in immature and live tickets not controlled by the wallet."
 msgstr ""
-"Guthaben in unfertigen und Live-Tickets, die nicht vom Wallet kontrolliert "
-"werden, gesperrt."
+"Монеты заблокированные тикетами или находящиеся в процессе перевода."
+""
 
 #. [export.dailyBalances.fields.locked]
 #. defaultMessage is:
@@ -602,7 +602,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "Guthaben in unfertigen und Live-Tickets gesperrt."
+msgstr "Монеты заблокированные тикетами или находящиеся в процессе перевода."
 
 #. [export.balances.fields.locked]
 #. defaultMessage is:
@@ -610,7 +610,7 @@ msgstr "Guthaben in unfertigen und Live-Tickets gesperrt."
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.fields.locked"
 msgid "Balance locked in immature and live tickets."
-msgstr "Guthaben in unfertigen und Live-Tickets gesperrt."
+msgstr "Монеты заблокированные тикетами или находящиеся в процессе перевода."
 
 #. [autobuyer.balanceToMaintain]
 #. defaultMessage is:
@@ -626,7 +626,7 @@ msgstr "Beizubehaltendes Guthaben"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/AccountDetails.json
 msgctxt "accounts.balances"
 msgid "Balances"
-msgstr "Guthaben"
+msgstr "Баланс"
 
 #. [export.balances.name]
 #. defaultMessage is:
@@ -634,7 +634,7 @@ msgstr "Guthaben"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.balances.name"
 msgid "Balances"
-msgstr "Guthaben"
+msgstr "Балансы"
 
 #. [txDetails.blockLabel]
 #. defaultMessage is:
@@ -642,7 +642,7 @@ msgstr "Guthaben"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.blockLabel"
 msgid "Block"
-msgstr "Block"
+msgstr "Блок"
 
 #. [help.blockchain]
 #. defaultMessage is:
@@ -650,7 +650,7 @@ msgstr "Block"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.blockchain"
 msgid "Blockchain Explorer"
-msgstr "Blockchain-Explorer"
+msgstr "Блокчейн эксплорер"
 
 #. [loaderBar.Loaded]
 #. defaultMessage is:
@@ -658,7 +658,7 @@ msgstr "Blockchain-Explorer"
 #: app/i18n/extracted/app/components/indicators/LinearProgressFull.json
 msgctxt "loaderBar.Loaded"
 msgid "Blockchain loaded"
-msgstr "Blockchain geladen"
+msgstr "Блокчейн загрузился"
 
 #. [loaderBar.Loading]
 #. defaultMessage is:
@@ -666,7 +666,7 @@ msgstr "Blockchain geladen"
 #: app/i18n/extracted/app/components/indicators/LinearProgressFull.json
 msgctxt "loaderBar.Loading"
 msgid "Blockchain syncing"
-msgstr "Blockchain-Synchronisierung"
+msgstr "Блокчейн загружается"
 
 #. [appMenu.bringAllFront]
 #. defaultMessage is:
@@ -674,7 +674,7 @@ msgstr "Blockchain-Synchronisierung"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.bringAllFront"
 msgid "Bring All to Front"
-msgstr "Alle nach vorne bringen"
+msgstr "Поверх всех окон"
 
 #. [home.noTransactions.buyFromExchanges]
 #. defaultMessage is:
@@ -682,7 +682,7 @@ msgstr "Alle nach vorne bringen"
 #: app/i18n/extracted/app/components/views/HomePage/tables/NoTransactionsLinks.json
 msgctxt "home.noTransactions.buyFromExchanges"
 msgid "Buy Decred from Exchanges"
-msgstr "Decred von Exchanges kaufen"
+msgstr "Купить пикфайт коины"
 
 #. [fileBrowserTypes.csv.name]
 #. defaultMessage is:
@@ -690,7 +690,7 @@ msgstr "Decred von Exchanges kaufen"
 #: app/i18n/extracted/app/components/inputs/PathBrowseInput.json
 msgctxt "fileBrowserTypes.csv.name"
 msgid "CSV Files"
-msgstr "CSV-Dateien"
+msgstr "CSV-файлы"
 
 #. [confirmModal.btnCancel]
 #. defaultMessage is:
@@ -698,7 +698,7 @@ msgstr "CSV-Dateien"
 #: app/i18n/extracted/app/components/modals/ConfirmModal/index.json
 msgctxt "confirmModal.btnCancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [passphraseModal.btnCancel]
 #. defaultMessage is:
@@ -706,7 +706,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/modals/PassphraseModal/ButtonsToolbar.json
 msgctxt "passphraseModal.btnCancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [seedCopyConfirm.btnCancel]
 #. defaultMessage is:
@@ -714,7 +714,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/Modal.json
 msgctxt "seedCopyConfirm.btnCancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [accounts.cancelRenameBtn]
 #. defaultMessage is:
@@ -722,7 +722,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/AccountRow/RenameAccount.json
 msgctxt "accounts.cancelRenameBtn"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [getStarted.backBtn]
 #. defaultMessage is:
@@ -730,7 +730,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.backBtn"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [privacy.custom.cancel]
 #. defaultMessage is:
@@ -738,7 +738,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.json
 msgctxt "privacy.custom.cancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [advancedStartup.cancel]
 #. defaultMessage is:
@@ -746,7 +746,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "advancedStartup.cancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [stake.addPool.cancelBtn]
 #. defaultMessage is:
@@ -754,7 +754,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stake.addPool.cancelBtn"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [stakepools.list.form.cancel]
 #. defaultMessage is:
@@ -762,7 +762,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/List.json
 msgctxt "stakepools.list.form.cancel"
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr "Отмена"
 
 #. [walletselection.canelChanges]
 #. defaultMessage is:
@@ -770,7 +770,7 @@ msgstr "Abbrechen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
 msgctxt "walletselection.canelChanges"
 msgid "Cancel Changes"
-msgstr "Änderungen löschen"
+msgstr "Сбросить изменения"
 
 #. [sidebar.rescanCancelBtn.tip]
 #. defaultMessage is:
@@ -778,7 +778,7 @@ msgstr "Änderungen löschen"
 #: app/i18n/extracted/app/components/buttons/RescanCancelButton.json
 msgctxt "sidebar.rescanCancelBtn.tip"
 msgid "Cancel rescan"
-msgstr "Erneutes Scannen abbrechen"
+msgstr "Отменить загрузку"
 
 #. [send.cancelSendAllTitle]
 #. defaultMessage is:
@@ -786,7 +786,7 @@ msgstr "Erneutes Scannen abbrechen"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.cancelSendAllTitle"
 msgid "Cancel sending all funds"
-msgstr "Senden aller Guthaben abbrechen"
+msgstr "Отменить перевод всех монет"
 
 #. [proposals.updateVoteChoiceModal.btnLabel]
 #. defaultMessage is:
@@ -794,7 +794,7 @@ msgstr "Senden aller Guthaben abbrechen"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
 msgctxt "proposals.updateVoteChoiceModal.btnLabel"
 msgid "Cast Vote"
-msgstr "Stimme abgeben"
+msgstr "Проголосовать"
 
 #. [trezor.changeLabel.changeButton]
 #. defaultMessage is:
@@ -802,7 +802,7 @@ msgstr "Stimme abgeben"
 #: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
 msgctxt "trezor.changeLabel.changeButton"
 msgid "Change"
-msgstr "Ändern"
+msgstr "Редактировать"
 
 #. [trezorPage.changeHomeScreen]
 #. defaultMessage is:
@@ -810,7 +810,7 @@ msgstr "Ändern"
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.changeHomeScreen"
 msgid "Change Home Screen"
-msgstr "Startbildschirm ändern"
+msgstr "Редактировать главное меню"
 
 #. [trezor.changeLabel.header]
 #. defaultMessage is:
@@ -818,7 +818,7 @@ msgstr "Startbildschirm ändern"
 #: app/i18n/extracted/app/components/views/TrezorPage/ChangeLabel.json
 msgctxt "trezor.changeLabel.header"
 msgid "Change Label"
-msgstr "Beschriftung ändern"
+msgstr "Редактировать подпись"
 
 #. [settings.changeConfirmation]
 #. defaultMessage is:
@@ -826,7 +826,7 @@ msgstr "Beschriftung ändern"
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.changeConfirmation"
 msgid "Change your passphrase"
-msgstr "Ändern Sie Ihre Passphrase"
+msgstr "Изменить пароль"
 
 #. [trezor.changeLabel.success]
 #. defaultMessage is:
@@ -834,7 +834,7 @@ msgstr "Ändern Sie Ihre Passphrase"
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "trezor.changeLabel.success"
 msgid "Changed label on selected trezor to '{label}'"
-msgstr "Beschriftung auf ausgewähltem Trezor auf '{label}' ändern"
+msgstr "Подписать ярлык trezor на '{label}'"
 
 #. [settings.description]
 #. defaultMessage is:
@@ -843,7 +843,7 @@ msgstr "Beschriftung auf ausgewähltem Trezor auf '{label}' ändern"
 msgctxt "settings.description"
 msgid "Changing network settings requires a restart"
 msgstr ""
-"Für das Ändern der Netzwerkeinstellungen ist ein Neustart erforderlich"
+"Для активации новых настрое сети нужно перезапустить кошелёк"
 
 #. [getStarted.header.checkingWalletState.meta]
 #. defaultMessage is:
@@ -851,7 +851,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.checkingWalletState.meta"
 msgid "Checking wallet state"
-msgstr "Wallet-Status wird geprüft"
+msgstr "Проверка кощелька"
 
 #. [createwallet.walletname.placehlder]
 #. defaultMessage is:
@@ -859,7 +859,7 @@ msgstr "Wallet-Status wird geprüft"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "createwallet.walletname.placehlder"
 msgid "Choose a Name"
-msgstr "Wählen Sie einen Namen"
+msgstr "Выбери имя"
 
 #. [selectLang.titleSub]
 #. defaultMessage is:
@@ -867,7 +867,7 @@ msgstr "Wählen Sie einen Namen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/LanguageSelectPage/Page.json
 msgctxt "selectLang.titleSub"
 msgid "Choose your language"
-msgstr "Wählen Sie Ihre Sprache"
+msgstr "Выбери язык"
 
 #. [trezorPage.clearSession]
 #. defaultMessage is:
@@ -875,7 +875,7 @@ msgstr "Wählen Sie Ihre Sprache"
 #: app/i18n/extracted/app/components/views/TrezorPage/ConfigButtons.json
 msgctxt "trezorPage.clearSession"
 msgid "Clear Session"
-msgstr "Sitzung löschen"
+msgstr "Закрыть сессию"
 
 #. [trezor.pinModal.description]
 #. defaultMessage is:
@@ -893,7 +893,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/modals/InfoConfirmModal/index.json
 msgctxt "infoConfirmModal.btnClose"
 msgid "Close"
-msgstr "Schließen"
+msgstr "Закрыть"
 
 #. [walletselection.closeEditWallets]
 #. defaultMessage is:
@@ -901,7 +901,7 @@ msgstr "Schließen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
 msgctxt "walletselection.closeEditWallets"
 msgid "Close"
-msgstr "Schließen"
+msgstr "Закрыть"
 
 #. [fatal.button]
 #. defaultMessage is:
@@ -909,7 +909,7 @@ msgstr "Schließen"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button"
 msgid "Close Pfcredit"
-msgstr "Pfcredit schließen"
+msgstr "Закрыть Pfcredit"
 
 #. [settings.closeWalletModalOk]
 #. defaultMessage is:
@@ -917,7 +917,7 @@ msgstr "Pfcredit schließen"
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.closeWalletModalOk"
 msgid "Close Wallet"
-msgstr "Wallet schließen"
+msgstr "Закрыть кошелёк"
 
 #. [txDetails.type.coinbase]
 #. defaultMessage is:
@@ -933,7 +933,7 @@ msgstr "Coinbase"
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.subtitle.communications"
 msgid "Communications"
-msgstr "Kommunikation"
+msgstr "Сообщения"
 
 #. [appMenu.communityDiscussions]
 #. defaultMessage is:
@@ -941,7 +941,7 @@ msgstr "Kommunikation"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.communityDiscussions"
 msgid "Community Discussions"
-msgstr "Community-Diskussionen"
+msgstr "Дискуссии"
 
 #. [trezor.configButtons.header]
 #. defaultMessage is:
@@ -965,7 +965,7 @@ msgstr "Konfigurierte StakePools:"
 #: app/i18n/extracted/app/components/modals/ChangePassphraseModal/Modal.json
 msgctxt "changePassModal.confirm"
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "Подтвердить"
 
 #. [infoModal.btnConfirm]
 #. defaultMessage is:
@@ -973,7 +973,7 @@ msgstr "Bestätigen"
 #: app/i18n/extracted/app/components/modals/ConfirmModal/index.json
 msgctxt "infoModal.btnConfirm"
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "Подтвердить"
 
 #. [createWallet.verifyPassphrasePlaceholder]
 #. defaultMessage is:
@@ -981,7 +981,7 @@ msgstr "Bestätigen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreatePassPhrase/PassPhraseInputs.json
 msgctxt "createWallet.verifyPassphrasePlaceholder"
 msgid "Confirm Private Passphrase"
-msgstr "Private Passphrase bestätigen"
+msgstr "Подтвердить пароль"
 
 #. [confirmSeed.label]
 #. defaultMessage is:
@@ -989,7 +989,7 @@ msgstr "Private Passphrase bestätigen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "confirmSeed.label"
 msgid "Confirm Seed"
-msgstr "Seed bestätigen"
+msgstr "Подтвердить сид"
 
 #. [seedCopyConfirm.btnConfirm]
 #. defaultMessage is:
@@ -997,7 +997,7 @@ msgstr "Seed bestätigen"
 #: app/i18n/extracted/app/components/modals/SeedCopyConfirmModal/Modal.json
 msgctxt "seedCopyConfirm.btnConfirm"
 msgid "Confirm Seed Copy"
-msgstr "Seed-Kopie bestätigen"
+msgstr "Подтвердить копию сида"
 
 #. [trezor.walltCreationPrivatePassphraseConfirm]
 #. defaultMessage is:
@@ -1005,7 +1005,7 @@ msgstr "Seed-Kopie bestätigen"
 #: app/i18n/extracted/app/components/modals/trezor/WalletCreationPassPhraseModal.json
 msgctxt "trezor.walltCreationPrivatePassphraseConfirm"
 msgid "Confirm Wallet PassPhrase"
-msgstr "Wallet-PassPhrase bestätigen"
+msgstr "Подтвердить пароль от кошелька"
 
 #. [proposals.updateVoteChoiceModal.title]
 #. defaultMessage is:
@@ -1013,7 +1013,7 @@ msgstr "Wallet-PassPhrase bestätigen"
 #: app/i18n/extracted/app/components/views/GovernancePage/Proposals/Details/UpdateVoteChoiceModalButton.json
 msgctxt "proposals.updateVoteChoiceModal.title"
 msgid "Confirm Your Vote"
-msgstr "Bestätigen Sie Ihre Stimme"
+msgstr "Подтверди пункт голосования"
 
 #. [passphraseModal.confirmationRequired]
 #. defaultMessage is:
@@ -1021,7 +1021,7 @@ msgstr "Bestätigen Sie Ihre Stimme"
 #: app/i18n/extracted/app/components/modals/PassphraseModal/Modal.json
 msgctxt "passphraseModal.confirmationRequired"
 msgid "Confirmation Required"
-msgstr "Bestätigung erforderlich"
+msgstr "Необходимо подтверждение"
 
 #. [settings.closeWalletModalTitle]
 #. defaultMessage is:
@@ -1029,7 +1029,7 @@ msgstr "Bestätigung erforderlich"
 #: app/i18n/extracted/app/components/views/SettingsPage/Page.json
 msgctxt "settings.closeWalletModalTitle"
 msgid "Confirmation Required"
-msgstr "Bestätigung erforderlich"
+msgstr "Необходимо подтверждение"
 
 #. [transaction.indicatorConfirmed]
 #. defaultMessage is:
@@ -1037,7 +1037,7 @@ msgstr "Bestätigung erforderlich"
 #: app/i18n/extracted/app/components/TxHistory/TxHistoryRow/Status.json
 msgctxt "transaction.indicatorConfirmed"
 msgid "Confirmed"
-msgstr "Bestätigt"
+msgstr "Подтверждено"
 
 #. [txDetails.indicatorConfirmed]
 #. defaultMessage is:
@@ -1045,7 +1045,7 @@ msgstr "Bestätigt"
 #: app/i18n/extracted/app/components/views/TxDetails.json
 msgctxt "txDetails.indicatorConfirmed"
 msgid "Confirmed"
-msgstr "Bestätigt"
+msgstr "Подтверждено"
 
 #. [votingPreferences.title]
 #. defaultMessage is:
@@ -1053,7 +1053,7 @@ msgstr "Bestätigt"
 #: app/i18n/extracted/app/components/views/GovernancePage/Blockchain/Page.json
 msgctxt "votingPreferences.title"
 msgid "Consensus Changes"
-msgstr "Konsensänderungen"
+msgstr "Изменения в консенсусе"
 
 #. [governance.tab.consensusChanges]
 #. defaultMessage is:
@@ -1061,7 +1061,7 @@ msgstr "Konsensänderungen"
 #: app/i18n/extracted/app/components/views/GovernancePage/index.json
 msgctxt "governance.tab.consensusChanges"
 msgid "Consensus Changes"
-msgstr "Konsensänderungen"
+msgstr "Изменения в консенсусе"
 
 #. [votingPreferences.description]
 #. defaultMessage is:
@@ -1094,7 +1094,7 @@ msgstr "Konstitution"
 #: app/i18n/extracted/app/components/modals/PassphraseModal/ButtonsToolbar.json
 msgctxt "passphraseModal.continue"
 msgid "Continue"
-msgstr "Fortfahren"
+msgstr "Продолжить"
 
 #. [createWallet.continueBtn]
 #. defaultMessage is:
@@ -1102,7 +1102,7 @@ msgstr "Fortfahren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreateWallet.json
 msgctxt "createWallet.continueBtn"
 msgid "Continue"
-msgstr "Fortfahren"
+msgstr "Продолжить"
 
 #. [selectLang.continueBtn]
 #. defaultMessage is:
@@ -1110,7 +1110,7 @@ msgstr "Fortfahren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/LanguageSelectPage/Page.json
 msgctxt "selectLang.continueBtn"
 msgid "Continue"
-msgstr "Fortfahren"
+msgstr "Продолжить"
 
 #. [getStarted.stakePools.continueBtn]
 #. defaultMessage is:
@@ -1118,7 +1118,7 @@ msgstr "Fortfahren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/StakePools/Form.json
 msgctxt "getStarted.stakePools.continueBtn"
 msgid "Continue"
-msgstr "Weiter"
+msgstr "Продолжить"
 
 #. [wallet.create.button]
 #. defaultMessage is:
@@ -1126,7 +1126,7 @@ msgstr "Weiter"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/CreateWalletForm.json
 msgctxt "wallet.create.button"
 msgid "Continue"
-msgstr "Weiter"
+msgstr "Продолжить"
 
 #. [stake.addPool.addBtn]
 #. defaultMessage is:
@@ -1134,7 +1134,7 @@ msgstr "Weiter"
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/AddForm.json
 msgctxt "stake.addPool.addBtn"
 msgid "Continue"
-msgstr "Fortfahren"
+msgstr "Продолжить"
 
 #. [clipboard.copied]
 #. defaultMessage is:
@@ -1142,7 +1142,7 @@ msgstr "Fortfahren"
 #: app/i18n/extracted/app/components/shared/CopyToClipboard.json
 msgctxt "clipboard.copied"
 msgid "Copied"
-msgstr "Kopiert"
+msgstr "Скопировано"
 
 #. [appMenu.copy]
 #. defaultMessage is:
@@ -1150,7 +1150,7 @@ msgstr "Kopiert"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.copy"
 msgid "Copy"
-msgstr "Kopieren"
+msgstr "Копировать"
 
 #. [createWallet.copy]
 #. defaultMessage is:
@@ -1158,7 +1158,7 @@ msgstr "Kopieren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/CreateWallet.json
 msgctxt "createWallet.copy"
 msgid "Copy seed words to clipboard"
-msgstr "Seed-Wörter in Zwischenablage kopieren"
+msgstr "Скопировать сид в буфер"
 
 #. [createWallet.createWalletBtn]
 #. defaultMessage is:
@@ -1166,7 +1166,7 @@ msgstr "Seed-Wörter in Zwischenablage kopieren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ContinueWalletCreation.json
 msgctxt "createWallet.createWalletBtn"
 msgid "Create Wallet"
-msgstr "Wallet erstellen"
+msgstr "Развернуть кошелёк"
 
 #. [getStarted.newSeedTab]
 #. defaultMessage is:
@@ -1174,7 +1174,7 @@ msgstr "Wallet erstellen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "getStarted.newSeedTab"
 msgid "Create a New Wallet"
-msgstr "Neues Wallet erstellen"
+msgstr "Создать новый кошелёк"
 
 #. [proposals.community.createLink]
 #. defaultMessage is:
@@ -1190,7 +1190,7 @@ msgstr "Proposal erstellen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/messages.json
 msgctxt "createWallet.title"
 msgid "Create a new wallet"
-msgstr "Neues Wallet erstellen"
+msgstr "Создать новый кошелёк"
 
 #. [stake.addPool.info]
 #. defaultMessage is:
@@ -1215,7 +1215,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/AccountsPage/Accounts/List.json
 msgctxt "accounts.newAccountConfirmations"
 msgid "Create new account"
-msgstr "Neuen Account erstellen"
+msgstr "Создать новый аккаунт"
 
 #. [proposal.overview.created.label]
 #. defaultMessage is:
@@ -1231,7 +1231,7 @@ msgstr "Erstellt von"
 #: app/i18n/extracted/app/components/views/TicketsPage/index.json
 msgctxt "tickets.description"
 msgid "Current Price: {ticketPrice}"
-msgstr "Aktueller Preis: {ticketPrice}"
+msgstr "Стоимость тикета: {ticketPrice}"
 
 #. [purchaseTickets.currentStakepool]
 #. defaultMessage is:
@@ -1247,7 +1247,7 @@ msgstr "Aktueller StakePool"
 #: app/i18n/extracted/app/components/views/HomePage/Page.json
 msgctxt "home.currentTotalBalanceLabel"
 msgid "Current Total Balance"
-msgstr "Aktuelles Gesamtguthaben"
+msgstr "Баланс"
 
 #. [privacy.custom.title]
 #. defaultMessage is:
@@ -1255,7 +1255,7 @@ msgstr "Aktuelles Gesamtguthaben"
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/CustomPrivacyOptions.json
 msgctxt "privacy.custom.title"
 msgid "Custom Privacy Options"
-msgstr "Individuelle Datenschutzoptionen"
+msgstr "Настройки приватности"
 
 #. [privacy.options.custom.title]
 #. defaultMessage is:
@@ -1263,7 +1263,7 @@ msgstr "Individuelle Datenschutzoptionen"
 #: app/i18n/extracted/app/components/views/GetStartedPage/PrivacyPage/TopLevelOptions.json
 msgctxt "privacy.options.custom.title"
 msgid "Customize Allowed Connections"
-msgstr "Zugelassene Verbindungen anpassen"
+msgstr "Настроить разрешённые соединения"
 
 #. [appMenu.cut]
 #. defaultMessage is:
@@ -1271,7 +1271,7 @@ msgstr "Zugelassene Verbindungen anpassen"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.cut"
 msgid "Cut"
-msgstr "Ausschneiden"
+msgstr "Вырезать"
 
 #. [login.form.appdata.placeholder]
 #. defaultMessage is:
@@ -1279,7 +1279,7 @@ msgstr "Ausschneiden"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
 msgctxt "login.form.appdata.placeholder"
 msgid "Daemon Data Directory"
-msgstr "Daemon-Datenverzeichnis"
+msgstr "Директория для работы демона"
 
 #. [login.form.appdata.label]
 #. defaultMessage is:
@@ -1287,7 +1287,7 @@ msgstr "Daemon-Datenverzeichnis"
 #: app/i18n/extracted/app/components/views/GetStartedPage/AdvancedStartup/AppDataForm.json
 msgctxt "login.form.appdata.label"
 msgid "Daemon Data Directory"
-msgstr "Daemon-Datenverzeichnis"
+msgstr "Директория для работы демона"
 
 #. [fatal.daemon.title]
 #. defaultMessage is:
@@ -1295,7 +1295,7 @@ msgstr "Daemon-Datenverzeichnis"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.daemon.title"
 msgid "Daemon Error"
-msgstr "Daemon-Fehler"
+msgstr "Демон не отвечает"
 
 #. [export.dailyBalances.name]
 #. defaultMessage is:
@@ -1303,7 +1303,7 @@ msgstr "Daemon-Fehler"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/messages.json
 msgctxt "export.dailyBalances.name"
 msgid "Daily Balances"
-msgstr "Tägliche Guthaben"
+msgstr "Балансы по дням"
 
 #. [export.dailyBalances.fields.time]
 #. defaultMessage is:
@@ -1356,7 +1356,7 @@ msgstr "Tages-Bucket"
 #: app/i18n/extracted/app/components/charts/messages.json
 msgctxt "charts.keys.day"
 msgid "Days"
-msgstr "Tage"
+msgstr "Дни"
 
 #. [settings.privacy.pfcdata.label]
 #. defaultMessage is:
@@ -1364,7 +1364,7 @@ msgstr "Tage"
 #: app/i18n/extracted/app/components/views/SettingsPage/PrivacySettings.json
 msgctxt "settings.privacy.pfcdata.label"
 msgid "Decred Block Explorer"
-msgstr "Decred Block Explorer"
+msgstr "PicFight Coin Block Explorer"
 
 #. [help.constitution.modal.title]
 #. defaultMessage is:
@@ -1442,7 +1442,7 @@ msgstr "Pfcredit V{version} veröffentlicht"
 #: app/i18n/extracted/app/components/views/GetStartedPage/OpenWallet/DecryptForm.json
 msgctxt "getStarted.decrypt.label"
 msgid "Decrypt Wallet"
-msgstr "Wallet entschlüsseln"
+msgstr "Расшифровать кошелёк"
 
 #. [fatal.button.delete]
 #. defaultMessage is:
@@ -1450,7 +1450,7 @@ msgstr "Wallet entschlüsseln"
 #: app/i18n/extracted/app/components/views/FatalErrorPage.json
 msgctxt "fatal.button.delete"
 msgid "Delete and Shutdown"
-msgstr "Löschen und Herunterfahren"
+msgstr "Удалить и выйти"
 
 #. [export.destination]
 #. defaultMessage is:
@@ -1458,14 +1458,14 @@ msgstr "Löschen und Herunterfahren"
 #: app/i18n/extracted/app/components/views/TransactionsPage/ExportTab/Page.json
 msgctxt "export.destination"
 msgid "Destination"
-msgstr "Ziel"
+msgstr "Куда"
 
 #. [send.confirmAmountAccount]
 #. defaultMessage is:
 #. Destination account
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.confirmAmountAccount"
-msgid "Destination account"
+msgid "Аккаунт получателя"
 msgstr "Ziel-Account"
 
 #. [send.confirmAmountAddress]
@@ -1474,7 +1474,7 @@ msgstr "Ziel-Account"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.confirmAmountAddress"
 msgid "Destination address"
-msgstr "Zieladresse"
+msgstr "Адрес получателя"
 
 #. [send.confirmAmountAddresses]
 #. defaultMessage is:
@@ -1482,7 +1482,7 @@ msgstr "Zieladresse"
 #: app/i18n/extracted/app/components/views/TransactionsPage/SendTab/Page.json
 msgctxt "send.confirmAmountAddresses"
 msgid "Destination addresses"
-msgstr "Zieladressen"
+msgstr "Адрес получателя"
 
 #. [export.transactions.fields.direction]
 #. defaultMessage is:
@@ -1527,7 +1527,7 @@ msgstr "Verschiedener lokaler Daemon-Standort"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.disable.title"
 msgid "Disable SPV"
-msgstr "SPV deaktivieren"
+msgstr "Отключить SPV"
 
 #. [settings.spv.false]
 #. defaultMessage is:
@@ -1535,7 +1535,7 @@ msgstr "SPV deaktivieren"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.spv.false"
 msgid "Disabled"
-msgstr "Deaktiviert"
+msgstr "Отключено"
 
 #. [settings.advancedDaemon.false]
 #. defaultMessage is:
@@ -1543,7 +1543,7 @@ msgstr "Deaktiviert"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.advancedDaemon.false"
 msgid "Disabled"
-msgstr "Deaktiviert"
+msgstr "Отключено"
 
 #. [privacy.options.disabled.description]
 #. defaultMessage is:
@@ -1567,7 +1567,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/GetStartedPage/index.json
 msgctxt "getStarted.header.discoveringAddresses.meta"
 msgid "Discovering addresses"
-msgstr "Adressen werden gesucht"
+msgstr "Сканирования адресов"
 
 #. [settings.displayedUnits]
 #. defaultMessage is:
@@ -1575,7 +1575,7 @@ msgstr "Adressen werden gesucht"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.displayedUnits"
 msgid "Displayed Units"
-msgstr "Angezeigte Einheiten"
+msgstr "Единицы измерения"
 
 #. [stakepools.list.confirmRemove]
 #. defaultMessage is:
@@ -1604,7 +1604,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.documentation"
 msgid "Documentation"
-msgstr "Dokumentation"
+msgstr "Документация"
 
 #. [appMenu.documentation]
 #. defaultMessage is:
@@ -1612,7 +1612,7 @@ msgstr "Dokumentation"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.documentation"
 msgid "Documentation"
-msgstr "Dokumentation"
+msgstr "Документация"
 
 #. [transactions.description.receive]
 #. defaultMessage is:
@@ -1624,8 +1624,7 @@ msgid ""
 "Each time you request a payment, create a new address to protect your "
 "privacy."
 msgstr ""
-"Erstellen Sie zum Schutz Ihrer Privatsphäre bei jeder Zahlungsanfrage eine "
-"neue Adresse."
+"Можно создавать новый адрес хоть для каждой входящей транзакции."
 
 #. [home.earned]
 #. defaultMessage is:
@@ -1633,7 +1632,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HomePage/tabs/Tickets.json
 msgctxt "home.earned"
 msgid "Earned"
-msgstr "Verdient"
+msgstr "Намайнено"
 
 #. [appMenu.edit]
 #. defaultMessage is:
@@ -1641,7 +1640,7 @@ msgstr "Verdient"
 #: app/i18n/extracted/static/menus.json
 msgctxt "appMenu.edit"
 msgid "Edit"
-msgstr "Bearbeiten"
+msgstr "Редактировать"
 
 #. [walletselection.editWallets]
 #. defaultMessage is:
@@ -1649,7 +1648,7 @@ msgstr "Bearbeiten"
 #: app/i18n/extracted/app/components/views/GetStartedPage/WalletSelection/Form.json
 msgctxt "walletselection.editWallets"
 msgid "Edit Wallets"
-msgstr "Wallets bearbeiten"
+msgstr "Редактировать кошельки"
 
 #. [proposals.enablePoliteia.button]
 #. defaultMessage is:
@@ -1665,7 +1664,7 @@ msgstr "Politeia-Integration aktivieren"
 #: app/i18n/extracted/app/components/views/GetStartedPage/SpvChoicePage/TopLevelOptions.json
 msgctxt "spv.options.enable.title"
 msgid "Enable SPV"
-msgstr "SPV aktivieren"
+msgstr "Включить SPV"
 
 #. [stake.enableStakePoolListing.button]
 #. defaultMessage is:
@@ -1681,7 +1680,7 @@ msgstr "StakePool-Liste aktivieren"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.spv.true"
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Включено"
 
 #. [settings.advancedDaemon.true]
 #. defaultMessage is:
@@ -1689,7 +1688,7 @@ msgstr "Aktiviert"
 #: app/i18n/extracted/app/components/views/SettingsPage/GeneralSettings.json
 msgctxt "settings.advancedDaemon.true"
 msgid "Enabled"
-msgstr "Aktiviert"
+msgstr "Включено"
 
 #. [privacy.options.standard.description]
 #. defaultMessage is:
@@ -1714,7 +1713,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/index.json
 msgctxt "stake.revokeTicketsPassphrase"
 msgid "Enter Passphrase to Revoke Tickets"
-msgstr "Geben Sie zum Widerrufen von Tickets die Passphrase ein"
+msgstr "Введи пароль"
 
 #. [trezor.pinModal.title]
 #. defaultMessage is:
@@ -1722,7 +1721,7 @@ msgstr "Geben Sie zum Widerrufen von Tickets die Passphrase ein"
 #: app/i18n/extracted/app/components/modals/trezor/PinModal.json
 msgctxt "trezor.pinModal.title"
 msgid "Enter Pin"
-msgstr "Pin eingeben"
+msgstr "Ваеди пин-код"
 
 #. [trezor.passphraseModal.title]
 #. defaultMessage is:
@@ -1738,7 +1737,7 @@ msgstr "Trezor-Passphrase eingeben"
 #: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
 msgctxt "securitycenter.signMessage.field.address.placeholder"
 msgid "Enter an address"
-msgstr "Adresse eingeben"
+msgstr "Введи адрес"
 
 #. [securitycenter.verify.field.address.placeholder]
 #. defaultMessage is:
@@ -1746,7 +1745,7 @@ msgstr "Adresse eingeben"
 #: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
 msgctxt "securitycenter.verify.field.address.placeholder"
 msgid "Enter an address"
-msgstr "Adresse eingeben"
+msgstr "Введи адрес"
 
 #. [securitycenter.validate.field.address.placeholder]
 #. defaultMessage is:
@@ -1754,7 +1753,7 @@ msgstr "Adresse eingeben"
 #: app/i18n/extracted/app/components/views/SecurityPage/ValidateAddress/Form.json
 msgctxt "securitycenter.validate.field.address.placeholder"
 msgid "Enter an address to validate"
-msgstr "Adresse zur Überprüfung eingeben"
+msgstr "Введи адрес для проверки"
 
 #. [createWallet.enterHexSeed.placeholder]
 #. defaultMessage is:
@@ -1762,7 +1761,7 @@ msgstr "Adresse zur Überprüfung eingeben"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/SeedHexEntry.json
 msgctxt "createWallet.enterHexSeed.placeholder"
 msgid "Enter the hex representation of your seed..."
-msgstr "Hexadezimale Darstellung Ihres Seeds eingeben …"
+msgstr "Вводи сид в формате HEX …"
 
 #. [getStarted.discoverAccountsInfo]
 #. defaultMessage is:
@@ -1787,7 +1786,7 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/SecurityPage/SignMessage/Form.json
 msgctxt "securitycenter.signMessage.field.message.placeholder"
 msgid "Enter your message"
-msgstr "Nachricht eingeben"
+msgstr "Введи своё сообщение"
 
 #. [securitycenter.verify.field.message.placeholder]
 #. defaultMessage is:
@@ -1795,7 +1794,7 @@ msgstr "Nachricht eingeben"
 #: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
 msgctxt "securitycenter.verify.field.message.placeholder"
 msgid "Enter your message"
-msgstr "Nachricht eingeben"
+msgstr "Введи своё сообщение"
 
 #. [createWallet.enterSeed.placeholder]
 #. defaultMessage is:
@@ -1803,7 +1802,7 @@ msgstr "Nachricht eingeben"
 #: app/i18n/extracted/app/components/views/GetStartedPage/CreateWallet/CreateWalletForm/ExistingSeed/SeedHexEntry.json
 msgctxt "createWallet.enterSeed.placeholder"
 msgid "Enter your seed..."
-msgstr "Geben Sie Ihren Seed ein …"
+msgstr "Введи сид …"
 
 #. [securitycenter.verify.field.signature.placeholder]
 #. defaultMessage is:
@@ -1811,7 +1810,7 @@ msgstr "Geben Sie Ihren Seed ein …"
 #: app/i18n/extracted/app/components/views/SecurityPage/VerifyMessage/Form.json
 msgctxt "securitycenter.verify.field.signature.placeholder"
 msgid "Enter your signature"
-msgstr "Signatur eingeben"
+msgstr "ВВеди подпись"
 
 #. [accountExtendedKey.failed]
 #. defaultMessage is:
@@ -1846,7 +1845,7 @@ msgstr ""
 #: app/i18n/extracted/app/reducers/snackbar.json
 msgctxt "spvSync.Failed"
 msgid "Error syncing SPV wallet: {originalError}"
-msgstr "Fehler bei Synchronisierung der SPV-Wallet: {originalError}"
+msgstr "Проблема с загрузкой SPV-кошелька: {originalError}"
 
 #. [addCustomStakePool.failed]
 #. defaultMessage is:
@@ -1866,8 +1865,8 @@ msgid ""
 "Error: seed is not 32 bytes, such comes from a non-supported software and "
 "may have unintended consequences."
 msgstr ""
-"Error: Seed hat nicht 32 Bytes. Dies kommt von einer nicht unterstützten "
-"Software und kann unbeabsichtigte Folgen haben."
+"Error: Длинна сида не равна 32-м байтам. Это точно сид?"
+""
 
 #. [getStarted.header.startrpc.meta]
 #. defaultMessage is:
