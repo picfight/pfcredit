@@ -1,9 +1,10 @@
 import staticDefaults from "../extracted/static";
 import { addLocaleData } from "react-intl";
 
+import ru_data from "react-intl/locale-data/ru";
 import en_data from "react-intl/locale-data/en";
 
-addLocaleData([ ...en_data ]);
+addLocaleData([ ...ru_data, ...en_data ]);
 
 // Extra formats. May be customized by each locale.
 export const defaultFormats = {
@@ -24,28 +25,19 @@ export const defaultFormats = {
   }
 };
 
+const ru = {
+  key: "ru",
+  language: "ru",
+  description: "Русский",
+  messages: require("../translations/ru.json"),
+  formats: defaultFormats
+};
 
 const en = {
   key: "en",
   language: "en",
   description: "English (US)",
   messages: staticDefaults, // uses defaultMessage for anything not on the staticDefaults
-  formats: defaultFormats //dont customize for en language
-};
-
-const en_GB = {
-  key: "en-GB",
-  language: "en-GB",
-  description: "English (UK)",
-  messages: require("../translations/original.json"),
-  formats: defaultFormats //dont customize for en language
-};
-
-const en_AU = {
-  key: "en-AU",
-  language: "en-AU",
-  description: "English (AU)",
-  messages: require("../translations/original.json"),
   formats: defaultFormats //dont customize for en language
 };
 
@@ -59,7 +51,7 @@ const dev = {
   formats: defaultFormats
 };
 
-const locales = [ en, en_GB, en_AU ];
+const locales = [ ru, en ];
 
 if (process.env.NODE_ENV === "development") {
   locales.push(dev);
@@ -89,6 +81,9 @@ export function appLocaleFromElectronLocale(electronLocale) {
   case "es":
     return "es";
 
+  case "ru":
+    return "ru";
+
   case "fr":
   case "fr-CA":
   case "fr-CH":
@@ -109,6 +104,6 @@ export function appLocaleFromElectronLocale(electronLocale) {
     return "zh";
 
   default:
-    return "en";
+    return "ru";
   }
 }
