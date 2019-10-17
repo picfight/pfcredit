@@ -88,6 +88,8 @@ func fileGenerator(data string) string {
 	data = coinknife.Replace(data, "Mainnet Decred addresses always begin with letter D", "Mainnet PicFight Coin addresses always begin with letter J")
 	data = coinknife.Replace(data, "Testnet Decred addresses always begin with letter T", "Testnet PicFight Coin addresses always begin with letter T")
 
+  data = coinknife.Replace(data, "t.me/decred", "t.me/picfightchat")
+
 	//
 	//data = coinknife.Replace(data, "Decred ", "PicFight Coin ")
 	//data = coinknife.Replace(data, " Decred", " PicFight Coin")

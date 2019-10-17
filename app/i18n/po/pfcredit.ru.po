@@ -7004,11 +7004,11 @@ msgstr "slack.decred.org"
 
 #. [help.telegram.subtitle]
 #. defaultMessage is:
-#. t.me/decred
+#. t.me/picfightchat
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 msgctxt "help.telegram.subtitle"
-msgid "t.me/decred"
-msgstr "t.me/decred"
+msgid "t.me/picfightchat"
+msgstr "t.me/picfightchat"
 
 #. [stake.discoverStakeOoolsAPILink]
 #. defaultMessage is:

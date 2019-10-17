@@ -6612,9 +6612,9 @@ msgstr ""
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
 #. [help.telegram.subtitle]
 #. defaultMessage is:
-#. t.me/decred
+#. t.me/picfightchat
 msgctxt "help.telegram.subtitle"
-msgid "t.me/decred"
+msgid "t.me/picfightchat"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/TicketsPage/PurchaseTab/StakePools/index.json
