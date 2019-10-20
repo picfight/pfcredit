@@ -18,9 +18,9 @@ const WalletError = ({ getNetworkError }) => (
   <div style={styles.view}>
     <div style={styles.content}>
       { getNetworkError ?
-        <p>{getNetworkError} Please verify that your pfcd is configured correctly and restart.</p> :
+        <p>{getNetworkError} Connecting to pfcd...</p> :
         <p> We have detected that your wallet has disconnected.
-          Please reload Pfcredit to fix this problem. </p>
+          Please reload pfCredit to fix this problem. </p>
       }
     </div>
   </div>
