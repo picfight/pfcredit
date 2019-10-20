@@ -3,20 +3,14 @@ import "style/Tutorial.less";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { StepIndicator } from "indicators";
-import { onboard01, onboard02, onboard03, onboard04 } from "assets/videos";
+import {onboard04 } from "assets/videos";
 
 const docByStep = {
   0: "GetStartedTutorialPage01",
-  1: "GetStartedTutorialPage02",
-  2: "GetStartedTutorialPage03",
-  3: "GetStartedTutorialPage04",
 };
 
 const videosByStep = {
-  0: onboard01,
-  1: onboard02,
-  2: onboard03,
-  3: onboard04,
+  0: onboard04,
 };
 
 const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {

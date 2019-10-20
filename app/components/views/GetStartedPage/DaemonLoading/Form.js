@@ -5,7 +5,7 @@ import { PasswordInput } from "inputs";
 import "style/GetStarted.less";
 import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
   DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
-  WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
+  LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 
 const DaemonLoadingBody = ({
   Form,
