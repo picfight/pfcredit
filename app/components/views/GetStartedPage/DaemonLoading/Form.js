@@ -60,7 +60,6 @@ const DaemonLoadingBody = ({
           <SlateGrayButton className="tutorial-button" onClick={onShowTutorial}>
             <LearnBasicsMsg />
           </SlateGrayButton>
-          <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
         </div>
         <div className="loader-bar">
           <Aux>
