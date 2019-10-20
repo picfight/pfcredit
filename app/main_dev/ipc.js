@@ -3,7 +3,7 @@ import path from "path";
 import parseArgs from "minimist";
 import { OPTIONS } from "./constants";
 import { createLogger } from "./logging";
-import { getWalletPath, getWalletDBPathFromWallets, getPfcdPath, pfcdCfg, pfcctlCfg, appDataDirectory, getExecutablePath, getPfcdRpcCert } from "./paths";
+import { getWalletPath, getPfcdPath, pfcdCfg, pfcctlCfg, appDataDirectory, getExecutablePath, getPfcdRpcCert } from "./paths";
 import { createTempPfcdConf, initWalletCfg, newWalletConfigCreation, getWalletCfg, readPfcdConfig } from "../config";
 import { launchPFCD, launchPFCWallet, GetPfcdPID, GetDcrwPID, closePFCD, closePFCW, GetDcrwPort } from "./launch";
 

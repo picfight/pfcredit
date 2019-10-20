@@ -1,6 +1,5 @@
 import { FormattedMessage as T } from "react-intl";
 import { DescriptionHeader } from "layout";
-import { Link } from "react-router-dom";
 
 export const TutorialsTabHeader = () =>
   <DescriptionHeader

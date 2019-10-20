@@ -2,7 +2,7 @@ import ReleaseNotesForm from "./Form";
 
 // versions with release notes available. From newer to older.
 const availableVersions = [
-  { version: "1.0.0"},
+  { version: "1.0.0" },
 ];
 
 @autobind
