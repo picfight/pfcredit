@@ -1,13 +1,13 @@
 {
   "name": "pfcredit",
   "productName": "pfcredit",
-  "version": "1.4.0",
-  "description": "Cross-platform decred gui based on Electron and React",
+  "version": "1.0.0",
+  "description": "pfCredit is s cross platform GUI Wallet for PicFight coin written in node.js using Electron",
   "main": "./main.js",
   "author": {
-    "name": "Decred Team",
-    "email": "info@decred.org",
-    "url": "https://github.com/decred"
+    "name": "PicFight.org",
+    "email": "pfCredit@picfight.org",
+    "url": "https://github.com/picfight/pfcredit"
   },
   "license": "ISC",
   "dependencies": {
