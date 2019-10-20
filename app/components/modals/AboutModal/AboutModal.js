@@ -17,6 +17,12 @@ class AboutModal extends React.Component {
           <div className="about-modal-text-paragraph">
             <T id="aboutModal.paragraph1" m="pfCredit is s cross platform GUI Wallet for PicFight coin written in node.js using Electron"/>
           </div>
+          <div className="about-modal-text-paragraph">
+            <T id="aboutModal.paragraph2a" m="Source code:"/> <a onClick={() => shell.openExternal("https://github.com/picfight/pfcredit")}>github.com/picfight/pfcredit</a>
+          </div>
+          <div className="about-modal-text-paragraph">
+            <T id="aboutModal.paragraph3" m="Parent project:"/> <a onClick={() => shell.openExternal("https://github.com/decred/decrediton")}>github.com/decred/decrediton</a>
+          </div>
         </div>
         <div className="about-modal-bottom-area">
           <div className="about-modal-bottom-area-left">
