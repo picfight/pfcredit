@@ -44,8 +44,6 @@ export default ({
         </div>
         <T id="getStarted.releaseNotesTitle" m="Pfcredit v{version} Released" values={{ version }}/>
         <div className="release-notes-version-navigation">
-          <a href="#" onClick={onNewerVersion}><T id="getStarted.releaseNotes.NewerVersion" m="Newer Version"/></a>
-          <a href="#" onClick={onOlderVersion}><T id="getStarted.releaseNotes.OlderVersion" m="Older Version"/></a>
         </div>
       </div>
       <div className="release-notes">

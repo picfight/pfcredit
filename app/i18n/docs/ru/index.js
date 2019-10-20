@@ -16,10 +16,6 @@ export { default as TrezorWalletCreationPassPhraseWarning } from "./Warnings/Tre
 
 export { default as GetStartedTutorialPage01 } from "./GetStarted/TutorialPage01.md";
 
-export { default as ReleaseNote1_3_0 } from "./ReleaseNotes/v1.3.0.md";
-export { default as ReleaseNote1_3_1 } from "./ReleaseNotes/v1.3.1.md";
-export { default as ReleaseNote1_4_0 } from "./ReleaseNotes/v1.4.0.md";
-
 export { default as StakingTutorialPage01 } from "./StakingTutorial/Page01.md";
 export { default as StakingTutorialPage02 } from "./StakingTutorial/Page02.md";
 
