@@ -20,7 +20,6 @@ const DaemonLoadingBody = ({
   onShowSettings,
   onShowLogs,
   onShowTutorial,
-  onShowReleaseNotes,
   startupError,
   updateAvailable,
   appVersion,

@@ -18,8 +18,6 @@ export default ({
   version,
   docName,
   imgClassName,
-  onNewerVersion,
-  onOlderVersion,
 }) => (
   <div className="page-body getstarted">
     <div className="getstarted loader logs">

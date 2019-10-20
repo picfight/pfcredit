@@ -26,7 +26,6 @@ export const getAvailableWallets = (network) => {
     const lastAccess = cfg.get("lastaccess");
     const watchingOnly = cfg.get("iswatchonly");
     const isTrezor = cfg.get("trezor");
-    const walletDbFilePath = getWalletDBPathFromWallets(isTestNet, wallet);
     // const finished = fs.pathExistsSync(walletDbFilePath);
     const finished = true;
     availableWallets.push({ network, wallet, finished, lastAccess, watchingOnly, isTrezor });

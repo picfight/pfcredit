@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { FormattedMessage as T } from "react-intl";
-import { ExternalLink } from "shared";
 
 export default () => (
   <div className="overview-no-transactions">

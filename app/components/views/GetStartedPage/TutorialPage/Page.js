@@ -3,7 +3,7 @@ import "style/Tutorial.less";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
 import { StepIndicator } from "indicators";
-import {onboard04 } from "assets/videos";
+import { onboard04 } from "assets/videos";
 
 const docByStep = {
   0: "GetStartedTutorialPage01",
