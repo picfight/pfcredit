@@ -7,8 +7,5 @@ export default () => (
     <Link to="/transactions/receive" className="receive">
       <T id="home.noTransactions.receiveLink" m="Generate a PFC Address for receiving funds" /> →
     </Link>
-    <ExternalLink href="https://decred.org/exchanges" className="buy">
-      <T id="home.noTransactions.buyFromExchanges" m="Buy Decred from Exchanges" /> →
-    </ExternalLink>
   </div>
 );
