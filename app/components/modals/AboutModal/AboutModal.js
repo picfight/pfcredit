@@ -15,7 +15,7 @@ class AboutModal extends React.Component {
           </div>
           <div className="info-modal-close-button-top" onClick={onCancelModal}/>
           <div className="about-modal-text-paragraph">
-            <T id="aboutModal.paragraph1" m=""/>
+            <T id="aboutModal.paragraph1" m="pfCredit is s cross platform GUI Wallet for PicFight coin written in node.js using Electron"/>
           </div>
         </div>
         <div className="about-modal-bottom-area">
