@@ -1,8 +1,7 @@
-import { KeyBlueButton, InvisibleButton } from "buttons";
+import { InvisibleButton } from "buttons";
 import "style/Tutorial.less";
 import { FormattedMessage as T } from "react-intl";
 import { Documentation } from "shared";
-import { StepIndicator } from "indicators";
 import { onboard04 } from "assets/videos";
 
 const docByStep = {
@@ -13,7 +12,7 @@ const videosByStep = {
   0: onboard04,
 };
 
-const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTutorial }) => {
+const TutorialPage = ({ tutorialStep, finishTutorial }) => {
   return (
     <div className="getstarted-tutorial">
       <div className={"tutorial-side step-" + tutorialStep}>
@@ -26,24 +25,13 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
         </div>
 
         <div className="tutorial-main-toolbar">
-          <KeyBlueButton className="next-button" onClick={tutorialStep < 3 ? onNextTutorialStep : finishTutorial} >
-            <T id="tutorial.nextBtn" m={"Next"}/>
-          </KeyBlueButton>
-
-          <StepIndicator
-            currentPageIndex={tutorialStep}
-            pageCount={1}
-            onGotoPage={onGoToStep}
-          />
-
           <InvisibleButton className="skip-button" onClick={finishTutorial}>
-            { tutorialStep < 3
-              ? <T id="tutorial.skipBtn" m={"Skip"}/>
-              : <T id="tutorial.finishBtn" m={"Finish"}/> }
+            <T id="tutorial.finishBtn" m={"Finish"}/>
           </InvisibleButton>
         </div>
       </div>
     </div>
   );
 };
+
 export default TutorialPage;

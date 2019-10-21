@@ -1,13 +1,13 @@
-# Balance Information
+# Информация о балансе
 
-**Total** This is the total balance controlled by this account currently.
+**Всего** Все монеты приписанные к данном аккаунту.
 
-**Spendable Balance** The spendable/accessible balance for the this account.
+**Доступно** Монеты доступные к операциям.
 
-**Locked By Tickets** This is the balance that is currently locked by tickets for this account. Once the tickets are voted or revoked these funds will be unlocked.
+**Заблокированные тикетами** Количество монет заблокированное тикетами для стейк-майнинга. Когда тикет закончит свою работу эти монеты будут разблокированы. 
 
-**Voting Authority** This balance shows the total amount that this account has voting authority over.  For example, if you use a voting-only wallet this will show that total amount controlled.
+**Участвуют в стейк-майнинге** Количество монет выделенное для стейк-майнинга.
 
-**Immature Rewards** These are regular coinbase rewards that are currently maturing (from PoW mining reward for instance).
+**К зачислению за майнинг** Награды за констуирование блоков (PoW-майнинг).
 
-**Immature Stake Generation** This balance shows the current stake rewards and revocations that are awaiting maturity (256 blocks on mainnet)."
+**К зачислению за майнинг стейков** Стоимость отзываемых тикетов и награды за стейк-майнинг (PoS-майнинг).
