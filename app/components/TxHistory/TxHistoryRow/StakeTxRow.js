@@ -5,7 +5,7 @@ import { Balance, Tooltip } from "shared";
 import { diffBetweenTwoTs } from "helpers/dateFormat";
 
 const messageByType = { // TODO: use constants instead of string
-  "vote": <T id="transaction.type.vote" m="Voted" />,
+  "vote": <T id="transaction.type.vote" m="Vote" />,
   "ticket": <T id="transaction.type.ticket" m="Purchased" />,
   "revocation": <T id="transaction.type.revocation" m="Revoked" />,
   "voted": <T id="transaction.type.voted" m="Voted" />,
