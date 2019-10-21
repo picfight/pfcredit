@@ -3,8 +3,7 @@ import { FormattedRelative, injectIntl } from "react-intl";
 import { KeyBlueButton, SlateGrayButton, InvisibleButton } from "buttons";
 import { PasswordInput } from "inputs";
 import { LogsLinkMsg, SettingsLinkMsg, HeaderTimeMsg, DiscoverLabelMsg,
-  DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink,
-  WhatsNewLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
+  DiscoverAccountsInfoMsg, ScanBtnMsg, LearnBasicsMsg, UpdateAvailableLink, LoaderTitleMsg, AboutModalButton, messages } from "../messages";
 import "style/GetStarted.less";
 
 const SpvSyncBody = ({
@@ -55,7 +54,6 @@ const SpvSyncBody = ({
           <SlateGrayButton className="tutorial-button" onClick={onShowTutorial}>
             <LearnBasicsMsg />
           </SlateGrayButton>
-          <WhatsNewLink {...{ onShowReleaseNotes, appVersion }} />
         </div>
         <div className="loader-bar">
           <Aux>
