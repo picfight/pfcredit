@@ -1,9 +1,17 @@
-# What is Decred Blockchain?
+# Сид
 
-At Decred’s heart is an ever growing list of records shared globally across a decentralised ledger; this is Decred’s blockchain.
+Криптовалютныый кошелёк - это безжизненная машина лишённая всякого смысла и цели к существованию.
 
-The blockchain holds all of Decred’s transactional data and uses an innovative **Proof-of-Stake (PoS)/Proof-of-Work (PoW) system** to validate transactions and keep the network secure.
+Сид - это случайное число в диапазоне от 0 до 10...(с 77 нулями).
 
-This hybrid system mitigates weaknesses that PoS and PoW have individually. Furthermore it forms the cornerstone for **smart governance** of the project.
+Сид вставляется в кошелёк и тот оживает: начинает генерировать секретные и приватные ключи для шифрования, подписывать транзакции, посылать и принимать платежи.
 
-Widespread participation in **staking (PoS)** and **mining (PoW)** helps to protect the neutrality of the network and rewards the participants with newly generated PFC from the blockreward.
+Сид, по сути, является твоим криптографическим паспортом и даёт исключительно и неоспоримое право распоряжаться связанными с ним монетами. 
+
+Любой желающий может сгенерировать сид генератором случайных чисел. Дла удобства кошелёк уже умеет это делать. 
+
+Сид нужно держать в секрете. Не храни его на компьютере. Запиши его на бумаге, сохрани на usb флешку и спрячь в сухом и тихом месте.
+
+**Никто кроме тебя не может гарантировать безопасность твоего сида и твоего кошелька**.
+
+**Если что-то тебе кажется подозрительным - будь внимателен. Избегай принятия решений на основании страха и неуверенности!**

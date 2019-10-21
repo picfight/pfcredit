@@ -32,7 +32,7 @@ const TutorialPage = ({ tutorialStep, onNextTutorialStep, onGoToStep, finishTuto
 
           <StepIndicator
             currentPageIndex={tutorialStep}
-            pageCount={4}
+            pageCount={1}
             onGotoPage={onGoToStep}
           />
 
