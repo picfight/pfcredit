@@ -23,7 +23,7 @@ const CreateWallet = ({
   <Aux>
     <div className="getstarted content">
       <div className="go-back-screen-button-area">
-        <Tooltip text={ <T id="createWallet.goBack" m="Go back" /> }><div className="go-back-screen-button" onClick={onReturnToWalletSelection}/></Tooltip>
+        <div className="go-back-screen-button" onClick={onReturnToWalletSelection}/>
       </div>
       <div className="content-title">
         <CreateWalletTitleMsg />
