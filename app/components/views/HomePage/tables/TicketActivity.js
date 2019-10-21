@@ -12,7 +12,6 @@ const RecentTickets = ({
   getTransactionsRequestAttempt,
   getAccountsResponse,
   rowNumber,
-  goToMyTickets,
   tsDate,
 }) => {
   const hasTickets = tickets.length > 0;
@@ -25,7 +24,6 @@ const RecentTickets = ({
             : <T id="home.noTickets.title" m="No tickets yet" /> }
           {hasTickets &&
           <div className="home-content-link">
-            <a onClick={goToMyTickets}><T id="home.ticketActivityHistory" m="See all" /> &#8594;</a>
           </div>
           }
         </div>
