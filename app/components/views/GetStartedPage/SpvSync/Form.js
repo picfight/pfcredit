@@ -12,7 +12,6 @@ const SpvSyncBody = ({
   onShowSettings,
   onShowLogs,
   onShowTutorial,
-  onShowReleaseNotes,
   startupError,
   updateAvailable,
   appVersion,
