@@ -1,12 +1,12 @@
 sudo: required
 
 os:
-  - linux
   - osx
+  - linux
 
 language: node_js
 node_js:
-- 10.14.1
+- 10.15.2
 
 cache:
   yarn: true
