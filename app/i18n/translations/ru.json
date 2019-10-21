@@ -592,7 +592,7 @@
   "settings.save": "Сохранить",
   "settings.security.title": "Безопасность",
   "settings.spv.false": "Отключено",
-  "settings.spv.true": "Включено",
+  "settings.spv.true": "Включено (не работает)",
   "settings.subtitle": "Настройки",
   "settings.timezone.local.description": "Использовать местное время",
   "settings.timezone.local.label": "Местное время",
