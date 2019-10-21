@@ -732,7 +732,7 @@
   "tickets.title": "Tickets",
   "tickets.type.all": "All",
   "tickets.updateStakePoolConfigHeader": "You have successfully updated your stakepool settings.",
-  "transaction.confirmationHeight": "{confirmations, plural, =0 {ждёт следующий блок} one {высота: #} other {высота: #}}",
+  "transaction.confirmationHeight": "{confirmations, plural, =0 {в самом верхнем блоке} one {глубина: #} other {глубина: #}}",
   "transaction.indicatorConfirmed": "в блокчейне",
   "transaction.indicatorPending": "не в блокчейне",
   "transaction.sortby.newest": "начиная с новых",
