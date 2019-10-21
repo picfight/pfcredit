@@ -1,7 +1,6 @@
 import { KeyBlueButton, InvisibleButton } from "buttons";
 import { FormattedMessage as T } from "react-intl";
 import { SeedCopyConfirmModal } from "modals";
-import { Tooltip } from "shared";
 import { LoaderBarBottom } from "indicators";
 import { Documentation } from "shared";
 import { BackBtnMsg, CreateWalletTitleMsg } from "../../messages";
