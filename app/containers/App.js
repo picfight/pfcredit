@@ -1,10 +1,9 @@
 import { IntlProvider } from "react-intl";
 import { defaultFormats } from "i18n/locales";
 import { app, theming } from "connectors";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import { StaticSwitch } from "shared";
-import GetStartedContainer from "./GetStarted";
 import WalletContainer from "./Wallet";
 import ShutdownAppPage from "components/views/ShutdownAppPage";
 import FatalErrorPage from "components/views/FatalErrorPage";
@@ -106,10 +105,8 @@ class App extends React.Component {
         defaultFormats={defaultFormats}
         key={locale.key}>
         <div className={theme}>
-          <Switch><Redirect from="/" exact to="/getstarted" /></Switch>
           <Snackbar/>
           <MainSwitch {...topLevelAnimation} className="top-level-container">
-            <Route path="/getstarted"  component={GetStartedContainer} />
             <Route path="/shutdown"    component={ShutdownAppPage} />
             <Route path="/error"       component={FatalErrorPage} />
             <Route path="/"            component={WalletContainer} />
