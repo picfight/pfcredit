@@ -9,7 +9,7 @@ pfCredit is a cross-platform GUI wallet for PicFight coin based on the [Decred/D
 
 Currently pfCredit is available on Windows, Linux, and macOS.
 
-Pfcredit will NOT use or in any way disrupt the CLI wallet file you may
+pfCredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
 Download the pfCredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/picfgith-binaries/releases).
@@ -56,7 +56,7 @@ This would build and run the pfCredit.
 
 ### Windows
 
-Don`t build on Windows. This is the path of pain and suffering. Instead install a virtual machine with linux and use Linux build instructions.
+Don`t build on Windows. This is the path of pain and suffering. Instead install a virtual machine with linux and use the build instructions for linux.
 
 ### Releasing the end-user app
 
