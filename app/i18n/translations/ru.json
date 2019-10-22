@@ -219,7 +219,7 @@
   "fatal.removeConfirmModal.title": "Remove daemon data",
   "fatal.suggestion.corrupted": "This error means your blockchain data has somehow become corrupted.  Typically, this is caused by a sector on the HDD/SDD that went bad and its built-in SMART didn't repair it, or the more likely case, there was a memory issue which corrupted the data.  To resolve, you must delete your blockchain data and re-download.  Press the button below to complete the process. When you restart pfCredit, it will automatically begin your blockchain download. Please come to our support channel on slack/matrix/discord/rocketchat to get advice about running disk utilities.",
   "fatal.suggestion.diffConnection": "This error typically means you have the testnet flag in your pfcd.conf file. You should check your pfcd.conf file and remove the testnet=1.",
-  "fatal.suggestion.fallthrough": "Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue.",
+  "fatal.suggestion.fallthrough": "Сообщения об ошибках можно отправлять сюда: https://github.com/picfight/pfcredit/issues",
   "fatal.suggestion.resources": "This error typically means you have another instance of daemon running.  You should check your taskmanager or profiler to shutdown any still running daemon and then try again.",
   "fatal.suggestion.title": "Suggested action to resolve error",
   "fatal.wallet.title": "Проблема с кошельком",
