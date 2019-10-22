@@ -12,7 +12,7 @@ Currently pfCredit is available on Windows, Linux, and macOS.
 pfCredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
-Download the pfCredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/picfgith-binaries/releases).
+Download the pfCredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/pfcredit/releases).
 
 ## Usage
 
