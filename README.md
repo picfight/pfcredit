@@ -84,7 +84,7 @@ Adjust the following steps for the paths you want to use.
 mkdir code
 cd code
 git clone https://github.com/picfight/pfcredit.git
-cd pfcredit
+cd pfCredit
 yarn
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
@@ -95,7 +95,7 @@ yarn dev
 The following steps will help you configure your pfCredit development environment and reduce future startup times.
 
 ### Wallet
-When you launch pfcredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+When you launch pfCredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
 
 ### Decred Node
 It will be helpful to you to run the Decred node in a separate process and simply attach to it between pfCredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
