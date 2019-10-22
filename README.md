@@ -14,41 +14,79 @@ already be using at this time.
 
 Download the pfCredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/picfgith-binaries/releases).
 
-On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
-no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/picfight/pfcredit/issues/1404)).
+## Usage
 
-On Fedora or similar distros you may need to install the libXScrnSaver
-package if you see this error:
-```
-error while loading shared libraries: libXss.so.1
+When you launch pfCredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
+
+## Building from the source code and developing
+
+### Setting up your development environment
+
+To build the code you need to install on your machine:
+
+- NodeJS
+
+- npm
+
+- Yarn
+
+- Go-lang and Git
+
+### Building
+
+First you need to build and install `pfcd`, `pfcwallet` and `pfcctl`.
+
+- [pfcd/pfcctl installation instructions](https://github.com/picfight/pfcd)
+- [pfcwallet installation instructions](https://github.com/picfight/pfcwallet)
+
+Adjust the following steps for the paths you want to use.
+
+``` bash
+mkdir code
+cd code
+git clone https://github.com/picfight/pfcredit.git
+cd pfCredit
+yarn
+mkdir bin/
+cp $GOPATH/bin/dcr* bin/
+yarn dev
 ```
 
-You can install this on a recent Fedora with the command:
+This would build and run the pfCredit.
+
+### Windows
+
+Don`t build on Windows. This is the path of pain and suffering. Instead install a virtual machine with linux and use Linux build instructions.
+
+### Releasing the end-user app
+
+Necessary build commands are located in the `package.json` file, see the `scripts`
+section of the file for details and build commands:
+```bash
+...
+    "dev": "npm run hot-server -- --start-hot",
+    "package": "npm run build && build --publish never",
+    "package-win": "npm run build && build --win --x64 --ia32",
+    "package-linux": "npm run build && build --linux",
+    "package-mac": "npm run build && build --mac",
+    "package-all": "npm run build && build -mwl",
+    "package-dev-linux": "npm run build && build --linux tar.gz",
+...
+```
+
+For example use `package-linux` command as follows:
 
 ```bash
-sudo dnf -y install libXScrnSaver
+yarn package-linux
 ```
 
-On linux you will need to decompress the package:
+After it is finished it will have the built rpm, deb and tar.gz in the releases/ directory.
+
+If you're only interested in a tar.gz, you can alternatively use:
+
 ```bash
-tar -xvzf pfcredit-X.X.X.tar.gz
+yarn package-dev-linux
 ```
-and then run the file:
-```bash
-./pfcredit
-```
-
-This will start pfcd and pfcwallet for you.
-
-On macOS, double-click the .dmg file, drag the .app to your
-Applications folder.  Double click on Pfcredit.app to start.
-
-You can also install via [brew cask](https://caskroom.github.io):
-```bash
-brew cask install pfcredit
-```
-
-From there follow the on screen instructions to setup your wallet.
 
 ### Options
 
@@ -66,39 +104,9 @@ To pass additional arguments to pfcwallet (such as to increase the logging level
 pfcredit --extrawalletargs='-d=debug'
 ```
 
-## Developing
+### Node
 
-Due to potential compatibility issues, for now, all work should be
-done with electron 2.0.0.
-
-You need to install pfcd, pfcwallet and pfcctl.
-
-- [pfcd/pfcctl installation instructions](https://github.com/picfight/pfcd#updating)
-- [pfcwallet installation instructions](https://github.com/picfight/pfcwallet#installation-and-updating)
-
-This has been tested on Linux and OSX.
-
-Adjust the following steps for the paths you want to use.
-
-``` bash
-mkdir code
-cd code
-git clone https://github.com/picfight/pfcredit.git
-cd pfCredit
-yarn
-mkdir bin/
-cp $GOPATH/bin/dcr* bin/
-yarn dev
-```
-
-## Setting up your development environment
-The following steps will help you configure your pfCredit development environment and reduce future startup times.
-
-### Wallet
-When you launch pfCredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
-
-### Decred Node
-It will be helpful to you to run the Decred node in a separate process and simply attach to it between pfCredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+It will be helpful to you to run the pfcd node in a separate process and simply attach to it between pfCredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -119,77 +127,6 @@ OSX - ```pfcd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccer
 Linux - ```pfcd --testnet -u USER -P PASSWORD --rpclisten=127.0.0.1:19119 --rpccert=~/.pfcd/rpc.cert```
 
 You can connect to this daemon in ```Advanced Startup => Different Local Daemon Location``` and input the parameters requested. Note that all the parameters needed are present in the command you used to start the node for your respective system.
-
-### Windows
-
-On windows you will need some extra steps to build grpc.  This assumes
-you are using msys2 with various development tools (compilers, make,
-etc) all installed.
-
-Install node from the official package https://nodejs.org/en/download/
-and add it to your msys2 path.  You must install the same version of node as required for Linux and OSX (8.6.0+).
-
-Install openssl from the following site:
-https://slproweb.com/products/Win32OpenSSL.html
-
-From an admin shell:
-
-```bash
-npm install --global --production windows-build-tools
-```
-
-Then build grpc as described above.
-
-## Building the package
-
-You need to install pfcd, pfcwallet and pfcctl.
-
-- [pfcd/pfcctl installation instructions](https://github.com/picfight/pfcd#updating)
-- [pfcwallet installation instructions](https://github.com/picfight/pfcwallet#installation-and-updating)
-
-To build a packaged version of pfCredit (including a dmg on OSX and
-exe on Windows), follow the development steps above.  Then build the
-dcr command line tools:
-
-```bash
-cd code/pfcredit
-mkdir bin
-cp `which pfcd` bin/
-cp `which pfcctl` bin/
-cp `which pfcwallet` bin/
-yarn
-yarn package
-```
-
-## Building release versions
-
-### Linux
-
-You need to make sure you have the following packages installed for the building to work:
-- icns2png
-- graphicsmagick
-- rpm-build
-
-```bash
-yarn package-linux
-```
-
-After it is finished it will have the built rpm, deb and tar.gz in the releases/ directory.
-
-If you're only interested in a tar.gz, you can alternatively use:
-
-```bash
-yarn package-dev-linux
-```
-
-## Contact
-
-If you have any further questions you can find us at:
-
-- irc.freenode.net (channel #decred)
-- [webchat](https://webchat.freenode.net/?channels=decred)
-- forum.decred.org
-- decred.slack.com
 
 ## Issue Tracker
 
