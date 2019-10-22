@@ -2043,10 +2043,10 @@ msgid "Firmware updated on trezor device"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-#. [help.forum]
+#. [help.vk]
 #. defaultMessage is:
 #. Forum
-msgctxt "help.forum"
+msgctxt "help.vk"
 msgid "Forum"
 msgstr ""
 
@@ -6498,10 +6498,10 @@ msgid "explorer.picfight.org"
 msgstr ""
 
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-#. [help.forum.subtitle]
+#. [help.vk.subtitle]
 #. defaultMessage is:
 #. forum.decred.org
-msgctxt "help.forum.subtitle"
+msgctxt "help.vk.subtitle"
 msgid "forum.decred.org"
 msgstr ""
 

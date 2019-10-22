@@ -2169,11 +2169,11 @@ msgctxt "trezor.updateFirmware.success"
 msgid "Firmware updated on trezor device"
 msgstr "Firmware auf Trezor-Gerät wurde aktualisiert"
 
-#. [help.forum]
+#. [help.vk]
 #. defaultMessage is:
 #. Forum
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.forum"
+msgctxt "help.vk"
 msgid "Forum"
 msgstr "Forum"
 
@@ -6889,11 +6889,11 @@ msgctxt "help.blockchain.subtitle"
 msgid "explorer.picfight.org"
 msgstr "explorer.picfight.org"
 
-#. [help.forum.subtitle]
+#. [help.vk.subtitle]
 #. defaultMessage is:
 #. forum.decred.org
 #: app/i18n/extracted/app/components/views/HelpPage/LinksTab/index.json
-msgctxt "help.forum.subtitle"
+msgctxt "help.vk.subtitle"
 msgid "forum.decred.org"
 msgstr "forum.decred.org"
 
