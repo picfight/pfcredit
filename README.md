@@ -1,19 +1,18 @@
-# pfcredit
+# pfCredit
 
 [![Build Status](https://travis-ci.org/picfight/pfcredit.png?branch=master)](https://travis-ci.org/picfight/pfcredit)
 [![ISC License](http://img.shields.io/badge/license-ISC-blue.svg)](http://copyfree.org)
 
-pfcredit is a cross-platform GUI for decred written in node.js using
-Electron.
+pfCredit is a cross-platform GUI wallet for PicFight coin based on the [Decred/Decrediton](https://github.com/decred/decrediton).
 
 ## Installation
 
-Currently pfcredit is available on Windows, Linux, and macOS.
+Currently pfCredit is available on Windows, Linux, and macOS.
 
 Pfcredit will NOT use or in any way disrupt the CLI wallet file you may
 already be using at this time.
 
-Download the pfcredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/picfgith-binaries/releases).
+Download the pfCredit release for your operating system on [picfgith/picfgith-binaries](https://github.com/picfgith/picfgith-binaries/releases).
 
 On macOS, Ubuntu (14.04 LTS kernel 3.16 and later), and recent Debians, there should be
 no additional dependencies needed (exception: Ubuntu 18.04+, see [issue #1404](https://github.com/picfight/pfcredit/issues/1404)).
@@ -93,13 +92,13 @@ yarn dev
 ```
 
 ## Setting up your development environment
-The following steps will help you configure your pfcredit development environment and reduce future startup times.
+The following steps will help you configure your pfCredit development environment and reduce future startup times.
 
 ### Wallet
 When you launch pfcredit, you will be prompted to select a wallet to use. Select your wallet or create a new one using the in-app wizard. Be sure to save your seed and make your password memorable.
 
 ### Decred Node
-It will be helpful to you to run the Decred node in a separate process and simply attach to it between pfcredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
+It will be helpful to you to run the Decred node in a separate process and simply attach to it between pfCredit restarts. In order to see the advanced daemon configuration options you open your ```config.json``` and set the ```daemon_start_advanced``` flag to ```true``` as follows:
 
 ```"daemon_start_advanced": true,```
 
@@ -148,7 +147,7 @@ You need to install pfcd, pfcwallet and pfcctl.
 - [pfcd/pfcctl installation instructions](https://github.com/picfight/pfcd#updating)
 - [pfcwallet installation instructions](https://github.com/picfight/pfcwallet#installation-and-updating)
 
-To build a packaged version of pfcredit (including a dmg on OSX and
+To build a packaged version of pfCredit (including a dmg on OSX and
 exe on Windows), follow the development steps above.  Then build the
 dcr command line tools:
 
@@ -200,4 +199,4 @@ is used for this project.
 
 ## License
 
-pfcredit is licensed under the [copyfree](http://copyfree.org) ISC License.
+pfCredit is licensed under the [copyfree](http://copyfree.org) ISC License.
