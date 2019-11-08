@@ -54,7 +54,7 @@ class FatalErrorPage extends React.Component {
                       onSubmit={deleteDaemonData}
                       buttonLabel={ <T id="fatal.button.delete" m="Delete and Shutdown"/>}/>
                   </Aux> :
-                  <T id="fatal.suggestion.fallthrough" m="Please note the error above and go to the support channel on slack/matrix/rockchat for help resolving the issue." />
+                  <T id="fatal.suggestion.fallthrough" m="Try refreshing with F5. Otherwise report the error here: https://github.com/picfight/pfcredit/issues" />
             }
           </div>
           <div className="fatal-error-toolbar">
