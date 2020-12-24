@@ -109,9 +109,9 @@
     "url": "git+https://github.com/picfight/pfcredit.git"
   },
   "author": {
-    "name": "The Decred developers",
-    "email": "info@decred.org",
-    "url": "https://github.com/decred"
+    "name": "PicFight.org",
+    "email": "info@picfight.org",
+    "url": "https://github.com/picfight"
   },
   "license": "ISC",
   "bugs": {
